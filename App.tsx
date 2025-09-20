@@ -1,5 +1,6 @@
 
 
+
 import React from 'react';
 // Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
 import * as ReactRouterDOM from 'react-router-dom';
@@ -19,6 +20,8 @@ import Chatbot from './components/chatbot/Chatbot';
 import BrokerDuelPage from './pages/BrokerDuelPage';
 import MethodologyPage from './pages/MethodologyPage';
 import SourcesPage from './pages/SourcesPage';
+import CategoryPage from './pages/CategoryPage';
+import { categoryPages } from './pages/categoryPageData';
 
 const App: React.FC = () => {
   return (
@@ -35,6 +38,15 @@ const App: React.FC = () => {
         <ReactRouterDOM.Route path="/methodology" element={<MethodologyPage />} />
         <ReactRouterDOM.Route path="/sources" element={<SourcesPage />} />
         
+        {/* Dynamically create routes for all category pages */}
+        {categoryPages.map(({ path, title, description, filterFn }) => (
+          <ReactRouterDOM.Route 
+            key={path}
+            path={path}
+            element={<CategoryPage title={title} description={description} filterFn={filterFn} />} 
+          />
+        ))}
+
         <ReactRouterDOM.Route path="/broker-matcher" element={
           <ProtectedRoute>
             <BrokerMatcherPage />

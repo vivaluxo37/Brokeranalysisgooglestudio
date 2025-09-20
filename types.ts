@@ -92,6 +92,9 @@ export interface Broker {
     executionType: string;
   };
   reviews?: Review[];
+  isIslamic?: boolean;
+  copyTrading?: boolean;
+  providesSignals?: boolean;
 }
 
 export interface User {

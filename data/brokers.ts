@@ -24,6 +24,7 @@ export const brokers: Broker[] = [
         "Does not offer investor protection for non-EU/UK clients",
         "No proprietary mobile platform"
     ],
+    isIslamic: true,
     regulation: {
       regulators: ['ASIC', 'FCA', 'CySEC', 'DFSA', 'BaFin', 'CMA'],
     },
@@ -91,6 +92,7 @@ export const brokers: Broker[] = [
     foundingYear: 2007,
     headquarters: 'Sydney, Australia',
     description: 'IC Markets is one of the most renowned Forex CFD providers, offering trading solutions for active day traders and scalpers as well as traders that are new to the forex market.',
+    isIslamic: true,
     regulation: {
       regulators: ['ASIC', 'CySEC', 'FSA'],
     },
@@ -116,6 +118,7 @@ export const brokers: Broker[] = [
       platforms: ['MT4', 'MT5', 'cTrader'],
       executionType: 'ECN',
     },
+    tradableInstruments: { forexPairs: 61, indices: 25, commodities: 19, stocks: 730, cryptocurrencies: 10 },
     reviews: [
       { id: 'rev3', brokerId: 'ic-markets', userId: 'user789', userName: 'Charlie', rating: 5, comment: 'The raw spreads are unbeatable for scalping. 24/7 support is a huge plus.', date: '2023-09-15T08:00:00Z', verified: true },
     ],
@@ -129,6 +132,7 @@ export const brokers: Broker[] = [
     foundingYear: 2002,
     headquarters: 'Warsaw, Poland',
     description: 'XTB is a global, publicly-traded CFDs and forex broker with an excellent proprietary trading platform, xStation 5, and great customer service.',
+    isIslamic: true,
     regulation: {
       regulators: ['FCA', 'KNF', 'CySEC', 'IFSC'],
     },
@@ -154,6 +158,7 @@ export const brokers: Broker[] = [
       platforms: ['xStation 5'],
       executionType: 'Market Maker',
     },
+    tradableInstruments: { forexPairs: 48, indices: 42, commodities: 22, stocks: 1800, cryptocurrencies: 25 },
     reviews: [
       { id: 'rev4', brokerId: 'xtb', userId: 'user101', userName: 'David', rating: 4, comment: 'xStation 5 is a fantastic platform. Very intuitive.', date: '2023-11-01T11:20:00Z' },
       { id: 'rev5', brokerId: 'xtb', userId: 'user112', userName: 'Eve', rating: 5, comment: 'No minimum deposit is great for beginners. I started with a small amount and had no issues.', date: '2023-08-05T18:45:00Z', verified: true },
@@ -190,9 +195,10 @@ export const brokers: Broker[] = [
       customerSupport: ['24/5 Phone', 'Email'],
     },
     technology: {
-      platforms: ['MT4', 'MT5', 'Advanced Trading Platform'],
+      platforms: ['MT4', 'MT5', 'Advanced Trading Platform', 'TradingView'],
       executionType: 'Market Maker',
     },
+    tradableInstruments: { forexPairs: 80, indices: 15, commodities: 10, stocks: 4500, cryptocurrencies: 8 },
     reviews: [],
   },
   {
@@ -209,6 +215,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.6, gbpusd: 0.9, usdjpy: 0.7 }, commission: 'Included in spread', swapFeeCategory: 'Standard', maxLeverage: '1:200' },
     accessibility: { minDeposit: 250, depositMethods: ['Credit Card', 'Bank Transfer', 'PayPal'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'PayPal'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['Proprietary', 'MT4', 'ProRealTime'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 80, indices: 30, commodities: 25, stocks: 12000, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -225,6 +232,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.7, gbpusd: 1.0, usdjpy: 0.8 }, commission: 'Varies', swapFeeCategory: 'Standard', maxLeverage: '1:100' },
     accessibility: { minDeposit: 2000, depositMethods: ['Bank Transfer', 'Credit Card'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['24/5 Phone', 'Email'] },
     technology: { platforms: ['SaxoTraderGO', 'SaxoTraderPRO'], executionType: 'Direct Market Access' },
+    tradableInstruments: { forexPairs: 182, indices: 29, commodities: 19, stocks: 22000, cryptocurrencies: 9 },
     reviews: []
   },
   {
@@ -241,6 +249,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.3, usdjpy: 0.1 }, commission: '$2.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:50' },
     accessibility: { minDeposit: 0, depositMethods: ['Bank Transfer'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['Phone', 'Email', 'Chat'] },
     technology: { platforms: ['Trader Workstation (TWS)', 'IBKR Mobile'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 100, indices: 13, commodities: 10, stocks: 9000, cryptocurrencies: 4 },
     reviews: []
   },
   {
@@ -257,6 +266,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.9, gbpusd: 1.2, usdjpy: 1.0 }, commission: 'Included in spread', swapFeeCategory: 'High', maxLeverage: '1:200' },
     accessibility: { minDeposit: 0, depositMethods: ['Credit Card', 'Bank Transfer', 'PayPal'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'PayPal'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['OANDA Trade', 'MT4', 'TradingView'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 70, indices: 16, commodities: 8, stocks: 50, cryptocurrencies: 4 },
     reviews: []
   },
   {
@@ -273,6 +283,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.7, gbpusd: 0.9, usdjpy: 0.8 }, commission: 'Varies', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 0, depositMethods: ['Credit Card', 'Bank Transfer'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['Next Generation', 'MT4'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 330, indices: 80, commodities: 100, stocks: 9000, cryptocurrencies: 15 },
     reviews: []
   },
   {
@@ -289,6 +300,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.3, gbpusd: 1.6, usdjpy: 1.4 }, commission: 'Included in spread', swapFeeCategory: 'Standard', maxLeverage: '1:400' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Phone', 'Email', 'Live Chat'] },
     technology: { platforms: ['Trading Station', 'MT4', 'TradingView'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 40, indices: 15, commodities: 8, stocks: 200, cryptocurrencies: 7 },
     reviews: []
   },
   {
@@ -305,6 +317,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$3.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:1000' },
     accessibility: { minDeposit: 5, depositMethods: ['Credit Card', 'Bank Transfer', 'Neteller', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 57, indices: 30, commodities: 15, stocks: 1200, cryptocurrencies: 31 },
     reviews: []
   },
   {
@@ -316,11 +329,13 @@ export const brokers: Broker[] = [
     foundingYear: 2008,
     headquarters: 'Limassol, Cyprus',
     description: 'Exness is known for its instant withdrawal features, high leverage options, and providing excellent trading conditions.',
+    isIslamic: true,
     regulation: { regulators: ['CySEC', 'FCA', 'FSCA'] },
     ratings: { regulation: 8.8, costs: 9.0, platforms: 8.2, support: 8.5 },
     tradingConditions: { spreads: { eurusd: 0.3, gbpusd: 0.5, usdjpy: 0.4 }, commission: 'Zero on Standard accounts', swapFeeCategory: 'Low', maxLeverage: '1:Unlimited' },
     accessibility: { minDeposit: 10, depositMethods: ['Bank Transfer', 'Credit Card', 'Skrill', 'Neteller'], withdrawalMethods: ['Bank Transfer', 'Credit Card', 'Skrill', 'Neteller'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 107, indices: 10, commodities: 8, stocks: 81, cryptocurrencies: 34 },
     reviews: []
   },
   {
@@ -332,11 +347,13 @@ export const brokers: Broker[] = [
     foundingYear: 2007,
     headquarters: 'Tel Aviv, Israel',
     description: 'The world\'s leading social trading platform, eToro allows users to copy the trades of successful investors or receive followers themselves.',
+    copyTrading: true,
     regulation: { regulators: ['CySEC', 'FCA', 'ASIC'] },
     ratings: { regulation: 9.0, costs: 7.0, platforms: 9.5, support: 7.5 },
     tradingConditions: { spreads: { eurusd: 1.0, gbpusd: 1.5, usdjpy: 1.2 }, commission: 'Zero', swapFeeCategory: 'High', maxLeverage: '1:400' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'PayPal', 'Bank Transfer'], withdrawalMethods: ['Credit Card', 'PayPal', 'Bank Transfer'], customerSupport: ['Ticket System', 'Help Center'] },
     technology: { platforms: ['eToro Platform'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 49, indices: 13, commodities: 32, stocks: 2700, cryptocurrencies: 70 },
     reviews: []
   },
   {
@@ -353,6 +370,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.8, gbpusd: 1.2, usdjpy: 0.9 }, commission: 'Zero', swapFeeCategory: 'High', maxLeverage: '1:300' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'PayPal', 'Bank Transfer'], withdrawalMethods: ['Credit Card', 'PayPal', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Email'] },
     technology: { platforms: ['WebTrader'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 70, indices: 30, commodities: 22, stocks: 1500, cryptocurrencies: 14 },
     reviews: []
   },
   {
@@ -369,6 +387,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.9, gbpusd: 1.4, usdjpy: 1.1 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:400' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'AvaTradeGo'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 55, indices: 30, commodities: 25, stocks: 600, cryptocurrencies: 16 },
     reviews: []
   },
   {
@@ -385,6 +404,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.2, usdjpy: 0.1 }, commission: '$2.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Bank Transfer', 'Credit Card', 'Skrill'], withdrawalMethods: ['Bank Transfer', 'Credit Card'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 62, indices: 15, commodities: 6, stocks: 0, cryptocurrencies: 8 },
     reviews: []
   },
   {
@@ -401,6 +421,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:1000' },
     accessibility: { minDeposit: 5, depositMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 53, indices: 11, commodities: 6, stocks: 950, cryptocurrencies: 40 },
     reviews: []
   },
   {
@@ -417,6 +438,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.5, gbpusd: 0.8, usdjpy: 0.7 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:3000' },
     accessibility: { minDeposit: 1, depositMethods: ['Credit Card', 'Skrill', 'Neteller', 'Local Banks'], withdrawalMethods: ['Credit Card', 'Skrill', 'Neteller'], customerSupport: ['24/7 Live Chat', 'Phone'] },
     technology: { platforms: ['MT4', 'MT5', 'FBS Trader'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 40, indices: 10, commodities: 5, stocks: 120, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -433,6 +455,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.6, gbpusd: 0.9, usdjpy: 0.7 }, commission: 'Zero', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 25, depositMethods: ['Credit Card', 'Skrill', 'Neteller', 'Crypto'], withdrawalMethods: ['Credit Card', 'Skrill', 'Crypto'], customerSupport: ['24/7 Live Chat', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 35, indices: 10, commodities: 5, stocks: 0, cryptocurrencies: 30 },
     reviews: []
   },
   {
@@ -449,6 +472,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$2.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:2000' },
     accessibility: { minDeposit: 10, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], customerSupport: ['24/7 Live Chat', 'Phone'] },
     technology: { platforms: ['MT4', 'MT5', 'cTrader', 'R StocksTrader'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 40, indices: 10, commodities: 5, stocks: 12000, cryptocurrencies: 26 },
     reviews: []
   },
   {
@@ -465,6 +489,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.5, usdjpy: 0.4 }, commission: '$4.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 68, indices: 15, commodities: 5, stocks: 1200, cryptocurrencies: 20 },
     reviews: []
   },
   {
@@ -481,6 +506,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.3 }, commission: '$3.50 per lot', swapFeeCategory: 'Low', maxLeverage: '1:200' },
     accessibility: { minDeposit: 1000, depositMethods: ['Bank Transfer', 'Credit Card'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['24/5 Phone', 'Email'] },
     technology: { platforms: ['JForex', 'MT4'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 5, stocks: 700, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -497,6 +523,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.6, gbpusd: 1.0, usdjpy: 0.8 }, commission: 'Varies', swapFeeCategory: 'Standard', maxLeverage: '1:100' },
     accessibility: { minDeposit: 1000, depositMethods: ['Bank Transfer', 'Credit Card'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['24/5 Phone', 'Email'] },
     technology: { platforms: ['Advanced Trader', 'MT4', 'MT5'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 80, indices: 26, commodities: 25, stocks: 9000, cryptocurrencies: 24 },
     reviews: []
   },
   {
@@ -513,6 +540,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.5, gbpusd: 0.8, usdjpy: 0.6 }, commission: 'Zero on some accounts', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Bank Transfer', 'Credit Card', 'Skrill'], withdrawalMethods: ['Bank Transfer', 'Credit Card'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 45, indices: 26, commodities: 16, stocks: 3000, cryptocurrencies: 32 },
     reviews: []
   },
   {
@@ -529,6 +557,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.8, gbpusd: 1.2, usdjpy: 1.0 }, commission: 'Included in spread', swapFeeCategory: 'Standard', maxLeverage: '1:200' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Phone', 'Email', 'Live Chat'] },
     technology: { platforms: ['Web Trader', 'AT Pro', 'MT4'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 84, indices: 21, commodities: 25, stocks: 4500, cryptocurrencies: 6 },
     reviews: []
   },
   {
@@ -545,6 +574,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$3.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 0, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['ThinkTrader', 'MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 46, indices: 16, commodities: 8, stocks: 2000, cryptocurrencies: 20 },
     reviews: []
   },
   {
@@ -561,6 +591,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.5, gbpusd: 0.9, usdjpy: 0.7 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:400' },
     accessibility: { minDeposit: 500, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['ActivTrader', 'MT4', 'MT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 48, indices: 15, commodities: 8, stocks: 500, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -572,11 +603,13 @@ export const brokers: Broker[] = [
     foundingYear: 2006,
     headquarters: 'London, UK',
     description: 'FxPro is a highly-regarded broker offering a wide choice of platforms and excellent execution with no dealing desk intervention.',
+    isIslamic: true,
     regulation: { regulators: ['FCA', 'CySEC', 'FSCA', 'SCB'] },
     ratings: { regulation: 9.2, costs: 8.8, platforms: 8.8, support: 8.5 },
     tradingConditions: { spreads: { eurusd: 0.3, gbpusd: 0.6, usdjpy: 0.4 }, commission: '$4.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Bank Transfer', 'Credit Card', 'PayPal', 'Skrill'], withdrawalMethods: ['Bank Transfer', 'Credit Card', 'PayPal'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'cTrader', 'FxPro Edge'], executionType: 'NDD' },
+    tradableInstruments: { forexPairs: 70, indices: 19, commodities: 3, stocks: 2000, cryptocurrencies: 30 },
     reviews: []
   },
   {
@@ -593,6 +626,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$3.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 0, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 70, indices: 11, commodities: 8, stocks: 100, cryptocurrencies: 30 },
     reviews: []
   },
   {
@@ -609,6 +643,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.2, gbpusd: 1.5, usdjpy: 1.4 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:400' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 43, indices: 12, commodities: 6, stocks: 100, cryptocurrencies: 7 },
     reviews: []
   },
   {
@@ -625,6 +660,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.4, gbpusd: 1.8, usdjpy: 1.6 }, commission: 'Zero', swapFeeCategory: 'High', maxLeverage: '1:500' },
     accessibility: { minDeposit: 0, depositMethods: ['Credit Card', 'Bank Transfer'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Phone', 'Email'] },
     technology: { platforms: ['LCG Trader', 'MT4'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 17, stocks: 4000, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -641,6 +677,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.7, gbpusd: 1.1, usdjpy: 0.9 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:300' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'PayPal', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'PayPal'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['Markets.com Platform', 'MT4', 'MT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 67, indices: 40, commodities: 28, stocks: 2000, cryptocurrencies: 25 },
     reviews: []
   },
   {
@@ -657,6 +694,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.9, gbpusd: 1.3, usdjpy: 1.1 }, commission: 'Varies', swapFeeCategory: 'High', maxLeverage: '1:1000' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 80, indices: 20, commodities: 15, stocks: 150, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -673,6 +711,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.3 }, commission: 'Zero', swapFeeCategory: 'Low', maxLeverage: '1:25' },
     accessibility: { minDeposit: 0, depositMethods: ['Bank Transfer'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['Phone', 'Email'] },
     technology: { platforms: ['Proprietary'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 20, indices: 10, commodities: 3, stocks: 0, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -684,11 +723,13 @@ export const brokers: Broker[] = [
     foundingYear: 2018,
     headquarters: 'Seychelles',
     description: 'Primarily a cryptocurrency exchange, Bitget has expanded to offer CFD trading on a range of assets with a focus on copy trading.',
+    copyTrading: true,
     regulation: { regulators: ['MSB (US)', 'MSB (Canada)'] },
     ratings: { regulation: 7.0, costs: 8.0, platforms: 8.5, support: 7.8 },
     tradingConditions: { spreads: { eurusd: 0.8, gbpusd: 1.2, usdjpy: 1.0 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:125' },
     accessibility: { minDeposit: 50, depositMethods: ['Crypto', 'Credit Card'], withdrawalMethods: ['Crypto'], customerSupport: ['24/7 Live Chat', 'Ticket System'] },
     technology: { platforms: ['Web Platform', 'Mobile App'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 20, indices: 5, commodities: 2, stocks: 50, cryptocurrencies: 500 },
     reviews: []
   },
   {
@@ -705,6 +746,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.2, usdjpy: 0.1 }, commission: '$2.50 per lot', swapFeeCategory: 'Low', maxLeverage: '1:400' },
     accessibility: { minDeposit: 100, depositMethods: ['Bank Transfer', 'Credit Card', 'Crypto'], withdrawalMethods: ['Bank Transfer', 'Credit Card'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'cTrader', 'Currenex'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 60, indices: 10, commodities: 5, stocks: 100, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -721,6 +763,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$3.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:1000' },
     accessibility: { minDeposit: 10, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 33, indices: 4, commodities: 2, stocks: 60, cryptocurrencies: 11 },
     reviews: []
   },
   {
@@ -737,6 +780,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$1.50 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 10, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 100, cryptocurrencies: 40 },
     reviews: []
   },
   {
@@ -753,6 +797,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.9, gbpusd: 1.4, usdjpy: 1.1 }, commission: 'Zero (Fixed Spreads)', swapFeeCategory: 'Standard', maxLeverage: '1:400' },
     accessibility: { minDeposit: 25, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['easyMarkets Platform', 'MT4'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 95, indices: 20, commodities: 15, stocks: 50, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -769,6 +814,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$3.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Neteller', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'Iress'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 60, indices: 19, commodities: 9, stocks: 800, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -785,6 +831,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.4, usdjpy: 0.2 }, commission: '$3.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'ProTrader (TradingView)'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 44, indices: 25, commodities: 20, stocks: 800, cryptocurrencies: 40 },
     reviews: []
   },
   {
@@ -801,6 +848,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.6, usdjpy: 0.4 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 200, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 80, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -817,6 +865,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$3.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 0, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'TradingView'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 64, indices: 20, commodities: 10, stocks: 2000, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -833,6 +882,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.2, usdjpy: 0.1 }, commission: '$2.25 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 0, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 90, indices: 10, commodities: 10, stocks: 100, cryptocurrencies: 30 },
     reviews: []
   },
   {
@@ -849,6 +899,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$3.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'PayPal', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'TradingView'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 56, indices: 11, commodities: 8, stocks: 500, cryptocurrencies: 250 },
     reviews: []
   },
   {
@@ -865,6 +916,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.2, usdjpy: 0.1 }, commission: '$3.50 per lot', swapFeeCategory: 'Low', maxLeverage: '1:200' },
     accessibility: { minDeposit: 200, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'TraderEvolution'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 54, indices: 15, commodities: 8, stocks: 0, cryptocurrencies: 20 },
     reviews: []
   },
   {
@@ -881,6 +933,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.5, usdjpy: 0.4 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 18, commodities: 10, stocks: 1600, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -897,6 +950,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.3, gbpusd: 0.6, usdjpy: 0.5 }, commission: 'Zero on some accounts', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'BDSwiss WebTrader'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 140, cryptocurrencies: 20 },
     reviews: []
   },
   {
@@ -913,6 +967,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.4 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 45, indices: 10, commodities: 5, stocks: 20, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -929,6 +984,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$1.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 5, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'ActTrader'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 70, indices: 10, commodities: 5, stocks: 500, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -945,6 +1001,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.4, gbpusd: 0.8, usdjpy: 0.6 }, commission: 'Varies', swapFeeCategory: 'High', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['Libertex Platform', 'MT4'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 50, indices: 25, commodities: 20, stocks: 150, cryptocurrencies: 70 },
     reviews: []
   },
   {
@@ -961,6 +1018,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.6, gbpusd: 1.0, usdjpy: 0.8 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 20, depositMethods: ['Credit Card', 'Bank Transfer', 'Apple Pay'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['Proprietary', 'MT4', 'TradingView'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 138, indices: 25, commodities: 35, stocks: 5000, cryptocurrencies: 470 },
     reviews: []
   },
   {
@@ -977,6 +1035,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.8, gbpusd: 1.2, usdjpy: 1.0 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:300' },
     accessibility: { minDeposit: 1, depositMethods: ['Credit Card', 'Bank Transfer', 'Google Pay'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['Help Center', 'Email'] },
     technology: { platforms: ['Proprietary'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 180, indices: 35, commodities: 25, stocks: 7000, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -993,6 +1052,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$2.50 per lot', swapFeeCategory: 'Low', maxLeverage: '1:200' },
     accessibility: { minDeposit: 500, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['Phone', 'Email', 'Community Forum'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 42, indices: 10, commodities: 5, stocks: 400, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1009,6 +1069,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.5, usdjpy: 0.3 }, commission: '$2.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:2000' },
     accessibility: { minDeposit: 10, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 60, indices: 5, commodities: 5, stocks: 170, cryptocurrencies: 4 },
     reviews: []
   },
   {
@@ -1025,6 +1086,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$3.50 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 54, indices: 13, commodities: 8, stocks: 200, cryptocurrencies: 30 },
     reviews: []
   },
   {
@@ -1041,6 +1103,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.4, gbpusd: 0.8, usdjpy: 0.6 }, commission: 'Zero on Standard', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['Skilling Trader', 'cTrader', 'MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 73, indices: 10, commodities: 5, stocks: 700, cryptocurrencies: 50 },
     reviews: []
   },
   {
@@ -1057,6 +1120,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.7, gbpusd: 1.1, usdjpy: 0.9 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 45, indices: 10, commodities: 5, stocks: 80, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1073,6 +1137,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.4, gbpusd: 0.8, usdjpy: 0.6 }, commission: 'Varies', swapFeeCategory: 'Standard', maxLeverage: '1:200' },
     accessibility: { minDeposit: 0, depositMethods: ['Bank Transfer', 'Credit Card'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['Phone', 'Email', 'Chat'] },
     technology: { platforms: ['FlowBank Pro', 'MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 20, commodities: 10, stocks: 9000, cryptocurrencies: 20 },
     reviews: []
   },
   {
@@ -1089,6 +1154,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.8, gbpusd: 1.2, usdjpy: 1.0 }, commission: 'Zero on CFDs', swapFeeCategory: 'Standard', maxLeverage: '1:30' },
     accessibility: { minDeposit: 0, depositMethods: ['Bank Transfer'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['Phone', 'Email'] },
     technology: { platforms: ['PowerDesk'], executionType: 'Direct Market Access' },
+    tradableInstruments: { forexPairs: 50, indices: 20, commodities: 10, stocks: 10000, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1105,6 +1171,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$2.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:100' },
     accessibility: { minDeposit: 10000, depositMethods: ['Bank Transfer'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['24/5 Phone', 'Email'] },
     technology: { platforms: ['Proprietary API'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 100, indices: 15, commodities: 5, stocks: 0, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1121,6 +1188,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.7, gbpusd: 1.0, usdjpy: 0.8 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:200' },
     accessibility: { minDeposit: 0, depositMethods: ['Credit Card', 'Bank Transfer'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Phone', 'Email', 'Live Chat'] },
     technology: { platforms: ['Proprietary'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 60, indices: 20, commodities: 10, stocks: 2000, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1137,6 +1205,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.3 }, commission: '$3.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 80, indices: 15, commodities: 20, stocks: 0, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1153,6 +1222,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.3, gbpusd: 0.6, usdjpy: 0.4 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['ProTrader (TradingView)', 'MT4', 'MT5'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 45, indices: 20, commodities: 15, stocks: 700, cryptocurrencies: 30 },
     reviews: []
   },
   {
@@ -1169,6 +1239,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$2.75 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['cTrader', 'MT4'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 5, stocks: 600, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1185,6 +1256,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.3, gbpusd: 0.7, usdjpy: 0.5 }, commission: 'Varies', swapFeeCategory: 'Standard', maxLeverage: '1:1000' },
     accessibility: { minDeposit: 15, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 130, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1201,6 +1273,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.2, gbpusd: 1.5, usdjpy: 1.4 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 250, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 150, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1212,11 +1285,14 @@ export const brokers: Broker[] = [
     foundingYear: 2015,
     headquarters: 'Limassol, Cyprus',
     description: 'NAGA is a publicly-listed social trading platform that allows users to trade, copy, and connect with other traders.',
+    copyTrading: true,
+    providesSignals: true,
     regulation: { regulators: ['CySEC', 'BaFin'] },
     ratings: { regulation: 8.3, costs: 7.8, platforms: 8.8, support: 7.9 },
     tradingConditions: { spreads: { eurusd: 1.2, gbpusd: 1.6, usdjpy: 1.4 }, commission: 'Varies', swapFeeCategory: 'High', maxLeverage: '1:1000' },
     accessibility: { minDeposit: 250, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['NAGA Trader', 'MT4', 'MT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 45, indices: 15, commodities: 10, stocks: 600, cryptocurrencies: 20 },
     reviews: []
   },
   {
@@ -1233,6 +1309,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.4 }, commission: '$3.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 20, commodities: 10, stocks: 200, cryptocurrencies: 30 },
     reviews: []
   },
   {
@@ -1249,6 +1326,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.5, gbpusd: 0.7, usdjpy: 0.6 }, commission: 'Zero', swapFeeCategory: 'Low', maxLeverage: '1:1000' },
     accessibility: { minDeposit: 5, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], customerSupport: ['24/7 Live Chat', 'Help Center'] },
     technology: { platforms: ['DTrader', 'DBot', 'DMT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 90, cryptocurrencies: 25 },
     reviews: []
   },
   {
@@ -1265,6 +1343,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 55, indices: 15, commodities: 10, stocks: 20000, cryptocurrencies: 20 },
     reviews: []
   },
   {
@@ -1281,6 +1360,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.3, gbpusd: 0.6, usdjpy: 0.5 }, commission: '$3.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 1, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 50, indices: 15, commodities: 10, stocks: 300, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -1297,6 +1377,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.6, usdjpy: 0.5 }, commission: 'Varies', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'TrioSocio'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 10, commodities: 5, stocks: 150, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1313,6 +1394,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$3.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 100, cryptocurrencies: 20 },
     reviews: []
   },
   {
@@ -1329,6 +1411,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.0, gbpusd: 1.4, usdjpy: 1.2 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 50, indices: 15, commodities: 10, stocks: 50, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1345,6 +1428,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.6, usdjpy: 0.4 }, commission: '$4.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 200, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 45, indices: 10, commodities: 5, stocks: 30, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1361,6 +1445,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.4, gbpusd: 2.0, usdjpy: 1.6 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:400' },
     accessibility: { minDeposit: 5, depositMethods: ['Mobile Money', 'Bank Transfer', 'Credit Card'], withdrawalMethods: ['Mobile Money', 'Bank Transfer'], customerSupport: ['Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 60, indices: 10, commodities: 5, stocks: 400, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1377,6 +1462,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.3, gbpusd: 0.7, usdjpy: 0.5 }, commission: '$3.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 500, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 10, stocks: 200, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1393,6 +1479,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.4, gbpusd: 1.9, usdjpy: 1.6 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 55, indices: 15, commodities: 10, stocks: 300, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1409,6 +1496,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.6, gbpusd: 1.0, usdjpy: 0.8 }, commission: 'Varies', swapFeeCategory: 'Standard', maxLeverage: '1:100' },
     accessibility: { minDeposit: 1000, depositMethods: ['Bank Transfer'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'Phillip Nova'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 40, indices: 10, commodities: 5, stocks: 5000, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1425,6 +1513,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.6, usdjpy: 0.4 }, commission: '$2.99 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'WebTrader'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 60, indices: 10, commodities: 5, stocks: 50, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1441,6 +1530,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.5, gbpusd: 0.9, usdjpy: 0.7 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:200' },
     accessibility: { minDeposit: 0, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'TradingView'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 5, stocks: 100, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1457,6 +1547,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.3 }, commission: '$2.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'ZuluTrade'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 150, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1473,6 +1564,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.3, gbpusd: 0.6, usdjpy: 0.4 }, commission: 'Zero on Standard', swapFeeCategory: 'Standard', maxLeverage: '1:3000' },
     accessibility: { minDeposit: 1, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 100, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1489,6 +1581,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$2.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:30' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone'] },
     technology: { platforms: ['MT4', 'MT5', 'R StocksTrader'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 40, indices: 10, commodities: 5, stocks: 12000, cryptocurrencies: 26 },
     reviews: []
   },
   {
@@ -1505,6 +1598,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$5.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 5, stocks: 150, cryptocurrencies: 15 },
     reviews: []
   },
   {
@@ -1521,6 +1615,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.6, usdjpy: 0.5 }, commission: '$4.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'NDD' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 100, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1537,6 +1632,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.5, usdjpy: 0.3 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:400' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'cTrader'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 60, indices: 10, commodities: 5, stocks: 50, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1553,6 +1649,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$4.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 100, indices: 15, commodities: 10, stocks: 100, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1569,6 +1666,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.7, gbpusd: 1.1, usdjpy: 0.9 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 20, commodities: 10, stocks: 5000, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -1585,6 +1683,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.4 }, commission: 'Varies by subscription', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 10, stocks: 150, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -1601,6 +1700,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: 'Zero', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone'] },
     technology: { platforms: ['MT4'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 70, indices: 10, commodities: 5, stocks: 0, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1617,6 +1717,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.4 }, commission: '$2.50 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 250, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['cTrader'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 80, indices: 15, commodities: 5, stocks: 900, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1633,6 +1734,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 70, indices: 10, commodities: 5, stocks: 500, cryptocurrencies: 30 },
     reviews: []
   },
   {
@@ -1649,6 +1751,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.2, gbpusd: 1.6, usdjpy: 1.4 }, commission: 'Zero', swapFeeCategory: 'High', maxLeverage: '1:500' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'ADSS Platform'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 10, stocks: 1000, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1665,6 +1768,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.4 }, commission: '$4.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 250, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 10, stocks: 200, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1681,6 +1785,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 2.0, gbpusd: 2.8, usdjpy: 2.5 }, commission: 'Zero', swapFeeCategory: 'High', maxLeverage: '1:200' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Phone', 'Email'] },
     technology: { platforms: ['Fortrader', 'MT4'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 10, stocks: 300, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1697,6 +1802,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.5, usdjpy: 0.3 }, commission: '$1.50 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 500, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 70, indices: 10, commodities: 5, stocks: 500, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1713,6 +1819,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.6, gbpusd: 1.0, usdjpy: 0.8 }, commission: 'Varies', swapFeeCategory: 'Standard', maxLeverage: '1:200' },
     accessibility: { minDeposit: 200, depositMethods: ['Bank Transfer', 'PayPal'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'Trader Workstation'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 20, commodities: 10, stocks: 1000, cryptocurrencies: 5 },
     reviews: []
   },
   {
@@ -1729,6 +1836,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.5, usdjpy: 0.3 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 500, depositMethods: ['Bank Transfer', 'Skrill'], withdrawalMethods: ['Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 5, stocks: 600, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1745,6 +1853,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.2, gbpusd: 1.8, usdjpy: 1.5 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:400' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'CopyKat'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 50, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -1761,6 +1870,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.6, usdjpy: 0.4 }, commission: '$3.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:1000' },
     accessibility: { minDeposit: 5, depositMethods: ['Credit Card', 'Bank Transfer', 'Crypto', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], customerSupport: ['24/7 Live Chat', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 50, cryptocurrencies: 50 },
     reviews: []
   },
   {
@@ -1777,6 +1887,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$3.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:777' },
     accessibility: { minDeposit: 10, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4', 'MT5', 'cTrader'], executionType: 'ECN/STP' },
+    tradableInstruments: { forexPairs: 60, indices: 10, commodities: 5, stocks: 100, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1793,6 +1904,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.5, gbpusd: 0.9, usdjpy: 0.7 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 200, cryptocurrencies: 20 },
     reviews: []
   },
   {
@@ -1809,6 +1921,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.8, gbpusd: 1.2, usdjpy: 1.0 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:200' },
     accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Phone', 'Email'] },
     technology: { platforms: ['TraderPro', 'MT4'], executionType: 'Market Maker' },
+    tradableInstruments: { forexPairs: 60, indices: 20, commodities: 10, stocks: 5000, cryptocurrencies: 0 },
     reviews: []
   },
   {
@@ -1825,6 +1938,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$2.00 per lot', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 25, depositMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'ECN' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 0, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -1841,6 +1955,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 1.2, gbpusd: 1.8, usdjpy: 1.5 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:300' },
     accessibility: { minDeposit: 250, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['Social WebTrader', 'MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 15, commodities: 10, stocks: 150, cryptocurrencies: 10 },
     reviews: []
   },
   {
@@ -1857,6 +1972,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.3 }, commission: '$3.00 per lot', swapFeeCategory: 'Standard', maxLeverage: '1:500' },
     accessibility: { minDeposit: 25, depositMethods: ['Credit Card', 'Crypto', 'Bank Transfer'], withdrawalMethods: ['Crypto', 'Bank Transfer'], customerSupport: ['24/7 Live Chat', 'Email'] },
     technology: { platforms: ['MT5'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 50, indices: 10, commodities: 5, stocks: 100, cryptocurrencies: 50 },
     reviews: []
   },
   {
@@ -1873,6 +1989,7 @@ export const brokers: Broker[] = [
     tradingConditions: { spreads: { eurusd: 0.2, gbpusd: 0.6, usdjpy: 0.4 }, commission: 'Varies', swapFeeCategory: 'Standard', maxLeverage: '1:300' },
     accessibility: { minDeposit: 250, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['24/5 Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['MT4'], executionType: 'STP' },
+    tradableInstruments: { forexPairs: 60, indices: 10, commodities: 5, stocks: 50, cryptocurrencies: 5 },
     reviews: []
   }
 ];

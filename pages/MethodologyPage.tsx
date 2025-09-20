@@ -1,15 +1,37 @@
 
+
 import React from 'react';
 import Card, { CardContent, CardHeader } from '../components/ui/Card';
+import JsonLdSchema from '../components/common/JsonLdSchema';
 
 const MethodologyPage: React.FC = () => {
+
+  const lastUpdatedDate = "2025-09-15";
+
+  const methodologyJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Our Methodology | Brokeranalysis",
+    "url": "https://brokeranalysis.com/#/methodology",
+    "description": "Learn how Brokeranalysis calculates trust scores, analyzes costs, and uses AI to provide unbiased forex broker reviews.",
+    "lastReviewed": lastUpdatedDate,
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Brokeranalysis",
+      "url": "https://brokeranalysis.com",
+      "logo": "https://brokeranalysis.com/logo.png"
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto py-8">
+      <JsonLdSchema data={methodologyJsonLd} />
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">Our Methodology</h1>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-foreground/80">
           Transparency is at the core of our mission. Here's how we gather data, score brokers, and leverage AI to help you make informed decisions.
         </p>
+         <p className="text-sm text-foreground/60 mt-2">Last Updated: September 15, 2025</p>
       </div>
 
       <div className="space-y-8">

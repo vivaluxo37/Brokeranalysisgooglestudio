@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { NAV_LINKS } from '../../constants';
 
 const Footer: React.FC = () => {
-  const footerLinks = [...NAV_LINKS, { name: 'Methodology', path: '/methodology' }];
+  const footerLinks = [...NAV_LINKS, { name: 'Methodology', path: '/methodology' }, { name: 'Sources', path: '/sources' }];
 
   return (
     <footer className="bg-card/50 border-t border-input mt-24 transition-colors duration-300">

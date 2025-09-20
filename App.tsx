@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
@@ -16,6 +17,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import Chatbot from './components/chatbot/Chatbot';
 import BrokerDuelPage from './pages/BrokerDuelPage';
 import MethodologyPage from './pages/MethodologyPage';
+import SourcesPage from './pages/SourcesPage';
 
 const App: React.FC = () => {
   return (
@@ -30,6 +32,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/methodology" element={<MethodologyPage />} />
+        <Route path="/sources" element={<SourcesPage />} />
         
         <Route path="/broker-matcher" element={
           <ProtectedRoute>

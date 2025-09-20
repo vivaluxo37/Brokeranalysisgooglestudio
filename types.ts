@@ -7,6 +7,7 @@ export interface Review {
   rating: number; // Score out of 5
   comment: string;
   date: string; // ISO 8601 format
+  verified?: boolean;
 }
 
 export interface Broker {
@@ -20,6 +21,12 @@ export interface Broker {
   regulation: {
     regulators: string[];
   };
+  ratings: {
+      regulation: number;
+      costs: number;
+      platforms: number;
+      support: number;
+  };
   tradingConditions: {
     spreads: {
       eurusd: number;
@@ -27,7 +34,7 @@ export interface Broker {
       usdjpy: number;
     };
     commission: string;
-    swapFees: string;
+    swapFeeCategory: 'Low' | 'Standard' | 'High';
     maxLeverage: string;
   };
   accessibility: {

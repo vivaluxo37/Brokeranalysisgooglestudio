@@ -48,4 +48,10 @@ export const Icons = {
   starEmpty: (props: React.SVGProps<SVGSVGElement>) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
   ),
+  verified: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+  ),
+  duel: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12.97 2.49a1 1 0 0 0-1.94 0l-1.55 4.8-4.99 1.15a1 1 0 0 0-.6 1.77l3.85 3.33-1.2 5.03a1 1 0 0 0 1.48 1.12l4.42-2.7 4.42 2.7a1 1 0 0 0 1.48-1.12l-1.2-5.03 3.85-3.33a1 1 0 0 0-.6-1.77l-4.99-1.15-1.55-4.8z"/><path d="M12.97 12.49a1 1 0 0 0-1.94 0l-1.55 4.8-4.99 1.15a1 1 0 0 0-.6 1.77l3.85 3.33-1.2 5.03a1 1 0 0 0 1.48 1.12l4.42-2.7 4.42 2.7a1 1 0 0 0 1.48-1.12l-1.2-5.03 3.85-3.33a1 1 0 0 0-.6-1.77l-4.99-1.15-1.55-4.8z"/></svg>
+  ),
 };

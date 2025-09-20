@@ -13,10 +13,16 @@ export const brokers: Broker[] = [
     regulation: {
       regulators: ['ASIC', 'FCA', 'CySEC', 'DFSA'],
     },
+    ratings: {
+      regulation: 9.8,
+      costs: 9.5,
+      platforms: 9.0,
+      support: 9.1,
+    },
     tradingConditions: {
       spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.2 },
       commission: '$3.50 per lot',
-      swapFees: 'Standard',
+      swapFeeCategory: 'Low',
       maxLeverage: '1:500',
     },
     accessibility: {
@@ -30,7 +36,7 @@ export const brokers: Broker[] = [
       executionType: 'ECN/STP',
     },
     reviews: [
-      { id: 'rev1', brokerId: 'pepperstone', userId: 'user123', userName: 'Alice', rating: 5, comment: 'Excellent spreads and customer service. Highly recommend!', date: '2023-10-26T10:00:00Z' },
+      { id: 'rev1', brokerId: 'pepperstone', userId: 'user123', userName: 'Alice', rating: 5, comment: 'Excellent spreads and customer service. Highly recommend!', date: '2023-10-26T10:00:00Z', verified: true },
       { id: 'rev2', brokerId: 'pepperstone', userId: 'user456', userName: 'Bob', rating: 4, comment: 'Good platform selection, but withdrawal took a bit longer than expected.', date: '2023-10-22T14:30:00Z' },
     ],
   },
@@ -45,10 +51,16 @@ export const brokers: Broker[] = [
     regulation: {
       regulators: ['ASIC', 'CySEC', 'FSA'],
     },
+     ratings: {
+      regulation: 9.5,
+      costs: 9.7,
+      platforms: 8.8,
+      support: 9.0,
+    },
     tradingConditions: {
       spreads: { eurusd: 0.0, gbpusd: 0.2, usdjpy: 0.1 },
       commission: '$3.50 per lot',
-      swapFees: 'Low',
+      swapFeeCategory: 'Low',
       maxLeverage: '1:500',
     },
     accessibility: {
@@ -62,7 +74,7 @@ export const brokers: Broker[] = [
       executionType: 'ECN',
     },
     reviews: [
-      { id: 'rev3', brokerId: 'ic-markets', userId: 'user789', userName: 'Charlie', rating: 5, comment: 'The raw spreads are unbeatable for scalping. 24/7 support is a huge plus.', date: '2023-09-15T08:00:00Z' },
+      { id: 'rev3', brokerId: 'ic-markets', userId: 'user789', userName: 'Charlie', rating: 5, comment: 'The raw spreads are unbeatable for scalping. 24/7 support is a huge plus.', date: '2023-09-15T08:00:00Z', verified: true },
     ],
   },
   {
@@ -76,10 +88,16 @@ export const brokers: Broker[] = [
     regulation: {
       regulators: ['FCA', 'KNF', 'CySEC', 'IFSC'],
     },
+    ratings: {
+      regulation: 9.2,
+      costs: 8.5,
+      platforms: 9.5,
+      support: 8.9,
+    },
     tradingConditions: {
       spreads: { eurusd: 0.5, gbpusd: 0.8, usdjpy: 0.6 },
       commission: 'Zero on Standard accounts',
-      swapFees: 'Standard',
+      swapFeeCategory: 'Standard',
       maxLeverage: '1:500',
     },
     accessibility: {
@@ -94,7 +112,7 @@ export const brokers: Broker[] = [
     },
     reviews: [
       { id: 'rev4', brokerId: 'xtb', userId: 'user101', userName: 'David', rating: 4, comment: 'xStation 5 is a fantastic platform. Very intuitive.', date: '2023-11-01T11:20:00Z' },
-      { id: 'rev5', brokerId: 'xtb', userId: 'user112', userName: 'Eve', rating: 5, comment: 'No minimum deposit is great for beginners. I started with a small amount and had no issues.', date: '2023-08-05T18:45:00Z' },
+      { id: 'rev5', brokerId: 'xtb', userId: 'user112', userName: 'Eve', rating: 5, comment: 'No minimum deposit is great for beginners. I started with a small amount and had no issues.', date: '2023-08-05T18:45:00Z', verified: true },
     ],
   },
   {
@@ -108,10 +126,16 @@ export const brokers: Broker[] = [
     regulation: {
       regulators: ['FCA', 'NFA', 'ASIC', 'CIMA'],
     },
+    ratings: {
+      regulation: 9.9,
+      costs: 7.8,
+      platforms: 8.5,
+      support: 8.2,
+    },
     tradingConditions: {
       spreads: { eurusd: 1.0, gbpusd: 1.5, usdjpy: 1.2 },
       commission: 'Included in spread',
-      swapFees: 'High',
+      swapFeeCategory: 'High',
       maxLeverage: '1:400',
     },
     accessibility: {

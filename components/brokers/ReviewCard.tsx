@@ -4,6 +4,7 @@ import { Review } from '../../types';
 import Card, { CardContent } from '../ui/Card';
 import StarRating from '../ui/StarRating';
 import { Icons } from '../../constants';
+import Badge from '../ui/Badge';
 
 interface ReviewCardProps {
   review: Review;
@@ -17,7 +18,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   });
 
   return (
-    <Card className="bg-card/70">
+    <Card className="bg-card/70 animate-fade-in">
       <CardContent>
         <div className="flex justify-between items-start">
             <div>
@@ -26,7 +27,14 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
                         <Icons.user className="h-5 w-5 text-gray-400" />
                     </span>
                     <div>
-                        <p className="font-semibold text-foreground">{review.userName}</p>
+                        <div className="flex items-center gap-2">
+                            <p className="font-semibold text-foreground">{review.userName}</p>
+                            {review.verified && (
+                                <Badge variant="success" Icon={Icons.verified}>
+                                    Verified Trader
+                                </Badge>
+                            )}
+                        </div>
                         <p className="text-xs text-gray-400">{formattedDate}</p>
                     </div>
                 </div>

@@ -22,6 +22,21 @@ const SortIcon: React.FC<{ direction?: 'asc' | 'desc' }> = ({ direction }) => {
 interface EnrichedBrokerData extends Broker { spread: number; commission: number; totalCost: number; }
 type SortableKeys = keyof Pick<EnrichedBrokerData, 'name' | 'spread' | 'commission' | 'totalCost'>;
 
+const parseMarkdown = (text: string): string => {
+  let html = text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold
+
+  html = html.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
+    // Check if it's an external link
+    if (url.startsWith('http')) {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${linkText}</a>`;
+    }
+    // Internal link
+    return `<a href="${url}" class="text-primary-400 hover:underline">${linkText}</a>`;
+  });
+  return html;
+};
+
 
 const CostAnalyzerPage: React.FC = () => {
     const { comparisonList } = useComparison();
@@ -65,15 +80,14 @@ const CostAnalyzerPage: React.FC = () => {
     const minCost = useMemo(() => enrichedData.length === 0 ? Infinity : Math.min(...enrichedData.map(d => d.totalCost)), [enrichedData]);
 
     const handleGetAnalysis = async (type: 'general' | 'personal') => {
-        const costDataForAI = sortedData.map(d => ({ name: d.name, spread: d.spread, commission: d.commission, totalCost: d.totalCost, swapCategory: d.tradingConditions.swapFeeCategory }));
+        const costDataForAI = sortedData.map(d => ({ name: d.name, websiteUrl: d.websiteUrl, spread: d.spread, commission: d.commission, totalCost: d.totalCost, swapCategory: d.tradingConditions.swapFeeCategory }));
         setError(null);
 
         if (type === 'general') {
             setLoadingAnalysis(true);
             setAnalysisResult(null);
             try {
-                // For general analysis, totalCost is useful.
-                const generalCostData = costDataForAI.map(({ name, spread, commission, totalCost }) => ({ name, spread, commission, totalCost }));
+                const generalCostData = costDataForAI.map(({ name, websiteUrl, spread, commission, totalCost }) => ({ name, websiteUrl, spread, commission, totalCost }));
                 const result = await getCostAnalysis(instrument, generalCostData);
                 setAnalysisResult(result);
             } catch (err) { setError('Failed to get AI analysis.'); console.error(err); }
@@ -82,8 +96,7 @@ const CostAnalyzerPage: React.FC = () => {
             setLoadingProjection(true);
             setProjectionResult(null);
             try {
-                // For personalized projection, the AI reasons about the components, so we don't send the pre-calculated totalCost.
-                const personalCostData = costDataForAI.map(({ name, spread, commission, swapCategory }) => ({ name, spread, commission, swapCategory }));
+                const personalCostData = costDataForAI.map(({ name, websiteUrl, spread, commission, swapCategory }) => ({ name, websiteUrl, spread, commission, swapCategory }));
                 const result = await getPersonalizedCostProjection({ style: tradingStyle, instrument, brokers: personalCostData });
                 setProjectionResult(result);
             } catch (err) { setError('Failed to get AI projection.'); console.error(err); }
@@ -113,7 +126,19 @@ const CostAnalyzerPage: React.FC = () => {
                     <tbody>
                         {sortedData.map(broker => {
                             const isCheapest = broker.totalCost === minCost && enrichedData.length > 1 && minCost > 0;
-                            return (<tr key={broker.id} className={`border-b last:border-b-0 transition-colors ${isCheapest ? 'bg-green-900/30 border-green-800' : 'border-input'}`}><td className="p-4 flex items-center gap-3"><img src={broker.logoUrl} alt={broker.name} className="h-8 bg-white p-1 rounded-md" /><span className={`font-semibold ${isCheapest ? 'text-green-300' : ''}`}>{broker.name}</span>{isCheapest && <span className="text-xs font-bold text-green-300 bg-green-800/60 px-2 py-0.5 rounded-full">Cheapest</span>}</td><td className="p-4 text-right font-mono">{broker.spread.toFixed(2)}</td><td className="p-4 text-right font-mono">{broker.commission.toFixed(2)}</td><td className={`p-4 text-right font-bold text-lg font-mono ${isCheapest ? 'text-green-300' : 'text-primary-400'}`}>{broker.totalCost.toFixed(2)}</td></tr>);
+                            return (<tr key={broker.id} className={`border-b last:border-b-0 transition-colors ${isCheapest ? 'bg-green-900/30 border-green-800' : 'border-input'}`}>
+                                <td className="p-4 flex items-center gap-3">
+                                    <Link to={`/broker/${broker.id}`} className="flex items-center gap-3 group">
+                                        <img src={broker.logoUrl} alt={broker.name} className="h-8 bg-white p-1 rounded-md" />
+                                        <span className={`font-semibold ${isCheapest ? 'text-green-300' : ''} group-hover:underline`}>{broker.name}</span>
+                                    </Link>
+                                    {isCheapest && <span className="text-xs font-bold text-green-300 bg-green-800/60 px-2 py-0.5 rounded-full">Cheapest</span>}
+                                </td>
+                                <td className="p-4 text-right font-mono">{broker.spread.toFixed(2)}</td>
+                                <td className="p-4 text-right font-mono">{broker.commission.toFixed(2)}</td>
+                                <td className={`p-4 text-right font-bold text-lg font-mono ${isCheapest ? 'text-green-300' : 'text-primary-400'}`}>{broker.totalCost.toFixed(2)}</td>
+                               </tr>
+                            );
                         })}
                     </tbody>
                 </table>
@@ -125,7 +150,7 @@ const CostAnalyzerPage: React.FC = () => {
                     <CardContent>
                          <div className="mb-4"><label htmlFor="instrument" className="block text-sm font-medium text-gray-300 mb-1">Select Instrument</label><select id="instrument" value={instrument} onChange={e => setInstrument(e.target.value as Instrument)} className="bg-input border-input rounded-md w-full p-2">{instruments.map(inst => <option key={inst} value={inst}>{inst}</option>)}</select></div>
                         <Button onClick={() => handleGetAnalysis('general')} disabled={loadingAnalysis} className="w-full">{loadingAnalysis ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/>Get Instant Analysis</>}</Button>
-                        {analysisResult && <div className="mt-4 text-gray-300 whitespace-pre-wrap animate-fade-in">{analysisResult}</div>}
+                        {analysisResult && <div className="mt-4 text-gray-300 whitespace-pre-wrap animate-fade-in" dangerouslySetInnerHTML={{ __html: parseMarkdown(analysisResult) }} />}
                     </CardContent>
                 </Card>
                  <Card>
@@ -133,7 +158,7 @@ const CostAnalyzerPage: React.FC = () => {
                     <CardContent>
                         <div className="mb-4"><label htmlFor="tradingStyle" className="block text-sm font-medium text-gray-300 mb-1">Your Trading Style</label><select id="tradingStyle" value={tradingStyle} onChange={e => setTradingStyle(e.target.value as TradingStyle)} className="bg-input border-input rounded-md w-full p-2">{tradingStyles.map(style => <option key={style} value={style}>{style}</option>)}</select></div>
                         <Button onClick={() => handleGetAnalysis('personal')} disabled={loadingProjection} className="w-full">{loadingProjection ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/>Get My Projection</>}</Button>
-                        {projectionResult && <div className="mt-4 text-gray-300 whitespace-pre-wrap animate-fade-in">{projectionResult}</div>}
+                        {projectionResult && <div className="mt-4 text-gray-300 whitespace-pre-wrap animate-fade-in" dangerouslySetInnerHTML={{ __html: parseMarkdown(projectionResult) }} />}
                     </CardContent>
                 </Card>
             </div>

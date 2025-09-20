@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { Broker, Review, AIRecommendation } from '../types';
 import { brokers } from '../data/brokers';
@@ -126,6 +120,7 @@ export const getBrokerRecommendations = async (
 
 interface CostData {
     name: string;
+    websiteUrl: string;
     spread: number;
     commission: number;
     totalCost: number;
@@ -143,7 +138,8 @@ export const getCostAnalysis = async (instrument: string, costData: CostData[]):
         Based on this data, please provide:
         1. A clear recommendation for the most cost-effective broker at this moment.
         2. A brief, 2-3 sentence explanation of your reasoning, highlighting why that broker is cheaper. Mention the importance of considering both spread and commission.
-        3. Keep the tone helpful and professional. Do not output JSON.
+        3. When you recommend a broker, create a markdown link to their website using their name as the link text and the "websiteUrl" as the URL. For example: "The best option is [BrokerName](https://broker.website.com/) because...".
+        4. Keep the tone helpful and professional. Do not output JSON.
     `;
 
     const response = await ai.models.generateContent({
@@ -159,7 +155,7 @@ export type TradingStyle = 'Scalper' | 'Day Trader' | 'Swing Trader';
 interface PersonalizedCostRequest {
     style: TradingStyle;
     instrument: string;
-    brokers: { name: string; spread: number; commission: number; swapCategory: 'Low' | 'Standard' | 'High' }[];
+    brokers: { name: string; websiteUrl: string; spread: number; commission: number; swapCategory: 'Low' | 'Standard' | 'High' }[];
 }
 
 export const getPersonalizedCostProjection = async (request: PersonalizedCostRequest): Promise<string> => {
@@ -178,8 +174,9 @@ export const getPersonalizedCostProjection = async (request: PersonalizedCostReq
 
         Your response should be a concise paragraph (3-4 sentences).
         1. Start by recommending the best broker FOR THEIR STYLE.
-        2. Explain your choice clearly, referencing their style (e.g., "As a scalper, your priority is...").
-        3. Briefly mention why the other brokers are less suitable for them.
+        2. When you recommend a broker, create a markdown link to their website using their name as the link text and the "websiteUrl" as the URL. For example: "For a swing trader like you, [BrokerName](https://broker.website.com/) is the clear choice."
+        3. Explain your choice clearly, referencing their style (e.g., "As a scalper, your priority is...").
+        4. Briefly mention why the other brokers are less suitable for them.
         Do not output JSON.
     `;
     const response = await ai.models.generateContent({ model, contents: prompt });

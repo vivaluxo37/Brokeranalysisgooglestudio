@@ -9,6 +9,7 @@ import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import { getBrokerRecommendations } from '../services/geminiService';
 import { Icons } from '../constants';
 import { useAuth } from '../hooks/useAuth';
+import Tooltip from '../components/ui/Tooltip';
 
 const steps = [
   {
@@ -191,9 +192,11 @@ const BrokerMatcherPage: React.FC = () => {
                     Back
                 </Button>
                 {isFinalStep && (
-                    <Button onClick={handleSubmit} size="lg" disabled={!preferences.priority}>
-                        Find My Broker
-                    </Button>
+                    <Tooltip content="Uses AI to analyze your preferences and recommend the best brokers for you.">
+                      <Button onClick={handleSubmit} size="lg" disabled={!preferences.priority}>
+                          Find My Broker
+                      </Button>
+                    </Tooltip>
                 )}
            </div>
         </CardContent>

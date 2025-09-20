@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import { brokers } from '../data/brokers';
 import NotFoundPage from './NotFoundPage';
 import Tag from '../components/ui/Tag';
@@ -140,7 +141,7 @@ const RegulatoryTrustScore: React.FC<{ brokerName: string; regulators: string[] 
 
 
 const BrokerDetailPage: React.FC = () => {
-  const { brokerId } = useParams<{ brokerId: string }>();
+  const { brokerId } = ReactRouterDOM.useParams<{ brokerId: string }>();
   const broker = brokers.find(b => b.id === brokerId);
   
   const { addBrokerToComparison, removeBrokerFromComparison, isBrokerInComparison } = useComparison();
@@ -367,7 +368,7 @@ const BrokerDetailPage: React.FC = () => {
                 </CardContent>
             </Card>
         ) : (
-            <div className="text-center p-6 bg-card rounded-lg border border-input my-8"><p className="text-card-foreground/80"><Link to="/login" className="text-primary-400 font-semibold hover:underline">Log in</Link> to leave a review.</p></div>
+            <div className="text-center p-6 bg-card rounded-lg border border-input my-8"><p className="text-card-foreground/80"><ReactRouterDOM.Link to="/login" className="text-primary-400 font-semibold hover:underline">Log in</ReactRouterDOM.Link> to leave a review.</p></div>
         )}
 
         <div className="space-y-6">

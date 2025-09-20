@@ -1,6 +1,8 @@
 
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import { NAV_LINKS } from '../../constants';
 
 const Footer: React.FC = () => {
@@ -11,9 +13,9 @@ const Footer: React.FC = () => {
       <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-foreground/70">
         <div className="flex justify-center flex-wrap gap-x-6 gap-y-2 text-sm mb-4">
             {footerLinks.map(link => (
-              <Link key={link.name} to={link.path} className="hover:text-primary-400 transition-colors">
+              <ReactRouterDOM.Link key={link.name} to={link.path} className="hover:text-primary-400 transition-colors">
                 {link.name}
-              </Link>
+              </ReactRouterDOM.Link>
             ))}
         </div>
         <div className="text-center">

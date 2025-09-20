@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
@@ -12,8 +13,8 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = ReactRouterDOM.useNavigate();
+  const location = ReactRouterDOM.useLocation();
   const from = location.state?.from?.pathname || '/dashboard';
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,9 +62,9 @@ const LoginPage: React.FC = () => {
           </form>
           <p className="mt-6 text-center text-sm text-card-foreground/80">
             Don't have an account?{' '}
-            <Link to="/register" className="font-medium text-primary-500 hover:text-primary-400">
+            <ReactRouterDOM.Link to="/register" className="font-medium text-primary-500 hover:text-primary-400">
               Register here
-            </Link>
+            </ReactRouterDOM.Link>
           </p>
         </CardContent>
       </Card>

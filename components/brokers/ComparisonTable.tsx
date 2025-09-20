@@ -1,7 +1,9 @@
 
 
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import { Broker } from '../../types';
 import Button from '../ui/Button';
 import { useComparison } from '../../hooks/useComparison';
@@ -90,10 +92,10 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
             <th className="p-4 w-1/4">Feature</th>
             {brokers.map(broker => (
               <th key={broker.id} className="p-4 text-center">
-                <Link to={`/broker/${broker.id}`}>
+                <ReactRouterDOM.Link to={`/broker/${broker.id}`}>
                   <img src={broker.logoUrl} alt={broker.name} className="h-10 mx-auto bg-white p-1 rounded-md mb-2"/>
                   <span className="font-semibold text-primary-400 hover:underline">{broker.name}</span>
-                </Link>
+                </ReactRouterDOM.Link>
                 <div className="flex justify-center items-center gap-2 mt-2">
                     <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer">
                         <Button variant="primary" size="sm" className="text-xs px-3 py-1">Visit</Button>

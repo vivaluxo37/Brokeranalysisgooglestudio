@@ -1,7 +1,8 @@
 
 
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import HomePage from './pages/HomePage';
 import AllBrokersPage from './pages/AllBrokersPage';
@@ -22,31 +23,31 @@ import SourcesPage from './pages/SourcesPage';
 const App: React.FC = () => {
   return (
     <Layout>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/brokers" element={<AllBrokersPage />} />
-        <Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
-        <Route path="/compare" element={<ComparePage />} />
-        <Route path="/compare/:brokerId1/vs/:brokerId2" element={<BrokerDuelPage />} />
-        <Route path="/cost-analyzer" element={<CostAnalyzerPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/methodology" element={<MethodologyPage />} />
-        <Route path="/sources" element={<SourcesPage />} />
+      <ReactRouterDOM.Routes>
+        <ReactRouterDOM.Route path="/" element={<HomePage />} />
+        <ReactRouterDOM.Route path="/brokers" element={<AllBrokersPage />} />
+        <ReactRouterDOM.Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
+        <ReactRouterDOM.Route path="/compare" element={<ComparePage />} />
+        <ReactRouterDOM.Route path="/compare/:brokerId1/vs/:brokerId2" element={<BrokerDuelPage />} />
+        <ReactRouterDOM.Route path="/cost-analyzer" element={<CostAnalyzerPage />} />
+        <ReactRouterDOM.Route path="/login" element={<LoginPage />} />
+        <ReactRouterDOM.Route path="/register" element={<RegisterPage />} />
+        <ReactRouterDOM.Route path="/methodology" element={<MethodologyPage />} />
+        <ReactRouterDOM.Route path="/sources" element={<SourcesPage />} />
         
-        <Route path="/broker-matcher" element={
+        <ReactRouterDOM.Route path="/broker-matcher" element={
           <ProtectedRoute>
             <BrokerMatcherPage />
           </ProtectedRoute>
         } />
-        <Route path="/dashboard" element={
+        <ReactRouterDOM.Route path="/dashboard" element={
           <ProtectedRoute>
             <DashboardPage />
           </ProtectedRoute>
         } />
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+        <ReactRouterDOM.Route path="*" element={<NotFoundPage />} />
+      </ReactRouterDOM.Routes>
       <Chatbot />
     </Layout>
   );

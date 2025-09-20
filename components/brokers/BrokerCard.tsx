@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import { Broker } from '../../types';
 import Card, { CardContent } from '../ui/Card';
 import Button from '../ui/Button';
@@ -50,7 +51,7 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
         <button onClick={handleFavoriteClick} className="absolute top-3 right-3 z-10 p-1 rounded-full bg-card/50 hover:bg-input transition-colors" aria-label="Toggle Favorite">
           {isFavorite ? <Icons.starFull className="h-5 w-5 text-yellow-400" /> : <Icons.star className="h-5 w-5 text-card-foreground/60" />}
         </button>
-        <Link to={`/broker/${broker.id}`} className="block h-full">
+        <ReactRouterDOM.Link to={`/broker/${broker.id}`} className="block h-full">
           <CardContent>
             <div className="flex justify-between items-start">
               <img src={broker.logoUrl} alt={`${broker.name} logo`} className="h-12 w-auto object-contain bg-white p-2 rounded-md" />
@@ -73,7 +74,7 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
               </div>
             </div>
           </CardContent>
-        </Link>
+        </ReactRouterDOM.Link>
       </div>
       <div className="p-4 border-t border-input flex items-center gap-2">
         <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex-1">

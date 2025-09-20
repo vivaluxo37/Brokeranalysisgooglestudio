@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import App from './App';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
@@ -16,7 +17,7 @@ if (!rootElement) {
 
 const app = (
   <React.StrictMode>
-    <HashRouter>
+    <ReactRouterDOM.HashRouter>
       <ThemeProvider>
         <AuthProvider>
           <ComparisonProvider>
@@ -30,7 +31,7 @@ const app = (
           </ComparisonProvider>
         </AuthProvider>
       </ThemeProvider>
-    </HashRouter>
+    </ReactRouterDOM.HashRouter>
   </React.StrictMode>
 );
 

@@ -1,6 +1,8 @@
 
+
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import { brokers } from '../data/brokers';
 import NotFoundPage from './NotFoundPage';
 import ComparisonTable from '../components/brokers/ComparisonTable';
@@ -11,7 +13,7 @@ import { getDuelVerdict } from '../services/geminiService';
 import Spinner from '../components/ui/Spinner';
 
 const BrokerDuelPage: React.FC = () => {
-  const { brokerId1, brokerId2 } = useParams<{ brokerId1: string, brokerId2: string }>();
+  const { brokerId1, brokerId2 } = ReactRouterDOM.useParams<{ brokerId1: string, brokerId2: string }>();
   const broker1 = brokers.find(b => b.id === brokerId1);
   const broker2 = brokers.find(b => b.id === brokerId2);
 
@@ -42,9 +44,9 @@ const BrokerDuelPage: React.FC = () => {
     <div className="animate-fade-in">
       <div className="text-center mb-8">
         <div className="flex justify-center items-center gap-4">
-            <Link to={`/broker/${broker1.id}`}><img src={broker1.logoUrl} alt={broker1.name} className="h-20 bg-white p-2 rounded-md"/></Link>
+            <ReactRouterDOM.Link to={`/broker/${broker1.id}`}><img src={broker1.logoUrl} alt={broker1.name} className="h-20 bg-white p-2 rounded-md"/></ReactRouterDOM.Link>
             <Icons.duel className="h-12 w-12 text-primary-500" />
-            <Link to={`/broker/${broker2.id}`}><img src={broker2.logoUrl} alt={broker2.name} className="h-20 bg-white p-2 rounded-md"/></Link>
+            <ReactRouterDOM.Link to={`/broker/${broker2.id}`}><img src={broker2.logoUrl} alt={broker2.name} className="h-20 bg-white p-2 rounded-md"/></ReactRouterDOM.Link>
         </div>
         <h1 className="text-4xl font-bold mt-4">{broker1.name} vs {broker2.name}</h1>
         <p className="text-lg text-foreground/80 mt-2">A head-to-head showdown.</p>
@@ -84,9 +86,9 @@ const BrokerDuelPage: React.FC = () => {
       </div>
 
       <div className="text-center mt-8">
-          <Link to="/compare">
+          <ReactRouterDOM.Link to="/compare">
             <Button variant="secondary">Back to Comparison</Button>
-          </Link>
+          </ReactRouterDOM.Link>
       </div>
     </div>
   );

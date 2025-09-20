@@ -1,5 +1,6 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { NAV_LINKS } from '../../constants';
 import ThemeToggle from '../ui/ThemeToggle';
@@ -14,13 +15,13 @@ const Header: React.FC = () => {
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold text-primary-500">
+            <ReactRouterDOM.Link to="/" className="text-2xl font-bold text-primary-500">
               Brokeranalysis
-            </Link>
+            </ReactRouterDOM.Link>
             <div className="hidden md:block ml-10">
               <div className="flex items-baseline space-x-4">
                 {NAV_LINKS.map((link) => (
-                  <NavLink
+                  <ReactRouterDOM.NavLink
                     key={link.name}
                     to={link.path}
                     className={({ isActive }) =>
@@ -32,7 +33,7 @@ const Header: React.FC = () => {
                     }
                   >
                     {link.name}
-                  </NavLink>
+                  </ReactRouterDOM.NavLink>
                 ))}
               </div>
             </div>
@@ -42,19 +43,19 @@ const Header: React.FC = () => {
             <ThemeToggle />
             {user ? (
               <>
-                <Link to="/dashboard" className="text-sm font-medium text-foreground/80 hover:text-foreground">{user.name}</Link>
+                <ReactRouterDOM.Link to="/dashboard" className="text-sm font-medium text-foreground/80 hover:text-foreground">{user.name}</ReactRouterDOM.Link>
                 <Button onClick={logout} variant="secondary" size="sm">
                   Logout
                 </Button>
               </>
             ) : (
               <>
-                <Link to="/login">
+                <ReactRouterDOM.Link to="/login">
                   <Button variant="ghost" size="sm">Login</Button>
-                </Link>
-                <Link to="/register">
+                </ReactRouterDOM.Link>
+                <ReactRouterDOM.Link to="/register">
                   <Button variant="primary" size="sm">Register</Button>
-                </Link>
+                </ReactRouterDOM.Link>
               </>
             )}
           </div>

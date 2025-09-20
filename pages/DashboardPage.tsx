@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useFavorites } from '../hooks/useFavorites';
 import { MatcherHistoryItem } from '../types';
@@ -46,7 +47,7 @@ const AccordionItem: React.FC<{ title: string; subtitle: string; children: React
 // Component for the "Quick Actions" section
 // FIX: Changed icon prop from React.ReactElement to React.ElementType and updated component to render it directly to fix a TypeScript error with React.cloneElement.
 const QuickActionCard: React.FC<{ to: string, icon: React.ElementType<{ className?: string }>, title: string, description: string }> = ({ to, icon: Icon, title, description }) => (
-    <Link to={to} className="block group">
+    <ReactRouterDOM.Link to={to} className="block group">
         <Card className="h-full hover:border-primary-600 hover:-translate-y-1 transition-all">
             <CardContent className="flex items-start gap-4">
                 <div className="p-3 bg-input rounded-lg text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-colors">
@@ -58,7 +59,7 @@ const QuickActionCard: React.FC<{ to: string, icon: React.ElementType<{ classNam
                 </div>
             </CardContent>
         </Card>
-    </Link>
+    </ReactRouterDOM.Link>
 );
 
 
@@ -68,7 +69,7 @@ const DashboardPage: React.FC = () => {
   const { getReviewsByUserId, verifyReview } = useReviews();
   const { getAlertsForFavorites } = useAlerts();
   const [history, setHistory] = useState<MatcherHistoryItem[]>([]);
-  const navigate = useNavigate();
+  const navigate = ReactRouterDOM.useNavigate();
 
   // State for account settings
   const [name, setName] = useState(user?.name || '');
@@ -202,9 +203,9 @@ const DashboardPage: React.FC = () => {
           ) : (
             <div className="text-center py-12 px-6">
               <p className="text-card-foreground/70">No alerts for your favorited brokers. Add some brokers to your favorites to start receiving updates!</p>
-              <Link to="/brokers" className="mt-4 inline-block">
+              <ReactRouterDOM.Link to="/brokers" className="mt-4 inline-block">
                 <Button variant="secondary">Explore Brokers</Button>
-              </Link>
+              </ReactRouterDOM.Link>
             </div>
           )}
         </CardContent>
@@ -226,6 +227,15 @@ const DashboardPage: React.FC = () => {
                     <AccordionItem key={item.id} title={title} subtitle={subtitle}>
                         <div className="space-y-6">
                             <div>
+                                <h4 className="font-semibold text-primary-400 mb-2">Your Preferences:</h4>
+                                <div className="text-sm text-foreground/80 grid grid-cols-[auto,1fr] gap-x-4 gap-y-1">
+                                    <span>Experience:</span> <span className="font-semibold">{item.preferences.experience}</span>
+                                    <span>Initial Deposit:</span> <span className="font-semibold">{item.preferences.minDeposit}</span>
+                                    <span>Platforms:</span> <span className="font-semibold">{item.preferences.platforms || 'Any'}</span>
+                                    <span>Priority:</span> <span className="font-semibold">{item.preferences.priority}</span>
+                                </div>
+                            </div>
+                            <div>
                                 <h4 className="font-semibold text-primary-400 mb-2">AI Analysis:</h4>
                                 <p className="text-foreground/90 italic">"{item.reasoning}"</p>
                             </div>
@@ -243,9 +253,9 @@ const DashboardPage: React.FC = () => {
           ) : (
             <div className="text-center py-12 px-6">
                 <p className="text-card-foreground/70">You haven't used the AI Broker Matcher yet.</p>
-                <Link to="/broker-matcher" className="mt-4 inline-block">
+                <ReactRouterDOM.Link to="/broker-matcher" className="mt-4 inline-block">
                     <Button variant="primary">Find Your First Match</Button>
-                </Link>
+                </ReactRouterDOM.Link>
             </div>
           )}
         </CardContent>
@@ -265,7 +275,7 @@ const DashboardPage: React.FC = () => {
                   <div key={review.id} className="p-4 rounded-lg bg-input/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                       <p className="font-semibold text-card-foreground">
-                        Review for <Link to={`/broker/${broker?.id}`} className="text-primary-400 hover:underline">{broker?.name || 'Unknown Broker'}</Link>
+                        Review for <ReactRouterDOM.Link to={`/broker/${broker?.id}`} className="text-primary-400 hover:underline">{broker?.name || 'Unknown Broker'}</ReactRouterDOM.Link>
                       </p>
                       <StarRating score={review.rating * 2} size="sm" className="my-1"/>
                       <p className="text-sm text-card-foreground/80 italic">"{review.comment}"</p>
@@ -286,9 +296,9 @@ const DashboardPage: React.FC = () => {
           ) : (
             <div className="text-center py-12 px-6">
               <p className="text-card-foreground/70">You haven't written any reviews yet.</p>
-              <Link to="/brokers" className="mt-4 inline-block">
+              <ReactRouterDOM.Link to="/brokers" className="mt-4 inline-block">
                 <Button variant="secondary">Find a Broker to Review</Button>
-              </Link>
+              </ReactRouterDOM.Link>
             </div>
           )}
         </CardContent>
@@ -307,9 +317,9 @@ const DashboardPage: React.FC = () => {
             ) : (
                 <div className="text-center py-12 px-6">
                     <p className="text-card-foreground/70">You haven't favorited any brokers yet. Click the star icon on a broker to save it here.</p>
-                     <Link to="/brokers" className="mt-4 inline-block">
+                     <ReactRouterDOM.Link to="/brokers" className="mt-4 inline-block">
                         <Button variant="secondary">Explore Brokers</Button>
-                    </Link>
+                    </ReactRouterDOM.Link>
                 </div>
             )}
         </CardContent>

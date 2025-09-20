@@ -5,7 +5,8 @@ import { useAlerts } from '../../hooks/useAlerts';
 import { brokers } from '../../data/brokers';
 import { Icons } from '../../constants';
 import Button from '../ui/Button';
-import { Link } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 
 const SeverityIndicator: React.FC<{ severity: 'High' | 'Medium' | 'Low' }> = ({ severity }) => {
     const severityClasses = {
@@ -68,7 +69,7 @@ const AlertsDropdown: React.FC = () => {
                             unreadAlerts.map(alert => {
                                 const broker = brokers.find(b => b.id === alert.brokerId);
                                 return (
-                                    <Link key={alert.id} to="/dashboard" onClick={() => setIsOpen(false)} className="block p-3 hover:bg-input/50 border-b border-input last:border-b-0">
+                                    <ReactRouterDOM.Link key={alert.id} to="/dashboard" onClick={() => setIsOpen(false)} className="block p-3 hover:bg-input/50 border-b border-input last:border-b-0">
                                         <div className="flex items-start gap-3">
                                             <SeverityIndicator severity={alert.severity} />
                                             <div>
@@ -80,7 +81,7 @@ const AlertsDropdown: React.FC = () => {
                                                 </p>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </ReactRouterDOM.Link>
                                 );
                             })
                         ) : (
@@ -88,11 +89,11 @@ const AlertsDropdown: React.FC = () => {
                         )}
                     </div>
                     <div className="p-2 bg-input/30 rounded-b-lg">
-                        <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+                        <ReactRouterDOM.Link to="/dashboard" onClick={() => setIsOpen(false)}>
                             <Button variant="ghost" size="sm" className="w-full">
                                 View all alerts
                             </Button>
-                        </Link>
+                        </ReactRouterDOM.Link>
                     </div>
                 </div>
             )}

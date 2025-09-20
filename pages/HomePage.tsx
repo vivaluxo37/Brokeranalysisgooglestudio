@@ -1,7 +1,8 @@
 
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
+import * as ReactRouterDOM from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { Icons } from '../constants';
 import { brokers } from '../data/brokers';
@@ -102,16 +103,16 @@ const HomePage: React.FC = () => {
           Data-driven insights on dozens of regulated brokers worldwide.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Link to="/broker-matcher">
+          <ReactRouterDOM.Link to="/broker-matcher">
             <Button size="lg" variant="primary" className="animate-pulse w-full sm:w-auto">
               Use AI Broker Matcher
             </Button>
-          </Link>
-          <Link to="/brokers">
+          </ReactRouterDOM.Link>
+          <ReactRouterDOM.Link to="/brokers">
             <Button size="lg" variant="secondary" className="w-full sm:w-auto">
               Explore All Brokers
             </Button>
-          </Link>
+          </ReactRouterDOM.Link>
         </div>
         <div className="mt-16">
           <p className="text-sm text-foreground/60 uppercase tracking-wider">Trusted by top traders</p>

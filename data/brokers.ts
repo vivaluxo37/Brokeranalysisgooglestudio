@@ -4,7 +4,7 @@ export const brokers: Broker[] = [
   {
     id: 'pepperstone',
     name: 'Pepperstone',
-    logoUrl: 'https://picsum.photos/seed/pepperstone/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/Pepperstone_logo_logotype_2022_bkgw0d.svg',
     score: 9.2,
     foundingYear: 2010,
     headquarters: 'Melbourne, Australia',
@@ -42,7 +42,7 @@ export const brokers: Broker[] = [
   {
     id: 'ic-markets',
     name: 'IC Markets',
-    logoUrl: 'https://picsum.photos/seed/icmarkets/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/IC_Markets_logo_logotype_2022_h1csy2.svg',
     score: 9.0,
     foundingYear: 2007,
     headquarters: 'Sydney, Australia',
@@ -79,7 +79,7 @@ export const brokers: Broker[] = [
   {
     id: 'xtb',
     name: 'XTB',
-    logoUrl: 'https://picsum.photos/seed/xtb/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/XTB_logo_logotype_2022_q4m2ac.svg',
     score: 8.8,
     foundingYear: 2002,
     headquarters: 'Warsaw, Poland',
@@ -117,7 +117,7 @@ export const brokers: Broker[] = [
   {
     id: 'forex-com',
     name: 'Forex.com',
-    logoUrl: 'https://picsum.photos/seed/forexcom/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/Forex.com_logo_logotype_2022_m2fyia.svg',
     score: 8.5,
     foundingYear: 2001,
     headquarters: 'New Jersey, USA',
@@ -152,7 +152,7 @@ export const brokers: Broker[] = [
   {
     id: 'ig',
     name: 'IG',
-    logoUrl: 'https://picsum.photos/seed/ig/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/IG_logo_logotype_2022_v4w8vx.svg',
     score: 9.5,
     foundingYear: 1974,
     headquarters: 'London, UK',
@@ -167,7 +167,7 @@ export const brokers: Broker[] = [
   {
     id: 'saxo-bank',
     name: 'Saxo Bank',
-    logoUrl: 'https://picsum.photos/seed/saxo-bank/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/Saxo_Bank_logo_logotype_2022_b3mluj.svg',
     score: 9.4,
     foundingYear: 1992,
     headquarters: 'Copenhagen, Denmark',
@@ -182,7 +182,7 @@ export const brokers: Broker[] = [
   {
     id: 'interactive-brokers',
     name: 'Interactive Brokers',
-    logoUrl: 'https://picsum.photos/seed/interactive-brokers/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/Interactive_Brokers_logo_logotype_2022_vjdlmw.svg',
     score: 9.3,
     foundingYear: 1978,
     headquarters: 'Greenwich, USA',
@@ -197,7 +197,7 @@ export const brokers: Broker[] = [
   {
     id: 'oanda',
     name: 'OANDA',
-    logoUrl: 'https://picsum.photos/seed/oanda/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/Oanda_logo_logotype_2022_i4jm2r.svg',
     score: 8.7,
     foundingYear: 1996,
     headquarters: 'New York, USA',
@@ -212,7 +212,7 @@ export const brokers: Broker[] = [
   {
     id: 'cmc-markets',
     name: 'CMC Markets',
-    logoUrl: 'https://picsum.photos/seed/cmc-markets/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/CMC_Markets_logo_logotype_2022_pjkq2y.svg',
     score: 8.9,
     foundingYear: 1989,
     headquarters: 'London, UK',
@@ -227,7 +227,7 @@ export const brokers: Broker[] = [
   {
     id: 'fxcm',
     name: 'FXCM',
-    logoUrl: 'https://picsum.photos/seed/fxcm/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/FXCM_logo_logotype_2022_rpl79h.svg',
     score: 8.4,
     foundingYear: 1999,
     headquarters: 'London, UK',
@@ -242,7 +242,7 @@ export const brokers: Broker[] = [
   {
     id: 'xm',
     name: 'XM',
-    logoUrl: 'https://picsum.photos/seed/xm/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/XM_logo_logotype_2022_qvrxbg.svg',
     score: 8.6,
     foundingYear: 2009,
     headquarters: 'Limassol, Cyprus',
@@ -257,7 +257,7 @@ export const brokers: Broker[] = [
   {
     id: 'exness',
     name: 'Exness',
-    logoUrl: 'https://picsum.photos/seed/exness/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/Exness_logo_logotype_2022_fkk6f0.svg',
     score: 8.5,
     foundingYear: 2008,
     headquarters: 'Limassol, Cyprus',
@@ -272,7 +272,7 @@ export const brokers: Broker[] = [
   {
     id: 'etoro',
     name: 'eToro',
-    logoUrl: 'https://picsum.photos/seed/etoro/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/eToro_logo_logotype_2022_pkh2n4.svg',
     score: 8.2,
     foundingYear: 2007,
     headquarters: 'Tel Aviv, Israel',
@@ -287,7 +287,7 @@ export const brokers: Broker[] = [
   {
     id: 'plus500',
     name: 'Plus500',
-    logoUrl: 'https://picsum.photos/seed/plus500/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/Plus500_logo_logotype_2022_j3hllg.svg',
     score: 8.0,
     foundingYear: 2008,
     headquarters: 'Haifa, Israel',
@@ -302,7 +302,7 @@ export const brokers: Broker[] = [
   {
     id: 'avatrade',
     name: 'AvaTrade',
-    logoUrl: 'https://picsum.photos/seed/avatrade/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/AvaTrade_logo_logotype_2022_xbcx1a.svg',
     score: 8.3,
     foundingYear: 2006,
     headquarters: 'Dublin, Ireland',
@@ -317,7 +317,7 @@ export const brokers: Broker[] = [
   {
     id: 'tickmill',
     name: 'Tickmill',
-    logoUrl: 'https://picsum.photos/seed/tickmill/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/Tickmill_logo_logotype_2022_qgslcu.svg',
     score: 8.7,
     foundingYear: 2014,
     headquarters: 'London, UK',
@@ -332,7 +332,7 @@ export const brokers: Broker[] = [
   {
     id: 'hf-markets',
     name: 'HF Markets',
-    logoUrl: 'https://picsum.photos/seed/hf-markets/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/HFM_logo_logotype_2022_l9y52z.svg',
     score: 8.1,
     foundingYear: 2010,
     headquarters: 'St. Vincent & Grenadines',
@@ -347,7 +347,7 @@ export const brokers: Broker[] = [
   {
     id: 'fbs',
     name: 'FBS',
-    logoUrl: 'https://picsum.photos/seed/fbs/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/FBS_logo_logotype_2022_qdfp0a.svg',
     score: 7.9,
     foundingYear: 2009,
     headquarters: 'Belize',
@@ -362,7 +362,7 @@ export const brokers: Broker[] = [
   {
     id: 'octafx',
     name: 'OctaFX',
-    logoUrl: 'https://picsum.photos/seed/octafx/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/OctaFX_logo_logotype_2022_bctcqt.svg',
     score: 7.8,
     foundingYear: 2011,
     headquarters: 'St. Vincent & Grenadines',
@@ -377,7 +377,7 @@ export const brokers: Broker[] = [
   {
     id: 'roboforex',
     name: 'RoboForex',
-    logoUrl: 'https://picsum.photos/seed/roboforex/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/RoboForex_logo_logotype_2022_z3fmyz.svg',
     score: 8.0,
     foundingYear: 2009,
     headquarters: 'Belize',
@@ -392,7 +392,7 @@ export const brokers: Broker[] = [
   {
     id: 'hycm',
     name: 'HYCM',
-    logoUrl: 'https://picsum.photos/seed/hycm/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/HYCM_logo_logotype_2022_h1l8jd.svg',
     score: 8.2,
     foundingYear: 1977,
     headquarters: 'London, UK',
@@ -407,7 +407,7 @@ export const brokers: Broker[] = [
   {
     id: 'dukascopy',
     name: 'Dukascopy Bank',
-    logoUrl: 'https://picsum.photos/seed/dukascopy/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/Dukascopy_logo_logotype_2022_h6z8fu.svg',
     score: 8.8,
     foundingYear: 1998,
     headquarters: 'Geneva, Switzerland',
@@ -422,7 +422,7 @@ export const brokers: Broker[] = [
   {
     id: 'swissquote',
     name: 'Swissquote',
-    logoUrl: 'https://picsum.photos/seed/swissquote/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/Swissquote_logo_logotype_2022_r3l1x0.svg',
     score: 9.1,
     foundingYear: 1996,
     headquarters: 'Gland, Switzerland',
@@ -437,7 +437,7 @@ export const brokers: Broker[] = [
   {
     id: 'admirals',
     name: 'Admirals',
-    logoUrl: 'https://picsum.photos/seed/admirals/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/Admirals_logo_logotype_2022_qj5qvx.svg',
     score: 8.6,
     foundingYear: 2001,
     headquarters: 'Tallinn, Estonia',
@@ -452,7 +452,7 @@ export const brokers: Broker[] = [
   {
     id: 'city-index',
     name: 'City Index',
-    logoUrl: 'https://picsum.photos/seed/city-index/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/City_Index_logo_logotype_2022_hpr7fu.svg',
     score: 8.5,
     foundingYear: 1983,
     headquarters: 'London, UK',
@@ -467,7 +467,7 @@ export const brokers: Broker[] = [
   {
     id: 'thinkmarkets',
     name: 'ThinkMarkets',
-    logoUrl: 'https://picsum.photos/seed/thinkmarkets/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/ThinkMarkets_logo_logotype_2022_gdszbu.svg',
     score: 8.4,
     foundingYear: 2010,
     headquarters: 'London & Melbourne',
@@ -482,7 +482,7 @@ export const brokers: Broker[] = [
   {
     id: 'activtrades',
     name: 'ActivTrades',
-    logoUrl: 'https://picsum.photos/seed/activtrades/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/ActivTrades_logo_logotype_2022_f3rqqg.svg',
     score: 8.3,
     foundingYear: 2001,
     headquarters: 'London, UK',
@@ -497,7 +497,7 @@ export const brokers: Broker[] = [
   {
     id: 'fxpro',
     name: 'FxPro',
-    logoUrl: 'https://picsum.photos/seed/fxpro/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/FxPro_logo_logotype_2022_xutp7l.svg',
     score: 8.7,
     foundingYear: 2006,
     headquarters: 'London, UK',
@@ -512,7 +512,7 @@ export const brokers: Broker[] = [
   {
     id: 'axi',
     name: 'Axi',
-    logoUrl: 'https://picsum.photos/seed/axi/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/Axi_logo_logotype_2022_w5m9b0.svg',
     score: 8.5,
     foundingYear: 2007,
     headquarters: 'Sydney, Australia',
@@ -527,7 +527,7 @@ export const brokers: Broker[] = [
   {
     id: 'atfx',
     name: 'ATFX',
-    logoUrl: 'https://picsum.photos/seed/atfx/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/ATFX_logo_logotype_2022_z9xxdq.svg',
     score: 8.1,
     foundingYear: 2017,
     headquarters: 'London, UK',
@@ -542,7 +542,7 @@ export const brokers: Broker[] = [
   {
     id: 'lcg',
     name: 'LCG',
-    logoUrl: 'https://picsum.photos/seed/lcg/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/LCG_logo_logotype_2022_zssu7m.svg',
     score: 8.0,
     foundingYear: 1996,
     headquarters: 'London, UK',
@@ -557,7 +557,7 @@ export const brokers: Broker[] = [
   {
     id: 'markets-com',
     name: 'Markets.com',
-    logoUrl: 'https://picsum.photos/seed/markets-com/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/Markets.com_logo_logotype_2022_g3p2uf.svg',
     score: 8.2,
     foundingYear: 2008,
     headquarters: 'British Virgin Islands',
@@ -572,7 +572,7 @@ export const brokers: Broker[] = [
   {
     id: 'ironfx',
     name: 'IronFX',
-    logoUrl: 'https://picsum.photos/seed/ironfx/200/200',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/IronFX_logo_logotype_2022_khtfdt.svg',
     score: 7.5,
     foundingYear: 2010,
     headquarters: 'Limassol, Cyprus',
@@ -587,7 +587,7 @@ export const brokers: Broker[] = [
   {
     id: 'gmo-click',
     name: 'GMO Click',
-    logoUrl: 'https://picsum.photos/seed/gmo-click/200/200',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/23/GMO_CLICK_logo.png',
     score: 8.9,
     foundingYear: 2005,
     headquarters: 'Tokyo, Japan',
@@ -602,7 +602,7 @@ export const brokers: Broker[] = [
   {
     id: 'bitget',
     name: 'Bitget',
-    logoUrl: 'https://picsum.photos/seed/bitget/200/200',
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bitget_logo.svg/2560px-Bitget_logo.svg.png',
     score: 7.8,
     foundingYear: 2018,
     headquarters: 'Seychelles',
@@ -617,7 +617,7 @@ export const brokers: Broker[] = [
   {
     id: 'tradeview',
     name: 'Tradeview Markets',
-    logoUrl: 'https://picsum.photos/seed/tradeview/200/200',
+    logoUrl: 'https://www.tradeviewmarkets.com/wp-content/uploads/2023/10/logo-light.svg',
     score: 8.4,
     foundingYear: 2004,
     headquarters: 'Grand Cayman, Cayman Islands',
@@ -632,7 +632,7 @@ export const brokers: Broker[] = [
   {
     id: 'nordfx',
     name: 'NordFX',
-    logoUrl: 'https://picsum.photos/seed/nordfx/200/200',
+    logoUrl: 'https://nordfx.com/images/logo-main-new.svg',
     score: 7.7,
     foundingYear: 2008,
     headquarters: 'Vanuatu',
@@ -647,7 +647,7 @@ export const brokers: Broker[] = [
   {
     id: 'fxopen',
     name: 'FXOpen',
-    logoUrl: 'https://picsum.photos/seed/fxopen/200/200',
+    logoUrl: 'https://www.fxopen.com/img/logo/fxopen-logo.svg',
     score: 8.1,
     foundingYear: 2005,
     headquarters: 'London, UK',
@@ -662,7 +662,7 @@ export const brokers: Broker[] = [
   {
     id: 'easymarkets',
     name: 'easyMarkets',
-    logoUrl: 'https://picsum.photos/seed/easymarkets/200/200',
+    logoUrl: 'https://www.easymarkets.com/eu/wp-content/uploads/2021/03/easyMarkets-logo-blue.svg',
     score: 8.0,
     foundingYear: 2001,
     headquarters: 'Limassol, Cyprus',

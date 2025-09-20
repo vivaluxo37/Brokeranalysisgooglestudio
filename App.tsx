@@ -15,6 +15,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Chatbot from './components/chatbot/Chatbot';
 import BrokerDuelPage from './pages/BrokerDuelPage';
+import MethodologyPage from './pages/MethodologyPage';
 
 const App: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const App: React.FC = () => {
         <Route path="/cost-analyzer" element={<CostAnalyzerPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/methodology" element={<MethodologyPage />} />
         
         <Route path="/broker-matcher" element={
           <ProtectedRoute>

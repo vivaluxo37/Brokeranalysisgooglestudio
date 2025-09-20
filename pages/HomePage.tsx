@@ -60,6 +60,33 @@ const HomePage: React.FC = () => {
     }
   ];
 
+  const popularCategories = [
+    { 
+      icon: <Icons.user className="h-8 w-8 text-primary-400" />, 
+      title: "Best for Beginners", 
+      path: "/brokers/type/beginners",
+      description: "Find user-friendly platforms with low deposits and great educational content." 
+    },
+     { 
+      icon: <Icons.globe className="h-8 w-8 text-primary-400" />, 
+      title: "UK Forex Brokers", 
+      path: "/brokers/country/uk",
+      description: "Explore top-tier, FCA-regulated brokers known for their robust client protection." 
+    },
+     { 
+      icon: <Icons.layers className="h-8 w-8 text-primary-400" />, 
+      title: "ECN Brokers", 
+      path: "/brokers/type/ecn",
+      description: "For serious traders seeking direct market access and the tightest possible spreads." 
+    },
+     { 
+      icon: <Icons.users className="h-8 w-8 text-primary-400" />, 
+      title: "Copy Trading", 
+      path: "/brokers/type/copy-trading",
+      description: "Leverage the expertise of seasoned traders by automatically copying their trades." 
+    }
+  ];
+
   const faqs = [
     {
       q: "What’s the safest forex broker?",
@@ -141,6 +168,23 @@ const HomePage: React.FC = () => {
             ))}
         </div>
       </div>
+      
+       {/* Popular Categories Section */}
+      <div className="text-center">
+        <h2 className="text-3xl font-bold mb-10">Explore Popular Categories</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {popularCategories.map(category => (
+            <ReactRouterDOM.Link to={category.path} key={category.title} className="group block p-6 bg-card rounded-lg border border-input text-left hover:border-primary-600 hover:-translate-y-1 transition-all">
+                <div className="p-3 bg-input rounded-full mb-4 inline-block group-hover:bg-primary-600 group-hover:text-white transition-colors">
+                    {category.icon}
+                </div>
+                <h3 className="text-xl font-bold text-primary-400">{category.title}</h3>
+                <p className="mt-2 text-card-foreground/80">{category.description}</p>
+            </ReactRouterDOM.Link>
+            ))}
+        </div>
+      </div>
+
 
       {/* How it Works Section */}
        <div className="text-center max-w-4xl mx-auto">

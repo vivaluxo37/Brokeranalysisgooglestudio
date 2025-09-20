@@ -17,6 +17,9 @@ import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import { getReviewSummary, ReviewSummary, getRegulatoryTrustScore, TrustScore } from '../services/geminiService';
 import Spinner from '../components/ui/Spinner';
 import BrokerCharts from '../components/brokers/BrokerCharts';
+import MetaTags from '../components/common/MetaTags';
+import useMetaDescription from '../hooks/useMetaDescription';
+import JsonLdSchema from '../components/common/JsonLdSchema';
 
 const DetailItem: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
     <div className="py-3 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -147,6 +150,45 @@ const BrokerDetailPage: React.FC = () => {
   const [sortOrder, setSortOrder] = useState('date-desc');
   const [filterRating, setFilterRating] = useState(0);
 
+  const description = useMetaDescription(broker);
+
+  const brokerJsonLd = useMemo(() => {
+    if (!broker) return null;
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": broker.name,
+      "url": `https://brokeranalysis.com/#/broker/${broker.id}`,
+      "logo": broker.logoUrl,
+      "description": broker.description,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": broker.headquarters.split(',')[0].trim(),
+        "addressCountry": broker.headquarters.split(',').pop()?.trim() || "Unknown"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": broker.score.toFixed(1),
+        "reviewCount": reviews.length.toString()
+      },
+      "review": reviews.map(review => ({
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": review.userName
+        },
+        "datePublished": review.date,
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": review.rating.toString()
+        },
+        "reviewBody": review.comment
+      }))
+    };
+    return schema;
+  }, [broker, reviews]);
+
   if (!broker) {
     return <NotFoundPage />;
   }
@@ -200,6 +242,13 @@ const BrokerDetailPage: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
+       <MetaTags
+        title={`${broker.name} Review & Analysis (Updated 2025) | Brokeranalysis`}
+        description={description}
+        canonicalUrl={`https://brokeranalysis.com/#/broker/${broker.id}`}
+        imageUrl={broker.logoUrl}
+      />
+      {brokerJsonLd && <JsonLdSchema data={brokerJsonLd} />}
       <div className="bg-card rounded-lg shadow-xl overflow-hidden border border-input">
         <div className="p-6 md:flex md:items-center md:justify-between bg-input/30">
             <div className="flex-1 min-w-0">

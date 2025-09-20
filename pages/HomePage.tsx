@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { Icons } from '../constants';
 import { brokers } from '../data/brokers';
+import JsonLdSchema from '../components/common/JsonLdSchema';
 
 // New AccordionItem component
 const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
@@ -72,8 +73,22 @@ const HomePage: React.FC = () => {
     }
   ];
 
+  const faqJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map(faq => ({
+          "@type": "Question",
+          "name": faq.q,
+          "acceptedAnswer": {
+              "@type": "Answer",
+              "text": faq.a
+          }
+      }))
+  };
+
   return (
     <div className="space-y-24 md:space-y-32">
+      <JsonLdSchema data={faqJsonLd} />
       {/* Hero Section */}
       <div className="text-center pt-16 md:pt-24">
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-600">

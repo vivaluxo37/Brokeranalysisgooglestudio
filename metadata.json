@@ -1,0 +1,5 @@
+{
+  "name": "Brokeranalysis - AI Forex Broker Comparison",
+  "description": "An AI-driven single-page web application to help traders research, compare, and select forex brokers. Features include a comprehensive broker database, an AI chatbot, a personalized 'Broker Matcher' tool, and a side-by-side comparison feature.",
+  "requestFramePermissions": []
+}

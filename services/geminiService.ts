@@ -1,4 +1,5 @@
 
+
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { Broker, Review } from '../types';
 
@@ -231,11 +232,11 @@ export const getRegulatoryTrustScore = async (brokerName: string, regulators: st
     const score = scoreMatch ? parseFloat(scoreMatch[1]) : 7.0; // Default score
     const reasoning = text.split('. ').slice(1).join('. ').trim() || "Score based on available regulatory information.";
 
-    const sources = response.candidates?.[0]?.groundingMetadata?.groundingChunks
-        ?.map(chunk => chunk.web)
-        .filter(Boolean) // Step 1: Safely remove any undefined/null entries.
-        .filter((web, index, self) => self.findIndex(w => w.uri === web.uri) === index) // Step 2: Now that `self` has no undefineds, find unique URIs.
-        .map(web => ({ uri: web.uri, title: web.title })) as { uri: string, title: string }[] || [];
+    const sources = (response.candidates?.[0]?.groundingMetadata?.groundingChunks ?? [])
+        .map(chunk => chunk.web)
+        .filter(Boolean)
+        .filter((web, index, self) => self.findIndex(w => w.uri === web.uri) === index)
+        .map(web => ({ uri: web.uri, title: web.title })) as { uri: string, title: string }[];
 
     return { score, reasoning, sources };
 };

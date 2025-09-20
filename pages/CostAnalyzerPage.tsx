@@ -65,7 +65,6 @@ const CostAnalyzerPage: React.FC = () => {
     const minCost = useMemo(() => enrichedData.length === 0 ? Infinity : Math.min(...enrichedData.map(d => d.totalCost)), [enrichedData]);
 
     const handleGetAnalysis = async (type: 'general' | 'personal') => {
-        // FIX: Changed `brokerName` to `name` to match the expected types in geminiService.
         const costDataForAI = sortedData.map(d => ({ name: d.name, spread: d.spread, commission: d.commission, totalCost: d.totalCost, swapCategory: d.tradingConditions.swapFeeCategory }));
         setError(null);
 
@@ -73,7 +72,9 @@ const CostAnalyzerPage: React.FC = () => {
             setLoadingAnalysis(true);
             setAnalysisResult(null);
             try {
-                const result = await getCostAnalysis(instrument, costDataForAI);
+                // For general analysis, totalCost is useful.
+                const generalCostData = costDataForAI.map(({ name, spread, commission, totalCost }) => ({ name, spread, commission, totalCost }));
+                const result = await getCostAnalysis(instrument, generalCostData);
                 setAnalysisResult(result);
             } catch (err) { setError('Failed to get AI analysis.'); console.error(err); }
             finally { setLoadingAnalysis(false); }
@@ -81,7 +82,9 @@ const CostAnalyzerPage: React.FC = () => {
             setLoadingProjection(true);
             setProjectionResult(null);
             try {
-                const result = await getPersonalizedCostProjection({ style: tradingStyle, instrument, brokers: costDataForAI });
+                // For personalized projection, the AI reasons about the components, so we don't send the pre-calculated totalCost.
+                const personalCostData = costDataForAI.map(({ name, spread, commission, swapCategory }) => ({ name, spread, commission, swapCategory }));
+                const result = await getPersonalizedCostProjection({ style: tradingStyle, instrument, brokers: personalCostData });
                 setProjectionResult(result);
             } catch (err) { setError('Failed to get AI projection.'); console.error(err); }
             finally { setLoadingProjection(false); }

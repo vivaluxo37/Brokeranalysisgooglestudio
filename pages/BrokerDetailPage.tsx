@@ -21,6 +21,7 @@ import MetaTags from '../components/common/MetaTags';
 import useMetaDescription from '../hooks/useMetaDescription';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useReviews } from '../hooks/useReviews';
+import Tooltip from '../components/ui/Tooltip';
 
 const DetailItem: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
     <div className="py-3 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -288,14 +289,18 @@ const BrokerDetailPage: React.FC = () => {
                         Visit {broker.name}
                     </Button>
                 </a>
-                <Button onClick={handleCompareClick} variant="secondary">
-                    {inCompare ? <Icons.compareRemove className="h-5 w-5 mr-2" /> : <Icons.compare className="h-5 w-5 mr-2" />}
-                    {inCompare ? "Remove from Compare" : "Add to Compare"}
-                </Button>
-                 <Button onClick={handleFavoriteClick} variant="secondary">
-                    {isFavorite ? <Icons.starFull className="h-5 w-5 mr-2 text-yellow-400" /> : <Icons.star className="h-5 w-5 mr-2" />}
-                    {isFavorite ? "Favorited" : "Add to Favorites"}
-                </Button>
+                <Tooltip content={inCompare ? 'Remove from your comparison list' : 'Add to your comparison list'}>
+                  <Button onClick={handleCompareClick} variant="secondary">
+                      {inCompare ? <Icons.compareRemove className="h-5 w-5 mr-2" /> : <Icons.compare className="h-5 w-5 mr-2" />}
+                      {inCompare ? "Remove from Compare" : "Add to Compare"}
+                  </Button>
+                </Tooltip>
+                 <Tooltip content={isFavorite ? 'Remove from your favorites' : 'Add this broker to your favorites'}>
+                  <Button onClick={handleFavoriteClick} variant="secondary">
+                      {isFavorite ? <Icons.starFull className="h-5 w-5 mr-2 text-yellow-400" /> : <Icons.star className="h-5 w-5 mr-2" />}
+                      {isFavorite ? "Favorited" : "Add to Favorites"}
+                  </Button>
+                </Tooltip>
             </div>
             
             <BrokerCharts broker={broker} />

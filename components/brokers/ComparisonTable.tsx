@@ -8,6 +8,7 @@ import { Broker } from '../../types';
 import Button from '../ui/Button';
 import { useComparison } from '../../hooks/useComparison';
 import Tag from '../ui/Tag';
+import Tooltip from '../ui/Tooltip';
 
 interface ComparisonTableProps {
   brokers: Broker[];
@@ -100,7 +101,9 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
                     <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer">
                         <Button variant="primary" size="sm" className="text-xs px-3 py-1">Visit</Button>
                     </a>
-                    <Button onClick={() => removeBrokerFromComparison(broker.id)} variant="danger" size="sm" className="text-xs px-2 py-1">Remove</Button>
+                    <Tooltip content={`Remove ${broker.name} from comparison`}>
+                      <Button onClick={() => removeBrokerFromComparison(broker.id)} variant="danger" size="sm" className="text-xs px-2 py-1">Remove</Button>
+                    </Tooltip>
                 </div>
               </th>
             ))}

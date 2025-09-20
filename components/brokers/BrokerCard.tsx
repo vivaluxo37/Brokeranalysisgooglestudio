@@ -8,6 +8,7 @@ import { useComparison } from '../../hooks/useComparison';
 import { useFavorites } from '../../hooks/useFavorites';
 import { Icons } from '../../constants';
 import StarRating from '../ui/StarRating';
+import Tooltip from '../ui/Tooltip';
 
 interface BrokerCardProps {
   broker: Broker;
@@ -48,17 +49,21 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
   return (
     <Card className={`flex flex-col h-full ${recommendationClasses}`}>
       <div className="relative flex-grow">
-        <button onClick={handleFavoriteClick} className="absolute top-3 right-3 z-10 p-1 rounded-full bg-card/50 hover:bg-input transition-colors" aria-label="Toggle Favorite">
-          {isFavorite ? <Icons.starFull className="h-5 w-5 text-yellow-400" /> : <Icons.star className="h-5 w-5 text-card-foreground/60" />}
-        </button>
+        <Tooltip content={isFavorite ? 'Remove from Favorites' : 'Add to Favorites'} position="left">
+          <button onClick={handleFavoriteClick} className="absolute top-3 right-3 z-10 p-1 rounded-full bg-card/50 hover:bg-input transition-colors" aria-label="Toggle Favorite">
+            {isFavorite ? <Icons.starFull className="h-5 w-5 text-yellow-400" /> : <Icons.star className="h-5 w-5 text-card-foreground/60" />}
+          </button>
+        </Tooltip>
         <ReactRouterDOM.Link to={`/broker/${broker.id}`} className="block h-full">
           <CardContent>
             <div className="flex justify-between items-start">
               <img src={broker.logoUrl} alt={`${broker.name} logo`} className="h-12 w-auto object-contain bg-white p-2 rounded-md" />
-              <div className="flex flex-col items-end">
-                  <div className="text-3xl font-bold text-primary-400">{broker.score.toFixed(1)}</div>
-                  <StarRating score={broker.score} />
-              </div>
+              <Tooltip content="Overall score based on regulation, costs, platforms, and support.">
+                <div className="flex flex-col items-end">
+                    <div className="text-3xl font-bold text-primary-400">{broker.score.toFixed(1)}</div>
+                    <StarRating score={broker.score} />
+                </div>
+              </Tooltip>
             </div>
             <h3 className="text-xl font-bold mt-4 text-card-foreground">{broker.name}</h3>
             <p className="text-sm text-card-foreground/70 mt-1">{broker.headquarters} &bull; Est. {broker.foundingYear}</p>
@@ -82,10 +87,12 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
             Visit Broker
           </Button>
         </a>
-        <Button onClick={handleCompareClick} variant="secondary" size="sm" className="flex-1">
-            {inCompare ? <Icons.compareRemove className="h-4 w-4 mr-2" /> : <Icons.compare className="h-4 w-4 mr-2" />}
-            {inCompare ? 'In Compare' : 'Compare'}
-        </Button>
+        <Tooltip content={inCompare ? 'Remove from comparison list' : 'Add to comparison list'} className="flex-1">
+          <Button onClick={handleCompareClick} variant="secondary" size="sm" className="w-full">
+              {inCompare ? <Icons.compareRemove className="h-4 w-4 mr-2" /> : <Icons.compare className="h-4 w-4 mr-2" />}
+              {inCompare ? 'In Compare' : 'Compare'}
+          </Button>
+        </Tooltip>
       </div>
     </Card>
   );

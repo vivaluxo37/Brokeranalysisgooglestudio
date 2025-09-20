@@ -10,8 +10,22 @@ export const brokers: Broker[] = [
     foundingYear: 2010,
     headquarters: 'Melbourne, Australia',
     description: 'Pepperstone is an award-winning online broker known for its fast execution, low spreads, and a wide range of trading platforms. It is regulated by top-tier authorities like ASIC and the FCA.',
+    summary: "Our top-rated broker, Pepperstone, excels in offering ultra-low trading costs through its Razor account, making it ideal for scalpers and algorithmic traders. With top-tier regulation from ASIC and the FCA, excellent platform variety including TradingView integration, and no minimum deposit, it's a superb choice for both new and experienced traders who prioritize performance and safety.",
+    pros: [
+        "Extremely low forex fees on Razor account",
+        "Fast and reliable ECN trade execution",
+        "Regulated by top-tier authorities (FCA, ASIC, CySEC)",
+        "Excellent selection of trading platforms (MT4, MT5, cTrader, TradingView)",
+        "Seamless and free deposit/withdrawal options",
+        "No minimum deposit requirement"
+    ],
+    cons: [
+        "Stock CFD fees are relatively high",
+        "Does not offer investor protection for non-EU/UK clients",
+        "No proprietary mobile platform"
+    ],
     regulation: {
-      regulators: ['ASIC', 'FCA', 'CySEC', 'DFSA'],
+      regulators: ['ASIC', 'FCA', 'CySEC', 'DFSA', 'BaFin', 'CMA'],
     },
     ratings: {
       regulation: 9.8,
@@ -23,17 +37,45 @@ export const brokers: Broker[] = [
       spreads: { eurusd: 0.1, gbpusd: 0.4, usdjpy: 0.2 },
       commission: '$3.50 per lot',
       swapFeeCategory: 'Low',
-      maxLeverage: '1:500',
+      maxLeverage: '1:500', // Varies by regulation
     },
     accessibility: {
-      minDeposit: 200,
-      depositMethods: ['Credit Card', 'Bank Transfer', 'PayPal', 'Skrill'],
-      withdrawalMethods: ['Credit Card', 'Bank Transfer', 'PayPal'],
+      minDeposit: 0, // Officially no minimum, but $200 recommended
+      depositMethods: ['Credit Card', 'Debit Card', 'Bank Transfer', 'PayPal', 'Skrill', 'Neteller'],
+      withdrawalMethods: ['Credit Card', 'Bank Transfer', 'PayPal', 'Skrill'],
       customerSupport: ['24/5 Live Chat', 'Phone', 'Email'],
     },
     technology: {
       platforms: ['MT4', 'MT5', 'cTrader', 'TradingView'],
       executionType: 'ECN/STP',
+    },
+    accountTypes: [
+        { name: 'Standard Account', type: 'STP', minDeposit: 0, spreads: 'From 1.0 pips', commission: 'Zero commission', bestFor: 'Beginners and discretionary traders' },
+        { name: 'Razor Account', type: 'ECN', minDeposit: 0, spreads: 'From 0.0 pips', commission: '~$3.50 per lot per side', bestFor: 'Scalpers and algorithmic traders' },
+    ],
+    tradingFees: {
+        forex: "Low - Razor account offers raw spreads + ~$7.00 commission round turn.",
+        indices: "Average - Spreads are competitive, e.g., ~1 point on AUS200.",
+        commodities: "Low - Tight spreads on Gold (XAU/USD) and Oil.",
+        stocks: "High - Stock CFD commissions are higher than some competitors.",
+    },
+    nonTradingFees: {
+        inactivityFee: "None - No inactivity fee is charged.",
+        withdrawalFee: "Free for most methods (bank transfers may incur fees).",
+        depositFee: "Free - Pepperstone covers deposit fees for most methods.",
+    },
+    tradableInstruments: {
+        forexPairs: 62,
+        indices: 28,
+        commodities: 22,
+        stocks: 1000,
+        cryptocurrencies: 18,
+    },
+    researchTools: ['Autochartist', 'Smart Trader Tools for MT4/5', 'Delkos client sentiment'],
+    education: ['Webinars', 'Trading guides', 'Market analysis articles'],
+    safety: {
+        clientFundProtection: "Segregated client funds at Tier 1 banks.",
+        negativeBalanceProtection: true,
     },
     reviews: [
       { id: 'rev1', brokerId: 'pepperstone', userId: 'user123', userName: 'Alice', rating: 5, comment: 'Excellent spreads and customer service. Highly recommend!', date: '2023-10-26T10:00:00Z', verified: true },

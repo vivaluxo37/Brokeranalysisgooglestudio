@@ -11,6 +11,29 @@ export interface Review {
   verified?: boolean;
 }
 
+export interface AccountType {
+    name: string;
+    type: 'ECN' | 'STP' | 'Standard' | 'NDD';
+    minDeposit: number;
+    spreads: string; // e.g., "From 0.0 pips"
+    commission: string; // e.g., "$3.50 per lot"
+    bestFor: string;
+}
+
+export interface TradingFees {
+    forex: string;
+    indices: string;
+    commodities: string;
+    stocks: string;
+}
+
+export interface NonTradingFees {
+    inactivityFee: string;
+    withdrawalFee: string;
+    depositFee: string;
+}
+
+
 export interface Broker {
   id: string;
   name: string;
@@ -20,6 +43,25 @@ export interface Broker {
   foundingYear: number;
   headquarters: string;
   description: string;
+  summary?: string;
+  pros?: string[];
+  cons?: string[];
+  accountTypes?: AccountType[];
+  tradingFees?: TradingFees;
+  nonTradingFees?: NonTradingFees;
+  tradableInstruments?: {
+      forexPairs: number;
+      indices: number;
+      commodities: number;
+      stocks: number;
+      cryptocurrencies: number;
+  };
+  researchTools?: string[];
+  education?: string[];
+  safety?: {
+      clientFundProtection: string;
+      negativeBalanceProtection: boolean;
+  };
   regulation: {
     regulators: string[];
   };

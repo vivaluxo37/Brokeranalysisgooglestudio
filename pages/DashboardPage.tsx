@@ -1,6 +1,4 @@
-
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useFavorites } from '../hooks/useFavorites';
@@ -12,6 +10,11 @@ import Button from '../components/ui/Button';
 import { Icons } from '../constants';
 import Input from '../components/ui/Input';
 import Spinner from '../components/ui/Spinner';
+import { useReviews } from '../hooks/useReviews';
+import VerificationModal from '../components/reviews/VerificationModal';
+import StarRating from '../components/ui/StarRating';
+import Badge from '../components/ui/Badge';
+import { useAlerts } from '../hooks/useAlerts';
 
 // A reusable accordion component for the dashboard
 const AccordionItem: React.FC<{ title: string; subtitle: string; children: React.ReactNode }> = ({ title, subtitle, children }) => {
@@ -62,6 +65,8 @@ const QuickActionCard: React.FC<{ to: string, icon: React.ElementType<{ classNam
 const DashboardPage: React.FC = () => {
   const { user, updateUser, deleteAccount } = useAuth();
   const { favoritesList } = useFavorites();
+  const { getReviewsByUserId, verifyReview } = useReviews();
+  const { getAlertsForFavorites } = useAlerts();
   const [history, setHistory] = useState<MatcherHistoryItem[]>([]);
   const navigate = useNavigate();
 
@@ -72,6 +77,15 @@ const DashboardPage: React.FC = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // State for verification modal
+  const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
+
+  const userReviews = useMemo(() => {
+    return user ? getReviewsByUserId(user.id) : [];
+  }, [user, getReviewsByUserId]);
 
   useEffect(() => {
     if (user) {
@@ -116,7 +130,34 @@ const DashboardPage: React.FC = () => {
     }
   };
 
+  const handleOpenVerification = (reviewId: string) => {
+    setSelectedReviewId(reviewId);
+    setIsVerificationModalOpen(true);
+  };
+
+  const handleVerifyReview = () => {
+    if (!selectedReviewId) return;
+    setIsVerifying(true);
+    // Simulate API call
+    setTimeout(() => {
+      verifyReview(selectedReviewId);
+      setIsVerifying(false);
+      setIsVerificationModalOpen(false);
+      setSelectedReviewId(null);
+    }, 1000);
+  };
+
   const favoriteBrokers = allBrokers.filter(b => favoritesList.includes(b.id));
+  const myAlerts = getAlertsForFavorites(favoritesList);
+
+  const getSeverityColor = (severity: 'High' | 'Medium' | 'Low') => {
+      switch (severity) {
+          case 'High': return 'border-l-red-500 bg-red-900/20';
+          case 'Medium': return 'border-l-yellow-500 bg-yellow-900/20';
+          case 'Low': return 'border-l-green-500 bg-green-900/20';
+          default: return 'border-l-gray-500 bg-gray-900/20';
+      }
+  };
 
   return (
     <div className="space-y-12">
@@ -133,6 +174,41 @@ const DashboardPage: React.FC = () => {
           <QuickActionCard to="/brokers" icon={Icons.shieldCheck} title="Explore All Brokers" description="Browse our full broker list." />
       </div>
 
+       {/* My Alerts */}
+       <Card>
+        <CardHeader>
+          <h2 className="text-2xl font-semibold">My Alerts</h2>
+        </CardHeader>
+        <CardContent>
+          {myAlerts.length > 0 ? (
+            <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
+              {myAlerts.map(alert => {
+                const broker = allBrokers.find(b => b.id === alert.brokerId);
+                return (
+                  <div key={alert.id} className={`p-4 rounded-r-lg border-l-4 ${getSeverityColor(alert.severity)}`}>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-semibold text-card-foreground">
+                          {broker?.name}: {alert.title}
+                        </p>
+                        <p className="text-sm text-card-foreground/80 mt-1">{alert.description}</p>
+                      </div>
+                      <p className="text-xs text-card-foreground/60 flex-shrink-0 ml-4">{new Date(alert.date).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-12 px-6">
+              <p className="text-card-foreground/70">No alerts for your favorited brokers. Add some brokers to your favorites to start receiving updates!</p>
+              <Link to="/brokers" className="mt-4 inline-block">
+                <Button variant="secondary">Explore Brokers</Button>
+              </Link>
+            </div>
+          )}
+        </CardContent>
+       </Card>
 
       {/* AI Match History */}
       <Card>
@@ -174,6 +250,49 @@ const DashboardPage: React.FC = () => {
           )}
         </CardContent>
       </Card>
+      
+       {/* My Reviews Section */}
+       <Card>
+        <CardHeader>
+          <h2 className="text-2xl font-semibold">My Reviews</h2>
+        </CardHeader>
+        <CardContent>
+          {userReviews.length > 0 ? (
+            <div className="space-y-4">
+              {userReviews.map(review => {
+                const broker = allBrokers.find(b => b.id === review.brokerId);
+                return (
+                  <div key={review.id} className="p-4 rounded-lg bg-input/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                      <p className="font-semibold text-card-foreground">
+                        Review for <Link to={`/broker/${broker?.id}`} className="text-primary-400 hover:underline">{broker?.name || 'Unknown Broker'}</Link>
+                      </p>
+                      <StarRating score={review.rating * 2} size="sm" className="my-1"/>
+                      <p className="text-sm text-card-foreground/80 italic">"{review.comment}"</p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      {review.verified ? (
+                        <Badge variant="success" Icon={Icons.verified}>Verified</Badge>
+                      ) : (
+                        <Button size="sm" variant="secondary" onClick={() => handleOpenVerification(review.id)}>
+                          Verify Review
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-12 px-6">
+              <p className="text-card-foreground/70">You haven't written any reviews yet.</p>
+              <Link to="/brokers" className="mt-4 inline-block">
+                <Button variant="secondary">Find a Broker to Review</Button>
+              </Link>
+            </div>
+          )}
+        </CardContent>
+       </Card>
 
        {/* Favorite Brokers */}
        <Card>
@@ -250,6 +369,14 @@ const DashboardPage: React.FC = () => {
           </Card>
         </div>
       )}
+
+      {/* Verification Modal */}
+      <VerificationModal
+        isOpen={isVerificationModalOpen}
+        isVerifying={isVerifying}
+        onClose={() => setIsVerificationModalOpen(false)}
+        onVerify={handleVerifyReview}
+      />
 
     </div>
   );

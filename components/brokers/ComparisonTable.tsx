@@ -15,31 +15,68 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
   const { removeBrokerFromComparison } = useComparison();
 
   const features = [
+    { type: 'header', title: 'Overall Score' },
     { title: 'Score', key: 'score' },
+    { type: 'header', title: 'Trading Costs' },
+    { title: 'EUR/USD Spread', key: 'tradingConditions.spreads.eurusd' },
+    { title: 'GBP/USD Spread', key: 'tradingConditions.spreads.gbpusd' },
+    { title: 'USD/JPY Spread', key: 'tradingConditions.spreads.usdjpy' },
+    { title: 'Commission', key: 'tradingConditions.commission' },
+    { title: 'Swap Fee Category', key: 'tradingConditions.swapFeeCategory' },
+    { type: 'header', title: 'Trading Conditions' },
+    { title: 'Max Leverage', key: 'tradingConditions.maxLeverage' },
+    { title: 'Execution Type', key: 'technology.executionType' },
+    { type: 'header', title: 'Accessibility' },
+    { title: 'Min. Deposit', key: 'accessibility.minDeposit' },
+    { title: 'Deposit Methods', key: 'accessibility.depositMethods' },
+    { title: 'Withdrawal Methods', key: 'accessibility.withdrawalMethods' },
+    { title: 'Customer Support', key: 'accessibility.customerSupport' },
+    { type: 'header', title: 'Technology' },
+    { title: 'Platforms', key: 'technology.platforms' },
+    { type: 'header', title: 'Trust & Background' },
+    { title: 'Regulators', key: 'regulation.regulators' },
     { title: 'Founded', key: 'foundingYear' },
     { title: 'Headquarters', key: 'headquarters' },
-    { title: 'Regulators', key: 'regulation.regulators' },
-    { title: 'Min. Deposit', key: 'accessibility.minDeposit' },
-    { title: 'Customer Support', key: 'accessibility.customerSupport' },
-    { title: 'Max Leverage', key: 'tradingConditions.maxLeverage' },
-    { title: 'EUR/USD Spread', key: 'tradingConditions.spreads.eurusd' },
-    { title: 'Platforms', key: 'technology.platforms' },
-    { title: 'Execution Type', key: 'technology.executionType' },
   ];
 
   const renderValue = (broker: Broker, key: string) => {
+    // Helper to render array values as tags, showing up to 3
+    const renderArrayWithTags = (arr: string[]) => (
+      <div className="flex flex-wrap justify-center gap-1">
+          {arr.slice(0, 3).map(item => <Tag key={item}>{item}</Tag>)}
+          {arr.length > 3 && <Tag>+{arr.length - 3} more</Tag>}
+      </div>
+    );
+    
     switch (key) {
       case 'score': return <span className="text-2xl font-bold text-primary-400">{broker.score.toFixed(1)}</span>;
-      case 'regulation.regulators': return broker.regulation.regulators.map(r => <Tag key={r}>{r}</Tag>);
+      case 'regulation.regulators': return renderArrayWithTags(broker.regulation.regulators);
+      case 'accessibility.depositMethods': return renderArrayWithTags(broker.accessibility.depositMethods);
+      case 'accessibility.withdrawalMethods': return renderArrayWithTags(broker.accessibility.withdrawalMethods);
       case 'accessibility.minDeposit': return `$${broker.accessibility.minDeposit}`;
       case 'accessibility.customerSupport': return broker.accessibility.customerSupport.join(', ');
       case 'tradingConditions.spreads.eurusd': return `${broker.tradingConditions.spreads.eurusd} pips`;
+      case 'tradingConditions.spreads.gbpusd': return `${broker.tradingConditions.spreads.gbpusd} pips`;
+      case 'tradingConditions.spreads.usdjpy': return `${broker.tradingConditions.spreads.usdjpy} pips`;
       case 'technology.platforms': return broker.technology.platforms.join(', ');
+      case 'tradingConditions.swapFeeCategory':
+        const category = broker.tradingConditions.swapFeeCategory;
+        const color = {
+            'Low': 'text-green-400',
+            'Standard': 'text-yellow-400',
+            'High': 'text-red-400'
+        }[category];
+        return <span className={`font-semibold ${color}`}>{category}</span>;
       default:
+        // Generic getter for simple values like 'foundingYear', 'headquarters', etc.
         const keys = key.split('.');
         let value: any = broker;
         for (const k of keys) {
-            value = value[k];
+            if (value && typeof value === 'object' && k in value) {
+                value = value[k];
+            } else {
+                return '-';
+            }
         }
         return value;
     }
@@ -68,16 +105,27 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
           </tr>
         </thead>
         <tbody>
-          {features.map(feature => (
-            <tr key={feature.key} className="border-b border-input last:border-b-0">
-              <td className="p-4 font-semibold text-foreground/80">{feature.title}</td>
-              {brokers.map(broker => (
-                <td key={broker.id} className="p-4 text-center align-top">
-                  {renderValue(broker, feature.key)}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {features.map((feature: any) => { // Using 'any' to easily check for 'type'
+            if (feature.type === 'header') {
+              return (
+                <tr key={feature.title} className="bg-input/30">
+                  <th colSpan={brokers.length + 1} className="p-2 pl-4 text-left text-sm font-bold text-primary-400 tracking-wider">
+                    {feature.title}
+                  </th>
+                </tr>
+              );
+            }
+            return (
+              <tr key={feature.key} className="border-b border-input last:border-b-0">
+                <td className="p-4 font-semibold text-foreground/80 whitespace-nowrap">{feature.title}</td>
+                {brokers.map(broker => (
+                  <td key={broker.id} className="p-4 text-center align-top">
+                    {renderValue(broker, feature.key)}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

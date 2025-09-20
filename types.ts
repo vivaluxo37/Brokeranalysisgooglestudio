@@ -109,3 +109,28 @@ export interface MatcherHistoryItem {
     reasoning: string;
     recommendedBrokerIds: string[];
 }
+
+export interface ReviewsContextType {
+  reviews: Review[];
+  getReviewsByBrokerId: (brokerId: string) => Review[];
+  getReviewsByUserId: (userId: string) => Review[];
+  addReview: (review: Omit<Review, 'id' | 'date' | 'verified'>) => void;
+  verifyReview: (reviewId: string) => void;
+}
+
+export interface Alert {
+  id: string;
+  brokerId: string;
+  title: string;
+  description: string;
+  date: string; // ISO 8601 format
+  severity: 'High' | 'Medium' | 'Low';
+  read: boolean;
+}
+
+export interface AlertsContextType {
+  alerts: Alert[];
+  unreadCount: number;
+  markAllAsRead: () => void;
+  getAlertsForFavorites: (favoriteBrokerIds: string[]) => Alert[];
+}

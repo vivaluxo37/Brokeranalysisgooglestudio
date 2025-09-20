@@ -1,5 +1,3 @@
-
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { brokers } from '../data/brokers';
@@ -21,6 +19,7 @@ import BrokerCharts from '../components/brokers/BrokerCharts';
 import MetaTags from '../components/common/MetaTags';
 import useMetaDescription from '../hooks/useMetaDescription';
 import JsonLdSchema from '../components/common/JsonLdSchema';
+import { useReviews } from '../hooks/useReviews';
 
 const DetailItem: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
     <div className="py-3 sm:grid sm:grid-cols-3 sm:gap-4">
@@ -34,6 +33,11 @@ const AIReviewSummary: React.FC<{ brokerName: string; reviews: Review[] }> = ({ 
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (reviews.length === 0) {
+            setLoading(false);
+            setSummary(null);
+            return;
+        }
         const fetchSummary = async () => {
             setLoading(true);
             try {
@@ -142,8 +146,10 @@ const BrokerDetailPage: React.FC = () => {
   const { addBrokerToComparison, removeBrokerFromComparison, isBrokerInComparison } = useComparison();
   const { addBrokerToFavorites, removeBrokerFromFavorites, isBrokerInFavorites } = useFavorites();
   const { user } = useAuth();
+  const { getReviewsByBrokerId, addReview } = useReviews();
 
-  const [reviews, setReviews] = useState<Review[]>(broker?.reviews || []);
+  const reviews = useMemo(() => getReviewsByBrokerId(broker?.id || ''), [getReviewsByBrokerId, broker]);
+  
   const [newRating, setNewRating] = useState(0);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -210,16 +216,13 @@ const BrokerDetailPage: React.FC = () => {
 
     setIsSubmitting(true);
     setTimeout(() => {
-        const newReview: Review = {
-            id: Date.now().toString(),
+        addReview({
             brokerId: broker.id,
             userId: user.id,
             userName: user.name,
             rating: newRating,
             comment: newComment,
-            date: new Date().toISOString(),
-        };
-        setReviews(prev => [newReview, ...prev]);
+        });
         setNewRating(0);
         setNewComment('');
         setIsSubmitting(false);

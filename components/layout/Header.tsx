@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { NAV_LINKS } from '../../constants';
 import ThemeToggle from '../ui/ThemeToggle';
 import Button from '../ui/Button';
+import AlertsDropdown from '../common/AlertsDropdown';
 
 const Header: React.FC = () => {
   const { user, logout } = useAuth();
@@ -36,7 +37,8 @@ const Header: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            {user && <AlertsDropdown />}
             <ThemeToggle />
             {user ? (
               <>

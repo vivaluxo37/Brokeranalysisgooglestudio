@@ -6,6 +6,8 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ComparisonProvider } from './contexts/ComparisonContext';
 import { FavoritesProvider } from './contexts/FavoritesContext';
+import { ReviewsProvider } from './contexts/ReviewsContext';
+import { AlertsProvider } from './contexts/AlertsContext';
 
 export function render(url: string) {
   return ReactDOMServer.renderToString(
@@ -15,7 +17,11 @@ export function render(url: string) {
           <AuthProvider>
             <ComparisonProvider>
               <FavoritesProvider>
-                <App />
+                <ReviewsProvider>
+                  <AlertsProvider>
+                    <App />
+                  </AlertsProvider>
+                </ReviewsProvider>
               </FavoritesProvider>
             </ComparisonProvider>
           </AuthProvider>

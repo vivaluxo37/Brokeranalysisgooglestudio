@@ -3,26 +3,48 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Icons } from '../../constants';
 import { ChatMessage } from '../../types';
 import { getChatbotResponseStream } from '../../services/geminiService';
-import Spinner from '../ui/Spinner';
+
+const TypingIndicator: React.FC = () => (
+    <div className="flex items-center space-x-1.5 p-2">
+        <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+        <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+        <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"></div>
+    </div>
+);
+
+const parseMarkdown = (text: string): string => {
+  let html = text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold
+
+  html = html.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
+    // Check if it's an external link
+    if (url.startsWith('http')) {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${linkText}</a>`;
+    }
+    // Internal link
+    return `<a href="${url}" class="text-primary-400 hover:underline">${linkText}</a>`;
+  });
+  return html;
+};
+
 
 const ChatMessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
     const isUser = message.sender === 'user';
     return (
-        <div className={`flex items-start gap-3 my-4 ${isUser ? 'justify-end' : ''}`}>
-            {!isUser && <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-primary-600 text-white"><Icons.bot className="h-5 w-5"/></span>}
-            <div className={`p-3 rounded-lg max-w-sm md:max-w-md ${isUser ? 'bg-primary-600 text-white' : 'bg-input text-foreground'}`}>
-                <p className="text-sm break-words">{message.text}</p>
+        <div className={`flex items-start gap-3 my-2 animate-fade-in ${isUser ? 'justify-end' : ''}`}>
+            {!isUser && <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-slate-700 text-primary-400"><Icons.bot className="h-5 w-5"/></span>}
+            <div className={`p-3 rounded-xl max-w-sm md:max-w-md shadow-md ${isUser ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-700 text-foreground rounded-bl-none'}`}>
+                <p className="text-sm break-words" dangerouslySetInnerHTML={{ __html: parseMarkdown(message.text) }} />
             </div>
-            {isUser && <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-card text-white"><Icons.user className="h-5 w-5"/></span>}
+            {isUser && <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-slate-600 text-white"><Icons.user className="h-5 w-5"/></span>}
         </div>
     );
 };
 
-
 const Chatbot: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<ChatMessage[]>([
-        { sender: 'ai', text: "Hello! I'm BrokerBot. Ask me anything about forex trading or brokers." }
+        { sender: 'ai', text: "Hello! I'm BrokerBot. Ask me about a broker's spreads, leverage, or compare two brokers directly!" }
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -34,42 +56,44 @@ const Chatbot: React.FC = () => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [messages, isLoading]);
 
     const handleSend = async () => {
         if (input.trim() === '' || isLoading) return;
 
-        const userMessage: ChatMessage = { sender: 'user', text: input.trim() };
+        const userMessageText = input.trim();
+        const userMessage: ChatMessage = { sender: 'user', text: userMessageText };
         setMessages(prev => [...prev, userMessage]);
         setInput('');
         setIsLoading(true);
-        
-        const aiMessage: ChatMessage = { sender: 'ai', text: "" };
-        setMessages(prev => [...prev, aiMessage]);
 
         try {
-            const stream = await getChatbotResponseStream(input.trim());
+            const stream = await getChatbotResponseStream(userMessageText);
+            let firstChunk = true;
             let currentText = "";
+            
             for await (const chunk of stream) {
                 currentText += chunk.text;
-                setMessages(prev => {
-                    const lastMessage = prev[prev.length - 1];
-                    if (lastMessage.sender === 'ai') {
-                       return [...prev.slice(0, -1), { ...lastMessage, text: currentText }];
-                    }
-                    return prev;
-                });
+                if (firstChunk) {
+                    setIsLoading(false); // Hide typing indicator
+                    const aiMessage: ChatMessage = { sender: 'ai', text: currentText };
+                    setMessages(prev => [...prev, aiMessage]);
+                    firstChunk = false;
+                } else {
+                    setMessages(prev => {
+                        const lastMessage = prev[prev.length - 1];
+                        if (lastMessage?.sender === 'ai') {
+                           return [...prev.slice(0, -1), { ...lastMessage, text: currentText }];
+                        }
+                        return prev;
+                    });
+                }
             }
+            if (firstChunk) setIsLoading(false); // Handle empty stream
         } catch (error) {
             console.error('Gemini API error:', error);
-            setMessages(prev => {
-                const lastMessage = prev[prev.length - 1];
-                if (lastMessage.sender === 'ai') {
-                    return [...prev.slice(0, -1), { ...lastMessage, text: "Sorry, I'm having trouble connecting right now." }];
-                }
-                return prev;
-            });
-        } finally {
+            const errorMessage: ChatMessage = { sender: 'ai', text: "Sorry, I'm having trouble connecting right now." };
+            setMessages(prev => [...prev, errorMessage]);
             setIsLoading(false);
         }
     };
@@ -78,7 +102,7 @@ const Chatbot: React.FC = () => {
         return (
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-5 right-5 bg-primary-600 text-white p-4 rounded-full shadow-lg hover:bg-primary-700 transition-transform transform hover:scale-110"
+                className="fixed bottom-5 right-5 bg-primary-600 text-white p-4 rounded-full shadow-lg hover:bg-primary-700 transition-transform transform hover:scale-110 animate-pulse"
                 aria-label="Open Chatbot"
             >
                 <Icons.chat className="h-8 w-8" />
@@ -87,33 +111,35 @@ const Chatbot: React.FC = () => {
     }
 
     return (
-        <div className="fixed bottom-5 right-5 w-[90vw] max-w-md h-[70vh] max-h-[600px] bg-card rounded-lg shadow-2xl flex flex-col z-50 border border-input">
-            <header className="p-4 flex justify-between items-center bg-input rounded-t-lg">
+        <div className="fixed bottom-5 right-5 w-[90vw] max-w-md h-[70vh] max-h-[600px] bg-gradient-to-br from-card to-background rounded-2xl shadow-2xl flex flex-col z-50 border border-input/50 animate-fade-in">
+            <header className="p-4 flex justify-between items-center bg-card/50 rounded-t-2xl border-b border-input/50 backdrop-blur-sm">
                 <h3 className="font-bold text-lg">BrokerBot Assistant</h3>
                 <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white"><Icons.close className="h-6 w-6" /></button>
             </header>
             <main className="flex-1 p-4 overflow-y-auto">
                 {messages.map((msg, index) => <ChatMessageBubble key={index} message={msg} />)}
-                {isLoading && messages[messages.length - 1].sender === 'user' && (
-                     <div className="flex items-start gap-3 my-4">
-                        <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-primary-600 text-white"><Icons.bot className="h-5 w-5"/></span>
-                        <div className={`p-3 rounded-lg bg-input text-foreground`}><Spinner size="sm" /></div>
+                {isLoading && (
+                    <div className="flex items-start gap-3 my-2 animate-fade-in">
+                        <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-slate-700 text-primary-400"><Icons.bot className="h-5 w-5"/></span>
+                        <div className="p-1 rounded-xl bg-slate-700 text-foreground rounded-bl-none shadow-md">
+                            <TypingIndicator />
+                        </div>
                     </div>
                 )}
                 <div ref={messagesEndRef} />
             </main>
-            <footer className="p-4 border-t border-input">
-                <div className="flex items-center bg-background rounded-lg">
+            <footer className="p-3 border-t border-input/50 bg-card/50 rounded-b-2xl">
+                <div className="flex items-center bg-input rounded-xl">
                     <input
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                        placeholder="Ask a question..."
-                        className="w-full bg-transparent p-3 focus:outline-none"
+                        placeholder="Ask about spreads, leverage..."
+                        className="w-full bg-transparent p-3 focus:outline-none placeholder-gray-400"
                         disabled={isLoading}
                     />
-                    <button onClick={handleSend} disabled={isLoading || input.trim() === ''} className="p-3 text-primary-500 disabled:text-gray-500">
+                    <button onClick={handleSend} disabled={isLoading || input.trim() === ''} className="p-3 text-primary-500 disabled:text-gray-500 hover:text-primary-400 transition-colors">
                        <Icons.send className="h-6 w-6"/>
                     </button>
                 </div>

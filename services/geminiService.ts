@@ -1,7 +1,10 @@
 
 
+
+
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { Broker, Review } from '../types';
+import { brokers } from '../data/brokers';
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 const model = "gemini-2.5-flash";
@@ -9,9 +12,36 @@ const model = "gemini-2.5-flash";
 // --- Chatbot Functionality ---
 
 export const getChatbotResponseStream = async (message: string) => {
+  const brokerContext = JSON.stringify(brokers.map(b => ({
+      id: b.id,
+      name: b.name,
+      websiteUrl: b.websiteUrl,
+      internalPath: `#/broker/${b.id}`,
+      score: b.score,
+      minDeposit: b.accessibility.minDeposit,
+      platforms: b.technology.platforms,
+      maxLeverage: b.tradingConditions.maxLeverage,
+      regulators: b.regulation.regulators,
+      spreads: b.tradingConditions.spreads,
+      commission: b.tradingConditions.commission
+  })), null, 2);
+
+  const prompt = `You are BrokerBot, an expert AI assistant for forex trading. You have access to a database of forex brokers in JSON format below. Use this data to answer user questions accurately. You can and should create links in your response using markdown format [link text](url).
+
+- To link to a broker's detail page within this app, use the 'internalPath' value. For example: "You can see more details on [Pepperstone](#/broker/pepperstone)".
+- To link to a broker's official website, use the 'websiteUrl' value. For example: "Visit the [official Pepperstone website](https://pepperstone.com/)".
+- To link to the comparison page, use '#/compare'. For example: "You can compare them on our [comparison page](#/compare)".
+
+If a user asks to compare brokers, use the data to provide a comparison. If the question is about a specific broker, use the data for that broker and provide helpful links. If it's a general forex question not related to the data, answer it from your general knowledge. Be helpful, concise, and friendly. Use markdown for formatting, like bolding broker names with **.
+
+Broker Data:
+${brokerContext}
+
+User's question: "${message}"`;
+
   const response = await ai.models.generateContentStream({
     model: model,
-    contents: `You are BrokerBot, an expert AI assistant for forex trading. A user is asking a question. Provide a helpful, concise, and friendly response. User's question: "${message}"`,
+    contents: prompt,
   });
   return response;
 };

@@ -14,6 +14,7 @@ export interface Broker {
   id: string;
   name: string;
   logoUrl: string;
+  websiteUrl: string;
   score: number;
   foundingYear: number;
   headquarters: string;

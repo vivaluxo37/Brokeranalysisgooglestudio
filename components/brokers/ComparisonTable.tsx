@@ -57,7 +57,12 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
                   <img src={broker.logoUrl} alt={broker.name} className="h-10 mx-auto bg-white p-1 rounded-md mb-2"/>
                   <span className="font-semibold text-primary-400 hover:underline">{broker.name}</span>
                 </Link>
-                <Button onClick={() => removeBrokerFromComparison(broker.id)} variant="danger" size="sm" className="mt-2 text-xs px-2 py-1">Remove</Button>
+                <div className="flex justify-center items-center gap-2 mt-2">
+                    <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer">
+                        <Button variant="primary" size="sm" className="text-xs px-3 py-1">Visit</Button>
+                    </a>
+                    <Button onClick={() => removeBrokerFromComparison(broker.id)} variant="danger" size="sm" className="text-xs px-2 py-1">Remove</Button>
+                </div>
               </th>
             ))}
           </tr>

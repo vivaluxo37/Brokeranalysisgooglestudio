@@ -56,10 +56,15 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
           </div>
         </CardContent>
       </Link>
-      <div className="p-4 border-t border-input">
-        <Button onClick={handleCompareClick} variant={inCompare ? 'secondary' : 'ghost'} size="sm" className="w-full">
+      <div className="p-4 border-t border-input flex items-center gap-2">
+        <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
+          <Button variant="primary" size="sm" className="w-full">
+            Visit Broker
+          </Button>
+        </a>
+        <Button onClick={handleCompareClick} variant="secondary" size="sm" className="flex-1">
             {inCompare ? <Icons.compareRemove className="h-4 w-4 mr-2" /> : <Icons.compare className="h-4 w-4 mr-2" />}
-            {inCompare ? 'Remove from Compare' : 'Add to Compare'}
+            {inCompare ? 'In Compare' : 'Compare'}
         </Button>
       </div>
     </Card>

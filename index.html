@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Brokeranalysis - AI Forex Broker Comparison</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --background-rgb: 248 250 252; /* slate-50 */
+        --foreground-rgb: 15 23 42;   /* slate-900 */
+        --card-rgb: 255 255 255;       /* white */
+        --card-foreground-rgb: 15 23 42; /* slate-900 */
+        --input-rgb: 203 213 225;     /* slate-300 */
+      }
+      .dark {
+        --background-rgb: 15 23 42;     /* slate-900 */
+        --foreground-rgb: 248 250 252;  /* slate-50 */
+        --card-rgb: 30 41 59;         /* slate-800 */
+        --card-foreground-rgb: 248 250 252; /* slate-50 */
+        --input-rgb: 51 65 85;        /* slate-700 */
+      }
+    </style>
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -25,11 +41,11 @@
                 '900': '#1e3a8a',
                 '950': '#172554'
               },
-              'background': '#0f172a',
-              'foreground': '#f8fafc',
-              'card': '#1e293b',
-              'card-foreground': '#f8fafc',
-              'input': '#334155',
+              'background': 'rgb(var(--background-rgb) / <alpha-value>)',
+              'foreground': 'rgb(var(--foreground-rgb) / <alpha-value>)',
+              'card': 'rgb(var(--card-rgb) / <alpha-value>)',
+              'card-foreground': 'rgb(var(--card-foreground-rgb) / <alpha-value>)',
+              'input': 'rgb(var(--input-rgb) / <alpha-value>)',
             },
             keyframes: {
               fadeIn: {
@@ -63,7 +79,7 @@
 }
 </script>
 </head>
-  <body class="bg-background text-foreground">
+  <body class="bg-background text-foreground transition-colors duration-300">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

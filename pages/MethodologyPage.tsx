@@ -68,6 +68,20 @@ const MethodologyPage: React.FC = () => {
           </CardContent>
         </Card>
 
+        <Card>
+          <CardHeader>
+            <h2 className="text-2xl font-bold text-primary-400">Affiliate Disclosure</h2>
+          </CardHeader>
+          <CardContent className="space-y-4 text-gray-300">
+            <p>
+              Our mission is to provide you with the most accurate and unbiased information possible to help you choose the right forex broker. To keep our platform free and continue our extensive research, we may receive compensation from some of the brokers listed on our site.
+            </p>
+            <p>
+              When you click on a link to a broker's website and open an account, we may earn an affiliate commission. This comes at no extra cost to you and does not influence our ratings, reviews, or the data we present. Our scoring and recommendations are based solely on our rigorous methodology. Your trust is our most important asset, and we are committed to maintaining it through transparency.
+            </p>
+          </CardContent>
+        </Card>
+
       </div>
     </div>
   );

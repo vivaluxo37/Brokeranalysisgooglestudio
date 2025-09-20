@@ -74,6 +74,15 @@ const BrokerDuelPage: React.FC = () => {
 
       <ComparisonTable brokers={[broker1, broker2]} />
       
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+          <a href={broker1.websiteUrl} target="_blank" rel="noopener noreferrer">
+              <Button variant="primary" size="lg" className="w-full">Visit {broker1.name}</Button>
+          </a>
+          <a href={broker2.websiteUrl} target="_blank" rel="noopener noreferrer">
+              <Button variant="primary" size="lg" className="w-full">Visit {broker2.name}</Button>
+          </a>
+      </div>
+
       <div className="text-center mt-8">
           <Link to="/compare">
             <Button variant="secondary">Back to Comparison</Button>

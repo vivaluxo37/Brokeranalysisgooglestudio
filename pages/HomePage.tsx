@@ -33,7 +33,7 @@ const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({
 
 
 const HomePage: React.FC = () => {
-  const brokerLogos = brokers.slice(0, 6).map(b => ({ name: b.name, logoUrl: b.logoUrl }));
+  const brokerLogos = brokers.slice(0, 6).map(b => ({ name: b.name, logoUrl: b.logoUrl, websiteUrl: b.websiteUrl }));
   const features = [
     { 
       icon: <Icons.data className="h-8 w-8 text-primary-400" />, 
@@ -101,7 +101,9 @@ const HomePage: React.FC = () => {
           <p className="text-sm text-gray-500 uppercase tracking-wider">Trusted by top traders</p>
           <div className="mt-4 flex justify-center items-center gap-6 sm:gap-8 flex-wrap">
             {brokerLogos.map(logo => (
-              <img key={logo.name} src={logo.logoUrl} alt={logo.name} title={logo.name} className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all" />
+              <a key={logo.name} href={logo.websiteUrl} target="_blank" rel="noopener noreferrer" title={`Visit ${logo.name}`}>
+                <img src={logo.logoUrl} alt={logo.name} className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all" />
+              </a>
             ))}
           </div>
         </div>

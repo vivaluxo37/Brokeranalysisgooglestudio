@@ -210,6 +210,18 @@ const BrokerDetailPage: React.FC = () => {
         </div>
 
         <div className="p-6">
+            <div className="mt-2 flex flex-wrap justify-center items-center gap-4">
+                <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer">
+                    <Button variant="primary" size="lg" className="shadow-lg shadow-primary-900/50 animate-pulse">
+                        Visit {broker.name}
+                    </Button>
+                </a>
+                <Button onClick={handleCompareClick} variant="secondary">
+                    {inCompare ? <Icons.compareRemove className="h-5 w-5 mr-2" /> : <Icons.compare className="h-5 w-5 mr-2" />}
+                    {inCompare ? "Remove from Compare" : "Add to Compare"}
+                </Button>
+            </div>
+            
             <BrokerCharts broker={broker} />
             
             <h2 className="text-xl font-semibold mb-2 mt-8">About {broker.name}</h2>
@@ -241,15 +253,6 @@ const BrokerDetailPage: React.FC = () => {
                         <DetailItem label="Execution Type">{broker.technology.executionType}</DetailItem>
                     </dl>
                 </div>
-            </div>
-            <div className="mt-8 flex justify-center gap-4">
-                <Button onClick={handleCompareClick} variant={inCompare ? "secondary" : "primary"}>
-                    {inCompare ? <Icons.compareRemove className="h-5 w-5 mr-2" /> : <Icons.compare className="h-5 w-5 mr-2" />}
-                    {inCompare ? "Remove from Compare" : "Add to Compare"}
-                </Button>
-                <Link to="/compare">
-                    <Button variant="ghost">Go to Comparison</Button>
-                </Link>
             </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 
+
 export interface Review {
   id: string;
   brokerId: string;
@@ -67,6 +68,8 @@ export interface AuthContextType {
   login: (email: string, pass: string) => Promise<void>;
   logout: () => void;
   register: (name: string, email: string, pass: string) => Promise<void>;
+  updateUser: (name: string) => Promise<void>;
+  deleteAccount: () => Promise<void>;
 }
 
 export interface ComparisonContextType {

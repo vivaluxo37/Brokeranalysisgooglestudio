@@ -105,24 +105,32 @@ const CostAnalyzerPage: React.FC = () => {
     };
     
     if (brokersToCompare.length === 0) return (
-        <div className="text-center py-20 bg-card rounded-lg border border-input"><h2 className="text-2xl font-semibold text-gray-300">Your comparison list is empty.</h2><p className="mt-2 text-gray-400">Add brokers to the comparison list to use the Cost Analyzer.</p><Link to="/brokers" className="mt-6 inline-block"><Button>Browse Brokers</Button></Link></div>
+        <div className="text-center py-20 bg-card rounded-lg border border-input"><h2 className="text-2xl font-semibold text-card-foreground/90">Your comparison list is empty.</h2><p className="mt-2 text-card-foreground/70">Add brokers to the comparison list to use the Cost Analyzer.</p><Link to="/brokers" className="mt-6 inline-block"><Button>Browse Brokers</Button></Link></div>
     );
     
     const renderHeader = (label: string, key: SortableKeys, align: 'left' | 'right' = 'left') => (
-        <th className={`p-4 text-${align} group`}><button className={`flex items-center w-full ${align === 'right' ? 'justify-end' : ''}`} onClick={() => requestSort(key)}><span className={sortConfig.key === key ? 'text-primary-400' : 'group-hover:text-gray-200'}>{label}</span><SortIcon direction={sortConfig.key === key ? sortConfig.direction : undefined} /></button></th>
+        <th className={`p-4 text-${align} group`}><button className={`flex items-center w-full ${align === 'right' ? 'justify-end' : ''}`} onClick={() => requestSort(key)}><span className={sortConfig.key === key ? 'text-primary-400' : 'group-hover:text-foreground'}>{label}</span><SortIcon direction={sortConfig.key === key ? sortConfig.direction : undefined} /></button></th>
     );
     
     return (
         <div>
-            <div className="text-center mb-10"><h1 className="text-4xl font-bold">Live Cost Analyzer</h1><p className="text-lg text-gray-400 mt-2">Compare real-time trading costs for a standard lot.</p></div>
+            <div className="text-center mb-10"><h1 className="text-4xl font-bold">Live Cost Analyzer</h1><p className="text-lg text-foreground/80 mt-2">Compare real-time trading costs for a standard lot.</p></div>
             
             <Card className="mb-8">
-                <CardContent><p className="text-xs text-gray-400 text-center">* Total cost is an estimate for trading 1 standard lot, assuming a pip value of $10. Data updates every 3 seconds. Swap fees are not included in this table.</p></CardContent>
+                <CardContent><p className="text-xs text-card-foreground/70 text-center">* Total cost is an estimate for trading 1 standard lot, assuming a pip value of $10. Data updates every 3 seconds. Swap fees are not included in this table.</p></CardContent>
             </Card>
 
             <div className="overflow-x-auto bg-card rounded-lg border border-input">
                 <table className="w-full min-w-max text-left">
-                    <thead><tr className="border-b border-input">{renderHeader('Broker', 'name')}{renderHeader('Live Spread (pips)', 'spread', 'right')}{renderHeader('Commission ($)', 'commission', 'right')}{renderHeader('Total Cost ($)', 'totalCost', 'right')}</tr></thead>
+                    <thead>
+                        <tr className="border-b border-input">
+                            {renderHeader('Broker', 'name')}
+                            {renderHeader('Live Spread (pips)', 'spread', 'right')}
+                            {renderHeader('Commission ($)', 'commission', 'right')}
+                            {renderHeader('Total Cost ($)', 'totalCost', 'right')}
+                            <th className="p-4 text-right">Visit Site</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         {sortedData.map(broker => {
                             const isCheapest = broker.totalCost === minCost && enrichedData.length > 1 && minCost > 0;
@@ -137,6 +145,13 @@ const CostAnalyzerPage: React.FC = () => {
                                 <td className="p-4 text-right font-mono">{broker.spread.toFixed(2)}</td>
                                 <td className="p-4 text-right font-mono">{broker.commission.toFixed(2)}</td>
                                 <td className={`p-4 text-right font-bold text-lg font-mono ${isCheapest ? 'text-green-300' : 'text-primary-400'}`}>{broker.totalCost.toFixed(2)}</td>
+                                <td className="p-4 text-right">
+                                    <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer">
+                                        <Button variant="primary" size="sm">
+                                            Visit
+                                        </Button>
+                                    </a>
+                                </td>
                                </tr>
                             );
                         })}
@@ -148,17 +163,17 @@ const CostAnalyzerPage: React.FC = () => {
                 <Card>
                     <CardHeader><h3 className="text-xl font-bold">General AI Analysis</h3></CardHeader>
                     <CardContent>
-                         <div className="mb-4"><label htmlFor="instrument" className="block text-sm font-medium text-gray-300 mb-1">Select Instrument</label><select id="instrument" value={instrument} onChange={e => setInstrument(e.target.value as Instrument)} className="bg-input border-input rounded-md w-full p-2">{instruments.map(inst => <option key={inst} value={inst}>{inst}</option>)}</select></div>
+                         <div className="mb-4"><label htmlFor="instrument" className="block text-sm font-medium text-card-foreground/90 mb-1">Select Instrument</label><select id="instrument" value={instrument} onChange={e => setInstrument(e.target.value as Instrument)} className="bg-input border-input rounded-md w-full p-2">{instruments.map(inst => <option key={inst} value={inst}>{inst}</option>)}</select></div>
                         <Button onClick={() => handleGetAnalysis('general')} disabled={loadingAnalysis} className="w-full">{loadingAnalysis ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/>Get Instant Analysis</>}</Button>
-                        {analysisResult && <div className="mt-4 text-gray-300 whitespace-pre-wrap animate-fade-in" dangerouslySetInnerHTML={{ __html: parseMarkdown(analysisResult) }} />}
+                        {analysisResult && <div className="mt-4 text-card-foreground/90 whitespace-pre-wrap animate-fade-in" dangerouslySetInnerHTML={{ __html: parseMarkdown(analysisResult) }} />}
                     </CardContent>
                 </Card>
                  <Card>
                     <CardHeader><h3 className="text-xl font-bold">Personalized AI Cost Projection</h3></CardHeader>
                     <CardContent>
-                        <div className="mb-4"><label htmlFor="tradingStyle" className="block text-sm font-medium text-gray-300 mb-1">Your Trading Style</label><select id="tradingStyle" value={tradingStyle} onChange={e => setTradingStyle(e.target.value as TradingStyle)} className="bg-input border-input rounded-md w-full p-2">{tradingStyles.map(style => <option key={style} value={style}>{style}</option>)}</select></div>
+                        <div className="mb-4"><label htmlFor="tradingStyle" className="block text-sm font-medium text-card-foreground/90 mb-1">Your Trading Style</label><select id="tradingStyle" value={tradingStyle} onChange={e => setTradingStyle(e.target.value as TradingStyle)} className="bg-input border-input rounded-md w-full p-2">{tradingStyles.map(style => <option key={style} value={style}>{style}</option>)}</select></div>
                         <Button onClick={() => handleGetAnalysis('personal')} disabled={loadingProjection} className="w-full">{loadingProjection ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/>Get My Projection</>}</Button>
-                        {projectionResult && <div className="mt-4 text-gray-300 whitespace-pre-wrap animate-fade-in" dangerouslySetInnerHTML={{ __html: parseMarkdown(projectionResult) }} />}
+                        {projectionResult && <div className="mt-4 text-card-foreground/90 whitespace-pre-wrap animate-fade-in" dangerouslySetInnerHTML={{ __html: parseMarkdown(projectionResult) }} />}
                     </CardContent>
                 </Card>
             </div>

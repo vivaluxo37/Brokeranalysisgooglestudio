@@ -9,7 +9,7 @@ const Header: React.FC = () => {
   const { user, logout } = useAuth();
 
   return (
-    <header className="bg-card/50 backdrop-blur-lg sticky top-0 z-50 border-b border-input">
+    <header className="bg-card/50 backdrop-blur-lg sticky top-0 z-50 border-b border-input transition-colors duration-300">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
                       `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                         isActive
                           ? 'bg-primary-500 text-white'
-                          : 'text-gray-300 hover:bg-card hover:text-white'
+                          : 'text-foreground/70 hover:bg-input hover:text-foreground'
                       }`
                     }
                   >
@@ -40,7 +40,7 @@ const Header: React.FC = () => {
             <ThemeToggle />
             {user ? (
               <>
-                <Link to="/dashboard" className="text-sm font-medium text-gray-300 hover:text-white">{user.name}</Link>
+                <Link to="/dashboard" className="text-sm font-medium text-foreground/80 hover:text-foreground">{user.name}</Link>
                 <Button onClick={logout} variant="secondary" size="sm">
                   Logout
                 </Button>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { NAV_LINKS } from '../../constants';
@@ -7,8 +6,8 @@ const Footer: React.FC = () => {
   const footerLinks = [...NAV_LINKS, { name: 'Methodology', path: '/methodology' }];
 
   return (
-    <footer className="bg-card/50 border-t border-input mt-24">
-      <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-gray-400">
+    <footer className="bg-card/50 border-t border-input mt-24 transition-colors duration-300">
+      <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-foreground/70">
         <div className="flex justify-center flex-wrap gap-x-6 gap-y-2 text-sm mb-4">
             {footerLinks.map(link => (
               <Link key={link.name} to={link.path} className="hover:text-primary-400 transition-colors">

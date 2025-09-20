@@ -48,7 +48,7 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
     <Card className={`flex flex-col h-full ${recommendationClasses}`}>
       <div className="relative flex-grow">
         <button onClick={handleFavoriteClick} className="absolute top-3 right-3 z-10 p-1 rounded-full bg-card/50 hover:bg-input transition-colors" aria-label="Toggle Favorite">
-          {isFavorite ? <Icons.starFull className="h-5 w-5 text-yellow-400" /> : <Icons.star className="h-5 w-5 text-gray-400" />}
+          {isFavorite ? <Icons.starFull className="h-5 w-5 text-yellow-400" /> : <Icons.star className="h-5 w-5 text-card-foreground/60" />}
         </button>
         <Link to={`/broker/${broker.id}`} className="block h-full">
           <CardContent>
@@ -59,17 +59,17 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
                   <StarRating score={broker.score} />
               </div>
             </div>
-            <h3 className="text-xl font-bold mt-4 text-gray-100">{broker.name}</h3>
-            <p className="text-sm text-gray-400 mt-1">{broker.headquarters} &bull; Est. {broker.foundingYear}</p>
+            <h3 className="text-xl font-bold mt-4 text-card-foreground">{broker.name}</h3>
+            <p className="text-sm text-card-foreground/70 mt-1">{broker.headquarters} &bull; Est. {broker.foundingYear}</p>
             
             <div className="mt-4 pt-3 border-t border-input/50 text-sm space-y-2">
-              <div className="flex justify-between items-center text-gray-400">
+              <div className="flex justify-between items-center text-card-foreground/70">
                 <span className="truncate pr-2">Regulators</span>
-                <span className="font-semibold text-right text-gray-200 truncate">{broker.regulation.regulators.slice(0, 2).join(', ')}</span>
+                <span className="font-semibold text-right text-card-foreground truncate">{broker.regulation.regulators.slice(0, 2).join(', ')}</span>
               </div>
-              <div className="flex justify-between items-center text-gray-400">
+              <div className="flex justify-between items-center text-card-foreground/70">
                 <span>Max Leverage</span>
-                <span className="font-semibold text-gray-200">{broker.tradingConditions.maxLeverage}</span>
+                <span className="font-semibold text-card-foreground">{broker.tradingConditions.maxLeverage}</span>
               </div>
             </div>
           </CardContent>

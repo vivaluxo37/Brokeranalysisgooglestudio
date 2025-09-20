@@ -97,14 +97,14 @@ const AllBrokersPage: React.FC = () => {
         .filter((b): b is Broker => !!b);
   }, [aiRecommendation]);
 
-  const selectClasses = "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
-  const labelClasses = "block text-sm font-medium text-gray-300 mb-1 text-left";
+  const selectClasses = "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+  const labelClasses = "block text-sm font-medium text-foreground/80 mb-1 text-left";
 
   return (
     <div>
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold">All Forex Brokers</h1>
-        <p className="text-lg text-gray-400 mt-2">Browse and filter our comprehensive list of regulated brokers.</p>
+        <p className="text-lg text-foreground/80 mt-2">Browse and filter our comprehensive list of regulated brokers.</p>
       </div>
 
       <div className="bg-card/50 p-6 rounded-lg border border-input mb-8 space-y-4">
@@ -157,7 +157,7 @@ const AllBrokersPage: React.FC = () => {
             >
                 {isAiLoading ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/>Get AI Recommendation</>}
             </Button>
-            {filteredBrokers.length < 2 && <p className="text-xs text-center mt-2 text-gray-400">Filter to at least 2 brokers to get a recommendation.</p>}
+            {filteredBrokers.length < 2 && <p className="text-xs text-center mt-2 text-foreground/60">Filter to at least 2 brokers to get a recommendation.</p>}
         </div>
       </div>
       
@@ -170,7 +170,7 @@ const AllBrokersPage: React.FC = () => {
                  <Card className="h-full flex flex-col">
                       <CardHeader><h3 className="text-xl font-bold flex items-center gap-2"><Icons.bot className="h-6 w-6 text-primary-400"/> AI Analysis</h3></CardHeader>
                       <CardContent className="flex-grow">
-                          <p className="text-gray-300 italic">{aiRecommendation.reasoning}</p>
+                          <p className="text-card-foreground/90 italic">{aiRecommendation.reasoning}</p>
                       </CardContent>
                   </Card>
               </div>
@@ -190,7 +190,7 @@ const AllBrokersPage: React.FC = () => {
         ))}
       </div>
       {filteredBrokers.length === 0 && (
-        <div className="text-center py-16 text-gray-400">
+        <div className="text-center py-16 text-foreground/70">
             <p>No brokers found matching your search and filter criteria.</p>
         </div>
       )}

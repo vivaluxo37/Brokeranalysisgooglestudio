@@ -116,7 +116,7 @@ const BrokerMatcherPage: React.FC = () => {
   const isFinalStep = currentStep === steps.length -1;
 
   if (loading) {
-      return <div className="flex flex-col items-center justify-center py-20"><Spinner size="lg"/><p className="mt-4 text-lg text-gray-300">Our AI is finding your perfect broker...</p></div>;
+      return <div className="flex flex-col items-center justify-center py-20"><Spinner size="lg"/><p className="mt-4 text-lg text-foreground/80">Our AI is finding your perfect broker...</p></div>;
   }
   
   if (results) {
@@ -131,7 +131,7 @@ const BrokerMatcherPage: React.FC = () => {
                 </h3>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-300 italic">{results.reasoning}</p>
+              <p className="text-card-foreground/90 italic">{results.reasoning}</p>
             </CardContent>
           </Card>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -152,7 +152,7 @@ const BrokerMatcherPage: React.FC = () => {
     <div>
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold">AI Broker Matcher</h1>
-        <p className="text-lg text-gray-400 mt-2">Answer a few questions and let our AI do the work.</p>
+        <p className="text-lg text-foreground/80 mt-2">Answer a few questions and let our AI do the work.</p>
       </div>
 
       <Card className="max-w-2xl mx-auto">
@@ -163,7 +163,7 @@ const BrokerMatcherPage: React.FC = () => {
               </div>
           </div>
           <div key={currentStep} className="text-center p-8 min-h-[250px] flex flex-col justify-center animate-fade-in">
-            <h2 className="text-2xl font-semibold text-gray-100">{steps[currentStep].title}</h2>
+            <h2 className="text-2xl font-semibold text-card-foreground">{steps[currentStep].title}</h2>
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {steps[currentStep].options.map(option => (
                 <Button 

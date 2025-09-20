@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Icons } from '../../constants';
 
@@ -23,7 +22,7 @@ const StarRatingInput: React.FC<StarRatingInputProps> = ({ rating, setRating, si
         const isFilled = (hoverRating || rating) >= starIndex;
         const starProps = {
             key: starIndex,
-            className: `cursor-pointer transition-colors ${sizeClasses[size]} ${isFilled ? 'text-yellow-400' : 'text-gray-500 hover:text-yellow-300'}`
+            className: `cursor-pointer transition-colors ${sizeClasses[size]} ${isFilled ? 'text-yellow-400' : 'text-foreground/50 hover:text-yellow-300'}`
         };
         return (
             <button

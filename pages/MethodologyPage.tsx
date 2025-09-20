@@ -7,7 +7,7 @@ const MethodologyPage: React.FC = () => {
     <div className="max-w-4xl mx-auto py-8">
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">Our Methodology</h1>
-        <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-300">
+        <p className="mt-4 max-w-2xl mx-auto text-lg text-foreground/80">
           Transparency is at the core of our mission. Here's how we gather data, score brokers, and leverage AI to help you make informed decisions.
         </p>
       </div>
@@ -17,7 +17,7 @@ const MethodologyPage: React.FC = () => {
           <CardHeader>
             <h2 className="text-2xl font-bold text-primary-400">How We Score Brokers</h2>
           </CardHeader>
-          <CardContent className="space-y-4 text-gray-300">
+          <CardContent className="space-y-4 text-card-foreground/90">
             <p>
               Each broker is given an overall score out of 10, which is a weighted average of several key categories. Our goal is to provide a balanced view that reflects the complete trading experience.
             </p>
@@ -34,7 +34,7 @@ const MethodologyPage: React.FC = () => {
           <CardHeader>
             <h2 className="text-2xl font-bold text-primary-400">Data Sources & Accuracy</h2>
           </CardHeader>
-          <CardContent className="space-y-4 text-gray-300">
+          <CardContent className="space-y-4 text-card-foreground/90">
             <p>
               Our data is meticulously gathered from multiple sources to ensure it is as accurate and up-to-date as possible:
             </p>
@@ -43,7 +43,7 @@ const MethodologyPage: React.FC = () => {
               <li><strong>Regulatory Body Databases:</strong> We verify licenses and check for disciplinary actions directly with regulatory agencies.</li>
               <li><strong>User Reviews:</strong> The experiences of real traders provide invaluable qualitative insights that complement our quantitative data.</li>
             </ul>
-            <p className="text-sm text-gray-400 italic">
+            <p className="text-sm text-card-foreground/70 italic">
               Disclaimer: The forex market is dynamic. While we strive for accuracy, information such as spreads and fees can change. Always verify details with the broker before opening an account.
             </p>
           </CardContent>
@@ -53,7 +53,7 @@ const MethodologyPage: React.FC = () => {
           <CardHeader>
             <h2 className="text-2xl font-bold text-primary-400">The Role of AI</h2>
           </CardHeader>
-          <CardContent className="space-y-4 text-gray-300">
+          <CardContent className="space-y-4 text-card-foreground/90">
             <p>
               We use Google's Gemini AI model as a powerful tool to process and analyze vast amounts of information, providing you with unique insights that would be impossible to generate manually.
             </p>
@@ -72,7 +72,7 @@ const MethodologyPage: React.FC = () => {
           <CardHeader>
             <h2 className="text-2xl font-bold text-primary-400">Affiliate Disclosure</h2>
           </CardHeader>
-          <CardContent className="space-y-4 text-gray-300">
+          <CardContent className="space-y-4 text-card-foreground/90">
             <p>
               Our mission is to provide you with the most accurate and unbiased information possible to help you choose the right forex broker. To keep our platform free and continue our extensive research, we may receive compensation from some of the brokers listed on our site.
             </p>

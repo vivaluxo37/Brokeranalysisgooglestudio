@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Broker } from '../../types';
 import Chart from 'chart.js/auto';
+import { useTheme } from '../../hooks/useTheme';
 
 interface BrokerChartsProps {
   broker: Broker;
@@ -10,6 +11,7 @@ const BrokerCharts: React.FC<BrokerChartsProps> = ({ broker }) => {
   const radarChartRef = useRef<HTMLCanvasElement>(null);
   const barChartRef = useRef<HTMLCanvasElement>(null);
   const chartInstances = useRef<{ radar?: Chart, bar?: Chart }>({});
+  const { theme } = useTheme();
 
   useEffect(() => {
     // Cleanup previous chart instances on re-render
@@ -19,6 +21,17 @@ const BrokerCharts: React.FC<BrokerChartsProps> = ({ broker }) => {
     if (chartInstances.current.bar) {
       chartInstances.current.bar.destroy();
     }
+
+    const rootStyles = getComputedStyle(document.documentElement);
+    const cardRGB = rootStyles.getPropertyValue('--card-rgb').trim();
+    const cardFgRGB = rootStyles.getPropertyValue('--card-foreground-rgb').trim();
+    const fgRGB = rootStyles.getPropertyValue('--foreground-rgb').trim();
+    
+    const labelColor = `rgb(${cardFgRGB})`;
+    const mutedColor = `rgba(${cardFgRGB}, 0.7)`;
+    const gridColor = `rgba(${fgRGB}, 0.2)`;
+    const pointBorderColor = `rgb(${cardRGB})`;
+
 
     // Radar Chart for Ratings
     if (radarChartRef.current) {
@@ -40,8 +53,8 @@ const BrokerCharts: React.FC<BrokerChartsProps> = ({ broker }) => {
               backgroundColor: 'rgba(59, 130, 246, 0.2)',
               borderColor: 'rgb(59, 130, 246)',
               pointBackgroundColor: 'rgb(59, 130, 246)',
-              pointBorderColor: '#fff',
-              pointHoverBackgroundColor: '#fff',
+              pointBorderColor: pointBorderColor,
+              pointHoverBackgroundColor: pointBorderColor,
               pointHoverBorderColor: 'rgb(59, 130, 246)'
             }]
           },
@@ -50,11 +63,11 @@ const BrokerCharts: React.FC<BrokerChartsProps> = ({ broker }) => {
             maintainAspectRatio: false,
             scales: {
               r: {
-                angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
-                grid: { color: 'rgba(255, 255, 255, 0.2)' },
-                pointLabels: { color: '#f8fafc', font: { size: 12 } },
+                angleLines: { color: gridColor },
+                grid: { color: gridColor },
+                pointLabels: { color: labelColor, font: { size: 12 } },
                 ticks: {
-                  color: '#9ca3af',
+                  color: mutedColor,
                   backdropColor: 'transparent',
                   stepSize: 2,
                   font: { size: 10 }
@@ -96,8 +109,8 @@ const BrokerCharts: React.FC<BrokerChartsProps> = ({ broker }) => {
                         {
                             label: 'Industry Average',
                             data: [industryAverage.eurusd, industryAverage.gbpusd, industryAverage.usdjpy],
-                            backgroundColor: 'rgba(107, 114, 128, 0.6)',
-                            borderColor: 'rgb(107, 114, 128)',
+                            backgroundColor: `rgba(${fgRGB}, 0.4)`,
+                            borderColor: `rgba(${fgRGB}, 0.6)`,
                             borderWidth: 1
                         }
                     ]
@@ -108,17 +121,17 @@ const BrokerCharts: React.FC<BrokerChartsProps> = ({ broker }) => {
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                            ticks: { color: '#9ca3af' },
-                            title: { display: true, text: 'Spreads (pips)', color: '#f8fafc' }
+                            grid: { color: gridColor },
+                            ticks: { color: mutedColor },
+                            title: { display: true, text: 'Spreads (pips)', color: labelColor }
                         },
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#9ca3af' }
+                            ticks: { color: mutedColor }
                         }
                     },
                     plugins: {
-                        legend: { labels: { color: '#f8fafc' } }
+                        legend: { labels: { color: labelColor } }
                     }
                 }
             });
@@ -130,7 +143,7 @@ const BrokerCharts: React.FC<BrokerChartsProps> = ({ broker }) => {
       if (chartInstances.current.radar) chartInstances.current.radar.destroy();
       if (chartInstances.current.bar) chartInstances.current.bar.destroy();
     };
-  }, [broker]);
+  }, [broker, theme]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">

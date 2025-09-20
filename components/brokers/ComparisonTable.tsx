@@ -70,7 +70,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
         <tbody>
           {features.map(feature => (
             <tr key={feature.key} className="border-b border-input last:border-b-0">
-              <td className="p-4 font-semibold text-gray-300">{feature.title}</td>
+              <td className="p-4 font-semibold text-foreground/80">{feature.title}</td>
               {brokers.map(broker => (
                 <td key={broker.id} className="p-4 text-center align-top">
                   {renderValue(broker, feature.key)}

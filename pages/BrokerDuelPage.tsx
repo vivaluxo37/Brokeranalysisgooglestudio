@@ -47,7 +47,7 @@ const BrokerDuelPage: React.FC = () => {
             <Link to={`/broker/${broker2.id}`}><img src={broker2.logoUrl} alt={broker2.name} className="h-20 bg-white p-2 rounded-md"/></Link>
         </div>
         <h1 className="text-4xl font-bold mt-4">{broker1.name} vs {broker2.name}</h1>
-        <p className="text-lg text-gray-400 mt-2">A head-to-head showdown.</p>
+        <p className="text-lg text-foreground/80 mt-2">A head-to-head showdown.</p>
       </div>
 
        <div className="text-center mb-8">
@@ -67,7 +67,7 @@ const BrokerDuelPage: React.FC = () => {
                     </h3>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-gray-200 text-lg whitespace-pre-wrap">{verdict}</p>
+                    <p className="text-card-foreground/90 text-lg whitespace-pre-wrap">{verdict}</p>
                 </CardContent>
             </Card>
         )}

@@ -59,7 +59,7 @@ const LoginPage: React.FC = () => {
               {loading ? <Spinner size="sm" /> : 'Login'}
             </Button>
           </form>
-          <p className="mt-6 text-center text-sm text-gray-400">
+          <p className="mt-6 text-center text-sm text-card-foreground/80">
             Don't have an account?{' '}
             <Link to="/register" className="font-medium text-primary-500 hover:text-primary-400">
               Register here

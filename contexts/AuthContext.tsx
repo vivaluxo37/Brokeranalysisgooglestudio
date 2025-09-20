@@ -1,4 +1,5 @@
 
+
 import React, { createContext, useState, useEffect } from 'react';
 import { AuthContextType, User } from '../types';
 
@@ -47,8 +48,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
+  const updateUser = async (name: string): Promise<void> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (user) {
+          const updatedUser = { ...user, name };
+          setUser(updatedUser);
+        }
+        resolve();
+      }, 500);
+    });
+  };
+
+  const deleteAccount = async (): Promise<void> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (user) {
+          // In a real app, you'd also remove other user-specific data
+          localStorage.removeItem(`favorites_${user.id}`);
+          localStorage.removeItem(`matcherHistory_${user.id}`);
+        }
+        setUser(null); // This triggers the useEffect to remove 'user' from localStorage
+        resolve();
+      }, 500);
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register, updateUser, deleteAccount }}>
       {children}
     </AuthContext.Provider>
   );

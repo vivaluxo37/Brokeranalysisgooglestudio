@@ -20,7 +20,7 @@ import BrokerCharts from '../components/brokers/BrokerCharts';
 
 const DetailItem: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
     <div className="py-3 sm:grid sm:grid-cols-3 sm:gap-4">
-        <dt className="text-sm font-medium text-gray-400">{label}</dt>
+        <dt className="text-sm font-medium text-foreground/70">{label}</dt>
         <dd className="mt-1 text-sm text-foreground sm:mt-0 sm:col-span-2">{children}</dd>
     </div>
 );
@@ -57,17 +57,17 @@ const AIReviewSummary: React.FC<{ brokerName: string; reviews: Review[] }> = ({ 
         <Card className="mt-8 animate-fade-in">
             <CardHeader><h3 className="text-xl font-bold flex items-center gap-2"><Icons.bot className="h-6 w-6 text-primary-400"/> AI Review Analysis</h3></CardHeader>
             <CardContent>
-                <p className="text-gray-300 italic mb-6">{summary.summary}</p>
+                <p className="text-card-foreground/90 italic mb-6">{summary.summary}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h4 className="font-semibold text-green-400 mb-2">Common Pros</h4>
-                        <ul className="list-disc list-inside space-y-1 text-gray-400">
+                        <ul className="list-disc list-inside space-y-1 text-card-foreground/70">
                             {summary.pros.map((pro, i) => <li key={i}>{pro}</li>)}
                         </ul>
                     </div>
                     <div>
                         <h4 className="font-semibold text-red-400 mb-2">Common Cons</h4>
-                        <ul className="list-disc list-inside space-y-1 text-gray-400">
+                        <ul className="list-disc list-inside space-y-1 text-card-foreground/70">
                             {summary.cons.map((con, i) => <li key={i}>{con}</li>)}
                         </ul>
                     </div>
@@ -97,7 +97,7 @@ const RegulatoryTrustScore: React.FC<{ brokerName: string; regulators: string[] 
     }, [brokerName, regulators]);
 
     if (loading) {
-        return <div className="flex items-center gap-2 text-sm text-gray-400"><Spinner size="sm" /> <span>Analyzing regulatory status...</span></div>;
+        return <div className="flex items-center gap-2 text-sm text-foreground/70"><Spinner size="sm" /> <span>Analyzing regulatory status...</span></div>;
     }
 
     if (!trustInfo) return null;
@@ -110,12 +110,12 @@ const RegulatoryTrustScore: React.FC<{ brokerName: string; regulators: string[] 
             <div className="p-4 bg-input/50 rounded-lg">
                 <div className="flex items-baseline gap-2">
                      <span className={`text-3xl font-bold ${scoreColor}`}>{trustInfo.score.toFixed(1)}</span>
-                     <span className="text-gray-400">/ 10</span>
+                     <span className="text-foreground/70">/ 10</span>
                 </div>
-                <p className="text-sm text-gray-300 mt-1 italic">{trustInfo.reasoning}</p>
+                <p className="text-sm text-foreground/90 mt-1 italic">{trustInfo.reasoning}</p>
                 {trustInfo.sources && trustInfo.sources.length > 0 && (
                     <div className="mt-3">
-                        <p className="text-xs text-gray-500">Sources found by AI:</p>
+                        <p className="text-xs text-foreground/60">Sources found by AI:</p>
                         <div className="flex flex-wrap gap-2 mt-1">
                             {trustInfo.sources.slice(0, 3).map((source, i) => (
                                 <a href={source.uri} key={i} target="_blank" rel="noopener noreferrer" className="text-xs text-primary-500 hover:underline bg-background px-2 py-1 rounded-md">
@@ -206,8 +206,8 @@ const BrokerDetailPage: React.FC = () => {
                 <div className="flex items-center">
                     <img className="h-16 w-16 bg-white p-2 rounded-md" src={broker.logoUrl} alt={`${broker.name} logo`} />
                     <div className="ml-4">
-                        <h1 className="text-3xl font-bold leading-7 text-white sm:truncate">{broker.name}</h1>
-                        <p className="text-gray-400 mt-1">{broker.headquarters} &bull; Est. {broker.foundingYear}</p>
+                        <h1 className="text-3xl font-bold leading-7 text-card-foreground sm:truncate">{broker.name}</h1>
+                        <p className="text-foreground/70 mt-1">{broker.headquarters} &bull; Est. {broker.foundingYear}</p>
                     </div>
                 </div>
             </div>
@@ -237,7 +237,7 @@ const BrokerDetailPage: React.FC = () => {
             <BrokerCharts broker={broker} />
             
             <h2 className="text-xl font-semibold mb-2 mt-8">About {broker.name}</h2>
-            <p className="text-gray-300">{broker.description}</p>
+            <p className="text-foreground/90">{broker.description}</p>
             
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
                 <div>
@@ -275,13 +275,13 @@ const BrokerDetailPage: React.FC = () => {
              {reviews.length > 0 && (
                 <div className="flex items-center gap-4">
                     <div>
-                        <label htmlFor="filter-rating" className="text-sm font-medium text-gray-400 mr-2">Filter:</label>
+                        <label htmlFor="filter-rating" className="text-sm font-medium text-foreground/80 mr-2">Filter:</label>
                         <select id="filter-rating" value={filterRating} onChange={(e) => setFilterRating(Number(e.target.value))} className="bg-input border-input rounded-md shadow-sm p-2">
                             <option value="0">All Ratings</option> <option value="5">5 Stars</option> <option value="4">4 Stars</option> <option value="3">3 Stars</option> <option value="2">2 Stars</option> <option value="1">1 Star</option>
                         </select>
                     </div>
                      <div>
-                        <label htmlFor="sort-order" className="text-sm font-medium text-gray-400 mr-2">Sort by:</label>
+                        <label htmlFor="sort-order" className="text-sm font-medium text-foreground/80 mr-2">Sort by:</label>
                         <select id="sort-order" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="bg-input border-input rounded-md shadow-sm p-2">
                             <option value="date-desc">Newest First</option> <option value="date-asc">Oldest First</option> <option value="rating-desc">Highest Rating</option> <option value="rating-asc">Lowest Rating</option>
                         </select>
@@ -297,20 +297,20 @@ const BrokerDetailPage: React.FC = () => {
                 <CardContent>
                     <h3 className="text-xl font-semibold mb-4">Leave a Review</h3>
                     <form onSubmit={handleReviewSubmit}>
-                        <div className="mb-4"><label className="block text-sm font-medium text-gray-300 mb-2">Your Rating</label><StarRatingInput rating={newRating} setRating={setNewRating} /></div>
-                        <div className="mb-4"><label htmlFor="comment" className="block text-sm font-medium text-gray-300 mb-2">Your Comment</label><textarea id="comment" rows={4} className="block w-full bg-input border-input rounded-md shadow-sm p-2" value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder={`Share your experience with ${broker.name}...`} required></textarea></div>
+                        <div className="mb-4"><label className="block text-sm font-medium text-card-foreground/90 mb-2">Your Rating</label><StarRatingInput rating={newRating} setRating={setNewRating} /></div>
+                        <div className="mb-4"><label htmlFor="comment" className="block text-sm font-medium text-card-foreground/90 mb-2">Your Comment</label><textarea id="comment" rows={4} className="block w-full bg-input border-input rounded-md shadow-sm p-2 placeholder:text-foreground/60" value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder={`Share your experience with ${broker.name}...`} required></textarea></div>
                         <Button type="submit" disabled={isSubmitting || newRating === 0 || !newComment.trim()}>{isSubmitting ? 'Submitting...' : 'Submit Review'}</Button>
                     </form>
                 </CardContent>
             </Card>
         ) : (
-            <div className="text-center p-6 bg-card rounded-lg border border-input my-8"><p><Link to="/login" className="text-primary-400 font-semibold hover:underline">Log in</Link> to leave a review.</p></div>
+            <div className="text-center p-6 bg-card rounded-lg border border-input my-8"><p className="text-card-foreground/80"><Link to="/login" className="text-primary-400 font-semibold hover:underline">Log in</Link> to leave a review.</p></div>
         )}
 
         <div className="space-y-6">
             {displayedReviews.length > 0 ? (
                 displayedReviews.map(review => <ReviewCard key={review.id} review={review} />)
-            ) : (<p className="text-center text-gray-400 py-8">{reviews.length > 0 ? 'No reviews match your selected filters.' : 'No reviews yet for this broker. Be the first to leave one!'}</p>)}
+            ) : (<p className="text-center text-foreground/70 py-8">{reviews.length > 0 ? 'No reviews match your selected filters.' : 'No reviews yet for this broker. Be the first to leave one!'}</p>)}
         </div>
       </div>
     </div>

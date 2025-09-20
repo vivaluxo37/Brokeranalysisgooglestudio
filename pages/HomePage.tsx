@@ -22,7 +22,7 @@ const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({
         className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
       >
         <div className="overflow-hidden">
-          <div className="pb-5 text-gray-400">
+          <div className="pb-5 text-card-foreground/70">
             {children}
           </div>
         </div>
@@ -64,7 +64,7 @@ const HomePage: React.FC = () => {
     },
     {
       q: "How does AI choose the right broker for me?",
-      a: "Our AI Broker Matcher analyzes your answers to questions about your experience, trading style, and priorities. It then compares your profile against our database of broker attributes—like costs, platforms, and regulation—to find the closest matches. It's a data-driven process designed to personalize your search."
+      a: "Our AI Broker Matcher analyzes your answers to questions about your trading style, and priorities. It then compares your profile against our database of broker attributes—like costs, platforms, and regulation—to find the closest matches. It's a data-driven process designed to personalize your search."
     },
     {
       q: "Which broker has the lowest trading costs?",
@@ -79,10 +79,10 @@ const HomePage: React.FC = () => {
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-600">
           Find Your Perfect Forex Broker
         </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-gray-300">
+        <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-foreground/80">
           Leverage the power of AI to analyze, compare, and choose the best broker tailored to your trading style.
         </p>
-         <p className="mt-2 text-sm text-gray-500">
+         <p className="mt-2 text-sm text-foreground/60">
           Data-driven insights on dozens of regulated brokers worldwide.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
@@ -98,11 +98,11 @@ const HomePage: React.FC = () => {
           </Link>
         </div>
         <div className="mt-16">
-          <p className="text-sm text-gray-500 uppercase tracking-wider">Trusted by top traders</p>
+          <p className="text-sm text-foreground/60 uppercase tracking-wider">Trusted by top traders</p>
           <div className="mt-4 flex justify-center items-center gap-6 sm:gap-8 flex-wrap">
             {brokerLogos.map(logo => (
               <a key={logo.name} href={logo.websiteUrl} target="_blank" rel="noopener noreferrer" title={`Visit ${logo.name}`}>
-                <img src={logo.logoUrl} alt={logo.name} className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all" />
+                <img src={logo.name} alt={logo.name} className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all" />
               </a>
             ))}
           </div>
@@ -119,7 +119,7 @@ const HomePage: React.FC = () => {
                     {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold text-primary-400">{feature.title}</h3>
-                <p className="mt-2 text-gray-400 flex-grow">{feature.description}</p>
+                <p className="mt-2 text-card-foreground/80 flex-grow">{feature.description}</p>
             </div>
             ))}
         </div>
@@ -135,17 +135,17 @@ const HomePage: React.FC = () => {
             <div className="flex flex-col items-center p-6 bg-card border border-input rounded-lg">
                 <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary-900/50 border-2 border-primary-700 text-2xl font-bold text-primary-300 mb-4">1</div>
                 <h3 className="text-xl font-bold mb-2">Answer Questions</h3>
-                <p className="text-gray-400">Tell us about your trading style, experience, and what you value most in a broker.</p>
+                <p className="text-card-foreground/80">Tell us about your trading style, experience, and what you value most in a broker.</p>
             </div>
             <div className="flex flex-col items-center p-6 bg-card border border-input rounded-lg">
                 <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary-900/50 border-2 border-primary-700 text-2xl font-bold text-primary-300 mb-4">2</div>
                 <h3 className="text-xl font-bold mb-2">Get AI Matches</h3>
-                <p className="text-gray-400">Our AI analyzes your profile and recommends top brokers from our database.</p>
+                <p className="text-card-foreground/80">Our AI analyzes your profile and recommends top brokers from our database.</p>
             </div>
             <div className="flex flex-col items-center p-6 bg-card border border-input rounded-lg">
                 <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary-900/50 border-2 border-primary-700 text-2xl font-bold text-primary-300 mb-4">3</div>
                 <h3 className="text-xl font-bold mb-2">Compare & Choose</h3>
-                <p className="text-gray-400">Use our tools to compare costs, features, and trust scores to make your final choice.</p>
+                <p className="text-card-foreground/80">Use our tools to compare costs, features, and trust scores to make your final choice.</p>
             </div>
          </div>
        </div>
@@ -155,11 +155,11 @@ const HomePage: React.FC = () => {
         <h2 className="text-3xl font-bold mb-10">Trusted by Traders Worldwide</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="p-6 bg-card rounded-lg border border-input text-left">
-                <p className="text-gray-300 italic">"The AI Broker Matcher is a game-changer. It found me a broker with low spreads that I'd never heard of. Saved me hours of research."</p>
+                <p className="text-card-foreground/90 italic">"The AI Broker Matcher is a game-changer. It found me a broker with low spreads that I'd never heard of. Saved me hours of research."</p>
                 <p className="mt-4 font-semibold text-primary-400">- Alex R., Day Trader</p>
             </div>
              <div className="p-6 bg-card rounded-lg border border-input text-left">
-                <p className="text-gray-300 italic">"Finally, a comparison site that's actually useful. The live cost analyzer is brilliant for seeing real-time fees. Highly recommended."</p>
+                <p className="text-card-foreground/90 italic">"Finally, a comparison site that's actually useful. The live cost analyzer is brilliant for seeing real-time fees. Highly recommended."</p>
                 <p className="mt-4 font-semibold text-primary-400">- Sarah T., Swing Trader</p>
             </div>
         </div>

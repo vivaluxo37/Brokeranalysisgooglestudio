@@ -24,24 +24,24 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             <div>
                 <div className="flex items-center mb-2">
                     <span className="flex items-center justify-center h-8 w-8 rounded-full bg-input mr-3">
-                        <Icons.user className="h-5 w-5 text-gray-400" />
+                        <Icons.user className="h-5 w-5 text-foreground/60" />
                     </span>
                     <div>
                         <div className="flex items-center gap-2">
-                            <p className="font-semibold text-foreground">{review.userName}</p>
+                            <p className="font-semibold text-card-foreground">{review.userName}</p>
                             {review.verified && (
                                 <Badge variant="success" Icon={Icons.verified}>
                                     Verified Trader
                                 </Badge>
                             )}
                         </div>
-                        <p className="text-xs text-gray-400">{formattedDate}</p>
+                        <p className="text-xs text-card-foreground/60">{formattedDate}</p>
                     </div>
                 </div>
             </div>
             <StarRating score={review.rating * 2} />
         </div>
-        <p className="text-gray-300 mt-4 pl-11">{review.comment}</p>
+        <p className="text-card-foreground/90 mt-4 pl-11">{review.comment}</p>
       </CardContent>
     </Card>
   );

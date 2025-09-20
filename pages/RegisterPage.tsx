@@ -66,7 +66,7 @@ const RegisterPage: React.FC = () => {
               {loading ? <Spinner size="sm" /> : 'Register'}
             </Button>
           </form>
-          <p className="mt-6 text-center text-sm text-gray-400">
+          <p className="mt-6 text-center text-sm text-card-foreground/80">
             Already have an account?{' '}
             <Link to="/login" className="font-medium text-primary-500 hover:text-primary-400">
               Login here

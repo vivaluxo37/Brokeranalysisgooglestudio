@@ -38,7 +38,7 @@ const ComparePage: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
             <h1 className="text-4xl font-bold">Compare Brokers</h1>
-            <p className="text-lg text-gray-400 mt-2">Side-by-side analysis of your selected brokers.</p>
+            <p className="text-lg text-foreground/80 mt-2">Side-by-side analysis of your selected brokers.</p>
         </div>
         <div className="flex items-center gap-2">
             {brokersToCompare.length === 2 && (
@@ -76,7 +76,7 @@ const ComparePage: React.FC = () => {
                 </h3>
             </CardHeader>
             <CardContent>
-                <div className="text-gray-300 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: summary.replace(/\*\*(.*?)\*\*/g, '<strong class="text-primary-400">$1</strong>') }} />
+                <div className="text-card-foreground/90 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: summary.replace(/\*\*(.*?)\*\*/g, '<strong class="text-primary-400">$1</strong>') }} />
             </CardContent>
         </Card>
       )}
@@ -86,8 +86,8 @@ const ComparePage: React.FC = () => {
         <ComparisonTable brokers={brokersToCompare} />
       ) : (
         <div className="text-center py-20 bg-card rounded-lg border border-input">
-          <h2 className="text-2xl font-semibold text-gray-300">Your comparison list is empty.</h2>
-          <p className="mt-2 text-gray-400">Add brokers to compare their features side-by-side.</p>
+          <h2 className="text-2xl font-semibold text-card-foreground/90">Your comparison list is empty.</h2>
+          <p className="mt-2 text-card-foreground/70">Add brokers to compare their features side-by-side.</p>
           <Link to="/brokers" className="mt-6 inline-block">
             <Button>Browse Brokers</Button>
           </Link>

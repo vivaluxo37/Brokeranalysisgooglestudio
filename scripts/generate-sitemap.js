@@ -1,3 +1,4 @@
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -69,9 +70,6 @@ function generateSitemapIndex(lastmod) {
     console.log(' -> Generating sitemap-index.xml...');
     const childSitemaps = [
         'sitemap-brokers.xml',
-        'sitemap-reviews.xml',
-        'sitemap-compare.xml',
-        'sitemap-news.xml',
     ];
 
     const sitemapEntries = childSitemaps.map(sitemapFile => `

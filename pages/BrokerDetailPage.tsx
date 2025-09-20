@@ -1,4 +1,5 @@
 
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { brokers } from '../data/brokers';
@@ -155,7 +156,7 @@ const BrokerDetailPage: React.FC = () => {
   const brokerJsonLd = useMemo(() => {
     if (!broker) return null;
 
-    const schema = {
+    const schema: any = {
       "@context": "https://schema.org",
       "@type": "FinancialService",
       "name": broker.name,
@@ -167,11 +168,6 @@ const BrokerDetailPage: React.FC = () => {
         "addressLocality": broker.headquarters.split(',')[0].trim(),
         "addressCountry": broker.headquarters.split(',').pop()?.trim() || "Unknown"
       },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": broker.score.toFixed(1),
-        "reviewCount": reviews.length.toString()
-      },
       "review": reviews.map(review => ({
         "@type": "Review",
         "author": {
@@ -181,11 +177,26 @@ const BrokerDetailPage: React.FC = () => {
         "datePublished": review.date,
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": review.rating.toString()
+          "ratingValue": review.rating.toString(),
+          "bestRating": "5",
+          "worstRating": "1"
         },
         "reviewBody": review.comment
       }))
     };
+    
+    const reviewCount = reviews.length;
+    if (reviewCount > 0) {
+      const averageRating = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviewCount).toFixed(2);
+      schema.aggregateRating = {
+        "@type": "AggregateRating",
+        "ratingValue": averageRating,
+        "bestRating": "5",
+        "worstRating": "1",
+        "reviewCount": reviewCount.toString()
+      };
+    }
+
     return schema;
   }, [broker, reviews]);
 

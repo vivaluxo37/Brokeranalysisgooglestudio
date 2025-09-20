@@ -1,3 +1,4 @@
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -42,7 +43,7 @@ try {
         `;
 
         const html = template
-            .replace(`</title>`, `${title}</title>`) // Replace existing title
+            .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
             .replace(`</head>`, `<meta name="description" content="${description}" /></head>`) // Add meta description
             .replace(`<div id="root"></div>`, `<div id="root">${appHtml}</div>`);
 

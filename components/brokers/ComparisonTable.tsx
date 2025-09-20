@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Broker } from '../../types';
@@ -19,6 +20,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
     { title: 'Headquarters', key: 'headquarters' },
     { title: 'Regulators', key: 'regulation.regulators' },
     { title: 'Min. Deposit', key: 'accessibility.minDeposit' },
+    { title: 'Customer Support', key: 'accessibility.customerSupport' },
     { title: 'Max Leverage', key: 'tradingConditions.maxLeverage' },
     { title: 'EUR/USD Spread', key: 'tradingConditions.spreads.eurusd' },
     { title: 'Platforms', key: 'technology.platforms' },
@@ -30,6 +32,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
       case 'score': return <span className="text-2xl font-bold text-primary-400">{broker.score.toFixed(1)}</span>;
       case 'regulation.regulators': return broker.regulation.regulators.map(r => <Tag key={r}>{r}</Tag>);
       case 'accessibility.minDeposit': return `$${broker.accessibility.minDeposit}`;
+      case 'accessibility.customerSupport': return broker.accessibility.customerSupport.join(', ');
       case 'tradingConditions.spreads.eurusd': return `${broker.tradingConditions.spreads.eurusd} pips`;
       case 'technology.platforms': return broker.technology.platforms.join(', ');
       default:

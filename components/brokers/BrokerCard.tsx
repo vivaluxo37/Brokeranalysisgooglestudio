@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Broker } from '../../types';
 import Card, { CardContent } from '../ui/Card';
-import Tag from '../ui/Tag';
 import Button from '../ui/Button';
 import { useComparison } from '../../hooks/useComparison';
 import { Icons } from '../../constants';
@@ -39,8 +38,16 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker }) => {
           </div>
           <h3 className="text-xl font-bold mt-4 text-gray-100">{broker.name}</h3>
           <p className="text-sm text-gray-400 mt-1">{broker.headquarters} &bull; Est. {broker.foundingYear}</p>
-          <div className="mt-4">
-            {broker.regulation.regulators.slice(0, 3).map(reg => <Tag key={reg}>{reg}</Tag>)}
+          
+          <div className="mt-4 pt-3 border-t border-input/50 text-sm space-y-2">
+            <div className="flex justify-between items-center text-gray-400">
+              <span className="truncate pr-2">Regulators</span>
+              <span className="font-semibold text-right text-gray-200 truncate">{broker.regulation.regulators.slice(0, 2).join(', ')}</span>
+            </div>
+            <div className="flex justify-between items-center text-gray-400">
+              <span>Max Leverage</span>
+              <span className="font-semibold text-gray-200">{broker.tradingConditions.maxLeverage}</span>
+            </div>
           </div>
         </CardContent>
       </Link>

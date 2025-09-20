@@ -5,8 +5,9 @@ import Spinner from '../components/ui/Spinner';
 import { Broker } from '../types';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
-import Card, { CardContent } from '../components/ui/Card';
+import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import { getBrokerRecommendations } from '../services/geminiService';
+import { Icons } from '../constants';
 
 const steps = [
   {
@@ -99,9 +100,14 @@ const BrokerMatcherPage: React.FC = () => {
       return (
         <div className="mt-4 animate-fade-in">
           <h2 className="text-3xl font-bold text-center mb-4">Your Top Matches</h2>
-          <Card className="max-w-3xl mx-auto mb-8">
+          <Card className="max-w-3xl mx-auto mb-8 animate-fade-in">
+            <CardHeader>
+                <h3 className="text-xl font-bold flex items-center gap-2">
+                    <Icons.bot className="h-6 w-6 text-primary-400" />
+                    AI Analysis
+                </h3>
+            </CardHeader>
             <CardContent>
-              <h3 className="font-semibold text-primary-400 mb-2">AI Analysis</h3>
               <p className="text-gray-300 italic">{results.reasoning}</p>
             </CardContent>
           </Card>
@@ -111,7 +117,7 @@ const BrokerMatcherPage: React.FC = () => {
             ))}
           </div>
           <div className="text-center mt-8">
-              <Button variant="secondary" onClick={() => { setResults(null); setCurrentStep(0); }}>Start Over</Button>
+              <Button variant="secondary" onClick={() => { setResults(null); setCurrentStep(0); setPreferences({ experience: '', platforms: '', minDeposit: 'Under $200', priority: '' }); }}>Start Over</Button>
           </div>
         </div>
       );
@@ -128,17 +134,18 @@ const BrokerMatcherPage: React.FC = () => {
         <CardContent>
           <div className="mb-4">
               <div className="w-full bg-input rounded-full h-2.5">
-                  <div className="bg-primary-600 h-2.5 rounded-full" style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}></div>
+                  <div className="bg-primary-600 h-2.5 rounded-full transition-all duration-500 ease-in-out" style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}></div>
               </div>
           </div>
-          <div className="text-center p-8 min-h-[250px] flex flex-col justify-center animate-fade-in">
+          <div key={currentStep} className="text-center p-8 min-h-[250px] flex flex-col justify-center animate-fade-in">
             <h2 className="text-2xl font-semibold text-gray-100">{steps[currentStep].title}</h2>
-            <div className={`mt-6 grid grid-cols-2 gap-4 ${steps[currentStep].isTextInput ? 'grid-cols-1' : ''}`}>
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {steps[currentStep].options.map(option => (
                 <Button 
                     key={option} 
                     variant={preferences[steps[currentStep].name as keyof typeof preferences] === option ? 'primary' : 'secondary'}
                     onClick={() => handleOptionClick(steps[currentStep].name, option)}
+                    className="justify-center"
                 >
                     {option}
                 </Button>
@@ -150,7 +157,7 @@ const BrokerMatcherPage: React.FC = () => {
                     name={steps[currentStep].name}
                     placeholder="Or type your own..."
                     onChange={handleTextInputChange}
-                    className="mt-4 block w-full bg-input border-input rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm p-3 text-center"
+                    className="mt-4 block w-full bg-background border-input rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm p-3 text-center"
                  />
             )}
           </div>

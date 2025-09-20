@@ -81,3 +81,8 @@ export interface ChatMessage {
   sender: 'user' | 'ai';
   text: string;
 }
+
+export interface AIRecommendation {
+  recommendedBrokerIds: string[];
+  reasoning: string;
+}

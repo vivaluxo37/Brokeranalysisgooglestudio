@@ -2,8 +2,10 @@
 
 
 
+
+
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
-import { Broker, Review } from '../types';
+import { Broker, Review, AIRecommendation } from '../types';
 import { brokers } from '../data/brokers';
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -307,3 +309,63 @@ export const getDuelVerdict = async (broker1: Broker, broker2: Broker): Promise<
     const response = await ai.models.generateContent({ model, contents: prompt });
     return response.text;
 }
+
+// --- NEW: AI Broker Recommendation ---
+export const getAIRecommendation = async (brokers: Broker[]): Promise<AIRecommendation> => {
+  if (brokers.length < 2) {
+    throw new Error("Cannot get a recommendation for fewer than two brokers.");
+  }
+  
+  const brokerData = brokers.map(b => ({
+    id: b.id,
+    name: b.name,
+    score: b.score,
+    regulators: b.regulation.regulators,
+    eurusdSpread: b.tradingConditions.spreads.eurusd,
+    commission: b.tradingConditions.commission,
+  }));
+
+  const prompt = `
+    Act as an expert forex trading analyst. Your task is to analyze the provided list of forex brokers and recommend the top 3 best options from the list.
+
+    Consider the following factors in your analysis, in this order of importance:
+    1.  **Overall Score:** A higher score is significantly better. This is the most important factor.
+    2.  **Regulation:** Brokers with multiple top-tier regulators (e.g., FCA, ASIC) are strongly preferred.
+    3.  **Trading Costs:** Lower spreads and commissions are better.
+
+    Here is the list of brokers to analyze:
+    ${JSON.stringify(brokerData, null, 2)}
+
+    Your task is to:
+    1.  Select the top 3 best brokers from THIS list based on the criteria above.
+    2.  Provide a concise, compelling reason (2-3 sentences) explaining your selection. Highlight what makes these brokers stand out from the others in THIS specific list.
+
+    Respond ONLY in the specified JSON format.
+  `;
+  
+  const response = await ai.models.generateContent({
+    model: model,
+    contents: prompt,
+    config: {
+      responseMimeType: 'application/json',
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: {
+          recommendedBrokerIds: {
+            type: Type.ARRAY,
+            items: { type: Type.STRING },
+            description: "An array of the IDs of the top 3 recommended brokers from the provided list.",
+          },
+          reasoning: {
+            type: Type.STRING,
+            description: "A brief explanation for why these brokers were chosen as the best from the list.",
+          },
+        },
+        required: ["recommendedBrokerIds", "reasoning"],
+      },
+    },
+  });
+
+  const parsedResponse: AIRecommendation = JSON.parse(response.text.trim());
+  return parsedResponse;
+};

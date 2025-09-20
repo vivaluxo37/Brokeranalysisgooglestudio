@@ -4,6 +4,12 @@ import { brokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
+import { getAIRecommendation } from '../services/geminiService';
+import { AIRecommendation, Broker } from '../types';
+import { Icons } from '../constants';
+import Spinner from '../components/ui/Spinner';
+import Card, { CardContent, CardHeader } from '../components/ui/Card';
+
 
 // Utility to parse leverage string like "1:500" into a number 500
 const parseLeverage = (leverageStr: string): number => {
@@ -22,7 +28,15 @@ const AllBrokersPage: React.FC = () => {
   const [leverageFilter, setLeverageFilter] = useState('any');
   const [regulatorFilter, setRegulatorFilter] = useState('any');
 
+  const [aiRecommendation, setAiRecommendation] = useState<AIRecommendation | null>(null);
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+
   const filteredBrokers = useMemo(() => {
+    // When filters change, reset the AI recommendation
+    setAiRecommendation(null);
+    setAiError(null);
+
     return brokers.filter(broker => {
       // Search Term Filter
       if (searchTerm && !broker.name.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -61,6 +75,28 @@ const AllBrokersPage: React.FC = () => {
     setRegulatorFilter('any');
   };
   
+  const handleGetAIRecommendation = async () => {
+    setIsAiLoading(true);
+    setAiError(null);
+    setAiRecommendation(null);
+    try {
+        const result = await getAIRecommendation(filteredBrokers);
+        setAiRecommendation(result);
+    } catch (err) {
+        setAiError("Sorry, the AI couldn't make a recommendation. Please try again with a different filter.");
+        console.error(err);
+    } finally {
+        setIsAiLoading(false);
+    }
+  };
+
+  const recommendedBrokers = useMemo(() => {
+    if (!aiRecommendation) return [];
+    return aiRecommendation.recommendedBrokerIds
+        .map(id => brokers.find(b => b.id === id))
+        .filter((b): b is Broker => !!b);
+  }, [aiRecommendation]);
+
   const selectClasses = "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
   const labelClasses = "block text-sm font-medium text-gray-300 mb-1 text-left";
 
@@ -112,8 +148,42 @@ const AllBrokersPage: React.FC = () => {
             Reset Filters
           </Button>
         </div>
+        <div className="pt-4 border-t border-input/50">
+            <Button 
+                onClick={handleGetAIRecommendation} 
+                disabled={isAiLoading || filteredBrokers.length < 2}
+                className="w-full"
+                size="lg"
+            >
+                {isAiLoading ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/>Get AI Recommendation</>}
+            </Button>
+            {filteredBrokers.length < 2 && <p className="text-xs text-center mt-2 text-gray-400">Filter to at least 2 brokers to get a recommendation.</p>}
+        </div>
       </div>
       
+      {aiError && <p className="text-center text-red-500 mb-6">{aiError}</p>}
+      
+      {aiRecommendation && recommendedBrokers.length > 0 && (
+          <div className="mb-12 animate-fade-in">
+              <h2 className="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-500">AI Top Picks From Your Selection</h2>
+              <div className="max-w-4xl mx-auto mb-6">
+                 <Card className="h-full flex flex-col">
+                      <CardHeader><h3 className="text-xl font-bold flex items-center gap-2"><Icons.bot className="h-6 w-6 text-primary-400"/> AI Analysis</h3></CardHeader>
+                      <CardContent className="flex-grow">
+                          <p className="text-gray-300 italic">{aiRecommendation.reasoning}</p>
+                      </CardContent>
+                  </Card>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {recommendedBrokers.map(broker => (
+                      <BrokerCard key={broker.id} broker={broker} isRecommended={true} />
+                  ))}
+              </div>
+          </div>
+      )}
+
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredBrokers.map(broker => (
           <BrokerCard key={broker.id} broker={broker} />

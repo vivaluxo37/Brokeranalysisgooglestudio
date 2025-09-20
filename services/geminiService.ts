@@ -12,7 +12,7 @@ export const getChatbotResponseStream = async (message: string) => {
       id: b.id,
       name: b.name,
       websiteUrl: b.websiteUrl,
-      internalPath: `#/broker/${b.id}`,
+      internalPath: `/#/broker/${b.id}`,
       score: b.score,
       minDeposit: b.accessibility.minDeposit,
       platforms: b.technology.platforms,
@@ -24,9 +24,9 @@ export const getChatbotResponseStream = async (message: string) => {
 
   const prompt = `You are BrokerBot, an expert AI assistant for forex trading. You have access to a database of forex brokers in JSON format below. Use this data to answer user questions accurately. You can and should create links in your response using markdown format [link text](url).
 
-- To link to a broker's detail page within this app, use the 'internalPath' value. For example: "You can see more details on [Pepperstone](#/broker/pepperstone)".
+- To link to a broker's detail page within this app, use the 'internalPath' value. For example: "You can see more details on [Pepperstone](/#/broker/pepperstone)".
 - To link to a broker's official website, use the 'websiteUrl' value. For example: "Visit the [official Pepperstone website](https://pepperstone.com/)".
-- To link to the comparison page, use '#/compare'. For example: "You can compare them on our [comparison page](#/compare)".
+- To link to the comparison page, use '/#/compare'. For example: "You can compare them on our [comparison page](/#/compare)".
 
 If a user asks to compare brokers, use the data to provide a comparison. If the question is about a specific broker, use the data for that broker and provide helpful links. If it's a general forex question not related to the data, answer it from your general knowledge. Be helpful, concise, and friendly. Use markdown for formatting, like bolding broker names with **.
 

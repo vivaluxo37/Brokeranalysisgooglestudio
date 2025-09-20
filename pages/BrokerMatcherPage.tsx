@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import Button from '../components/ui/Button';
 import Spinner from '../components/ui/Spinner';
-import { Broker } from '../types';
+import { Broker, MatcherHistoryItem } from '../types';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import { getBrokerRecommendations } from '../services/geminiService';
 import { Icons } from '../constants';
+import { useAuth } from '../hooks/useAuth';
 
 const steps = [
   {
@@ -45,6 +46,7 @@ const BrokerMatcherPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<{ recommendations: Broker[], reasoning: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { user } = useAuth();
 
   const handleOptionClick = (name: string, value: string) => {
     setPreferences(prev => ({ ...prev, [name]: value }));
@@ -56,6 +58,26 @@ const BrokerMatcherPage: React.FC = () => {
   const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setPreferences({ ...preferences, [e.target.name]: e.target.value });
   }
+
+  const saveResultsToHistory = (reasoning: string, recommendedBrokerIds: string[]) => {
+      if (!user) return;
+      const key = `matcherHistory_${user.id}`;
+      const newHistoryItem: MatcherHistoryItem = {
+          id: `match_${Date.now()}`,
+          timestamp: new Date().toISOString(),
+          preferences,
+          reasoning,
+          recommendedBrokerIds,
+      };
+      
+      try {
+          const existingHistory: MatcherHistoryItem[] = JSON.parse(localStorage.getItem(key) || '[]');
+          const updatedHistory = [newHistoryItem, ...existingHistory];
+          localStorage.setItem(key, JSON.stringify(updatedHistory));
+      } catch (e) {
+          console.error("Failed to save matcher history to localStorage:", e);
+      }
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -82,6 +104,7 @@ const BrokerMatcherPage: React.FC = () => {
         }
 
         setResults({ recommendations: recommendedBrokers, reasoning: response.reasoning });
+        saveResultsToHistory(response.reasoning, response.recommendedBrokerIds);
       } catch (err: any) {
         setError(err.message || 'Failed to get recommendations. Please try again.');
         console.error(err);

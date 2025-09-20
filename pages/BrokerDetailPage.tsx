@@ -6,6 +6,7 @@ import NotFoundPage from './NotFoundPage';
 import Tag from '../components/ui/Tag';
 import Button from '../components/ui/Button';
 import { useComparison } from '../hooks/useComparison';
+import { useFavorites } from '../hooks/useFavorites';
 import { useAuth } from '../hooks/useAuth';
 import { Icons } from '../constants';
 import StarRating from '../components/ui/StarRating';
@@ -135,6 +136,7 @@ const BrokerDetailPage: React.FC = () => {
   const broker = brokers.find(b => b.id === brokerId);
   
   const { addBrokerToComparison, removeBrokerFromComparison, isBrokerInComparison } = useComparison();
+  const { addBrokerToFavorites, removeBrokerFromFavorites, isBrokerInFavorites } = useFavorites();
   const { user } = useAuth();
 
   const [reviews, setReviews] = useState<Review[]>(broker?.reviews || []);
@@ -175,6 +177,12 @@ const BrokerDetailPage: React.FC = () => {
   const handleCompareClick = () => {
       if (inCompare) removeBrokerFromComparison(broker.id);
       else addBrokerToComparison(broker.id);
+  };
+
+  const isFavorite = isBrokerInFavorites(broker.id);
+  const handleFavoriteClick = () => {
+      if (isFavorite) removeBrokerFromFavorites(broker.id);
+      else addBrokerToFavorites(broker.id);
   };
   
   const displayedReviews = useMemo(() => {
@@ -219,6 +227,10 @@ const BrokerDetailPage: React.FC = () => {
                 <Button onClick={handleCompareClick} variant="secondary">
                     {inCompare ? <Icons.compareRemove className="h-5 w-5 mr-2" /> : <Icons.compare className="h-5 w-5 mr-2" />}
                     {inCompare ? "Remove from Compare" : "Add to Compare"}
+                </Button>
+                 <Button onClick={handleFavoriteClick} variant="secondary">
+                    {isFavorite ? <Icons.starFull className="h-5 w-5 mr-2 text-yellow-400" /> : <Icons.star className="h-5 w-5 mr-2" />}
+                    {isFavorite ? "Favorited" : "Add to Favorites"}
                 </Button>
             </div>
             

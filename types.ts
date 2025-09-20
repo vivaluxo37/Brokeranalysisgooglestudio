@@ -77,6 +77,13 @@ export interface ComparisonContextType {
   clearComparison: () => void;
 }
 
+export interface FavoritesContextType {
+  favoritesList: string[];
+  addBrokerToFavorites: (brokerId: string) => void;
+  removeBrokerFromFavorites: (brokerId: string) => void;
+  isBrokerInFavorites: (brokerId: string) => boolean;
+}
+
 export interface ChatMessage {
   sender: 'user' | 'ai';
   text: string;
@@ -85,4 +92,17 @@ export interface ChatMessage {
 export interface AIRecommendation {
   recommendedBrokerIds: string[];
   reasoning: string;
+}
+
+export interface MatcherHistoryItem {
+    id: string;
+    timestamp: string;
+    preferences: {
+        experience: string;
+        platforms: string;
+        minDeposit: string;
+        priority: string;
+    };
+    reasoning: string;
+    recommendedBrokerIds: string[];
 }

@@ -6,6 +6,7 @@ import App from './App';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { ComparisonProvider } from './contexts/ComparisonContext';
+import { FavoritesProvider } from './contexts/FavoritesContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -19,7 +20,9 @@ root.render(
       <ThemeProvider>
         <AuthProvider>
           <ComparisonProvider>
-            <App />
+            <FavoritesProvider>
+              <App />
+            </FavoritesProvider>
           </ComparisonProvider>
         </AuthProvider>
       </ThemeProvider>

@@ -233,6 +233,7 @@ export const getRegulatoryTrustScore = async (brokerName: string, regulators: st
     const reasoning = text.split('. ').slice(1).join('. ').trim() || "Score based on available regulatory information.";
 
     const sources = (response.candidates?.[0]?.groundingMetadata?.groundingChunks ?? [])
+        .filter(Boolean) // Ensure chunks themselves are not null/undefined
         .map(chunk => chunk.web)
         .filter(Boolean)
         .filter((web, index, self) => self.findIndex(w => w.uri === web.uri) === index)

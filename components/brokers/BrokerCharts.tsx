@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Broker } from '../../types';
-import { Chart } from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 
 interface BrokerChartsProps {
   broker: Broker;

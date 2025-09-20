@@ -9,9 +9,10 @@ import StarRating from '../ui/StarRating';
 
 interface BrokerCardProps {
   broker: Broker;
+  isRecommended?: boolean;
 }
 
-const BrokerCard: React.FC<BrokerCardProps> = ({ broker }) => {
+const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }) => {
   const { addBrokerToComparison, removeBrokerFromComparison, isBrokerInComparison } = useComparison();
   const inCompare = isBrokerInComparison(broker.id);
 
@@ -25,8 +26,12 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker }) => {
     }
   };
 
+  const recommendationClasses = isRecommended 
+    ? 'border-primary-600 ring-2 ring-primary-500/50 shadow-lg shadow-primary-900/40' 
+    : 'hover:border-primary-700';
+
   return (
-    <Card className="hover:border-primary-700 flex flex-col">
+    <Card className={`flex flex-col h-full ${recommendationClasses}`}>
       <Link to={`/broker/${broker.id}`} className="flex-grow">
         <CardContent>
           <div className="flex justify-between items-start">

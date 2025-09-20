@@ -112,8 +112,10 @@ const BrokerMatcherPage: React.FC = () => {
             </CardContent>
           </Card>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {results.recommendations.map(broker => (
-              <BrokerCard key={broker.id} broker={broker} />
+            {results.recommendations.map((broker, index) => (
+              <div key={broker.id} className="opacity-0 animate-fade-in" style={{ animationDelay: `${index * 150}ms`}}>
+                <BrokerCard broker={broker} isRecommended={true} />
+              </div>
             ))}
           </div>
           <div className="text-center mt-8">

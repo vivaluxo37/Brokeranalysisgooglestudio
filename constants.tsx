@@ -54,4 +54,19 @@ export const Icons = {
   duel: (props: React.SVGProps<SVGSVGElement>) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12.97 2.49a1 1 0 0 0-1.94 0l-1.55 4.8-4.99 1.15a1 1 0 0 0-.6 1.77l3.85 3.33-1.2 5.03a1 1 0 0 0 1.48 1.12l4.42-2.7 4.42 2.7a1 1 0 0 0 1.48-1.12l-1.2-5.03 3.85-3.33a1 1 0 0 0-.6-1.77l-4.99-1.15-1.55-4.8z"/><path d="M12.97 12.49a1 1 0 0 0-1.94 0l-1.55 4.8-4.99 1.15a1 1 0 0 0-.6 1.77l3.85 3.33-1.2 5.03a1 1 0 0 0 1.48 1.12l4.42-2.7 4.42 2.7a1 1 0 0 0 1.48-1.12l-1.2-5.03 3.85-3.33a1 1 0 0 0-.6-1.77l-4.99-1.15-1.55-4.8z"/></svg>
   ),
+  data: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+  ),
+  brainCircuit: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 2a4.5 4.5 0 0 0-4.5 4.5v1.42A4.5 4.5 0 0 0 12 12a4.5 4.5 0 0 0 4.5-4.08V6.5A4.5 4.5 0 0 0 12 2Z"/><path d="M12 12v2.53c0 .82-.16 1.62-.47 2.35a5.01 5.01 0 0 1-4.03 4.12H6.5a4.5 4.5 0 0 1 0-9H8"/><path d="m12 12 1-1 1 1"/><path d="M12 12v5.53a5.01 5.01 0 0 0 4.5-4.6V12h-2"/><path d="M16 12h-2"/><path d="M15 9.5V7.5"/><path d="M9 9.5V7.5"/><path d="M12 12h.5a2.5 2.5 0 0 1 2.5 2.5v1.42a2.5 2.5 0 0 1-2.5 2.5h-1a2.5 2.5 0 0 1-2.5-2.5V14.5A2.5 2.5 0 0 1 11.5 12H12Z"/></svg>
+  ),
+  layers: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+  ),
+  shieldCheck: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+  ),
+  chevronDown: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m6 9 6 6 6-6"/></svg>
+  ),
 };

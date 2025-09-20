@@ -4,6 +4,7 @@ export const NAV_LINKS = [
   { name: 'Home', path: '/' },
   { name: 'All Brokers', path: '/brokers' },
   { name: 'Compare Brokers', path: '/compare' },
+  { name: 'Cost Analyzer', path: '/cost-analyzer' },
   { name: 'Broker Matcher', path: '/broker-matcher' },
 ];
 

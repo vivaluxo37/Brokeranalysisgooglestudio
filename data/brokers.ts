@@ -29,6 +29,10 @@ export const brokers: Broker[] = [
       platforms: ['MT4', 'MT5', 'cTrader', 'TradingView'],
       executionType: 'ECN/STP',
     },
+    reviews: [
+      { id: 'rev1', brokerId: 'pepperstone', userId: 'user123', userName: 'Alice', rating: 5, comment: 'Excellent spreads and customer service. Highly recommend!', date: '2023-10-26T10:00:00Z' },
+      { id: 'rev2', brokerId: 'pepperstone', userId: 'user456', userName: 'Bob', rating: 4, comment: 'Good platform selection, but withdrawal took a bit longer than expected.', date: '2023-10-22T14:30:00Z' },
+    ],
   },
   {
     id: 'ic-markets',
@@ -57,6 +61,9 @@ export const brokers: Broker[] = [
       platforms: ['MT4', 'MT5', 'cTrader'],
       executionType: 'ECN',
     },
+    reviews: [
+      { id: 'rev3', brokerId: 'ic-markets', userId: 'user789', userName: 'Charlie', rating: 5, comment: 'The raw spreads are unbeatable for scalping. 24/7 support is a huge plus.', date: '2023-09-15T08:00:00Z' },
+    ],
   },
   {
     id: 'xtb',
@@ -85,6 +92,10 @@ export const brokers: Broker[] = [
       platforms: ['xStation 5'],
       executionType: 'Market Maker',
     },
+    reviews: [
+      { id: 'rev4', brokerId: 'xtb', userId: 'user101', userName: 'David', rating: 4, comment: 'xStation 5 is a fantastic platform. Very intuitive.', date: '2023-11-01T11:20:00Z' },
+      { id: 'rev5', brokerId: 'xtb', userId: 'user112', userName: 'Eve', rating: 5, comment: 'No minimum deposit is great for beginners. I started with a small amount and had no issues.', date: '2023-08-05T18:45:00Z' },
+    ],
   },
   {
     id: 'forex-com',
@@ -113,5 +124,6 @@ export const brokers: Broker[] = [
       platforms: ['MT4', 'MT5', 'Advanced Trading Platform'],
       executionType: 'Market Maker',
     },
+    reviews: [],
   },
 ];

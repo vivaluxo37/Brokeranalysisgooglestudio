@@ -99,3 +99,36 @@ export const getBrokerRecommendations = async (
     throw new Error("Received an invalid response from the AI. Please try again.");
   }
 };
+
+
+// --- Cost Analysis Functionality ---
+
+interface CostData {
+    brokerName: string;
+    spread: number;
+    commission: number;
+    totalCost: number;
+}
+
+export const getCostAnalysis = async (instrument: string, costData: CostData[]): Promise<string> => {
+    const prompt = `
+        You are an expert forex market analyst. Your task is to provide a concise cost analysis for trading one standard lot of ${instrument}.
+        The user has provided real-time cost data from several brokers.
+        Analyze the data below, which includes spread, commission, and a calculated total cost.
+
+        Live Cost Data:
+        ${JSON.stringify(costData, null, 2)}
+
+        Based on this data, please provide:
+        1. A clear recommendation for the most cost-effective broker at this moment.
+        2. A brief, 2-3 sentence explanation of your reasoning, highlighting why that broker is cheaper. Mention the importance of considering both spread and commission.
+        3. Keep the tone helpful and professional. Do not output JSON.
+    `;
+
+    const response = await ai.models.generateContent({
+        model: model,
+        contents: prompt,
+    });
+
+    return response.text;
+};

@@ -7,6 +7,7 @@ import AllBrokersPage from './pages/AllBrokersPage';
 import BrokerDetailPage from './pages/BrokerDetailPage';
 import BrokerMatcherPage from './pages/BrokerMatcherPage';
 import ComparePage from './pages/ComparePage';
+import CostAnalyzerPage from './pages/CostAnalyzerPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <Route path="/brokers" element={<AllBrokersPage />} />
         <Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
         <Route path="/compare" element={<ComparePage />} />
+        <Route path="/cost-analyzer" element={<CostAnalyzerPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         

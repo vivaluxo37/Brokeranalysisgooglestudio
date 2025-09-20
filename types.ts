@@ -1,4 +1,14 @@
 
+export interface Review {
+  id: string;
+  brokerId: string;
+  userId: string;
+  userName: string;
+  rating: number; // Score out of 5
+  comment: string;
+  date: string; // ISO 8601 format
+}
+
 export interface Broker {
   id: string;
   name: string;
@@ -30,6 +40,7 @@ export interface Broker {
     platforms: string[];
     executionType: string;
   };
+  reviews?: Review[];
 }
 
 export interface User {

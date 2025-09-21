@@ -95,6 +95,11 @@ export interface Broker {
   isIslamic?: boolean;
   copyTrading?: boolean;
   providesSignals?: boolean;
+  socialTrading?: {
+      popularityScore: number; // A score out of 100 indicating community size/activity
+      topTradersCount: number; // Number of "elite" or popular traders to copy
+      platforms: string[];
+  };
 }
 
 export interface User {
@@ -178,4 +183,14 @@ export interface AlertsContextType {
   unreadCount: number;
   markAllAsRead: () => void;
   getAlertsForFavorites: (favoriteBrokerIds: string[]) => Alert[];
+}
+
+export interface NewsArticle {
+  id: string;
+  title: string;
+  summary: string;
+  fullContent: string;
+  date: string; // ISO 8601
+  category: 'Forex' | 'Economy' | 'Central Banks' | 'Geopolitics' | 'Commodities';
+  importance: 'High' | 'Medium' | 'Low';
 }

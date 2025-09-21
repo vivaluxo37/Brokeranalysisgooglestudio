@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
-import { Broker, Review, AIRecommendation } from '../types';
+import { Broker, Review, AIRecommendation, NewsArticle } from '../types';
 import { brokers } from '../data/brokers';
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -365,4 +365,66 @@ export const getAIRecommendation = async (brokers: Broker[]): Promise<AIRecommen
 
   const parsedResponse: AIRecommendation = JSON.parse(response.text.trim());
   return parsedResponse;
+};
+
+// --- NEW: AI News Analysis ---
+interface NewsAnalysisResponse {
+    analysis: string;
+    recommendedBrokerIds: string[];
+}
+export const getNewsAnalysis = async (article: NewsArticle, brokers: Broker[]): Promise<NewsAnalysisResponse> => {
+    const brokerData = brokers.map(b => ({
+        id: b.id,
+        name: b.name,
+        executionType: b.technology.executionType,
+        negativeBalanceProtection: b.safety?.negativeBalanceProtection,
+        regulators: b.regulation.regulators,
+        spreads: b.tradingConditions.spreads,
+        commission: b.tradingConditions.commission,
+    }));
+
+    const prompt = `
+    Act as a senior market analyst for a professional trader.
+    Analyze the following news article and provide actionable insights.
+
+    News Article:
+    - Title: ${article.title}
+    - Summary: ${article.summary}
+    - Full Content: ${article.fullContent}
+
+    Based on this news, perform the following tasks:
+    1. Write a concise analysis (2-3 sentences) explaining the key implications for forex traders. For example, does this suggest increased volatility, a change in trend, or a risk-on/risk-off environment?
+    2. Based on your analysis, identify the TOP TWO most important broker characteristics needed to trade this event effectively (e.g., "fast ECN execution", "low spreads", "strong regulation", "negative balance protection").
+    3. From the provided list of brokers, select the TWO brokers that best exemplify these characteristics.
+
+    Respond ONLY in the specified JSON format.
+
+    Broker Data:
+    ${JSON.stringify(brokerData, null, 2)}
+    `;
+
+    const response = await ai.models.generateContent({
+        model,
+        contents: prompt,
+        config: {
+            responseMimeType: 'application/json',
+            responseSchema: {
+                type: Type.OBJECT,
+                properties: {
+                    analysis: {
+                        type: Type.STRING,
+                        description: "A concise analysis of the news article's impact on traders and the most important broker characteristics required.",
+                    },
+                    recommendedBrokerIds: {
+                        type: Type.ARRAY,
+                        description: "An array of exactly two broker IDs that are best suited for the market conditions described in the news.",
+                        items: { type: Type.STRING },
+                    },
+                },
+                required: ["analysis", "recommendedBrokerIds"],
+            }
+        }
+    });
+
+    return JSON.parse(response.text.trim());
 };

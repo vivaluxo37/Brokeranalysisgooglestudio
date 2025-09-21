@@ -153,22 +153,11 @@ const Section: React.FC<{ title: string; id: string; children: React.ReactNode; 
   </div>
 );
 
-const tableOfContents = [
-    { id: 'verdict', title: 'Our Verdict' },
-    { id: 'pros-cons', title: 'Pros & Cons' },
-    { id: 'ratings', title: 'Ratings Breakdown' },
-    { id: 'accounts', title: 'Account Types' },
-    { id: 'fees', title: 'Fees & Commissions' },
-    { id: 'platforms', title: 'Platforms & Tools' },
-    { id: 'safety', title: 'Regulation & Safety' },
-    { id: 'reviews', title: 'User Reviews' },
-];
-
-const TableOfContents: React.FC = () => (
+const TableOfContents: React.FC<{ items: { id: string; title: string }[] }> = ({ items }) => (
     <div className="hidden lg:block sticky top-24 self-start">
         <h3 className="font-semibold mb-3 text-card-foreground">On this page</h3>
         <ul className="space-y-2 text-sm border-l-2 border-input">
-            {tableOfContents.map(item => (
+            {items.map(item => (
                 <li key={item.id}>
                     <a href={`#${item.id}`} className="block pl-4 text-foreground/70 hover:text-primary-400 hover:border-primary-400 border-l-2 border-transparent -ml-px transition-colors">
                         {item.title}
@@ -246,6 +235,22 @@ const BrokerDetailPage: React.FC = () => {
 
     return schema;
   }, [broker, reviews]);
+
+  const tableOfContents = useMemo(() => {
+    if (!broker) return [];
+    const toc = [
+        { id: 'verdict', title: 'Our Verdict', show: !!broker.summary },
+        { id: 'pros-cons', title: 'Pros & Cons', show: !!broker.pros && !!broker.cons },
+        { id: 'ratings', title: 'Ratings Breakdown', show: true },
+        { id: 'accounts', title: 'Account Types', show: !!broker.accountTypes },
+        { id: 'fees', title: 'Fees & Commissions', show: !!broker.tradingFees && !!broker.nonTradingFees },
+        { id: 'platforms', title: 'Platforms & Tools', show: true },
+        { id: 'social', title: 'Social & Copy Trading', show: !!broker.socialTrading },
+        { id: 'safety', title: 'Regulation & Safety', show: true },
+        { id: 'reviews', title: 'User Reviews', show: true },
+    ];
+    return toc.filter(item => item.show);
+  }, [broker]);
 
   if (!broker) {
     return <NotFoundPage />;
@@ -433,6 +438,41 @@ const BrokerDetailPage: React.FC = () => {
             {broker.education && <p><strong>Education:</strong> {broker.education.join(', ')}.</p>}
         </Section>
         
+        {broker.socialTrading && (
+            <Section title="Social & Copy Trading" id="social">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 className="text-xl font-bold mb-4">Community Metrics</h3>
+                        <div className="space-y-4">
+                            <div className="flex flex-col">
+                                <div className="flex justify-between items-baseline mb-1">
+                                    <span className="font-semibold">Popularity Score</span>
+                                    <span className="text-lg font-bold text-primary-400">{broker.socialTrading.popularityScore} / 100</span>
+                                </div>
+                                <div className="w-full bg-input rounded-full h-2.5">
+                                    <div className="bg-primary-600 h-2.5 rounded-full" style={{ width: `${broker.socialTrading.popularityScore}%` }}></div>
+                                </div>
+                                <p className="text-xs text-foreground/70 mt-1">Based on platform activity and number of copiers.</p>
+                            </div>
+                            <div className="p-4 bg-input/50 rounded-lg">
+                                <p className="text-sm font-semibold">Top Traders to Copy</p>
+                                <p className="text-3xl font-bold text-card-foreground">{broker.socialTrading.topTradersCount.toLocaleString()}+</p>
+                                <p className="text-xs text-foreground/70">Verified "Popular Investors" or top-ranked traders available.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold mb-4">Available Platforms</h3>
+                        <ul className="list-disc list-inside space-y-2">
+                            {broker.socialTrading.platforms.map(platform => (
+                                <li key={platform}>{platform}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </Section>
+        )}
+        
         <Section title="Regulation & Safety" id="safety">
             <RegulatoryTrustScore brokerName={broker.name} regulators={broker.regulation.regulators} />
             {broker.safety && <div className="mt-4 space-y-2">
@@ -489,7 +529,7 @@ const BrokerDetailPage: React.FC = () => {
       </div>
 
       <div className="lg:col-span-1">
-        <TableOfContents />
+        <TableOfContents items={tableOfContents} />
       </div>
 
     </div>

@@ -1,6 +1,7 @@
 
 
 
+
 import React from 'react';
 // Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
 import * as ReactRouterDOM from 'react-router-dom';
@@ -22,6 +23,7 @@ import MethodologyPage from './pages/MethodologyPage';
 import SourcesPage from './pages/SourcesPage';
 import CategoryPage from './pages/CategoryPage';
 import { categoryPages } from './pages/categoryPageData';
+import MarketNewsPage from './pages/MarketNewsPage';
 
 const App: React.FC = () => {
   return (
@@ -37,6 +39,7 @@ const App: React.FC = () => {
         <ReactRouterDOM.Route path="/register" element={<RegisterPage />} />
         <ReactRouterDOM.Route path="/methodology" element={<MethodologyPage />} />
         <ReactRouterDOM.Route path="/sources" element={<SourcesPage />} />
+        <ReactRouterDOM.Route path="/market-news" element={<MarketNewsPage />} />
         
         {/* Dynamically create routes for all category pages */}
         {categoryPages.map(({ path, title, description, filterFn }) => (

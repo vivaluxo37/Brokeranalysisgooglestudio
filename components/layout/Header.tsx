@@ -80,7 +80,7 @@ const Header: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
-
+                                <NavLink to="/market-news">Market News</NavLink>
                                 <NavLink to="/methodology">Methodology</NavLink>
                             </div>
                         </div>
@@ -123,6 +123,7 @@ const Header: React.FC = () => {
                         <NavLink to="/compare" onClick={closeMobileMenu}>Compare</NavLink>
                         <NavLink to="/cost-analyzer" onClick={closeMobileMenu}>Cost Analyzer</NavLink>
                         <NavLink to="/broker-matcher" onClick={closeMobileMenu}>AI Matcher</NavLink>
+                        <NavLink to="/market-news" onClick={closeMobileMenu}>Market News</NavLink>
                         <NavLink to="/methodology" onClick={closeMobileMenu}>Methodology</NavLink>
 
                         <div className="pt-4 mt-4 border-t border-input">

@@ -354,6 +354,11 @@ export const brokers: Broker[] = [
     accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'PayPal', 'Bank Transfer'], withdrawalMethods: ['Credit Card', 'PayPal', 'Bank Transfer'], customerSupport: ['Ticket System', 'Help Center'] },
     technology: { platforms: ['eToro Platform'], executionType: 'Market Maker' },
     tradableInstruments: { forexPairs: 49, indices: 13, commodities: 32, stocks: 2700, cryptocurrencies: 70 },
+    socialTrading: {
+        popularityScore: 95,
+        topTradersCount: 1500,
+        platforms: ['eToro CopyTrader', 'Popular Investor Program']
+    },
     reviews: []
   },
   {
@@ -450,12 +455,18 @@ export const brokers: Broker[] = [
     foundingYear: 2011,
     headquarters: 'St. Vincent & Grenadines',
     description: 'OctaFX offers low-cost trading on popular platforms and is well-regarded for its copy trading service and user-friendly mobile app.',
+    copyTrading: true,
     regulation: { regulators: ['CySEC'] },
     ratings: { regulation: 7.2, costs: 8.5, platforms: 8.0, support: 7.8 },
     tradingConditions: { spreads: { eurusd: 0.6, gbpusd: 0.9, usdjpy: 0.7 }, commission: 'Zero', swapFeeCategory: 'Low', maxLeverage: '1:500' },
     accessibility: { minDeposit: 25, depositMethods: ['Credit Card', 'Skrill', 'Neteller', 'Crypto'], withdrawalMethods: ['Credit Card', 'Skrill', 'Crypto'], customerSupport: ['24/7 Live Chat', 'Email'] },
     technology: { platforms: ['MT4', 'MT5'], executionType: 'STP' },
     tradableInstruments: { forexPairs: 35, indices: 10, commodities: 5, stocks: 0, cryptocurrencies: 30 },
+    socialTrading: {
+        popularityScore: 82,
+        topTradersCount: 500,
+        platforms: ['OctaFX Copytrading']
+    },
     reviews: []
   },
   {
@@ -1293,6 +1304,11 @@ export const brokers: Broker[] = [
     accessibility: { minDeposit: 250, depositMethods: ['Credit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer'], customerSupport: ['Live Chat', 'Phone', 'Email'] },
     technology: { platforms: ['NAGA Trader', 'MT4', 'MT5'], executionType: 'Market Maker' },
     tradableInstruments: { forexPairs: 45, indices: 15, commodities: 10, stocks: 600, cryptocurrencies: 20 },
+    socialTrading: {
+        popularityScore: 88,
+        topTradersCount: 800,
+        platforms: ['NAGA Autocopy']
+    },
     reviews: []
   },
   {

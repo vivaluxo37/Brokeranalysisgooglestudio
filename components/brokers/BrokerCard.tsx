@@ -77,6 +77,14 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
                 <span>Max Leverage</span>
                 <span className="font-semibold text-card-foreground">{broker.tradingConditions.maxLeverage}</span>
               </div>
+               {broker.socialTrading && (
+                <div className="flex justify-between items-center text-card-foreground/70">
+                    <Tooltip content="A score based on community size and copy trading activity.">
+                    <span className="truncate pr-2 flex items-center gap-1"><Icons.users className="h-4 w-4"/> Popularity</span>
+                    </Tooltip>
+                    <span className="font-semibold text-card-foreground">{broker.socialTrading.popularityScore}/100</span>
+                </div>
+                )}
             </div>
           </CardContent>
         </ReactRouterDOM.Link>

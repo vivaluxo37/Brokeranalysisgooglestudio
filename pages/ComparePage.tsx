@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 // Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
 import * as ReactRouterDOM from 'react-router-dom';
@@ -11,10 +9,12 @@ import { getComparisonSummary } from '../services/geminiService';
 import Spinner from '../components/ui/Spinner';
 import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import { Icons } from '../constants';
+import { useTranslation } from '../hooks/useTranslation';
 
 const ComparePage: React.FC = () => {
   const { comparisonList, clearComparison } = useComparison();
   const brokersToCompare = allBrokers.filter(broker => comparisonList.includes(broker.id));
+  const { t } = useTranslation();
   
   const [loadingSummary, setLoadingSummary] = useState(false);
   const [summary, setSummary] = useState<string | null>(null);
@@ -39,21 +39,21 @@ const ComparePage: React.FC = () => {
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-            <h1 className="text-4xl font-bold">Compare Brokers</h1>
-            <p className="text-lg text-foreground/80 mt-2">Side-by-side analysis of your selected brokers.</p>
+            <h1 className="text-4xl font-bold">{t('comparePage.title')}</h1>
+            <p className="text-lg text-foreground/80 mt-2">{t('comparePage.subtitle')}</p>
         </div>
         <div className="flex items-center gap-2">
             {brokersToCompare.length === 2 && (
                  <ReactRouterDOM.Link to={`/compare/${brokersToCompare[0].id}/vs/${brokersToCompare[1].id}`}>
                     <Button variant="primary">
                         <Icons.duel className="h-5 w-5 mr-2" />
-                        Start Duel
+                        {t('comparePage.startDuel')}
                     </Button>
                  </ReactRouterDOM.Link>
             )}
              {brokersToCompare.length > 0 && (
                 <Button onClick={clearComparison} variant="danger">
-                    Clear All
+                    {t('comparePage.clearAll')}
                 </Button>
             )}
         </div>
@@ -62,7 +62,7 @@ const ComparePage: React.FC = () => {
       {brokersToCompare.length > 1 && (
         <div className="text-center mb-8">
             <Button onClick={handleGetSummary} disabled={loadingSummary} size="lg">
-                {loadingSummary ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/> Get AI Comparison Summary</>}
+                {loadingSummary ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/> {t('comparePage.getAiSummary')}</>}
             </Button>
         </div>
       )}
@@ -74,7 +74,7 @@ const ComparePage: React.FC = () => {
             <CardHeader>
                 <h3 className="text-xl font-bold flex items-center gap-2">
                     <Icons.bot className="h-6 w-6 text-primary-400"/>
-                    AI Analysis
+                    {t('comparePage.aiAnalysis')}
                 </h3>
             </CardHeader>
             <CardContent>
@@ -88,10 +88,10 @@ const ComparePage: React.FC = () => {
         <ComparisonTable brokers={brokersToCompare} />
       ) : (
         <div className="text-center py-20 bg-card rounded-lg border border-input">
-          <h2 className="text-2xl font-semibold text-card-foreground/90">Your comparison list is empty.</h2>
-          <p className="mt-2 text-card-foreground/70">Add brokers to compare their features side-by-side.</p>
+          <h2 className="text-2xl font-semibold text-card-foreground/90">{t('comparePage.empty.title')}</h2>
+          <p className="mt-2 text-card-foreground/70">{t('comparePage.empty.subtitle')}</p>
           <ReactRouterDOM.Link to="/brokers" className="mt-6 inline-block">
-            <Button>Browse Brokers</Button>
+            <Button>{t('comparePage.empty.button')}</Button>
           </ReactRouterDOM.Link>
         </div>
       )}

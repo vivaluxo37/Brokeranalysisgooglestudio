@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Button from '../components/ui/Button';
 import Spinner from '../components/ui/Spinner';
@@ -10,34 +9,40 @@ import { getBrokerRecommendations } from '../services/geminiService';
 import { Icons } from '../constants';
 import { useAuth } from '../hooks/useAuth';
 import Tooltip from '../components/ui/Tooltip';
-
-const steps = [
-  {
-    name: 'experience',
-    title: "First, what's your trading experience?",
-    options: ['Beginner', 'Intermediate', 'Expert'],
-  },
-  {
-    name: 'minDeposit',
-    title: 'What is your planned initial deposit?',
-    options: ['Under $200', '$200 - $1000', '$1000 - $5000', '$5000+'],
-  },
-  {
-    name: 'platforms',
-    title: 'Any preferred trading platforms?',
-    options: ['MetaTrader 4/5', 'cTrader', 'TradingView', 'Proprietary', "I don't mind"],
-    isTextInput: true,
-  },
-  {
-    name: 'priority',
-    title: "Finally, what's most important to you?",
-    options: ['Lowest Possible Spreads', 'Top-Tier Regulation', 'Best Trading Platform', 'Beginner Friendly'],
-    isTextInput: true,
-  },
-];
+import { useTranslation } from '../hooks/useTranslation';
 
 const BrokerMatcherPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const { t } = useTranslation();
+
+  const steps = [
+    {
+      name: 'experience',
+      title: t('brokerMatcherPage.steps.0.title'),
+      options: t('brokerMatcherPage.steps.0.options'),
+    },
+    {
+      name: 'minDeposit',
+      title: t('brokerMatcherPage.steps.1.title'),
+      options: t('brokerMatcherPage.steps.1.options'),
+    },
+    {
+      name: 'platforms',
+      title: t('brokerMatcherPage.steps.2.title'),
+      options: t('brokerMatcherPage.steps.2.options'),
+      isTextInput: true,
+      placeholder: t('brokerMatcherPage.steps.2.placeholder')
+    },
+    {
+      name: 'priority',
+      title: t('brokerMatcherPage.steps.3.title'),
+      options: t('brokerMatcherPage.steps.3.options'),
+      isTextInput: true,
+      placeholder: t('brokerMatcherPage.steps.3.placeholder')
+    },
+  ];
+
+
   const [preferences, setPreferences] = useState({
     experience: '',
     platforms: '',
@@ -107,7 +112,7 @@ const BrokerMatcherPage: React.FC = () => {
         setResults({ recommendations: recommendedBrokers, reasoning: response.reasoning });
         saveResultsToHistory(response.reasoning, response.recommendedBrokerIds);
       } catch (err: any) {
-        setError(err.message || 'Failed to get recommendations. Please try again.');
+        setError(err.message || t('brokerMatcherPage.results.error'));
         console.error(err);
       } finally {
         setLoading(false);
@@ -117,18 +122,18 @@ const BrokerMatcherPage: React.FC = () => {
   const isFinalStep = currentStep === steps.length -1;
 
   if (loading) {
-      return <div className="flex flex-col items-center justify-center py-20"><Spinner size="lg"/><p className="mt-4 text-lg text-foreground/80">Our AI is finding your perfect broker...</p></div>;
+      return <div className="flex flex-col items-center justify-center py-20"><Spinner size="lg"/><p className="mt-4 text-lg text-foreground/80">{t('brokerMatcherPage.loading')}</p></div>;
   }
   
   if (results) {
       return (
         <div className="mt-4 animate-fade-in">
-          <h2 className="text-3xl font-bold text-center mb-4">Your Top Matches</h2>
+          <h2 className="text-3xl font-bold text-center mb-4">{t('brokerMatcherPage.results.title')}</h2>
           <Card className="max-w-3xl mx-auto mb-8 animate-fade-in">
             <CardHeader>
                 <h3 className="text-xl font-bold flex items-center gap-2">
                     <Icons.bot className="h-6 w-6 text-primary-400" />
-                    AI Analysis
+                    {t('brokerMatcherPage.results.aiAnalysis')}
                 </h3>
             </CardHeader>
             <CardContent>
@@ -143,7 +148,7 @@ const BrokerMatcherPage: React.FC = () => {
             ))}
           </div>
           <div className="text-center mt-8">
-              <Button variant="secondary" onClick={() => { setResults(null); setCurrentStep(0); setPreferences({ experience: '', platforms: '', minDeposit: 'Under $200', priority: '' }); }}>Start Over</Button>
+              <Button variant="secondary" onClick={() => { setResults(null); setCurrentStep(0); setPreferences({ experience: '', platforms: '', minDeposit: 'Under $200', priority: '' }); }}>{t('brokerMatcherPage.results.startOver')}</Button>
           </div>
         </div>
       );
@@ -152,8 +157,8 @@ const BrokerMatcherPage: React.FC = () => {
   return (
     <div>
       <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold">AI Broker Matcher</h1>
-        <p className="text-lg text-foreground/80 mt-2">Answer a few questions and let our AI do the work.</p>
+        <h1 className="text-4xl font-bold">{t('brokerMatcherPage.title')}</h1>
+        <p className="text-lg text-foreground/80 mt-2">{t('brokerMatcherPage.subtitle')}</p>
       </div>
 
       <Card className="max-w-2xl mx-auto">
@@ -181,7 +186,7 @@ const BrokerMatcherPage: React.FC = () => {
                  <input 
                     type="text" 
                     name={steps[currentStep].name}
-                    placeholder="Or type your own..."
+                    placeholder={steps[currentStep].placeholder}
                     onChange={handleTextInputChange}
                     className="mt-4 block w-full bg-background border-input rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm p-3 text-center"
                  />
@@ -189,12 +194,12 @@ const BrokerMatcherPage: React.FC = () => {
           </div>
            <div className="flex justify-between items-center p-4 border-t border-input">
                 <Button variant="ghost" onClick={() => setCurrentStep(Math.max(0, currentStep - 1))} disabled={currentStep === 0}>
-                    Back
+                    {t('brokerMatcherPage.back')}
                 </Button>
                 {isFinalStep && (
-                    <Tooltip content="Uses AI to analyze your preferences and recommend the best brokers for you.">
+                    <Tooltip content={t('brokerMatcherPage.tooltip')}>
                       <Button onClick={handleSubmit} size="lg" disabled={!preferences.priority}>
-                          Find My Broker
+                          {t('brokerMatcherPage.findMyBroker')}
                       </Button>
                     </Tooltip>
                 )}

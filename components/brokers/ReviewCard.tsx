@@ -23,7 +23,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
         <div className="flex justify-between items-start">
             <div>
                 <div className="flex items-center mb-2">
-                    <span className="flex items-center justify-center h-8 w-8 rounded-full bg-input mr-3">
+                    <span className="flex items-center justify-center h-8 w-8 rounded-full bg-input ltr:mr-3 rtl:ml-3">
                         <Icons.user className="h-5 w-5 text-foreground/60" />
                     </span>
                     <div>
@@ -41,7 +41,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             </div>
             <StarRating score={review.rating * 2} />
         </div>
-        <p className="text-card-foreground/90 mt-4 pl-11">{review.comment}</p>
+        <p className="text-card-foreground/90 mt-4 ltr:pl-11 rtl:pr-11">{review.comment}</p>
       </CardContent>
     </Card>
   );

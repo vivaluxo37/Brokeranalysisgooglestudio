@@ -156,10 +156,10 @@ const Section: React.FC<{ title: string; id: string; children: React.ReactNode; 
 const TableOfContents: React.FC<{ items: { id: string; title: string }[] }> = ({ items }) => (
     <div className="hidden lg:block sticky top-24 self-start">
         <h3 className="font-semibold mb-3 text-card-foreground">On this page</h3>
-        <ul className="space-y-2 text-sm border-l-2 border-input">
+        <ul className="space-y-2 ltr:border-l-2 rtl:border-r-2 border-input">
             {items.map(item => (
                 <li key={item.id}>
-                    <a href={`#${item.id}`} className="block pl-4 text-foreground/70 hover:text-primary-400 hover:border-primary-400 border-l-2 border-transparent -ml-px transition-colors">
+                    <a href={`#${item.id}`} className="block ltr:pl-4 rtl:pr-4 text-foreground/70 hover:text-primary-400 hover:border-primary-400 ltr:border-l-2 rtl:border-r-2 border-transparent ltr:-ml-px rtl:-mr-px transition-colors">
                         {item.title}
                     </a>
                 </li>
@@ -245,6 +245,7 @@ const BrokerDetailPage: React.FC = () => {
         { id: 'accounts', title: 'Account Types', show: !!broker.accountTypes },
         { id: 'fees', title: 'Fees & Commissions', show: !!broker.tradingFees && !!broker.nonTradingFees },
         { id: 'platforms', title: 'Platforms & Tools', show: true },
+        { id: 'instruments', title: 'Tradable Instruments', show: !!broker.tradableInstruments },
         { id: 'social', title: 'Social & Copy Trading', show: !!broker.socialTrading },
         { id: 'safety', title: 'Regulation & Safety', show: true },
         { id: 'reviews', title: 'User Reviews', show: true },
@@ -317,13 +318,13 @@ const BrokerDetailPage: React.FC = () => {
               <div className="flex-1 min-w-0">
                   <div className="flex items-center">
                       <img className="h-16 w-16 bg-white p-2 rounded-md" src={broker.logoUrl} alt={`${broker.name} logo`} />
-                      <div className="ml-4">
+                      <div className="ltr:ml-4 rtl:mr-4">
                           <h1 className="text-3xl font-bold leading-7 text-card-foreground sm:truncate">{broker.name} Review</h1>
                           <p className="text-foreground/70 mt-1">{broker.headquarters} &bull; Est. {broker.foundingYear}</p>
                       </div>
                   </div>
               </div>
-              <div className="mt-6 flex flex-col items-center md:mt-0 md:ml-4">
+              <div className="mt-6 flex flex-col items-center md:mt-0 ltr:md:ml-4 rtl:md:mr-4">
                   <span className="text-5xl font-bold text-primary-400">{broker.score.toFixed(1)}</span>
                   <StarRating score={broker.score} className="mt-1" size="lg" />
               </div>
@@ -338,13 +339,13 @@ const BrokerDetailPage: React.FC = () => {
                   </a>
                   <Tooltip content={inCompare ? 'Remove from your comparison list' : 'Add to your comparison list'}>
                     <Button onClick={handleCompareClick} variant="secondary">
-                        {inCompare ? <Icons.compareRemove className="h-5 w-5 mr-2" /> : <Icons.compare className="h-5 w-5 mr-2" />}
+                        {inCompare ? <Icons.compareRemove className="h-5 w-5 ltr:mr-2 rtl:ml-2" /> : <Icons.compare className="h-5 w-5 ltr:mr-2 rtl:ml-2" />}
                         {inCompare ? "Remove from Compare" : "Add to Compare"}
                     </Button>
                   </Tooltip>
                    <Tooltip content={isFavorite ? 'Remove from your favorites' : 'Add this broker to your favorites'}>
                     <Button onClick={handleFavoriteClick} variant="secondary">
-                        {isFavorite ? <Icons.starFull className="h-5 w-5 mr-2 text-yellow-400" /> : <Icons.star className="h-5 w-5 mr-2" />}
+                        {isFavorite ? <Icons.starFull className="h-5 w-5 ltr:mr-2 rtl:ml-2 text-yellow-400" /> : <Icons.star className="h-5 w-5 ltr:mr-2 rtl:ml-2" />}
                         {isFavorite ? "Favorited" : "Add to Favorites"}
                     </Button>
                   </Tooltip>
@@ -438,6 +439,33 @@ const BrokerDetailPage: React.FC = () => {
             {broker.education && <p><strong>Education:</strong> {broker.education.join(', ')}.</p>}
         </Section>
         
+        {broker.tradableInstruments && (
+            <Section title="Tradable Instruments" id="instruments">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 text-center">
+                    <div className="p-4 bg-input/50 rounded-lg">
+                        <p className="text-sm text-foreground/70">Forex Pairs</p>
+                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.forexPairs.toLocaleString()}</p>
+                    </div>
+                    <div className="p-4 bg-input/50 rounded-lg">
+                        <p className="text-sm text-foreground/70">Indices</p>
+                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.indices.toLocaleString()}</p>
+                    </div>
+                    <div className="p-4 bg-input/50 rounded-lg">
+                        <p className="text-sm text-foreground/70">Commodities</p>
+                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.commodities.toLocaleString()}</p>
+                    </div>
+                    <div className="p-4 bg-input/50 rounded-lg">
+                        <p className="text-sm text-foreground/70">Stock CFDs</p>
+                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.stocks.toLocaleString()}</p>
+                    </div>
+                    <div className="p-4 bg-input/50 rounded-lg">
+                        <p className="text-sm text-foreground/70">Cryptocurrencies</p>
+                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.cryptocurrencies.toLocaleString()}</p>
+                    </div>
+                </div>
+            </Section>
+        )}
+
         {broker.socialTrading && (
             <Section title="Social & Copy Trading" id="social">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -488,13 +516,13 @@ const BrokerDetailPage: React.FC = () => {
                {reviews.length > 0 && (
                   <div className="flex items-center gap-4">
                       <div>
-                          <label htmlFor="filter-rating" className="text-sm font-medium text-foreground/80 mr-2">Filter:</label>
+                          <label htmlFor="filter-rating" className="text-sm font-medium text-foreground/80 ltr:mr-2 rtl:ml-2">Filter:</label>
                           <select id="filter-rating" value={filterRating} onChange={(e) => setFilterRating(Number(e.target.value))} className="bg-input border-input rounded-md shadow-sm p-2">
                               <option value="0">All Ratings</option> <option value="5">5 Stars</option> <option value="4">4 Stars</option> <option value="3">3 Stars</option> <option value="2">2 Stars</option> <option value="1">1 Star</option>
                           </select>
                       </div>
                        <div>
-                          <label htmlFor="sort-order" className="text-sm font-medium text-foreground/80 mr-2">Sort by:</label>
+                          <label htmlFor="sort-order" className="text-sm font-medium text-foreground/80 ltr:mr-2 rtl:ml-2">Sort by:</label>
                           <select id="sort-order" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="bg-input border-input rounded-md shadow-sm p-2">
                               <option value="date-desc">Newest First</option> <option value="date-asc">Oldest First</option> <option value="rating-desc">Highest Rating</option> <option value="rating-asc">Lowest Rating</option>
                           </select>

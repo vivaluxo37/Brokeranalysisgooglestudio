@@ -1,5 +1,3 @@
-
-
 import React, { useState, useMemo } from 'react';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
@@ -10,7 +8,7 @@ import { AIRecommendation, Broker } from '../types';
 import { Icons } from '../constants';
 import Spinner from '../components/ui/Spinner';
 import Card, { CardContent, CardHeader } from '../components/ui/Card';
-
+import { useTranslation } from '../hooks/useTranslation';
 
 // Utility to parse leverage string like "1:500" into a number 500
 const parseLeverage = (leverageStr: string): number => {
@@ -66,6 +64,7 @@ const AllBrokersPage: React.FC = () => {
   const [aiRecommendation, setAiRecommendation] = useState<AIRecommendation | null>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const handleCheckboxChange = (group: FilterKeys, value: string) => {
     setFilters(prev => {
@@ -160,7 +159,7 @@ const AllBrokersPage: React.FC = () => {
         const result = await getAIRecommendation(filteredBrokers);
         setAiRecommendation(result);
     } catch (err) {
-        setAiError("Sorry, the AI couldn't make a recommendation. Please try again with a different filter.");
+        setAiError(t('allBrokersPage.results.aiError'));
         console.error(err);
     } finally {
         setIsAiLoading(false);
@@ -177,69 +176,72 @@ const AllBrokersPage: React.FC = () => {
   return (
     <div>
       <div className="text-center mb-10">
-        <h1 className="text-4xl font-bold">All Forex Brokers</h1>
-        <p className="text-lg text-foreground/80 mt-2 max-w-3xl mx-auto">Use our advanced filters to find the broker that perfectly matches your trading style and needs.</p>
+        <h1 className="text-4xl font-bold">{t('allBrokersPage.title')}</h1>
+        <p className="text-lg text-foreground/80 mt-2 max-w-3xl mx-auto">{t('allBrokersPage.subtitle')}</p>
       </div>
 
       <div className="grid lg:grid-cols-4 gap-8 items-start">
         <aside className="lg:col-span-1 sticky top-24">
             <Card className="flex flex-col max-h-[calc(100vh-8rem)]">
                 <CardHeader className="flex justify-between items-center">
-                    <h2 className="text-xl font-bold">Filters</h2>
-                    <Button variant="ghost" size="sm" onClick={handleReset}>Reset</Button>
+                    <h2 className="text-xl font-bold">{t('allBrokersPage.filtersTitle')}</h2>
+                    <Button variant="ghost" size="sm" onClick={handleReset}>{t('allBrokersPage.reset')}</Button>
                 </CardHeader>
                 <CardContent className="overflow-y-auto">
                     <Input 
                         type="text"
-                        placeholder="Search by broker name..."
+                        placeholder={t('allBrokersPage.searchPlaceholder')}
                         value={filters.searchTerm}
                         onChange={(e) => setFilters(p => ({...p, searchTerm: e.target.value}))}
                         className="mb-4"
                     />
-                    <Accordion title="Trading Style Presets">
+                    <Accordion title={t('allBrokersPage.presetsTitle')}>
                         <div className="grid grid-cols-2 gap-2">
                             {(['Scalping', 'Algorithmic', 'Copy Trading', 'Swing Trading'] as TradingStyle[]).map(style => (
-                                <Button key={style} variant="secondary" size="sm" onClick={() => applyStylePreset(style)}>{style}</Button>
+                                <Button key={style} variant="secondary" size="sm" onClick={() => applyStylePreset(style)}>{t(`allBrokersPage.presets.${style.toLowerCase().replace(' ', '')}`)}</Button>
                             ))}
                         </div>
                     </Accordion>
-                    <Accordion title="General">
-                        <label className="text-sm font-semibold">Minimum Deposit</label>
+                    <Accordion title={t('allBrokersPage.generalTitle')}>
+                        <label className="text-sm font-semibold">{t('allBrokersPage.minDeposit')}</label>
                         <select value={filters.minDeposit} onChange={(e) => setFilters(p => ({...p, minDeposit: e.target.value}))} className="w-full mt-1 bg-input border-input rounded-md shadow-sm p-2">
-                            <option value="any">Any Amount</option><option value="100">Up to $100</option><option value="250">Up to $250</option><option value="1000">Up to $1000</option>
+                            <option value="any">{t('allBrokersPage.minDepositOptions.any')}</option>
+                            <option value="100">{t('allBrokersPage.minDepositOptions.100')}</option>
+                            <option value="250">{t('allBrokersPage.minDepositOptions.250')}</option>
+                            <option value="1000">{t('allBrokersPage.minDepositOptions.1000')}</option>
                         </select>
-                        <label className="text-sm font-semibold mt-3 block">Regulator</label>
+                        <label className="text-sm font-semibold mt-3 block">{t('allBrokersPage.regulator')}</label>
                         <select value={filters.regulator} onChange={(e) => setFilters(p => ({...p, regulator: e.target.value}))} className="w-full mt-1 bg-input border-input rounded-md shadow-sm p-2">
-                            <option value="any">Any Regulator</option>
+                            <option value="any">{t('allBrokersPage.regulatorOptions.any')}</option>
                             {allRegulators.map(reg => <option key={reg} value={reg}>{reg}</option>)}
                         </select>
                     </Accordion>
-                     <Accordion title="Execution & Costs">
-                        <h4 className="font-semibold text-sm mb-2">Execution Type</h4>
+                     <Accordion title={t('allBrokersPage.executionCostsTitle')}>
+                        <h4 className="font-semibold text-sm mb-2">{t('allBrokersPage.executionType')}</h4>
                         {['ECN', 'STP', 'NDD', 'Market Maker'].map(val => <label key={val} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={filters.executionTypes.includes(val)} onChange={() => handleCheckboxChange('executionTypes', val)} className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"/>{val}</label>)}
                         
-                        <h4 className="font-semibold text-sm mb-2 mt-4">EUR/USD Spread</h4>
-                        {[{v: 'any', l: 'Any'}, {v: 'ultra-low', l: 'Ultra Low (≤ 0.5 pips)'}, {v: 'low', l: 'Low (0.6 - 1.0 pips)'}, {v: 'standard', l: 'Standard ( > 1.0 pips)'}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="spread" value={opt.v} checked={filters.spread === opt.v} onChange={(e) => handleRadioChange('spread', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
+                        <h4 className="font-semibold text-sm mb-2 mt-4">{t('allBrokersPage.spread')}</h4>
+                        {[{v: 'any', l: t('allBrokersPage.spreadOptions.any')}, {v: 'ultra-low', l: t('allBrokersPage.spreadOptions.ultraLow')}, {v: 'low', l: t('allBrokersPage.spreadOptions.low')}, {v: 'standard', l: t('allBrokersPage.spreadOptions.standard')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="spread" value={opt.v} checked={filters.spread === opt.v} onChange={(e) => handleRadioChange('spread', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
                        
-                        <h4 className="font-semibold text-sm mb-2 mt-4">Commissions</h4>
-                        {[{v: 'any', l: 'Any'}, {v: 'commission', l: 'Commission-based'}, {v: 'zero', l: 'Zero Commission'}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="commission" value={opt.v} checked={filters.commission === opt.v} onChange={(e) => handleRadioChange('commission', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
+                        <h4 className="font-semibold text-sm mb-2 mt-4">{t('allBrokersPage.commissions')}</h4>
+                        {[{v: 'any', l: t('allBrokersPage.commissionOptions.any')}, {v: 'commission', l: t('allBrokersPage.commissionOptions.commission')}, {v: 'zero', l: t('allBrokersPage.commissionOptions.zero')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="commission" value={opt.v} checked={filters.commission === opt.v} onChange={(e) => handleRadioChange('commission', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
                      </Accordion>
-                     <Accordion title="Technology & Platforms">
-                        <h4 className="font-semibold text-sm mb-2">Platform</h4>
+                     <Accordion title={t('allBrokersPage.techPlatformsTitle')}>
+                        <h4 className="font-semibold text-sm mb-2">{t('allBrokersPage.platform')}</h4>
                         {['MT4', 'MT5', 'cTrader', 'TradingView'].map(val => <label key={val} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={filters.platforms.includes(val)} onChange={() => handleCheckboxChange('platforms', val)} className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"/>{val}</label>)}
 
-                        <h4 className="font-semibold text-sm mb-2 mt-4">Algorithmic Trading</h4>
-                        {[{v: 'eaSupport', l: 'MQL5/EA Support'}, {v: 'apiAccess', l: 'API Access'}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={filters.algoSupport.includes(opt.v)} onChange={() => handleCheckboxChange('algoSupport', opt.v)} className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
+                        <h4 className="font-semibold text-sm mb-2 mt-4">{t('allBrokersPage.algoTrading')}</h4>
+                        {[{v: 'eaSupport', l: t('allBrokersPage.algoTradingOptions.eaSupport')}, {v: 'apiAccess', l: t('allBrokersPage.algoTradingOptions.apiAccess')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={filters.algoSupport.includes(opt.v)} onChange={() => handleCheckboxChange('algoSupport', opt.v)} className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
 
-                        <h4 className="font-semibold text-sm mb-2 mt-4">Social Trading</h4>
-                        {[{v: 'any', l: 'Any'}, {v: 'yes', l: 'Supports Copy Trading'}, {v: 'no', l: 'No Copy Trading'}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="copyTrading" value={opt.v} checked={filters.copyTrading === opt.v} onChange={(e) => handleRadioChange('copyTrading', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
+                        <h4 className="font-semibold text-sm mb-2 mt-4">{t('allBrokersPage.socialTrading')}</h4>
+                        {[{v: 'any', l: t('allBrokersPage.socialTradingOptions.any')}, {v: 'yes', l: t('allBrokersPage.socialTradingOptions.yes')}, {v: 'no', l: t('allBrokersPage.socialTradingOptions.no')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="copyTrading" value={opt.v} checked={filters.copyTrading === opt.v} onChange={(e) => handleRadioChange('copyTrading', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
                      </Accordion>
-                     <Accordion title="Trading Conditions">
-                         <h4 className="font-semibold text-sm mb-2">Minimum Lot Size</h4>
-                        {[{v: 'any', l: 'Any'}, {v: 'micro', l: 'Micro (0.01)'}, {v: 'mini', l: 'Mini (0.1)'}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="minLotSize" value={opt.v} checked={filters.minLotSize === opt.v} onChange={(e) => handleRadioChange('minLotSize', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
+                     <Accordion title={t('allBrokersPage.tradingConditionsTitle')}>
+                         <h4 className="font-semibold text-sm mb-2">{t('allBrokersPage.minLotSize')}</h4>
+                        {[{v: 'any', l: t('allBrokersPage.minLotSizeOptions.any')}, {v: 'micro', l: t('allBrokersPage.minLotSizeOptions.micro')}, {v: 'mini', l: t('allBrokersPage.minLotSizeOptions.mini')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="minLotSize" value={opt.v} checked={filters.minLotSize === opt.v} onChange={(e) => handleRadioChange('minLotSize', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
                          
-                         <h4 className="font-semibold text-sm mb-2 mt-4">Max Leverage</h4>
-                        {[{v: 'any', l: 'Any'}, {v: 'low', l: 'Up to 1:100'}, {v: 'medium', l: '1:101 - 1:499'}, {v: 'high', l: '1:500+'}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="maxLeverage" value={opt.v} checked={filters.maxLeverage === opt.v} onChange={(e) => handleRadioChange('maxLeverage', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
+                         <h4 className="font-semibold text-sm mb-2 mt-4">{t('allBrokersPage.maxLeverage')}</h4>
+                        {[{v: 'any', l: t('allBrokersPage.maxLeverageOptions.any')}, {v: 'low', l: t('allBrokersPage.maxLeverageOptions.low')}, {v: 'medium', l: t('allBrokersPage.maxLeverageOptions.medium')}, {v: 'high', l: t('allBrokersPage.maxLeverageOptions.high')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="maxLeverage" value={opt.v} checked={filters.maxLeverage === opt.v} onChange={(e) => handleRadioChange('maxLeverage', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
                      </Accordion>
                 </CardContent>
             </Card>
@@ -248,25 +250,25 @@ const AllBrokersPage: React.FC = () => {
         <main className="lg:col-span-3">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4">
                 <p className="text-sm text-foreground/70">
-                    Showing {filteredBrokers.length} of {allBrokers.length} brokers
+                    {t('allBrokersPage.results.showing', { count: filteredBrokers.length, total: allBrokers.length })}
                 </p>
                 <Button 
                     onClick={handleGetAIRecommendation} 
                     disabled={isAiLoading || filteredBrokers.length < 2}
                 >
-                    {isAiLoading ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/>Get AI Recommendation</>}
+                    {isAiLoading ? <Spinner size="sm" /> : <><Icons.bot className="h-5 w-5 mr-2"/>{t('allBrokersPage.results.getAiRec')}</>}
                 </Button>
             </div>
-             {filteredBrokers.length < 2 && !isAiLoading && <p className="text-xs text-center sm:text-right mt-1 text-foreground/60">Filter to at least 2 brokers to get a recommendation.</p>}
+             {filteredBrokers.length < 2 && !isAiLoading && <p className="text-xs text-center sm:text-right mt-1 text-foreground/60">{t('allBrokersPage.results.aiRecTooltip')}</p>}
             
             {aiError && <p className="text-center text-red-500 my-6">{aiError}</p>}
       
             {aiRecommendation && recommendedBrokers.length > 0 && (
                 <div className="mb-12 animate-fade-in">
-                    <h2 className="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-500">AI Top Picks From Your Selection</h2>
+                    <h2 className="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-500">{t('allBrokersPage.results.aiPicksTitle')}</h2>
                     <div className="max-w-4xl mx-auto mb-6">
                        <Card className="h-full flex flex-col">
-                            <CardHeader><h3 className="text-xl font-bold flex items-center gap-2"><Icons.bot className="h-6 w-6 text-primary-400"/> AI Analysis</h3></CardHeader>
+                            <CardHeader><h3 className="text-xl font-bold flex items-center gap-2"><Icons.bot className="h-6 w-6 text-primary-400"/> {t('allBrokersPage.results.aiAnalysisTitle')}</h3></CardHeader>
                             <CardContent className="flex-grow">
                                 <p className="text-card-foreground/90 italic">{aiRecommendation.reasoning}</p>
                             </CardContent>
@@ -289,8 +291,8 @@ const AllBrokersPage: React.FC = () => {
                 </div>
             ) : (
                 <div className="text-center py-20 bg-card rounded-lg border border-input">
-                    <h3 className="text-xl font-semibold">No Brokers Match Your Criteria</h3>
-                    <p className="mt-2 text-card-foreground/70">Try adjusting your filters to find more results.</p>
+                    <h3 className="text-xl font-semibold">{t('allBrokersPage.results.noResultsTitle')}</h3>
+                    <p className="mt-2 text-card-foreground/70">{t('allBrokersPage.results.noResultsSubtitle')}</p>
                 </div>
             )}
         </main>

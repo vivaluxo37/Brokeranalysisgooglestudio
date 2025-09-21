@@ -32,7 +32,7 @@ const ChatMessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
     return (
         <div className={`flex items-start gap-3 my-2 animate-fade-in ${isUser ? 'justify-end' : ''}`}>
             {!isUser && <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-input text-primary-400"><Icons.bot className="h-5 w-5"/></span>}
-            <div className={`p-3 rounded-xl max-w-sm md:max-w-md shadow-md ${isUser ? 'bg-primary-600 text-white rounded-br-none' : 'bg-input text-card-foreground rounded-bl-none'}`}>
+            <div className={`p-3 rounded-xl max-w-sm md:max-w-md shadow-md ${isUser ? 'bg-primary-600 text-white ltr:rounded-br-none rtl:rounded-bl-none' : 'bg-input text-card-foreground ltr:rounded-bl-none rtl:rounded-br-none'}`}>
                 <p className="text-sm break-words" dangerouslySetInnerHTML={{ __html: parseMarkdown(message.text) }} />
             </div>
             {isUser && <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-input text-foreground"><Icons.user className="h-5 w-5"/></span>}
@@ -101,7 +101,7 @@ const Chatbot: React.FC = () => {
         return (
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-5 right-5 bg-primary-600 text-white p-4 rounded-full shadow-lg hover:bg-primary-700 transition-transform transform hover:scale-110 animate-pulse"
+                className="fixed bottom-5 ltr:right-5 rtl:left-5 bg-primary-600 text-white p-4 rounded-full shadow-lg hover:bg-primary-700 transition-transform transform hover:scale-110 animate-pulse"
                 aria-label="Open Chatbot"
             >
                 <Icons.chat className="h-8 w-8" />
@@ -110,7 +110,7 @@ const Chatbot: React.FC = () => {
     }
 
     return (
-        <div className="fixed bottom-5 right-5 w-[90vw] max-w-md h-[70vh] max-h-[600px] bg-gradient-to-br from-card to-background rounded-2xl shadow-2xl flex flex-col z-50 border border-input/50 animate-fade-in transition-colors duration-300">
+        <div className="fixed bottom-5 ltr:right-5 rtl:left-5 w-[90vw] max-w-md h-[70vh] max-h-[600px] bg-gradient-to-br from-card to-background rounded-2xl shadow-2xl flex flex-col z-50 border border-input/50 animate-fade-in transition-colors duration-300">
             <header className="p-4 flex justify-between items-center bg-card/50 rounded-t-2xl border-b border-input/50 backdrop-blur-sm transition-colors duration-300">
                 <h3 className="font-bold text-lg text-card-foreground">BrokerBot Assistant</h3>
                 <button onClick={() => setIsOpen(false)} className="text-foreground/60 hover:text-foreground"><Icons.close className="h-6 w-6" /></button>
@@ -120,7 +120,7 @@ const Chatbot: React.FC = () => {
                 {isLoading && (
                     <div className="flex items-start gap-3 my-2 animate-fade-in">
                         <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-input text-primary-400"><Icons.bot className="h-5 w-5"/></span>
-                        <div className="p-1 rounded-xl bg-input text-card-foreground rounded-bl-none shadow-md">
+                        <div className="p-1 rounded-xl bg-input text-card-foreground ltr:rounded-bl-none rtl:rounded-br-none shadow-md">
                             <TypingIndicator />
                         </div>
                     </div>

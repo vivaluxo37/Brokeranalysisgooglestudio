@@ -1,6 +1,3 @@
-
-
-
 import React from 'react';
 // Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
 import * as ReactRouterDOM from 'react-router-dom';
@@ -9,6 +6,7 @@ import Button from '../ui/Button';
 import { useComparison } from '../../hooks/useComparison';
 import Tag from '../ui/Tag';
 import Tooltip from '../ui/Tooltip';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface ComparisonTableProps {
   brokers: Broker[];
@@ -16,30 +14,35 @@ interface ComparisonTableProps {
 
 const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
   const { removeBrokerFromComparison } = useComparison();
+  const { t } = useTranslation();
 
   const features = [
-    { type: 'header', title: 'Overall Score' },
-    { title: 'Score', key: 'score' },
-    { type: 'header', title: 'Trading Costs' },
-    { title: 'EUR/USD Spread', key: 'tradingConditions.spreads.eurusd' },
-    { title: 'GBP/USD Spread', key: 'tradingConditions.spreads.gbpusd' },
-    { title: 'USD/JPY Spread', key: 'tradingConditions.spreads.usdjpy' },
-    { title: 'Commission', key: 'tradingConditions.commission' },
-    { title: 'Swap Fee Category', key: 'tradingConditions.swapFeeCategory' },
-    { type: 'header', title: 'Trading Conditions' },
-    { title: 'Max Leverage', key: 'tradingConditions.maxLeverage' },
-    { title: 'Execution Type', key: 'technology.executionType' },
-    { type: 'header', title: 'Accessibility' },
-    { title: 'Min. Deposit', key: 'accessibility.minDeposit' },
-    { title: 'Deposit Methods', key: 'accessibility.depositMethods' },
-    { title: 'Withdrawal Methods', key: 'accessibility.withdrawalMethods' },
-    { title: 'Customer Support', key: 'accessibility.customerSupport' },
-    { type: 'header', title: 'Technology' },
-    { title: 'Platforms', key: 'technology.platforms' },
-    { type: 'header', title: 'Trust & Background' },
-    { title: 'Regulators', key: 'regulation.regulators' },
-    { title: 'Founded', key: 'foundingYear' },
-    { title: 'Headquarters', key: 'headquarters' },
+    { type: 'header', title: t('compareTable.features.overallScore') },
+    { title: t('compareTable.features.score'), key: 'score' },
+    { type: 'header', title: t('compareTable.features.tradingCosts') },
+    { title: t('compareTable.features.eurusd'), key: 'tradingConditions.spreads.eurusd' },
+    { title: t('compareTable.features.gbpusd'), key: 'tradingConditions.spreads.gbpusd' },
+    { title: t('compareTable.features.usdjpy'), key: 'tradingConditions.spreads.usdjpy' },
+    { title: t('compareTable.features.commission'), key: 'tradingConditions.commission' },
+    { title: t('compareTable.features.swap'), key: 'tradingConditions.swapFeeCategory' },
+    { type: 'header', title: t('compareTable.features.tradingConditions') },
+    { title: t('compareTable.features.maxLeverage'), key: 'tradingConditions.maxLeverage' },
+    { title: t('compareTable.features.executionType'), key: 'technology.executionType' },
+    { type: 'header', title: t('compareTable.features.accessibility') },
+    { title: t('compareTable.features.minDeposit'), key: 'accessibility.minDeposit' },
+    { title: t('compareTable.features.depositMethods'), key: 'accessibility.depositMethods' },
+    { title: t('compareTable.features.withdrawalMethods'), key: 'accessibility.withdrawalMethods' },
+    { title: t('compareTable.features.support'), key: 'accessibility.customerSupport' },
+    { type: 'header', title: t('compareTable.features.technology') },
+    { title: t('compareTable.features.platforms'), key: 'technology.platforms' },
+    { type: 'header', title: t('compareTable.features.tradableInstruments') },
+    { title: t('compareTable.features.forexPairs'), key: 'tradableInstruments.forexPairs' },
+    { title: t('compareTable.features.stocks'), key: 'tradableInstruments.stocks' },
+    { title: t('compareTable.features.cryptocurrencies'), key: 'tradableInstruments.cryptocurrencies' },
+    { type: 'header', title: t('compareTable.features.trust') },
+    { title: t('compareTable.features.regulators'), key: 'regulation.regulators' },
+    { title: t('compareTable.features.founded'), key: 'foundingYear' },
+    { title: t('compareTable.features.headquarters'), key: 'headquarters' },
   ];
 
   const renderValue = (broker: Broker, key: string) => {
@@ -81,7 +84,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
                 return '-';
             }
         }
-        return value;
+        return typeof value === 'number' ? value.toLocaleString() : value;
     }
   };
 
@@ -90,7 +93,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
       <table className="w-full min-w-max text-left">
         <thead>
           <tr className="border-b border-input">
-            <th className="p-4 w-1/4">Feature</th>
+            <th className="p-4 w-1/4">{t('compareTable.feature')}</th>
             {brokers.map(broker => (
               <th key={broker.id} className="p-4 text-center">
                 <ReactRouterDOM.Link to={`/broker/${broker.id}`}>
@@ -99,10 +102,10 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
                 </ReactRouterDOM.Link>
                 <div className="flex justify-center items-center gap-2 mt-2">
                     <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer">
-                        <Button variant="primary" size="sm" className="text-xs px-3 py-1">Visit</Button>
+                        <Button variant="primary" size="sm" className="text-xs px-3 py-1">{t('compareTable.visit')}</Button>
                     </a>
                     <Tooltip content={`Remove ${broker.name} from comparison`}>
-                      <Button onClick={() => removeBrokerFromComparison(broker.id)} variant="danger" size="sm" className="text-xs px-2 py-1">Remove</Button>
+                      <Button onClick={() => removeBrokerFromComparison(broker.id)} variant="danger" size="sm" className="text-xs px-2 py-1">{t('compareTable.remove')}</Button>
                     </Tooltip>
                 </div>
               </th>

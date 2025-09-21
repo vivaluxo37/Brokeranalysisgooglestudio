@@ -8,24 +8,27 @@ import { ComparisonProvider } from './contexts/ComparisonContext';
 import { FavoritesProvider } from './contexts/FavoritesContext';
 import { ReviewsProvider } from './contexts/ReviewsContext';
 import { AlertsProvider } from './contexts/AlertsContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 export function render(url: string) {
   return ReactDOMServer.renderToString(
     <React.StrictMode>
       <StaticRouter location={url}>
-        <ThemeProvider>
-          <AuthProvider>
-            <ComparisonProvider>
-              <FavoritesProvider>
-                <ReviewsProvider>
-                  <AlertsProvider>
-                    <App />
-                  </AlertsProvider>
-                </ReviewsProvider>
-              </FavoritesProvider>
-            </ComparisonProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <ComparisonProvider>
+                <FavoritesProvider>
+                  <ReviewsProvider>
+                    <AlertsProvider>
+                      <App />
+                    </AlertsProvider>
+                  </ReviewsProvider>
+                </FavoritesProvider>
+              </ComparisonProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </LanguageProvider>
       </StaticRouter>
     </React.StrictMode>
   );

@@ -1,12 +1,11 @@
-
-
-
 import React from 'react';
 // Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
 import * as ReactRouterDOM from 'react-router-dom';
 import { categoryPageGroups } from '../../pages/categoryPageData';
+import { useTranslation } from '../../hooks/useTranslation';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   const mainLinks = [
     { name: 'Home', path: '/' },
     { name: 'All Brokers', path: '/brokers' },
@@ -25,12 +24,12 @@ const Footer: React.FC = () => {
           {/* Main Links */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
              <h3 className="text-2xl font-bold text-primary-500 mb-2">Brokeranalysis</h3>
-             <p className="text-sm">Discover your perfect forex broker with the power of AI.</p>
+             <p className="text-sm">{t('footer.subtitle')}</p>
           </div>
           
           {/* By Country */}
           <div>
-            <h4 className="font-semibold text-card-foreground mb-4">By Country</h4>
+            <h4 className="font-semibold text-card-foreground mb-4">{t('footer.byCountry')}</h4>
             <ul className="space-y-2 text-sm">
               {categoryPageGroups.country.map(link => (
                 <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
@@ -40,7 +39,7 @@ const Footer: React.FC = () => {
           
           {/* Platforms & Types */}
           <div>
-            <h4 className="font-semibold text-card-foreground mb-4">Platforms & Types</h4>
+            <h4 className="font-semibold text-card-foreground mb-4">{t('footer.platformsAndTypes')}</h4>
             <ul className="space-y-2 text-sm">
                {categoryPageGroups.platform.map(link => (
                 <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
@@ -50,7 +49,7 @@ const Footer: React.FC = () => {
 
            {/* Resources */}
           <div>
-            <h4 className="font-semibold text-card-foreground mb-4">Resources</h4>
+            <h4 className="font-semibold text-card-foreground mb-4">{t('footer.resources')}</h4>
             <ul className="space-y-2 text-sm">
                {mainLinks.map(link => (
                 <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
@@ -59,7 +58,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="text-center mt-12 border-t border-input pt-8">
-          <p>&copy; {new Date().getFullYear()} Brokeranalysis. All rights reserved.</p>
+          <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
         </div>
       </div>
     </footer>

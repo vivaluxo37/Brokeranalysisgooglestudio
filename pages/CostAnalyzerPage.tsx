@@ -14,7 +14,7 @@ import { Broker } from '../types';
 const PIP_VALUE_STANDARD_LOT = 10;
 
 const SortIcon: React.FC<{ direction?: 'asc' | 'desc' }> = ({ direction }) => {
-    const commonProps: React.SVGProps<SVGSVGElement> = { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "inline-block ml-1" };
+    const commonProps: React.SVGProps<SVGSVGElement> = { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "inline-block ltr:ml-1 rtl:mr-1" };
     if (direction === 'asc') return <svg {...commonProps}><path d="m18 15-6-6-6 6"/></svg>;
     if (direction === 'desc') return <svg {...commonProps}><path d="m6 9 6 6 6-6"/></svg>;
     return <svg {...commonProps} className={`${commonProps.className} opacity-30`}><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg>;
@@ -109,8 +109,8 @@ const CostAnalyzerPage: React.FC = () => {
         <div className="text-center py-20 bg-card rounded-lg border border-input"><h2 className="text-2xl font-semibold text-card-foreground/90">Your comparison list is empty.</h2><p className="mt-2 text-card-foreground/70">Add brokers to the comparison list to use the Cost Analyzer.</p><ReactRouterDOM.Link to="/brokers" className="mt-6 inline-block"><Button>Browse Brokers</Button></ReactRouterDOM.Link></div>
     );
     
-    const renderHeader = (label: string, key: SortableKeys, align: 'left' | 'right' = 'left') => (
-        <th className={`p-4 text-${align} group`}><button className={`flex items-center w-full ${align === 'right' ? 'justify-end' : ''}`} onClick={() => requestSort(key)}><span className={sortConfig.key === key ? 'text-primary-400' : 'group-hover:text-foreground'}>{label}</span><SortIcon direction={sortConfig.key === key ? sortConfig.direction : undefined} /></button></th>
+    const renderHeader = (label: string, key: SortableKeys, align: 'start' | 'end' = 'start') => (
+        <th className={`p-4 text-${align} group`}><button className={`flex items-center w-full ${align === 'end' ? 'justify-end' : ''}`} onClick={() => requestSort(key)}><span className={sortConfig.key === key ? 'text-primary-400' : 'group-hover:text-foreground'}>{label}</span><SortIcon direction={sortConfig.key === key ? sortConfig.direction : undefined} /></button></th>
     );
     
     return (
@@ -122,14 +122,14 @@ const CostAnalyzerPage: React.FC = () => {
             </Card>
 
             <div className="overflow-x-auto bg-card rounded-lg border border-input">
-                <table className="w-full min-w-max text-left">
+                <table className="w-full min-w-max">
                     <thead>
                         <tr className="border-b border-input">
-                            {renderHeader('Broker', 'name')}
-                            {renderHeader('Live Spread (pips)', 'spread', 'right')}
-                            {renderHeader('Commission ($)', 'commission', 'right')}
-                            {renderHeader('Total Cost ($)', 'totalCost', 'right')}
-                            <th className="p-4 text-right">Visit Site</th>
+                            {renderHeader('Broker', 'name', 'start')}
+                            {renderHeader('Live Spread (pips)', 'spread', 'end')}
+                            {renderHeader('Commission ($)', 'commission', 'end')}
+                            {renderHeader('Total Cost ($)', 'totalCost', 'end')}
+                            <th className="p-4 text-end">Visit Site</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,10 +143,10 @@ const CostAnalyzerPage: React.FC = () => {
                                     </ReactRouterDOM.Link>
                                     {isCheapest && <span className="text-xs font-bold text-green-300 bg-green-800/60 px-2 py-0.5 rounded-full">Cheapest</span>}
                                 </td>
-                                <td className="p-4 text-right font-mono">{broker.spread.toFixed(2)}</td>
-                                <td className="p-4 text-right font-mono">{broker.commission.toFixed(2)}</td>
-                                <td className={`p-4 text-right font-bold text-lg font-mono ${isCheapest ? 'text-green-300' : 'text-primary-400'}`}>{broker.totalCost.toFixed(2)}</td>
-                                <td className="p-4 text-right">
+                                <td className="p-4 text-end font-mono">{broker.spread.toFixed(2)}</td>
+                                <td className="p-4 text-end font-mono">{broker.commission.toFixed(2)}</td>
+                                <td className={`p-4 text-end font-bold text-lg font-mono ${isCheapest ? 'text-green-300' : 'text-primary-400'}`}>{broker.totalCost.toFixed(2)}</td>
+                                <td className="p-4 text-end">
                                     <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer">
                                         <Button variant="primary" size="sm">
                                             Visit

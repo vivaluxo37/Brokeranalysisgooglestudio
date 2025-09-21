@@ -79,7 +79,7 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
         </a>
         <Tooltip content={inCompare ? 'Remove from comparison list' : 'Add to comparison list'} className="flex-1">
           <Button onClick={handleCompareClick} variant="secondary" size="sm" className="w-full">
-              {inCompare ? <Icons.compareRemove className="h-4 w-4 mr-2" /> : <Icons.compare className="h-4 w-4 mr-2" />}
+              {inCompare ? <Icons.compareRemove className="h-4 w-4 ltr:mr-2 rtl:ml-2" /> : <Icons.compare className="h-4 w-4 ltr:mr-2 rtl:ml-2" />}
               {inCompare ? 'In Compare' : 'Compare'}
           </Button>
         </Tooltip>

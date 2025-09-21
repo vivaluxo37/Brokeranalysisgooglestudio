@@ -16,6 +16,7 @@ import VerificationModal from '../components/reviews/VerificationModal';
 import StarRating from '../components/ui/StarRating';
 import Badge from '../components/ui/Badge';
 import { useAlerts } from '../hooks/useAlerts';
+import { useTranslation } from '../hooks/useTranslation';
 
 // A reusable accordion component for the dashboard
 const AccordionItem: React.FC<{ title: string; subtitle: string; children: React.ReactNode }> = ({ title, subtitle, children }) => {
@@ -23,7 +24,7 @@ const AccordionItem: React.FC<{ title: string; subtitle: string; children: React
   return (
     <div className="border-b border-input last:border-b-0">
       <button
-        className="flex justify-between items-center w-full py-4 px-6 text-left hover:bg-input/50 transition-colors"
+        className="flex justify-between items-center w-full py-4 px-6 text-start hover:bg-input/50 transition-colors"
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
       >
@@ -68,6 +69,7 @@ const DashboardPage: React.FC = () => {
   const { favoritesList } = useFavorites();
   const { getReviewsByUserId, verifyReview } = useReviews();
   const { getAlertsForFavorites } = useAlerts();
+  const { t } = useTranslation();
   const [history, setHistory] = useState<MatcherHistoryItem[]>([]);
   const navigate = ReactRouterDOM.useNavigate();
 
@@ -159,26 +161,35 @@ const DashboardPage: React.FC = () => {
           default: return 'border-l-gray-500 bg-gray-900/20';
       }
   };
+   const getSeverityColorRTL = (severity: 'High' | 'Medium' | 'Low') => {
+      switch (severity) {
+          case 'High': return 'rtl:border-r-red-500 ltr:border-l-red-500 bg-red-900/20';
+          case 'Medium': return 'rtl:border-r-yellow-500 ltr:border-l-yellow-500 bg-yellow-900/20';
+          case 'Low': return 'rtl:border-r-green-500 ltr:border-l-green-500 bg-green-900/20';
+          default: return 'rtl:border-r-gray-500 ltr:border-l-gray-500 bg-gray-900/20';
+      }
+  };
+
 
   return (
     <div className="space-y-12">
       <div>
-        <h1 className="text-4xl font-bold">Welcome back, {user?.name}!</h1>
-        <p className="text-lg text-foreground/80 mt-2">This is your personal dashboard to track and manage your broker research.</p>
+        <h1 className="text-4xl font-bold">{t('dashboardPage.welcome', { name: user?.name || '' })}</h1>
+        <p className="text-lg text-foreground/80 mt-2">{t('dashboardPage.subtitle')}</p>
       </div>
       
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <QuickActionCard to="/broker-matcher" icon={Icons.bot} title="New AI Match" description="Find a new broker tailored to you." />
-          <QuickActionCard to="/compare" icon={Icons.layers} title="Compare Brokers" description="View your comparison list." />
-          <QuickActionCard to="/cost-analyzer" icon={Icons.data} title="Cost Analyzer" description="Analyze live trading fees." />
-          <QuickActionCard to="/brokers" icon={Icons.shieldCheck} title="Explore All Brokers" description="Browse our full broker list." />
+          <QuickActionCard to="/broker-matcher" icon={Icons.bot} title={t('dashboardPage.quickActions.newMatch.title')} description={t('dashboardPage.quickActions.newMatch.description')} />
+          <QuickActionCard to="/compare" icon={Icons.layers} title={t('dashboardPage.quickActions.compare.title')} description={t('dashboardPage.quickActions.compare.description')} />
+          <QuickActionCard to="/cost-analyzer" icon={Icons.data} title={t('dashboardPage.quickActions.analyzer.title')} description={t('dashboardPage.quickActions.analyzer.description')} />
+          <QuickActionCard to="/brokers" icon={Icons.shieldCheck} title={t('dashboardPage.quickActions.explore.title')} description={t('dashboardPage.quickActions.explore.description')} />
       </div>
 
        {/* My Alerts */}
        <Card>
         <CardHeader>
-          <h2 className="text-2xl font-semibold">My Alerts</h2>
+          <h2 className="text-2xl font-semibold">{t('dashboardPage.alerts.title')}</h2>
         </CardHeader>
         <CardContent>
           {myAlerts.length > 0 ? (
@@ -186,7 +197,7 @@ const DashboardPage: React.FC = () => {
               {myAlerts.map(alert => {
                 const broker = allBrokers.find(b => b.id === alert.brokerId);
                 return (
-                  <div key={alert.id} className={`p-4 rounded-r-lg border-l-4 ${getSeverityColor(alert.severity)}`}>
+                  <div key={alert.id} className={`p-4 ltr:rounded-r-lg rtl:rounded-l-lg ltr:border-l-4 rtl:border-r-4 ${getSeverityColorRTL(alert.severity)}`}>
                     <div className="flex justify-between items-start">
                       <div>
                         <p className="font-semibold text-card-foreground">
@@ -194,7 +205,7 @@ const DashboardPage: React.FC = () => {
                         </p>
                         <p className="text-sm text-card-foreground/80 mt-1">{alert.description}</p>
                       </div>
-                      <p className="text-xs text-card-foreground/60 flex-shrink-0 ml-4">{new Date(alert.date).toLocaleDateString()}</p>
+                      <p className="text-xs text-card-foreground/60 flex-shrink-0 ltr:ml-4 rtl:mr-4">{new Date(alert.date).toLocaleDateString()}</p>
                     </div>
                   </div>
                 )
@@ -202,9 +213,9 @@ const DashboardPage: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-12 px-6">
-              <p className="text-card-foreground/70">No alerts for your favorited brokers. Add some brokers to your favorites to start receiving updates!</p>
+              <p className="text-card-foreground/70">{t('dashboardPage.alerts.empty')}</p>
               <ReactRouterDOM.Link to="/brokers" className="mt-4 inline-block">
-                <Button variant="secondary">Explore Brokers</Button>
+                <Button variant="secondary">{t('dashboardPage.alerts.button')}</Button>
               </ReactRouterDOM.Link>
             </div>
           )}
@@ -214,33 +225,33 @@ const DashboardPage: React.FC = () => {
       {/* AI Match History */}
       <Card>
         <CardHeader>
-          <h2 className="text-2xl font-semibold">Your AI Broker Match History</h2>
+          <h2 className="text-2xl font-semibold">{t('dashboardPage.history.title')}</h2>
         </CardHeader>
         <CardContent className="p-0">
           {history.length > 0 ? (
             <div className="divide-y divide-input">
               {history.map(item => {
                 const matchedBrokers = allBrokers.filter(b => item.recommendedBrokerIds.includes(b.id));
-                const title = `Match for a ${item.preferences.experience} Trader`;
-                const subtitle = `Priority: ${item.preferences.priority} | ${new Date(item.timestamp).toLocaleDateString()}`;
+                const title = t('dashboardPage.history.matchTitle', { experience: item.preferences.experience });
+                const subtitle = t('dashboardPage.history.matchSubtitle', { priority: item.preferences.priority, date: new Date(item.timestamp).toLocaleDateString()});
                 return (
                     <AccordionItem key={item.id} title={title} subtitle={subtitle}>
                         <div className="space-y-6">
                             <div>
-                                <h4 className="font-semibold text-primary-400 mb-2">Your Preferences:</h4>
+                                <h4 className="font-semibold text-primary-400 mb-2">{t('dashboardPage.history.preferences')}</h4>
                                 <div className="text-sm text-foreground/80 grid grid-cols-[auto,1fr] gap-x-4 gap-y-1">
-                                    <span>Experience:</span> <span className="font-semibold">{item.preferences.experience}</span>
-                                    <span>Initial Deposit:</span> <span className="font-semibold">{item.preferences.minDeposit}</span>
-                                    <span>Platforms:</span> <span className="font-semibold">{item.preferences.platforms || 'Any'}</span>
-                                    <span>Priority:</span> <span className="font-semibold">{item.preferences.priority}</span>
+                                    <span>{t('dashboardPage.history.experience')}</span> <span className="font-semibold">{item.preferences.experience}</span>
+                                    <span>{t('dashboardPage.history.deposit')}</span> <span className="font-semibold">{item.preferences.minDeposit}</span>
+                                    <span>{t('dashboardPage.history.platforms')}</span> <span className="font-semibold">{item.preferences.platforms || t('dashboardPage.history.any')}</span>
+                                    <span>{t('dashboardPage.history.priority')}</span> <span className="font-semibold">{item.preferences.priority}</span>
                                 </div>
                             </div>
                             <div>
-                                <h4 className="font-semibold text-primary-400 mb-2">AI Analysis:</h4>
+                                <h4 className="font-semibold text-primary-400 mb-2">{t('dashboardPage.history.aiAnalysis')}</h4>
                                 <p className="text-foreground/90 italic">"{item.reasoning}"</p>
                             </div>
                             <div>
-                               <h4 className="font-semibold text-primary-400 mb-4">Recommended Brokers for this Match:</h4>
+                               <h4 className="font-semibold text-primary-400 mb-4">{t('dashboardPage.history.recommendations')}</h4>
                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {matchedBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} isRecommended={true} />)}
                                </div>
@@ -252,9 +263,9 @@ const DashboardPage: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-12 px-6">
-                <p className="text-card-foreground/70">You haven't used the AI Broker Matcher yet.</p>
+                <p className="text-card-foreground/70">{t('dashboardPage.history.empty')}</p>
                 <ReactRouterDOM.Link to="/broker-matcher" className="mt-4 inline-block">
-                    <Button variant="primary">Find Your First Match</Button>
+                    <Button variant="primary">{t('dashboardPage.history.button')}</Button>
                 </ReactRouterDOM.Link>
             </div>
           )}
@@ -264,7 +275,7 @@ const DashboardPage: React.FC = () => {
        {/* My Reviews Section */}
        <Card>
         <CardHeader>
-          <h2 className="text-2xl font-semibold">My Reviews</h2>
+          <h2 className="text-2xl font-semibold">{t('dashboardPage.reviews.title')}</h2>
         </CardHeader>
         <CardContent>
           {userReviews.length > 0 ? (
@@ -275,7 +286,10 @@ const DashboardPage: React.FC = () => {
                   <div key={review.id} className="p-4 rounded-lg bg-input/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                       <p className="font-semibold text-card-foreground">
-                        Review for <ReactRouterDOM.Link to={`/broker/${broker?.id}`} className="text-primary-400 hover:underline">{broker?.name || 'Unknown Broker'}</ReactRouterDOM.Link>
+                        {t('dashboardPage.reviews.reviewFor')}{' '}
+                        <ReactRouterDOM.Link to={`/broker/${broker?.id}`} className="text-primary-400 hover:underline">
+                            {broker?.name || t('dashboardPage.reviews.unknownBroker')}
+                        </ReactRouterDOM.Link>
                       </p>
                       <StarRating score={review.rating * 2} size="sm" className="my-1"/>
                       <p className="text-sm text-card-foreground/80 italic">"{review.comment}"</p>
@@ -285,7 +299,7 @@ const DashboardPage: React.FC = () => {
                         <Badge variant="success" Icon={Icons.verified}>Verified</Badge>
                       ) : (
                         <Button size="sm" variant="secondary" onClick={() => handleOpenVerification(review.id)}>
-                          Verify Review
+                          {t('dashboardPage.reviews.verify')}
                         </Button>
                       )}
                     </div>
@@ -295,9 +309,9 @@ const DashboardPage: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-12 px-6">
-              <p className="text-card-foreground/70">You haven't written any reviews yet.</p>
+              <p className="text-card-foreground/70">{t('dashboardPage.reviews.empty')}</p>
               <ReactRouterDOM.Link to="/brokers" className="mt-4 inline-block">
-                <Button variant="secondary">Find a Broker to Review</Button>
+                <Button variant="secondary">{t('dashboardPage.reviews.button')}</Button>
               </ReactRouterDOM.Link>
             </div>
           )}
@@ -307,7 +321,7 @@ const DashboardPage: React.FC = () => {
        {/* Favorite Brokers */}
        <Card>
         <CardHeader>
-            <h2 className="text-2xl font-semibold">Your Favorite Brokers</h2>
+            <h2 className="text-2xl font-semibold">{t('dashboardPage.favorites.title')}</h2>
         </CardHeader>
         <CardContent>
             {favoriteBrokers.length > 0 ? (
@@ -316,9 +330,9 @@ const DashboardPage: React.FC = () => {
                 </div>
             ) : (
                 <div className="text-center py-12 px-6">
-                    <p className="text-card-foreground/70">You haven't favorited any brokers yet. Click the star icon on a broker to save it here.</p>
+                    <p className="text-card-foreground/70">{t('dashboardPage.favorites.empty')}</p>
                      <ReactRouterDOM.Link to="/brokers" className="mt-4 inline-block">
-                        <Button variant="secondary">Explore Brokers</Button>
+                        <Button variant="secondary">{t('dashboardPage.favorites.button')}</Button>
                     </ReactRouterDOM.Link>
                 </div>
             )}
@@ -328,31 +342,31 @@ const DashboardPage: React.FC = () => {
        {/* Account Settings */}
       <Card>
         <CardHeader>
-          <h2 className="text-2xl font-semibold">Account Settings</h2>
+          <h2 className="text-2xl font-semibold">{t('dashboardPage.settings.title')}</h2>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleUpdateSubmit} className="max-w-lg space-y-4">
             <div>
-                <Input id="email" label="Email Address" type="email" value={user?.email || ''} disabled className="cursor-not-allowed bg-input/50" />
+                <Input id="email" label={t('dashboardPage.settings.email')} type="email" value={user?.email || ''} disabled className="cursor-not-allowed bg-input/50" />
             </div>
             <div>
-                <Input id="fullName" label="Full Name" type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                <Input id="fullName" label={t('dashboardPage.settings.name')} type="text" value={name} onChange={(e) => setName(e.target.value)} required />
             </div>
             <div>
-                <Input id="password" label="New Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Leave blank to keep current password" />
+                <Input id="password" label={t('dashboardPage.settings.password')} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('dashboardPage.settings.passwordPlaceholder')} />
             </div>
             <div className="flex items-center gap-4 pt-2">
               <Button type="submit" disabled={isUpdating || name === user?.name}>
-                {isUpdating ? <Spinner size="sm" /> : 'Save Changes'}
+                {isUpdating ? <Spinner size="sm" /> : t('dashboardPage.settings.button')}
               </Button>
-              {updateSuccess && <p className="text-sm text-green-400 animate-fade-in">Profile updated successfully!</p>}
+              {updateSuccess && <p className="text-sm text-green-400 animate-fade-in">{t('dashboardPage.settings.success')}</p>}
             </div>
           </form>
           <div className="mt-8 pt-6 border-t border-input">
-            <h3 className="text-lg font-semibold text-red-500">Danger Zone</h3>
-            <p className="text-sm text-card-foreground/70 mt-1">Deleting your account is a permanent action and cannot be undone.</p>
+            <h3 className="text-lg font-semibold text-red-500">{t('dashboardPage.settings.dangerZone')}</h3>
+            <p className="text-sm text-card-foreground/70 mt-1">{t('dashboardPage.settings.dangerDescription')}</p>
             <Button variant="danger" className="mt-4" onClick={() => setIsDeleteModalOpen(true)}>
-              Delete My Account
+              {t('dashboardPage.settings.deleteButton')}
             </Button>
           </div>
         </CardContent>
@@ -363,17 +377,17 @@ const DashboardPage: React.FC = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center animate-fade-in" aria-modal="true" role="dialog">
           <Card className="max-w-md w-full animate-fade-in">
             <CardHeader>
-              <h3 className="text-xl font-bold">Confirm Account Deletion</h3>
+              <h3 className="text-xl font-bold">{t('dashboardPage.settings.deleteModal.title')}</h3>
             </CardHeader>
             <CardContent>
-              <p className="text-card-foreground/80">Are you sure you want to permanently delete your account? All your data, including favorites and match history, will be lost.</p>
+              <p className="text-card-foreground/80">{t('dashboardPage.settings.deleteModal.text')}</p>
             </CardContent>
             <CardFooter className="flex justify-end gap-4 bg-input/30">
               <Button variant="secondary" onClick={() => setIsDeleteModalOpen(false)} disabled={isDeleting}>
-                Cancel
+                {t('dashboardPage.settings.deleteModal.cancel')}
               </Button>
               <Button variant="danger" onClick={handleDeleteAccount} disabled={isDeleting}>
-                {isDeleting ? <Spinner size="sm" /> : 'Yes, Delete Account'}
+                {isDeleting ? <Spinner size="sm" /> : t('dashboardPage.settings.deleteModal.confirm')}
               </Button>
             </CardFooter>
           </Card>

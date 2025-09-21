@@ -30,6 +30,9 @@ import ForexBasicsQuizPage from './pages/ForexBasicsQuizPage';
 import ChartingIntroQuizPage from './pages/ChartingIntroQuizPage';
 import RiskManagementQuizPage from './pages/RiskManagementQuizPage';
 import OrderTypesQuizPage from './pages/OrderTypesQuizPage';
+import EconomicCalendarPage from './pages/EconomicCalendarPage';
+import MarketDataPage from './pages/MarketDataPage';
+import CalculatorsPage from './pages/CalculatorsPage';
 
 const App: React.FC = () => {
   return (
@@ -59,6 +62,11 @@ const App: React.FC = () => {
         <ReactRouterDOM.Route path="/education/simulators" element={<SimulatorsPage />} />
         <ReactRouterDOM.Route path="/education/simulators/order-execution" element={<OrderExecutionSimulatorPage />} />
         
+        {/* Tools Routes */}
+        <ReactRouterDOM.Route path="/tools/economic-calendar" element={<EconomicCalendarPage />} />
+        <ReactRouterDOM.Route path="/tools/market-data" element={<MarketDataPage />} />
+        <ReactRouterDOM.Route path="/tools/calculators" element={<CalculatorsPage />} />
+
         {/* Dynamically create routes for all category pages */}
         {categoryPages.map(({ path, title, description, filterFn }) => (
           <ReactRouterDOM.Route 

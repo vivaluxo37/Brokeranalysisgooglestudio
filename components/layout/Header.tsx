@@ -136,6 +136,19 @@ const Header: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {/* Tools Dropdown */}
+                                <div className="group relative">
+                                    <button className="px-3 py-2 rounded-md text-sm font-medium text-foreground/70 group-hover:bg-input group-hover:text-foreground transition-colors flex items-center">
+                                        {t('header.tools')} <Icons.chevronDown className="h-4 w-4 ltr:ml-1 rtl:mr-1" />
+                                    </button>
+                                    <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-56 bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
+                                        <div className="p-2 space-y-1">
+                                            <NavLink to="/tools/economic-calendar" className="block w-full text-left">{t('header.toolsMenu.economicCalendar')}</NavLink>
+                                            <NavLink to="/tools/calculators" className="block w-full text-left">{t('header.toolsMenu.calculators')}</NavLink>
+                                            <NavLink to="/tools/market-data" className="block w-full text-left">{t('header.toolsMenu.marketData')}</NavLink>
+                                        </div>
+                                    </div>
+                                </div>
                                 {/* Education Dropdown */}
                                 <div className="group relative">
                                     <button className="px-3 py-2 rounded-md text-sm font-medium text-foreground/70 group-hover:bg-input group-hover:text-foreground transition-colors flex items-center">
@@ -194,6 +207,9 @@ const Header: React.FC = () => {
                         <NavLink to="/compare" onClick={closeMobileMenu}>{t('header.megaMenu.compareBrokers')}</NavLink>
                         <NavLink to="/cost-analyzer" onClick={closeMobileMenu}>{t('header.megaMenu.costAnalyzer')}</NavLink>
                         <NavLink to="/broker-matcher" onClick={closeMobileMenu}>{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
+                        <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu}>{t('header.toolsMenu.economicCalendar')}</NavLink>
+                        <NavLink to="/tools/calculators" onClick={closeMobileMenu}>{t('header.toolsMenu.calculators')}</NavLink>
+                        <NavLink to="/tools/market-data" onClick={closeMobileMenu}>{t('header.toolsMenu.marketData')}</NavLink>
                         <NavLink to="/education" onClick={closeMobileMenu}>{t('header.education')}</NavLink>
                         <NavLink to="/market-news" onClick={closeMobileMenu}>{t('header.marketNews')}</NavLink>
                         <NavLink to="/methodology" onClick={closeMobileMenu}>{t('header.methodology')}</NavLink>

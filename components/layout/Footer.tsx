@@ -7,23 +7,32 @@ import { useTranslation } from '../../hooks/useTranslation';
 const Footer: React.FC = () => {
   const { t } = useTranslation();
   const mainLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'All Brokers', path: '/brokers' },
-    { name: 'Compare Brokers', path: '/compare' },
-    { name: 'Cost Analyzer', path: '/cost-analyzer' },
-    { name: 'Broker Matcher', path: '/broker-matcher' },
-    { name: 'Market News', path: '/market-news' },
-    { name: 'Education Hub', path: '/education' },
-    { name: 'Methodology', path: '/methodology' },
-    { name: 'Sources', path: '/sources' },
+    { name: t('footer.links.home'), path: '/' },
+    { name: t('footer.links.allBrokers'), path: '/brokers' },
+    { name: t('footer.links.compareBrokers'), path: '/compare' },
+    { name: t('footer.links.costAnalyzer'), path: '/cost-analyzer' },
+    { name: t('footer.links.brokerMatcher'), path: '/broker-matcher' },
+    { name: t('footer.links.marketNews'), path: '/market-news' },
+    { name: t('footer.links.educationHub'), path: '/education' },
+  ];
+
+  const toolLinks = [
+      { name: t('footer.links.economicCalendar'), path: '/tools/economic-calendar'},
+      { name: t('footer.links.calculators'), path: '/tools/calculators'},
+      { name: t('footer.links.marketData'), path: '/tools/market-data'},
+  ];
+
+  const aboutLinks = [
+      { name: t('footer.links.methodology'), path: '/methodology' },
+      { name: t('footer.links.sources'), path: '/sources' },
   ];
 
   return (
     <footer className="bg-card/50 border-t border-input mt-24 transition-colors duration-300">
       <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8 text-foreground/70">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
           {/* Main Links */}
-          <div className="col-span-2 md:col-span-4 lg:col-span-1">
+          <div className="col-span-2">
              <h3 className="text-2xl font-bold text-primary-500 mb-2">Brokeranalysis</h3>
              <p className="text-sm">{t('footer.subtitle')}</p>
           </div>
@@ -32,7 +41,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.byCountry')}</h4>
             <ul className="space-y-2 text-sm">
-              {categoryPageGroups.country.map(link => (
+              {categoryPageGroups.country.slice(0, 6).map(link => (
                 <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
               ))}
             </ul>
@@ -42,7 +51,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.platformsAndTypes')}</h4>
             <ul className="space-y-2 text-sm">
-               {categoryPageGroups.platform.map(link => (
+               {categoryPageGroups.platform.slice(0, 6).map(link => (
                 <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
               ))}
             </ul>
@@ -57,6 +66,20 @@ const Footer: React.FC = () => {
               ))}
             </ul>
           </div>
+          
+          {/* Tools */}
+          <div>
+            <h4 className="font-semibold text-card-foreground mb-4">{t('footer.tools')}</h4>
+            <ul className="space-y-2 text-sm">
+               {toolLinks.map(link => (
+                <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
+              ))}
+               {aboutLinks.map(link => (
+                <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
+              ))}
+            </ul>
+          </div>
+
         </div>
         <div className="text-center mt-12 border-t border-input pt-8">
           <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>

@@ -3,6 +3,7 @@ export const translations = {
   en: {
     header: {
       brokers: "Brokers",
+      tools: "Tools",
       education: "Education",
       marketNews: "Market News",
       methodology: "Methodology",
@@ -18,6 +19,11 @@ export const translations = {
         aiBrokerMatcher: "AI Broker Matcher",
         byCountry: "By Country",
         platformsAndTypes: "Platforms & Types"
+      },
+      toolsMenu: {
+        economicCalendar: "Economic Calendar",
+        calculators: "Forex Calculators",
+        marketData: "Market Data"
       }
     },
     chatbot: {
@@ -36,7 +42,22 @@ export const translations = {
       byCountry: "By Country",
       platformsAndTypes: "Platforms & Types",
       resources: "Resources",
-      copyright: "© {year} Brokeranalysis. All rights reserved."
+      tools: "Tools",
+      copyright: "© {year} Brokeranalysis. All rights reserved.",
+      links: {
+        home: "Home",
+        allBrokers: "All Brokers",
+        compareBrokers: "Compare Brokers",
+        costAnalyzer: "Cost Analyzer",
+        brokerMatcher: "Broker Matcher",
+        marketNews: "Market News",
+        educationHub: "Education Hub",
+        economicCalendar: "Economic Calendar",
+        calculators: "Calculators",
+        marketData: "Market Data",
+        methodology: "Methodology",
+        sources: "Sources",
+      }
     },
     home: {
       heroTitle: "Find Your Perfect Forex Broker",
@@ -63,6 +84,17 @@ export const translations = {
           title: "Trust & Safety",
           description: "We verify regulatory data and use AI to generate a dynamic trust score for each broker."
         }
+      },
+      newTools: {
+          title: "Powerful New Trading Tools",
+          calendar: {
+              title: "Economic Calendar",
+              description: "Stay ahead of market-moving events with our real-time economic calendar."
+          },
+          calculators: {
+              title: "Forex Calculators",
+              description: "Essential tools for risk management, including position size and pip value calculators."
+          }
       },
       popularCategoriesTitle: "Explore Popular Categories",
       categories: {
@@ -463,11 +495,51 @@ export const translations = {
                 description: "Learn the difference between market, limit, and stop orders in a live, simulated market environment."
             }
         }
+    },
+    tools: {
+        calendar: {
+            title: "Economic Calendar",
+            subtitle: "Stay informed about key economic events that move the markets."
+        },
+        marketData: {
+            title: "Market Data",
+            subtitle: "Get a comprehensive overview of the forex market with real-time rates and technical insights."
+        },
+        calculators: {
+            title: "Forex Calculators",
+            subtitle: "Essential tools to help you manage your trades and risk effectively.",
+            pipValue: {
+                title: "Pip Value",
+                accountCurrency: "Account Currency",
+                currencyPair: "Currency Pair",
+                positionSize: "Position Size (Lots)",
+                calculate: "Calculate Pip Value",
+                result: "The value of one pip for a {lots} lot position on {pair} is approximately"
+            },
+            positionSize: {
+                title: "Position Size",
+                accountBalance: "Account Balance",
+                riskPercentage: "Risk Percentage (%)",
+                stopLoss: "Stop Loss (pips)",
+                calculate: "Calculate Position Size",
+                result: "To risk {risk}% of your account with a {sl} pip stop-loss, your recommended position size is:",
+                lots: "Lots",
+                units: "Units"
+            },
+            margin: {
+                title: "Margin",
+                leverage: "Leverage",
+                tradeSize: "Trade Size (Lots)",
+                calculate: "Calculate Margin",
+                result: "The margin required to open a {lots} lot position on {pair} with {leverage} leverage is"
+            }
+        }
     }
   },
   de: {
     header: {
       brokers: "Broker",
+      tools: "Werkzeuge",
       education: "Bildung",
       marketNews: "Marktnachrichten",
       methodology: "Methodik",
@@ -483,6 +555,11 @@ export const translations = {
         aiBrokerMatcher: "KI-Broker-Matcher",
         byCountry: "Nach Land",
         platformsAndTypes: "Plattformen & Typen"
+      },
+      toolsMenu: {
+        economicCalendar: "Wirtschaftskalender",
+        calculators: "Forex-Rechner",
+        marketData: "Marktdaten"
       }
     },
     chatbot: {
@@ -501,7 +578,22 @@ export const translations = {
       byCountry: "Nach Land",
       platformsAndTypes: "Plattformen & Typen",
       resources: "Ressourcen",
-      copyright: "© {year} Brokeranalysis. Alle Rechte vorbehalten."
+      tools: "Werkzeuge",
+      copyright: "© {year} Brokeranalysis. Alle Rechte vorbehalten.",
+      links: {
+        home: "Startseite",
+        allBrokers: "Alle Broker",
+        compareBrokers: "Broker vergleichen",
+        costAnalyzer: "Kostenanalysator",
+        brokerMatcher: "Broker Matcher",
+        marketNews: "Marktnachrichten",
+        educationHub: "Bildungszentrum",
+        economicCalendar: "Wirtschaftskalender",
+        calculators: "Rechner",
+        marketData: "Marktdaten",
+        methodology: "Methodik",
+        sources: "Quellen",
+      }
     },
     home: {
       heroTitle: "Finden Sie Ihren perfekten Forex-Broker",
@@ -528,6 +620,17 @@ export const translations = {
           title: "Vertrauen & Sicherheit",
           description: "Wir überprüfen regulatorische Daten und verwenden KI, um für jeden Broker eine dynamische Vertrauensbewertung zu erstellen."
         }
+      },
+      newTools: {
+          title: "Leistungsstarke neue Handelswerkzeuge",
+          calendar: {
+              title: "Wirtschaftskalender",
+              description: "Bleiben Sie mit unserem Echtzeit-Wirtschaftskalender über marktbewegende Ereignisse auf dem Laufenden."
+          },
+          calculators: {
+              title: "Forex-Rechner",
+              description: "Wesentliche Werkzeuge für das Risikomanagement, einschließlich Positionsgrößen- und Pip-Wert-Rechner."
+          }
       },
       popularCategoriesTitle: "Beliebte Kategorien erkunden",
       categories: {
@@ -928,11 +1031,51 @@ export const translations = {
                 description: "Lernen Sie den Unterschied zwischen Markt-, Limit- und Stop-Orders in einer live simulierten Marktumgebung."
             }
         }
+    },
+    tools: {
+        calendar: {
+            title: "Wirtschaftskalender",
+            subtitle: "Bleiben Sie über wichtige wirtschaftliche Ereignisse, die die Märkte bewegen, informiert."
+        },
+        marketData: {
+            title: "Marktdaten",
+            subtitle: "Erhalten Sie einen umfassenden Überblick über den Devisenmarkt mit Echtzeitkursen und technischen Einblicken."
+        },
+        calculators: {
+            title: "Forex-Rechner",
+            subtitle: "Wesentliche Werkzeuge, die Ihnen helfen, Ihre Trades und Ihr Risiko effektiv zu verwalten.",
+            pipValue: {
+                title: "Pip-Wert",
+                accountCurrency: "Kontowährung",
+                currencyPair: "Währungspaar",
+                positionSize: "Positionsgröße (Lots)",
+                calculate: "Pip-Wert berechnen",
+                result: "Der Wert eines Pips für eine {lots}-Lot-Position auf {pair} beträgt ungefähr"
+            },
+            positionSize: {
+                title: "Positionsgröße",
+                accountBalance: "Kontostand",
+                riskPercentage: "Risikoprozentsatz (%)",
+                stopLoss: "Stop-Loss (Pips)",
+                calculate: "Positionsgröße berechnen",
+                result: "Um {risk}% Ihres Kontos mit einem {sl}-Pip-Stop-Loss zu riskieren, beträgt Ihre empfohlene Positionsgröße:",
+                lots: "Lots",
+                units: "Einheiten"
+            },
+            margin: {
+                title: "Margin",
+                leverage: "Hebel",
+                tradeSize: "Handelsgröße (Lots)",
+                calculate: "Margin berechnen",
+                result: "Die erforderliche Margin, um eine {lots}-Lot-Position auf {pair} mit {leverage}-Hebel zu eröffnen, beträgt"
+            }
+        }
     }
   },
   ja: {
     header: {
       brokers: "ブローカー",
+      tools: "ツール",
       education: "教育",
       marketNews: "市場ニュース",
       methodology: "方法論",
@@ -948,6 +1091,11 @@ export const translations = {
         aiBrokerMatcher: "AIブローカーマッチャー",
         byCountry: "国別",
         platformsAndTypes: "プラットフォームと種類"
+      },
+      toolsMenu: {
+        economicCalendar: "経済指標カレンダー",
+        calculators: "FX計算ツール",
+        marketData: "市場データ"
       }
     },
     chatbot: {
@@ -966,7 +1114,22 @@ export const translations = {
       byCountry: "国別",
       platformsAndTypes: "プラットフォームと種類",
       resources: "リソース",
-      copyright: "© {year} Brokeranalysis. 無断複写・転載を禁じます。"
+      tools: "ツール",
+      copyright: "© {year} Brokeranalysis. 無断複写・転載を禁じます。",
+      links: {
+        home: "ホーム",
+        allBrokers: "すべてのブローカー",
+        compareBrokers: "ブローカー比較",
+        costAnalyzer: "コスト分析",
+        brokerMatcher: "ブローカーマッチャー",
+        marketNews: "市場ニュース",
+        educationHub: "教育ハブ",
+        economicCalendar: "経済指標カレンダー",
+        calculators: "計算ツール",
+        marketData: "市場データ",
+        methodology: "方法論",
+        sources: "情報源",
+      }
     },
     home: {
       heroTitle: "あなたにぴったりのFXブローカーを見つける",
@@ -993,6 +1156,17 @@ export const translations = {
           title: "信頼と安全性",
           description: "規制データを検証し、AIを使用して各ブローカーの動的な信頼スコアを生成します。"
         }
+      },
+      newTools: {
+          title: "強力な新しい取引ツール",
+          calendar: {
+              title: "経済指標カレンダー",
+              description: "リアルタイムの経済指標カレンダーで、市場を動かすイベントの先を行きましょう。"
+          },
+          calculators: {
+              title: "FX計算ツール",
+              description: "ポジションサイズやピップ値計算機など、リスク管理に不可欠なツール。"
+          }
       },
       popularCategoriesTitle: "人気のカテゴリを探索",
       categories: {
@@ -1391,6 +1565,45 @@ export const translations = {
             execution: {
                 title: "注文実行シミュレーター",
                 description: "ライブのシミュレーション市場環境で、成行注文、指値注文、逆指値注文の違いを学びます。"
+            }
+        }
+    },
+    tools: {
+        calendar: {
+            title: "経済指標カレンダー",
+            subtitle: "市場を動かす主要な経済イベントについて常に情報を入手してください。"
+        },
+        marketData: {
+            title: "市場データ",
+            subtitle: "リアルタイムのレートとテクニカルな洞察でFX市場の包括的な概要を入手してください。"
+        },
+        calculators: {
+            title: "FX計算ツール",
+            subtitle: "取引とリスクを効果的に管理するのに役立つ不可欠なツール。",
+            pipValue: {
+                title: "ピップ値",
+                accountCurrency: "口座通貨",
+                currencyPair: "通貨ペア",
+                positionSize: "ポジションサイズ（ロット）",
+                calculate: "ピップ値を計算",
+                result: "{pair}の{lots}ロットのポジションの1ピップの価値は、およそ"
+            },
+            positionSize: {
+                title: "ポジションサイズ",
+                accountBalance: "口座残高",
+                riskPercentage: "リスク許容率（%）",
+                stopLoss: "ストップロス（pips）",
+                calculate: "ポジションサイズを計算",
+                result: "{sl}ピップのストップロスで口座の{risk}%をリスクにさらすための推奨ポジションサイズは次のとおりです:",
+                lots: "ロット",
+                units: "ユニット"
+            },
+            margin: {
+                title: "証拠金",
+                leverage: "レバレッジ",
+                tradeSize: "取引サイズ（ロット）",
+                calculate: "証拠金を計算",
+                result: "{leverage}のレバレッジで{pair}の{lots}ロットのポジションを開設するために必要な証拠金は"
             }
         }
     }

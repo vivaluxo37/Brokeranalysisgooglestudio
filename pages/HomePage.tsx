@@ -6,6 +6,7 @@ import { Icons } from '../constants';
 import { brokers } from '../data/brokers';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useTranslation } from '../hooks/useTranslation';
+import TradingViewWidget from '../components/tools/tradingview/TradingViewWidget';
 
 // New AccordionItem component
 const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
@@ -32,6 +33,26 @@ const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({
     </div>
   );
 };
+
+const AdvancedChartWidget: React.FC = () => (
+    <div className="h-[500px] rounded-xl overflow-hidden border border-input">
+        <TradingViewWidget
+            widgetType="advanced_chart"
+            options={{
+                "autosize": true,
+                "symbol": "FX:EURUSD",
+                "interval": "D",
+                "timezone": "Etc/UTC",
+                "theme": "dark", // Adapted by component
+                "style": "1",
+                "locale": "en",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "container_id": "tradingview_advanced_chart"
+            }}
+        />
+    </div>
+);
 
 
 const HomePage: React.FC = () => {
@@ -153,6 +174,11 @@ const HomePage: React.FC = () => {
         </div>
       </div>
       
+      {/* Live Chart Section */}
+      <div className="max-w-6xl mx-auto">
+         <AdvancedChartWidget />
+      </div>
+
       {/* Features Section */}
       <div className="text-center">
         <h2 className="text-3xl font-bold mb-10">{t('home.whyChoose')}</h2>
@@ -169,6 +195,27 @@ const HomePage: React.FC = () => {
         </div>
       </div>
       
+       {/* New Tools Section */}
+       <div className="text-center">
+        <h2 className="text-3xl font-bold mb-10">{t('home.newTools.title')}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <ReactRouterDOM.Link to="/tools/economic-calendar" className="group block p-6 bg-card rounded-lg border border-input text-left hover:border-primary-600 hover:-translate-y-1 transition-all">
+                <div className="p-3 bg-input rounded-full mb-4 inline-block group-hover:bg-primary-600 group-hover:text-white transition-colors">
+                    <Icons.calendar className="h-8 w-8 text-primary-400"/>
+                </div>
+                <h3 className="text-xl font-bold text-primary-400">{t('home.newTools.calendar.title')}</h3>
+                <p className="mt-2 text-card-foreground/80">{t('home.newTools.calendar.description')}</p>
+            </ReactRouterDOM.Link>
+             <ReactRouterDOM.Link to="/tools/calculators" className="group block p-6 bg-card rounded-lg border border-input text-left hover:border-primary-600 hover:-translate-y-1 transition-all">
+                <div className="p-3 bg-input rounded-full mb-4 inline-block group-hover:bg-primary-600 group-hover:text-white transition-colors">
+                    <Icons.calculator className="h-8 w-8 text-primary-400"/>
+                </div>
+                <h3 className="text-xl font-bold text-primary-400">{t('home.newTools.calculators.title')}</h3>
+                <p className="mt-2 text-card-foreground/80">{t('home.newTools.calculators.description')}</p>
+            </ReactRouterDOM.Link>
+        </div>
+       </div>
+
        {/* Popular Categories Section */}
       <div className="text-center">
         <h2 className="text-3xl font-bold mb-10">{t('home.popularCategoriesTitle')}</h2>

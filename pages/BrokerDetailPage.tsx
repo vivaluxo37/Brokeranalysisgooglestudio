@@ -430,6 +430,14 @@ const BrokerDetailPage: React.FC = () => {
                          </tbody>
                     </table>
                 </div>
+                 <div className="mt-6 p-4 bg-input/50 rounded-lg text-center">
+                    <p className="text-foreground/80">Need help calculating your potential costs?</p>
+                    <ReactRouterDOM.Link to="/tools/calculators">
+                        <Button variant="secondary" className="mt-2">
+                            Use our Forex Calculators <Icons.chevronRight className="h-4 w-4 ml-2" />
+                        </Button>
+                    </ReactRouterDOM.Link>
+                </div>
             </Section>
         )}
 

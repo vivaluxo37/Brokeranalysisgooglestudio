@@ -9,7 +9,7 @@ import AlertsDropdown from '../common/AlertsDropdown';
 import { categoryPageGroups } from '../../pages/categoryPageData';
 import { useTranslation } from '../../hooks/useTranslation';
 
-const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () => void }> = ({ to, children, onClick }) => (
+const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () => void, className?: string }> = ({ to, children, onClick, className = '' }) => (
     <ReactRouterDOM.NavLink
         to={to}
         onClick={onClick}
@@ -18,7 +18,7 @@ const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () =>
             isActive
                 ? 'bg-primary-500 text-white'
                 : 'text-foreground/70 hover:bg-input hover:text-foreground'
-            }`
+            } ${className}`
         }
     >
         {children}
@@ -136,6 +136,20 @@ const Header: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {/* Education Dropdown */}
+                                <div className="group relative">
+                                    <button className="px-3 py-2 rounded-md text-sm font-medium text-foreground/70 group-hover:bg-input group-hover:text-foreground transition-colors flex items-center">
+                                        {t('header.education')} <Icons.chevronDown className="h-4 w-4 ltr:ml-1 rtl:mr-1" />
+                                    </button>
+                                    <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-56 bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
+                                        <div className="p-2 space-y-1">
+                                            <NavLink to="/education" className="block w-full text-left">{t('education.hub.title')}</NavLink>
+                                            <NavLink to="/education/quizzes" className="block w-full text-left">{t('education.quizzes.title')}</NavLink>
+                                            <NavLink to="/education/webinars" className="block w-full text-left">{t('education.webinars.title')}</NavLink>
+                                            <NavLink to="/education/simulators" className="block w-full text-left">{t('education.simulators.title')}</NavLink>
+                                        </div>
+                                    </div>
+                                </div>
                                 <NavLink to="/market-news">{t('header.marketNews')}</NavLink>
                                 <NavLink to="/methodology">{t('header.methodology')}</NavLink>
                             </div>
@@ -180,6 +194,7 @@ const Header: React.FC = () => {
                         <NavLink to="/compare" onClick={closeMobileMenu}>{t('header.megaMenu.compareBrokers')}</NavLink>
                         <NavLink to="/cost-analyzer" onClick={closeMobileMenu}>{t('header.megaMenu.costAnalyzer')}</NavLink>
                         <NavLink to="/broker-matcher" onClick={closeMobileMenu}>{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
+                        <NavLink to="/education" onClick={closeMobileMenu}>{t('header.education')}</NavLink>
                         <NavLink to="/market-news" onClick={closeMobileMenu}>{t('header.marketNews')}</NavLink>
                         <NavLink to="/methodology" onClick={closeMobileMenu}>{t('header.methodology')}</NavLink>
 

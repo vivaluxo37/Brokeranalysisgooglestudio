@@ -13,6 +13,7 @@ const Footer: React.FC = () => {
     { name: 'Cost Analyzer', path: '/cost-analyzer' },
     { name: 'Broker Matcher', path: '/broker-matcher' },
     { name: 'Market News', path: '/market-news' },
+    { name: 'Education Hub', path: '/education' },
     { name: 'Methodology', path: '/methodology' },
     { name: 'Sources', path: '/sources' },
   ];

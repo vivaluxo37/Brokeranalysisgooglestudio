@@ -80,6 +80,7 @@ export interface Broker {
     commission: string;
     swapFeeCategory: 'Low' | 'Standard' | 'High';
     maxLeverage: string;
+    minLotSize?: number;
   };
   accessibility: {
     minDeposit: number;
@@ -90,6 +91,8 @@ export interface Broker {
   technology: {
     platforms: string[];
     executionType: string;
+    apiAccess?: boolean;
+    eaSupport?: boolean;
   };
   reviews?: Review[];
   isIslamic?: boolean;

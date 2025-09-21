@@ -24,6 +24,7 @@ import SourcesPage from './pages/SourcesPage';
 import CategoryPage from './pages/CategoryPage';
 import { categoryPages } from './pages/categoryPageData';
 import MarketNewsPage from './pages/MarketNewsPage';
+import AdvancedScreeningPage from './pages/AdvancedScreeningPage';
 
 const App: React.FC = () => {
   return (
@@ -35,6 +36,7 @@ const App: React.FC = () => {
         <ReactRouterDOM.Route path="/compare" element={<ComparePage />} />
         <ReactRouterDOM.Route path="/compare/:brokerId1/vs/:brokerId2" element={<BrokerDuelPage />} />
         <ReactRouterDOM.Route path="/cost-analyzer" element={<CostAnalyzerPage />} />
+        <ReactRouterDOM.Route path="/advanced-screening" element={<AdvancedScreeningPage />} />
         <ReactRouterDOM.Route path="/login" element={<LoginPage />} />
         <ReactRouterDOM.Route path="/register" element={<RegisterPage />} />
         <ReactRouterDOM.Route path="/methodology" element={<MethodologyPage />} />

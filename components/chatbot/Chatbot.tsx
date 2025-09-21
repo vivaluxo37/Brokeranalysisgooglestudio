@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Icons } from '../../constants';
 import { ChatMessage } from '../../types';
 import { getChatbotResponseStream } from '../../services/geminiService';
+import { useTranslation } from '../../hooks/useTranslation';
 
 const TypingIndicator: React.FC = () => (
     <div className="flex items-center space-x-1.5 p-2">
@@ -41,9 +42,12 @@ const ChatMessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
 };
 
 const Chatbot: React.FC = () => {
+    const { t } = useTranslation();
+    const suggestions = t('chatbot.suggestions');
+
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<ChatMessage[]>([
-        { sender: 'ai', text: "Hello! I'm BrokerBot. Ask me about a broker's spreads, leverage, or compare two brokers directly!" }
+        { sender: 'ai', text: t('chatbot.greeting') }
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -57,15 +61,8 @@ const Chatbot: React.FC = () => {
         scrollToBottom();
     }, [messages, isLoading]);
 
-    const handleSend = async () => {
-        if (input.trim() === '' || isLoading) return;
-
-        const userMessageText = input.trim();
-        const userMessage: ChatMessage = { sender: 'user', text: userMessageText };
-        setMessages(prev => [...prev, userMessage]);
-        setInput('');
+    const processStreamedResponse = async (userMessageText: string) => {
         setIsLoading(true);
-
         try {
             const stream = await getChatbotResponseStream(userMessageText);
             let firstChunk = true;
@@ -97,6 +94,23 @@ const Chatbot: React.FC = () => {
         }
     };
 
+    const handleSend = async () => {
+        if (input.trim() === '' || isLoading) return;
+        const userMessageText = input.trim();
+        const userMessage: ChatMessage = { sender: 'user', text: userMessageText };
+        setMessages(prev => [...prev, userMessage]);
+        setInput('');
+        await processStreamedResponse(userMessageText);
+    };
+
+    const handleSuggestionClick = async (prompt: string) => {
+        if (isLoading) return;
+        const userMessage: ChatMessage = { sender: 'user', text: prompt };
+        setMessages(prev => [...prev, userMessage]);
+        await processStreamedResponse(prompt);
+    };
+
+
     if (!isOpen) {
         return (
             <button
@@ -127,6 +141,23 @@ const Chatbot: React.FC = () => {
                 )}
                 <div ref={messagesEndRef} />
             </main>
+            {messages.length === 1 && (
+                <div className="p-3 border-t border-input/50">
+                    <p className="text-xs text-foreground/60 mb-2 font-semibold tracking-wider">QUICK ACTIONS</p>
+                    <div className="flex flex-wrap gap-2">
+                        {Array.isArray(suggestions) && suggestions.map((q, i) => (
+                            <button
+                                key={i}
+                                onClick={() => handleSuggestionClick(q)}
+                                disabled={isLoading}
+                                className="px-3 py-1 text-sm rounded-full bg-input hover:bg-primary-900/50 text-foreground/80 transition-colors disabled:opacity-50"
+                            >
+                                {q}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
             <footer className="p-3 border-t border-input/50 bg-card/50 rounded-b-2xl transition-colors duration-300">
                 <div className="flex items-center bg-input rounded-xl transition-colors duration-300">
                     <input

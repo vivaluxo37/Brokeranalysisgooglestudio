@@ -63,7 +63,6 @@ const Header: React.FC = () => {
                                                     <NavLink to="/compare">Compare Brokers</NavLink>
                                                     <NavLink to="/cost-analyzer">Cost Analyzer</NavLink>
                                                     <NavLink to="/broker-matcher">AI Broker Matcher</NavLink>
-                                                    <NavLink to="/advanced-screening">Advanced Screening</NavLink>
                                                 </div>
                                             </div>
                                             <div className="col-span-1">
@@ -124,7 +123,6 @@ const Header: React.FC = () => {
                         <NavLink to="/compare" onClick={closeMobileMenu}>Compare</NavLink>
                         <NavLink to="/cost-analyzer" onClick={closeMobileMenu}>Cost Analyzer</NavLink>
                         <NavLink to="/broker-matcher" onClick={closeMobileMenu}>AI Matcher</NavLink>
-                        <NavLink to="/advanced-screening" onClick={closeMobileMenu}>Advanced Screening</NavLink>
                         <NavLink to="/market-news" onClick={closeMobileMenu}>Market News</NavLink>
                         <NavLink to="/methodology" onClick={closeMobileMenu}>Methodology</NavLink>
 

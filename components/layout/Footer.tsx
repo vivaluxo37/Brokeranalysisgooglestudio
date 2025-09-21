@@ -1,5 +1,6 @@
 
 
+
 import React from 'react';
 // Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
 import * as ReactRouterDOM from 'react-router-dom';
@@ -12,7 +13,6 @@ const Footer: React.FC = () => {
     { name: 'Compare Brokers', path: '/compare' },
     { name: 'Cost Analyzer', path: '/cost-analyzer' },
     { name: 'Broker Matcher', path: '/broker-matcher' },
-    { name: 'Advanced Screening', path: '/advanced-screening' },
     { name: 'Market News', path: '/market-news' },
     { name: 'Methodology', path: '/methodology' },
     { name: 'Sources', path: '/sources' },

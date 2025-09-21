@@ -5,7 +5,6 @@ import { Broker } from '../../types';
 import Card, { CardContent } from '../ui/Card';
 import Button from '../ui/Button';
 import { useComparison } from '../../hooks/useComparison';
-import { useFavorites } from '../../hooks/useFavorites';
 import { Icons } from '../../constants';
 import StarRating from '../ui/StarRating';
 import Tooltip from '../ui/Tooltip';
@@ -17,10 +16,8 @@ interface BrokerCardProps {
 
 const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }) => {
   const { addBrokerToComparison, removeBrokerFromComparison, isBrokerInComparison } = useComparison();
-  const { addBrokerToFavorites, removeBrokerFromFavorites, isBrokerInFavorites } = useFavorites();
 
   const inCompare = isBrokerInComparison(broker.id);
-  const isFavorite = isBrokerInFavorites(broker.id);
 
   const handleCompareClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -32,16 +29,6 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
     }
   };
 
-  const handleFavoriteClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (isFavorite) {
-      removeBrokerFromFavorites(broker.id);
-    } else {
-      addBrokerToFavorites(broker.id);
-    }
-  };
-
   const recommendationClasses = isRecommended 
     ? 'border-primary-600 ring-2 ring-primary-500/50 shadow-lg shadow-primary-900/40' 
     : 'hover:border-primary-700';
@@ -49,11 +36,6 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
   return (
     <Card className={`flex flex-col h-full ${recommendationClasses}`}>
       <div className="relative flex-grow">
-        <Tooltip content={isFavorite ? 'Remove from Favorites' : 'Add to Favorites'} position="left">
-          <button onClick={handleFavoriteClick} className="absolute top-3 right-3 z-10 p-1 rounded-full bg-card/50 hover:bg-input transition-colors" aria-label="Toggle Favorite">
-            {isFavorite ? <Icons.starFull className="h-5 w-5 text-yellow-400" /> : <Icons.star className="h-5 w-5 text-card-foreground/60" />}
-          </button>
-        </Tooltip>
         <ReactRouterDOM.Link to={`/broker/${broker.id}`} className="block h-full">
           <CardContent>
             <div className="flex justify-between items-start">

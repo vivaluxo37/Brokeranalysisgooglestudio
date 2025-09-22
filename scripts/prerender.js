@@ -1,4 +1,5 @@
 
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -12,14 +13,16 @@ try {
     // Read brokers data from the TS file.
     const brokersTS = fs.readFileSync(toAbsolute('../data/brokers.ts'), 'utf-8');
     const brokers = [];
-    const brokerObjectsRegex = /{\s*id: '([^']+)'.*?name: '([^']+)'.*?description: '((?:.|\n)*?)',\s*regulation:/g;
+    // FIX: Updated the regex to correctly parse only the content of the description string.
+    // The previous regex was too greedy and captured unrelated data, breaking meta tags.
+    const brokerObjectsRegex = /{\s*id:\s*'([^']+)'.*?name:\s*'([^']+)'.*?description:\s*'([^']*)'/g;
     
     let match;
     while((match = brokerObjectsRegex.exec(brokersTS)) !== null) {
         brokers.push({
             id: match[1],
             name: match[2],
-            description: match[3].replace(/\\'/g, "'").trim()
+            description: match[3] // The description is now correctly captured.
         });
     }
     console.log(`Found ${brokers.length} brokers to prerender.`);
@@ -35,7 +38,7 @@ try {
         const appHtml = render(url);
 
         const title = `${broker.name} Review & Analysis | Brokeranalysis`;
-        const description = broker.description.substring(0, 160).replace(/\s+/g, ' '); // Trim to 160 chars and remove newlines
+        const description = broker.description.substring(0, 160).replace(/\s+/g, ' ').trim(); // Trim to 160 chars and remove newlines
 
         const headHtml = `
             <title>${title}</title>

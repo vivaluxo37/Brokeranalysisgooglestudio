@@ -93,9 +93,9 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
       <table className="w-full min-w-max text-left">
         <thead>
           <tr className="border-b border-input">
-            <th className="p-4 w-1/4">{t('compareTable.feature')}</th>
+            <th className="p-4 sticky left-0 bg-card z-10 border-r border-input">{t('compareTable.feature')}</th>
             {brokers.map(broker => (
-              <th key={broker.id} className="p-4 text-center">
+              <th key={broker.id} className="p-4 text-center min-w-[200px]">
                 <ReactRouterDOM.Link to={`/broker/${broker.id}`}>
                   <img src={broker.logoUrl} alt={broker.name} className="h-10 mx-auto bg-white p-1 rounded-md mb-2"/>
                   <span className="font-semibold text-primary-400 hover:underline">{broker.name}</span>
@@ -117,7 +117,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
             if (feature.type === 'header') {
               return (
                 <tr key={feature.title} className="bg-input/30">
-                  <th colSpan={brokers.length + 1} className="p-2 pl-4 text-left text-sm font-bold text-primary-400 tracking-wider">
+                  <th colSpan={brokers.length + 1} className="p-2 pl-4 text-left text-sm font-bold text-primary-400 tracking-wider sticky left-0 bg-input/30 z-10">
                     {feature.title}
                   </th>
                 </tr>
@@ -125,7 +125,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
             }
             return (
               <tr key={feature.key} className="border-b border-input last:border-b-0">
-                <td className="p-4 font-semibold text-foreground/80 whitespace-nowrap">{feature.title}</td>
+                <td className="p-4 font-semibold text-foreground/80 whitespace-nowrap sticky left-0 bg-card z-10 border-r border-input">{feature.title}</td>
                 {brokers.map(broker => (
                   <td key={broker.id} className="p-4 text-center align-top">
                     {renderValue(broker, feature.key)}

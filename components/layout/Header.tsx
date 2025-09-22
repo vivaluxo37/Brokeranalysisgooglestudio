@@ -14,7 +14,7 @@ const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () =>
         to={to}
         onClick={onClick}
         className={({ isActive }) =>
-            `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+            `px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500 ${
             isActive
                 ? 'bg-primary-500 text-white'
                 : 'text-foreground/70 hover:bg-input hover:text-foreground'
@@ -99,10 +99,10 @@ const Header: React.FC = () => {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo and Desktop Nav */}
                     <div className="flex items-center">
-                        <ReactRouterDOM.Link to="/" className="text-2xl font-bold text-primary-500">
+                        <ReactRouterDOM.Link to="/" className="text-lg lg:text-2xl font-bold text-primary-500">
                             Brokeranalysis
                         </ReactRouterDOM.Link>
-                        <div className="hidden md:block ltr:ml-10 rtl:mr-10">
+                        <div className="hidden lg:block ltr:ml-10 rtl:mr-10">
                             <div className="flex items-baseline space-x-1">
                                 
                                 {/* Brokers Mega Menu */}
@@ -124,13 +124,13 @@ const Header: React.FC = () => {
                                             <div className="col-span-1">
                                                 <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.byCountry')}</h3>
                                                 <ul className="space-y-1 text-sm">
-                                                    {categoryPageGroups.country.slice(0, 5).map(link => <li key={link.path}><ReactRouterDOM.Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400">{link.name}</ReactRouterDOM.Link></li>)}
+                                                    {categoryPageGroups.country.slice(0, 5).map(link => <li key={link.path}><ReactRouterDOM.Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</ReactRouterDOM.Link></li>)}
                                                 </ul>
                                             </div>
                                             <div className="col-span-1">
                                                 <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.platformsAndTypes')}</h3>
                                                 <ul className="space-y-1 text-sm">
-                                                    {categoryPageGroups.platform.slice(0, 5).map(link => <li key={link.path}><ReactRouterDOM.Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400">{link.name}</ReactRouterDOM.Link></li>)}
+                                                    {categoryPageGroups.platform.slice(0, 5).map(link => <li key={link.path}><ReactRouterDOM.Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</ReactRouterDOM.Link></li>)}
                                                 </ul>
                                             </div>
                                         </div>
@@ -170,7 +170,7 @@ const Header: React.FC = () => {
                     </div>
 
                     {/* Right side actions */}
-                    <div className="hidden md:flex items-center space-x-2">
+                    <div className="hidden lg:flex items-center space-x-2">
                         {user && <AlertsDropdown />}
                         <ThemeToggle />
                         <LanguageSelector />
@@ -188,7 +188,7 @@ const Header: React.FC = () => {
                     </div>
                     
                     {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center">
+                    <div className="lg:hidden flex items-center">
                         <ThemeToggle />
                         <LanguageSelector />
                         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-controls="mobile-menu" aria-expanded={isMobileMenuOpen} className="p-2 rounded-md text-foreground/70 hover:bg-input hover:text-foreground">
@@ -201,7 +201,7 @@ const Header: React.FC = () => {
 
             {/* Mobile Menu Panel */}
             {isMobileMenuOpen && (
-                <div className="md:hidden" id="mobile-menu">
+                <div className="lg:hidden" id="mobile-menu">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-input">
                         <NavLink to="/brokers" onClick={closeMobileMenu}>{t('header.megaMenu.allBrokers')}</NavLink>
                         <NavLink to="/compare" onClick={closeMobileMenu}>{t('header.megaMenu.compareBrokers')}</NavLink>
@@ -214,19 +214,23 @@ const Header: React.FC = () => {
                         <NavLink to="/market-news" onClick={closeMobileMenu}>{t('header.marketNews')}</NavLink>
                         <NavLink to="/methodology" onClick={closeMobileMenu}>{t('header.methodology')}</NavLink>
 
+                        {/* Fix: Replaced truncated and incorrect code with proper mobile authentication links. */}
                         <div className="pt-4 mt-4 border-t border-input">
                             {user ? (
                                 <>
                                     <NavLink to="/dashboard" onClick={closeMobileMenu}>{t('header.dashboard')}</NavLink>
-                                    <button onClick={() => { logout(); closeMobileMenu(); }} className="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-foreground/70 hover:bg-input hover:text-foreground">
+                                    <button
+                                        onClick={() => { logout(); closeMobileMenu(); }}
+                                        className="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-foreground/70 hover:bg-input hover:text-foreground"
+                                    >
                                         {t('header.logout')}
                                     </button>
                                 </>
                             ) : (
-                                <div className="flex items-center gap-2">
-                                    <ReactRouterDOM.Link to="/login" className="flex-1"><Button variant="ghost" size="sm" className="w-full">{t('header.login')}</Button></ReactRouterDOM.Link>
-                                    <ReactRouterDOM.Link to="/register" className="flex-1"><Button variant="primary" size="sm" className="w-full">{t('header.register')}</Button></ReactRouterDOM.Link>
-                                </div>
+                                <>
+                                    <NavLink to="/login" onClick={closeMobileMenu}>{t('header.login')}</NavLink>
+                                    <NavLink to="/register" onClick={closeMobileMenu}>{t('header.register')}</NavLink>
+                                </>
                             )}
                         </div>
                     </div>

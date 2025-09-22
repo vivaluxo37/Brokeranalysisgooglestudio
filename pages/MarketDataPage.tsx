@@ -30,7 +30,7 @@ const MarketDataPage: React.FC = () => {
             </div>
 
             <div className="space-y-12">
-                <div className="h-[600px] rounded-xl overflow-hidden border border-input">
+                <div className="h-[450px] md:h-[600px] rounded-xl overflow-hidden border border-input">
                      <TradingViewWidget
                         widgetType="forex_cross_rates"
                         options={{
@@ -51,7 +51,7 @@ const MarketDataPage: React.FC = () => {
                         }}
                     />
                 </div>
-                <div className="h-[500px] rounded-xl overflow-hidden border border-input">
+                <div className="h-[400px] md:h-[500px] rounded-xl overflow-hidden border border-input">
                     <TradingViewWidget
                         widgetType="technical_analysis"
                         options={{

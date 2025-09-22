@@ -35,7 +35,7 @@ const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({
 };
 
 const AdvancedChartWidget: React.FC = () => (
-    <div className="h-[500px] rounded-xl overflow-hidden border border-input">
+    <div className="h-[400px] md:h-[500px] rounded-xl overflow-hidden border border-input">
         <TradingViewWidget
             widgetType="advanced_chart"
             options={{

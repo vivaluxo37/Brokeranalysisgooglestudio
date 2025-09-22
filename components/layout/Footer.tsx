@@ -27,6 +27,8 @@ const Footer: React.FC = () => {
       { name: t('footer.links.sources'), path: '/sources' },
   ];
 
+  const focusClasses = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-sm";
+
   return (
     <footer className="bg-card/50 border-t border-input mt-24 transition-colors duration-300">
       <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8 text-foreground/70">
@@ -42,7 +44,7 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.byCountry')}</h4>
             <ul className="space-y-2 text-sm">
               {categoryPageGroups.country.slice(0, 6).map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
               ))}
             </ul>
           </div>
@@ -52,7 +54,7 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.platformsAndTypes')}</h4>
             <ul className="space-y-2 text-sm">
                {categoryPageGroups.platform.slice(0, 6).map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
               ))}
             </ul>
           </div>
@@ -62,7 +64,7 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.resources')}</h4>
             <ul className="space-y-2 text-sm">
                {mainLinks.map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
               ))}
             </ul>
           </div>
@@ -72,10 +74,10 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.tools')}</h4>
             <ul className="space-y-2 text-sm">
                {toolLinks.map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
               ))}
                {aboutLinks.map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className="hover:text-primary-400 transition-colors">{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
               ))}
             </ul>
           </div>

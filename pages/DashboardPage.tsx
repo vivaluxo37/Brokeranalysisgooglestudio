@@ -17,6 +17,7 @@ import StarRating from '../components/ui/StarRating';
 import Badge from '../components/ui/Badge';
 import { useAlerts } from '../hooks/useAlerts';
 import { useTranslation } from '../hooks/useTranslation';
+import BrokerCardSkeleton from '../components/brokers/BrokerCardSkeleton';
 
 // A reusable accordion component for the dashboard
 const AccordionItem: React.FC<{ title: string; subtitle: string; children: React.ReactNode }> = ({ title, subtitle, children }) => {
@@ -80,6 +81,8 @@ const DashboardPage: React.FC = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isLoadingFavorites, setIsLoadingFavorites] = useState(true);
+
 
   // State for verification modal
   const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
@@ -92,6 +95,7 @@ const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     if (user) {
+      setIsLoadingFavorites(true);
       const key = `matcherHistory_${user.id}`;
       try {
         const storedHistory = JSON.parse(localStorage.getItem(key) || '[]');
@@ -101,6 +105,8 @@ const DashboardPage: React.FC = () => {
         setHistory([]);
       }
       setName(user.name); // Keep name in sync if user changes
+      const favTimer = setTimeout(() => setIsLoadingFavorites(false), 300);
+      return () => clearTimeout(favTimer);
     }
   }, [user]);
 
@@ -324,7 +330,13 @@ const DashboardPage: React.FC = () => {
             <h2 className="text-2xl font-semibold">{t('dashboardPage.favorites.title')}</h2>
         </CardHeader>
         <CardContent>
-            {favoriteBrokers.length > 0 ? (
+            {isLoadingFavorites ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {Array.from({ length: favoritesList.length > 0 ? favoritesList.length : 4 }).map((_, index) => (
+                        <BrokerCardSkeleton key={index} />
+                    ))}
+                </div>
+            ) : favoriteBrokers.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {favoriteBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} />)}
                 </div>

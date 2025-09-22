@@ -29,7 +29,7 @@ const EconomicCalendarPage: React.FC = () => {
         <p className="text-lg text-foreground/80 mt-2 max-w-3xl mx-auto">{t('tools.calendar.subtitle')}</p>
       </div>
 
-      <div className="h-[800px] rounded-xl overflow-hidden border border-input">
+      <div className="h-[600px] md:h-[800px] rounded-xl overflow-hidden border border-input">
           <TradingViewWidget
               widgetType="economic_calendar"
               options={{

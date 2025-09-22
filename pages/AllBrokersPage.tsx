@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import Input from '../components/ui/Input';
@@ -9,6 +9,7 @@ import { Icons } from '../constants';
 import Spinner from '../components/ui/Spinner';
 import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import { useTranslation } from '../hooks/useTranslation';
+import BrokerCardSkeleton from '../components/brokers/BrokerCardSkeleton';
 
 // Utility to parse leverage string like "1:500" into a number 500
 const parseLeverage = (leverageStr: string): number => {
@@ -65,6 +66,13 @@ const AllBrokersPage: React.FC = () => {
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate initial data fetching/processing delay
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleCheckboxChange = (group: FilterKeys, value: string) => {
     setFilters(prev => {
@@ -249,9 +257,11 @@ const AllBrokersPage: React.FC = () => {
 
         <main className="lg:col-span-3">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4">
-                <p className="text-sm text-foreground/70">
-                    {t('allBrokersPage.results.showing', { count: filteredBrokers.length, total: allBrokers.length })}
-                </p>
+                {!isLoading && (
+                    <p className="text-sm text-foreground/70">
+                        {t('allBrokersPage.results.showing', { count: filteredBrokers.length, total: allBrokers.length })}
+                    </p>
+                )}
                 <Button 
                     onClick={handleGetAIRecommendation} 
                     disabled={isAiLoading || filteredBrokers.length < 2}
@@ -284,8 +294,13 @@ const AllBrokersPage: React.FC = () => {
                 </div>
             )}
 
-
-            {filteredBrokers.length > 0 ? (
+            {isLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                        <BrokerCardSkeleton key={index} />
+                    ))}
+                </div>
+            ) : filteredBrokers.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} />)}
                 </div>

@@ -22,11 +22,26 @@ import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useReviews } from '../hooks/useReviews';
 import Tooltip from '../components/ui/Tooltip';
 
-const DetailItem: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
-    <div className="py-3 sm:grid sm:grid-cols-3 sm:gap-4">
-        <dt className="text-sm font-medium text-foreground/70">{label}</dt>
-        <dd className="mt-1 text-sm text-foreground sm:mt-0 sm:col-span-2">{children}</dd>
-    </div>
+const DetailRow: React.FC<{ label: string; children: React.ReactNode; helpText?: string }> = ({ label, children, helpText }) => (
+  <tr className="border-b border-input last:border-b-0">
+    <td className="p-3 font-semibold text-card-foreground/80 align-top">
+      <div className="flex items-center gap-1">
+        <span>{label}</span>
+        {helpText && (
+          <Tooltip content={helpText}>
+            <span className="text-foreground/50 cursor-help">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            </span>
+          </Tooltip>
+        )}
+      </div>
+    </td>
+    <td className="p-3 text-card-foreground align-top">{children}</td>
+  </tr>
+);
+
+const BooleanIcon: React.FC<{ value: boolean }> = ({ value }) => (
+  value ? <Icons.checkCircle className="h-5 w-5 text-green-500" /> : <Icons.xCircle className="h-5 w-5 text-red-500" />
 );
 
 const AIReviewSummary: React.FC<{ brokerName: string; reviews: Review[] }> = ({ brokerName, reviews }) => {
@@ -239,15 +254,17 @@ const BrokerDetailPage: React.FC = () => {
   const tableOfContents = useMemo(() => {
     if (!broker) return [];
     const toc = [
+        { id: 'glance', title: 'At a Glance', show: true },
         { id: 'verdict', title: 'Our Verdict', show: !!broker.summary },
         { id: 'pros-cons', title: 'Pros & Cons', show: !!broker.pros && !!broker.cons },
         { id: 'ratings', title: 'Ratings Breakdown', show: true },
-        { id: 'accounts', title: 'Account Types', show: !!broker.accountTypes },
-        { id: 'fees', title: 'Fees & Commissions', show: !!broker.tradingFees && !!broker.nonTradingFees },
-        { id: 'platforms', title: 'Platforms & Tools', show: true },
-        { id: 'instruments', title: 'Tradable Instruments', show: !!broker.tradableInstruments },
-        { id: 'social', title: 'Social & Copy Trading', show: !!broker.socialTrading },
         { id: 'safety', title: 'Regulation & Safety', show: true },
+        { id: 'fees', title: 'Fees & Costs', show: true },
+        { id: 'accounts', title: 'Account Types', show: !!broker.accountTypes },
+        { id: 'platforms', title: 'Platforms & Technology', show: true },
+        { id: 'instruments', title: 'Tradable Instruments', show: true },
+        { id: 'deposits', title: 'Deposit & Withdrawal', show: true },
+        { id: 'support', title: 'Customer Support', show: true },
         { id: 'reviews', title: 'User Reviews', show: true },
     ];
     return toc.filter(item => item.show);
@@ -353,6 +370,22 @@ const BrokerDetailPage: React.FC = () => {
           </div>
         </div>
 
+        <Section title="At a Glance" id="glance">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <tbody>
+                <DetailRow label="Founded">{broker.foundingYear}</DetailRow>
+                <DetailRow label="Headquarters">{broker.headquarters}</DetailRow>
+                <DetailRow label="Broker Type">{broker.coreInfo.brokerType}</DetailRow>
+                <DetailRow label="Regulation">{broker.regulation.regulators.join(', ')}</DetailRow>
+                <DetailRow label="Minimum Deposit">{`$${broker.accessibility.minDeposit}`}</DetailRow>
+                <DetailRow label="Max Leverage">{broker.tradingConditions.maxLeverage}</DetailRow>
+                <DetailRow label="Platforms">{broker.technology.platforms.join(', ')}</DetailRow>
+              </tbody>
+            </table>
+          </div>
+        </Section>
+
         {broker.summary && (
           <Section title="Our Verdict" id="verdict">
             <p className="text-lg italic text-foreground/90">{broker.summary}</p>
@@ -385,6 +418,62 @@ const BrokerDetailPage: React.FC = () => {
         <Section title="Ratings Breakdown" id="ratings">
             <BrokerCharts broker={broker} />
         </Section>
+
+        <Section title="Regulation & Safety" id="safety">
+            <RegulatoryTrustScore brokerName={broker.name} regulators={broker.regulation.regulators} />
+            <div className="overflow-x-auto mt-4">
+              <table className="w-full text-left text-sm">
+                <tbody>
+                  <DetailRow label="Regulated By">
+                    <ul className="list-disc list-inside">
+                      {broker.security.regulatedBy.map(reg => <li key={reg.regulator}>{reg.regulator} {reg.licenseNumber && `(${reg.licenseNumber})`}</li>)}
+                    </ul>
+                  </DetailRow>
+                  <DetailRow label="Segregated Accounts"><BooleanIcon value={broker.security.segregatedAccounts} /></DetailRow>
+                  <DetailRow label="Investor Compensation"><BooleanIcon value={broker.security.investorCompensationScheme.available} /> {broker.security.investorCompensationScheme.amount && `(${broker.security.investorCompensationScheme.amount})`}</DetailRow>
+                  <DetailRow label="Negative Balance Protection"><BooleanIcon value={broker.tradingConditionsExtended.negativeBalanceProtection} /></DetailRow>
+                   <DetailRow label="Two-Factor Authentication (2FA)"><BooleanIcon value={broker.security.twoFactorAuth} /></DetailRow>
+                </tbody>
+              </table>
+            </div>
+        </Section>
+        
+        <Section title="Fees & Costs" id="fees">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="bg-input/30"><th className="p-3 font-semibold" colSpan={2}>Trading Fees</th></tr>
+                </thead>
+                <tbody>
+                  <DetailRow label="Spread Type">{broker.fees.trading.spreadType}</DetailRow>
+                  <DetailRow label="Average Spreads">
+                    <ul className="list-disc list-inside">
+                        {broker.fees.trading.averageSpreads.map(s => <li key={s.pair}><strong>{s.pair}:</strong> {s.spread}</li>)}
+                    </ul>
+                  </DetailRow>
+                  <DetailRow label="Commission Structure">{broker.fees.trading.commissionStructure}</DetailRow>
+                  <DetailRow label="Overnight / Swap Fees">{broker.fees.trading.overnightSwapFees}</DetailRow>
+                </tbody>
+                <thead>
+                  <tr className="bg-input/30"><th className="p-3 font-semibold" colSpan={2}>Non-Trading Fees</th></tr>
+                </thead>
+                <tbody>
+                   <DetailRow label="Inactivity Fee">{broker.fees.nonTrading.inactivityFee}</DetailRow>
+                   <DetailRow label="Withdrawal Fee">{broker.fees.nonTrading.withdrawalFee}</DetailRow>
+                   <DetailRow label="Deposit Fee">{broker.fees.nonTrading.depositFee}</DetailRow>
+                   {broker.fees.nonTrading.conversionFee && <DetailRow label="Currency Conversion Fee">{broker.fees.nonTrading.conversionFee}</DetailRow>}
+                </tbody>
+              </table>
+            </div>
+             <div className="mt-6 p-4 bg-input/50 rounded-lg text-center">
+                <p className="text-foreground/80">Need help calculating your potential costs?</p>
+                <ReactRouterDOM.Link to="/tools/calculators">
+                    <Button variant="secondary" className="mt-2">
+                        Use our Forex Calculators <Icons.chevronRight className="h-4 w-4 ml-2" />
+                    </Button>
+                </ReactRouterDOM.Link>
+            </div>
+        </Section>
         
         {broker.accountTypes && (
             <Section title="Account Types" id="accounts">
@@ -407,116 +496,73 @@ const BrokerDetailPage: React.FC = () => {
             </Section>
         )}
         
-        {broker.tradingFees && broker.nonTradingFees && (
-            <Section title="Fees & Commissions" id="fees">
-                <h3 className="text-xl font-bold mb-4">Trading Fees</h3>
-                <div className="overflow-x-auto rounded-lg border border-input mb-6">
-                    <table className="w-full text-left">
-                         <tbody>
-                            <tr className="border-b border-input"><td className="p-3 font-semibold bg-input/30">Forex</td><td className="p-3">{broker.tradingFees.forex}</td></tr>
-                            <tr className="border-b border-input"><td className="p-3 font-semibold bg-input/30">Indices</td><td className="p-3">{broker.tradingFees.indices}</td></tr>
-                            <tr className="border-b border-input"><td className="p-3 font-semibold bg-input/30">Commodities</td><td className="p-3">{broker.tradingFees.commodities}</td></tr>
-                            <tr className=""><td className="p-3 font-semibold bg-input/30">Stocks</td><td className="p-3">{broker.tradingFees.stocks}</td></tr>
-                         </tbody>
-                    </table>
-                </div>
-                 <h3 className="text-xl font-bold mb-4">Non-Trading Fees</h3>
-                 <div className="overflow-x-auto rounded-lg border border-input">
-                    <table className="w-full text-left">
-                         <tbody>
-                            <tr className="border-b border-input"><td className="p-3 font-semibold bg-input/30">Inactivity Fee</td><td className="p-3">{broker.nonTradingFees.inactivityFee}</td></tr>
-                            <tr className="border-b border-input"><td className="p-3 font-semibold bg-input/30">Withdrawal Fee</td><td className="p-3">{broker.nonTradingFees.withdrawalFee}</td></tr>
-                            <tr className=""><td className="p-3 font-semibold bg-input/30">Deposit Fee</td><td className="p-3">{broker.nonTradingFees.depositFee}</td></tr>
-                         </tbody>
-                    </table>
-                </div>
-                 <div className="mt-6 p-4 bg-input/50 rounded-lg text-center">
-                    <p className="text-foreground/80">Need help calculating your potential costs?</p>
-                    <ReactRouterDOM.Link to="/tools/calculators">
-                        <Button variant="secondary" className="mt-2">
-                            Use our Forex Calculators <Icons.chevronRight className="h-4 w-4 ml-2" />
-                        </Button>
-                    </ReactRouterDOM.Link>
-                </div>
-            </Section>
-        )}
-
-         <Section title="Platforms & Tools" id="platforms">
-            <p><strong>Trading Platforms:</strong> {broker.technology.platforms.join(', ')}.</p>
-            {broker.researchTools && <p><strong>Research Tools:</strong> {broker.researchTools.join(', ')}.</p>}
-            {broker.education && <p><strong>Education:</strong> {broker.education.join(', ')}.</p>}
+         <Section title="Platforms & Technology" id="platforms">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                 <thead>
+                  <tr className="bg-input/30"><th className="p-3 font-semibold" colSpan={2}>Platform Features</th></tr>
+                </thead>
+                <tbody>
+                  <DetailRow label="Platforms">{broker.technology.platforms.join(', ')}</DetailRow>
+                  <DetailRow label="Charting Indicators">{broker.platformFeatures.charting.indicators}+</DetailRow>
+                  <DetailRow label="Automated Trading">{broker.platformFeatures.automatedTrading.join(', ')}</DetailRow>
+                  <DetailRow label="Copy Trading"><BooleanIcon value={broker.platformFeatures.copyTrading.available} /> {broker.platformFeatures.copyTrading.available && `(${broker.platformFeatures.copyTrading.platforms.join(', ')})`}</DetailRow>
+                </tbody>
+                 <thead>
+                  <tr className="bg-input/30"><th className="p-3 font-semibold" colSpan={2}>Trading Environment</th></tr>
+                </thead>
+                <tbody>
+                   <DetailRow label="Execution Type">{broker.technology.executionType}</DetailRow>
+                   {broker.tradingEnvironment.executionSpeedMs && <DetailRow label="Execution Speed">{`< ${broker.tradingEnvironment.executionSpeedMs}ms`}</DetailRow>}
+                   <DetailRow label="Scalping Allowed"><BooleanIcon value={broker.tradingConditionsExtended.scalpingAllowed} /></DetailRow>
+                   <DetailRow label="EAs / Algo Trading"><BooleanIcon value={broker.tradingConditionsExtended.eaAllowed} /></DetailRow>
+                   <DetailRow label="Order Types">{broker.tradingEnvironment.orderTypes.join(', ')}</DetailRow>
+                </tbody>
+              </table>
+            </div>
         </Section>
         
-        {broker.tradableInstruments && (
-            <Section title="Tradable Instruments" id="instruments">
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 text-center">
-                    <div className="p-4 bg-input/50 rounded-lg">
-                        <p className="text-sm text-foreground/70">Forex Pairs</p>
-                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.forexPairs.toLocaleString()}</p>
-                    </div>
-                    <div className="p-4 bg-input/50 rounded-lg">
-                        <p className="text-sm text-foreground/70">Indices</p>
-                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.indices.toLocaleString()}</p>
-                    </div>
-                    <div className="p-4 bg-input/50 rounded-lg">
-                        <p className="text-sm text-foreground/70">Commodities</p>
-                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.commodities.toLocaleString()}</p>
-                    </div>
-                    <div className="p-4 bg-input/50 rounded-lg">
-                        <p className="text-sm text-foreground/70">Stock CFDs</p>
-                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.stocks.toLocaleString()}</p>
-                    </div>
-                    <div className="p-4 bg-input/50 rounded-lg">
-                        <p className="text-sm text-foreground/70">Cryptocurrencies</p>
-                        <p className="text-3xl font-bold text-card-foreground">{broker.tradableInstruments.cryptocurrencies.toLocaleString()}</p>
-                    </div>
-                </div>
-            </Section>
-        )}
-
-        {broker.socialTrading && (
-            <Section title="Social & Copy Trading" id="social">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 className="text-xl font-bold mb-4">Community Metrics</h3>
-                        <div className="space-y-4">
-                            <div className="flex flex-col">
-                                <div className="flex justify-between items-baseline mb-1">
-                                    <span className="font-semibold">Popularity Score</span>
-                                    <span className="text-lg font-bold text-primary-400">{broker.socialTrading.popularityScore} / 100</span>
-                                </div>
-                                <div className="w-full bg-input rounded-full h-2.5">
-                                    <div className="bg-primary-600 h-2.5 rounded-full" style={{ width: `${broker.socialTrading.popularityScore}%` }}></div>
-                                </div>
-                                <p className="text-xs text-foreground/70 mt-1">Based on platform activity and number of copiers.</p>
-                            </div>
-                            <div className="p-4 bg-input/50 rounded-lg">
-                                <p className="text-sm font-semibold">Top Traders to Copy</p>
-                                <p className="text-3xl font-bold text-card-foreground">{broker.socialTrading.topTradersCount.toLocaleString()}+</p>
-                                <p className="text-xs text-foreground/70">Verified "Popular Investors" or top-ranked traders available.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-bold mb-4">Available Platforms</h3>
-                        <ul className="list-disc list-inside space-y-2">
-                            {broker.socialTrading.platforms.map(platform => (
-                                <li key={platform}>{platform}</li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            </Section>
-        )}
-        
-        <Section title="Regulation & Safety" id="safety">
-            <RegulatoryTrustScore brokerName={broker.name} regulators={broker.regulation.regulators} />
-            {broker.safety && <div className="mt-4 space-y-2">
-                <p><strong>Client Fund Protection:</strong> {broker.safety.clientFundProtection}</p>
-                <p><strong>Negative Balance Protection:</strong> {broker.safety.negativeBalanceProtection ? 'Yes' : 'No'}</p>
-            </div>}
+        <Section title="Tradable Instruments" id="instruments">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <tbody>
+                  <DetailRow label="Forex Pairs">{`${broker.tradableInstruments.forexPairs.total} (${broker.tradableInstruments.forexPairs.details})`}</DetailRow>
+                  <DetailRow label="Indices">{`${broker.tradableInstruments.indices.total} (${broker.tradableInstruments.indices.details})`}</DetailRow>
+                  <DetailRow label="Commodities">{`${broker.tradableInstruments.commodities.total} (${broker.tradableInstruments.commodities.details})`}</DetailRow>
+                  <DetailRow label="Stock CFDs">{`${broker.tradableInstruments.stocks.total} (${broker.tradableInstruments.stocks.details})`}</DetailRow>
+                  <DetailRow label="Cryptocurrencies">{`${broker.tradableInstruments.cryptocurrencies.total} (${broker.tradableInstruments.cryptocurrencies.details})`}</DetailRow>
+                  {broker.tradableInstruments.etfs && <DetailRow label="ETFs">{`${broker.tradableInstruments.etfs.total} (${broker.tradableInstruments.etfs.details})`}</DetailRow>}
+                </tbody>
+              </table>
+            </div>
         </Section>
 
+        <Section title="Deposit & Withdrawal" id="deposits">
+             <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <tbody>
+                  <DetailRow label="Deposit Methods">{broker.depositWithdrawal.depositMethods.join(', ')}</DetailRow>
+                  <DetailRow label="Withdrawal Methods">{broker.depositWithdrawal.withdrawalMethods.join(', ')}</DetailRow>
+                  <DetailRow label="Deposit Fees">{broker.depositWithdrawal.depositFees}</DetailRow>
+                   <DetailRow label="Withdrawal Fees">{broker.depositWithdrawal.withdrawalFees}</DetailRow>
+                   <DetailRow label="Avg. Withdrawal Time">{broker.depositWithdrawal.processingTime.withdrawals}</DetailRow>
+                </tbody>
+              </table>
+            </div>
+        </Section>
+
+         <Section title="Customer Support" id="support">
+             <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <tbody>
+                  <DetailRow label="Support Hours">{broker.customerSupport.hours}</DetailRow>
+                  <DetailRow label="Support Channels">{broker.customerSupport.channels.join(', ')}</DetailRow>
+                  <DetailRow label="Support Languages">{broker.customerSupport.languages.slice(0, 5).join(', ')}{broker.customerSupport.languages.length > 5 ? '...' : ''}</DetailRow>
+                </tbody>
+              </table>
+            </div>
+        </Section>
+        
         {/* --- REVIEWS SECTION --- */}
         <div id="reviews" className="pt-16 -mt-16">
           <div className="flex flex-col md:flex-row justify-between md:items-center my-6 gap-4 pt-8">

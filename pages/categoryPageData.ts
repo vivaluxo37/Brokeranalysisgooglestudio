@@ -74,7 +74,8 @@ const platformAndTypeFilters: CategoryPageInfo[] = [
     path: '/brokers/type/beginners',
     title: 'Best Forex Brokers for Beginners',
     description: 'Start your trading journey with brokers offering user-friendly platforms, low minimum deposits, and comprehensive educational resources.',
-    filterFn: (b) => b.accessibility.minDeposit <= 100 && (b.education?.length ?? 0) > 1 && b.score > 8.0,
+    // Fix: Removed check for non-existent `education` property.
+    filterFn: (b) => b.accessibility.minDeposit <= 100 && b.score > 8.0,
   },
   {
     name: 'MT4 Brokers',
@@ -123,7 +124,8 @@ const platformAndTypeFilters: CategoryPageInfo[] = [
     path: '/brokers/type/stock-trading',
     title: 'Best Brokers for Stock Trading',
     description: 'Diversify your portfolio with brokers that offer a wide range of stock CFDs and other equity instruments from global markets.',
-    filterFn: (b) => (b.tradableInstruments?.stocks ?? 0) > 100,
+    // Fix: Correctly access the `total` property on the `stocks` object.
+    filterFn: (b) => (b.tradableInstruments?.stocks?.total ?? 0) > 100,
   },
   {
     name: 'Telegram Signals',
@@ -137,7 +139,8 @@ const platformAndTypeFilters: CategoryPageInfo[] = [
     path: '/brokers/type/gold-trading',
     title: 'Best Brokers for Gold (XAU/USD) Trading',
     description: 'Trade one of the world\'s most popular commodities. Find brokers with low spreads and excellent conditions for trading Gold.',
-    filterFn: (b) => (b.tradableInstruments?.commodities ?? 0) > 0,
+    // Fix: Correctly access the `total` property on the `commodities` object.
+    filterFn: (b) => (b.tradableInstruments?.commodities?.total ?? 0) > 0,
   },
 ];
 

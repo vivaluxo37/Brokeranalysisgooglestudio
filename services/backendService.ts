@@ -383,7 +383,8 @@ export const handleNewsAnalysis = async (article: NewsArticle, brokers: Broker[]
         id: b.id,
         name: b.name,
         executionType: b.technology.executionType,
-        negativeBalanceProtection: b.safety?.negativeBalanceProtection,
+        // Fix: Correct property access for negativeBalanceProtection.
+        negativeBalanceProtection: b.tradingConditionsExtended.negativeBalanceProtection,
         regulators: b.regulation.regulators,
         spreads: b.tradingConditions.spreads,
         commission: b.tradingConditions.commission,

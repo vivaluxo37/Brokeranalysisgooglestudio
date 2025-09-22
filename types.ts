@@ -1,5 +1,6 @@
 
 
+
 export interface Review {
   id: string;
   brokerId: string;
@@ -20,20 +21,86 @@ export interface AccountType {
     bestFor: string;
 }
 
-export interface TradingFees {
-    forex: string;
-    indices: string;
-    commodities: string;
-    stocks: string;
+// New detailed types for Broker
+export interface DepositWithdrawal {
+    depositMethods: string[];
+    withdrawalMethods: string[];
+    depositFees: string; // "None", "Up to 2%", etc.
+    withdrawalFees: string;
+    processingTime: {
+        deposits: string; // e.g., "Instant for cards, 1-3 days for bank transfer"
+        withdrawals: string;
+    };
+    minWithdrawal: number;
 }
 
-export interface NonTradingFees {
-    inactivityFee: string;
-    withdrawalFee: string;
-    depositFee: string;
+export interface Promotions {
+    welcomeBonus?: string;
+    depositBonus?: string;
+    loyaltyProgram?: boolean;
 }
 
+export interface Support {
+    languages: string[];
+    channels: string[]; // 'Live Chat', 'Phone', etc.
+    hours: '24/5' | '24/7' | string;
+}
 
+export interface Security {
+    regulatedBy: { regulator: string; licenseNumber?: string }[];
+    segregatedAccounts: boolean;
+    investorCompensationScheme: {
+        available: boolean;
+        amount?: string; // e.g., "up to £85,000"
+    };
+    twoFactorAuth: boolean;
+}
+
+export interface TradingEnvironment {
+    executionSpeedMs?: number;
+    slippage: string; // e.g., "Low", "Average positive"
+    requotes: boolean;
+    liquidityProviders?: string[];
+    marketDepth: boolean;
+    orderTypes: string[];
+    guaranteedStopLoss: {
+        available: boolean;
+        cost?: string;
+    };
+}
+
+export interface PlatformFeatures {
+    charting: {
+        indicators: number;
+        drawingTools: number;
+    };
+    automatedTrading: string[]; // 'EAs', 'API', 'FIX'
+    copyTrading: {
+        available: boolean;
+        platforms: string[]; // 'Built-in', 'ZuluTrade', 'Myfxbook'
+    };
+    backtesting: boolean;
+    newsIntegration: boolean;
+}
+
+export interface AccountManagement {
+    islamicAccount: {
+        available: boolean;
+        conditions?: string;
+    };
+    baseCurrencies: string[];
+    mamPammSupport: boolean;
+    corporateAccounts: boolean;
+}
+
+export interface Transparency {
+    audited: boolean;
+    yearsInBusiness: number;
+    tradingVolumeDisclosed: boolean;
+    clientBase?: string; // e.g., "1M+ clients in 150 countries"
+}
+
+// Update the main Broker interface
 export interface Broker {
   id: string;
   name: string;
@@ -46,22 +113,68 @@ export interface Broker {
   summary?: string;
   pros?: string[];
   cons?: string[];
+  
+  // New detailed fields
+  coreInfo: {
+      brokerType: 'ECN' | 'STP' | 'Market Maker' | 'Hybrid' | 'NDD';
+      mobileTrading: boolean;
+      demoAccount: boolean;
+  };
+
   accountTypes?: AccountType[];
-  tradingFees?: TradingFees;
-  nonTradingFees?: NonTradingFees;
-  tradableInstruments?: {
-      forexPairs: number;
-      indices: number;
-      commodities: number;
-      stocks: number;
-      cryptocurrencies: number;
+  
+  // Re-structuring fees to be more detailed
+  fees: {
+    trading: {
+        spreadType: 'Fixed' | 'Variable' | 'Raw';
+        averageSpreads: { pair: string; spread: string }[];
+        commissionStructure: string;
+        overnightSwapFees: string;
+    };
+    nonTrading: {
+        inactivityFee: string;
+        withdrawalFee: string;
+        depositFee: string;
+        conversionFee?: string;
+    };
   };
-  researchTools?: string[];
-  education?: string[];
-  safety?: {
-      clientFundProtection: string;
-      negativeBalanceProtection: boolean;
+
+  tradableInstruments: {
+      forexPairs: { total: number; details: string };
+      commodities: { total: number; details: string };
+      indices: { total: number; details: string };
+      stocks: { total: number; details: string };
+      cryptocurrencies: { total: number; details: string };
+      etfs?: { total: number; details: string };
   };
+  
+  tradingConditionsExtended: {
+    minTradeSize: number; // in lots
+    scalpingAllowed: boolean;
+    hedgingAllowed: boolean;
+    eaAllowed: boolean;
+    negativeBalanceProtection: boolean;
+    marginCallLevel: string; // e.g. "100%"
+    stopOutLevel: string; // e.g. "50%"
+  };
+
+  depositWithdrawal: DepositWithdrawal;
+
+  promotions?: Promotions;
+  
+  customerSupport: Support;
+
+  security: Security;
+
+  tradingEnvironment: TradingEnvironment;
+  
+  platformFeatures: PlatformFeatures;
+
+  accountManagement: AccountManagement;
+
+  transparency: Transparency;
+  
+  // Legacy fields for backward compatibility
   regulation: {
     regulators: string[];
   };
@@ -71,18 +184,7 @@ export interface Broker {
       platforms: number;
       support: number;
   };
-  tradingConditions: {
-    spreads: {
-      eurusd: number;
-      gbpusd: number;
-      usdjpy: number;
-    };
-    commission: string;
-    swapFeeCategory: 'Low' | 'Standard' | 'High';
-    maxLeverage: string;
-    minLotSize?: number;
-  };
-  accessibility: {
+   accessibility: {
     minDeposit: number;
     depositMethods: string[];
     withdrawalMethods: string[];
@@ -94,16 +196,24 @@ export interface Broker {
     apiAccess?: boolean;
     eaSupport?: boolean;
   };
-  reviews?: Review[];
-  isIslamic?: boolean;
+  tradingConditions: { // Legacy trading conditions
+    spreads: { eurusd: number; gbpusd: number; usdjpy: number; };
+    commission: string;
+    swapFeeCategory: 'Low' | 'Standard' | 'High';
+    maxLeverage: string;
+    minLotSize?: number;
+  };
   copyTrading?: boolean;
+  isIslamic?: boolean;
   providesSignals?: boolean;
   socialTrading?: {
-      popularityScore: number; // A score out of 100 indicating community size/activity
-      topTradersCount: number; // Number of "elite" or popular traders to copy
+      popularityScore: number; 
+      topTradersCount: number; 
       platforms: string[];
   };
+  reviews?: Review[];
 }
+
 
 export interface User {
   id: string;

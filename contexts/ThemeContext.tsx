@@ -1,4 +1,5 @@
 
+
 import React, { createContext, useState, useEffect } from 'react';
 import { ThemeContextType } from '../types';
 
@@ -7,7 +8,7 @@ export const ThemeContext = createContext<ThemeContextType | null>(null);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const savedTheme = localStorage.getItem('theme');
-    return (savedTheme === 'light' || savedTheme === 'dark') ? savedTheme : 'dark';
+    return (savedTheme === 'light' || savedTheme === 'dark') ? savedTheme : 'light';
   });
 
   useEffect(() => {

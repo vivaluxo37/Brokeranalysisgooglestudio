@@ -14,6 +14,26 @@ interface BrokerCardProps {
   isRecommended?: boolean;
 }
 
+const RiskBadge: React.FC<{ broker: Broker }> = ({ broker }) => {
+  if (!broker.riskProfile) return null;
+
+  const { level, score } = broker.riskProfile;
+  const colorClasses = {
+    Low: 'text-green-400',
+    Medium: 'text-yellow-400',
+    High: 'text-orange-400',
+    Critical: 'text-red-500',
+  };
+
+  return (
+    <Tooltip content={`Risk Score: ${score}/100. Level: ${level}`}>
+      <span className="absolute top-3 right-3">
+        <Icons.shield className={`h-5 w-5 ${colorClasses[level]}`} />
+      </span>
+    </Tooltip>
+  );
+};
+
 const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }) => {
   const { addBrokerToComparison, removeBrokerFromComparison, isBrokerInComparison } = useComparison();
 
@@ -37,6 +57,7 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
     <Card className={`flex flex-col h-full ${recommendationClasses}`}>
       <div className="relative flex-grow">
         <ReactRouterDOM.Link to={`/broker/${broker.id}`} className="block h-full">
+          <RiskBadge broker={broker} />
           <CardContent>
             <div className="flex justify-between items-start">
               <img src={broker.logoUrl} alt={`${broker.name} logo`} className="h-12 w-auto object-contain bg-white p-2 rounded-md" />

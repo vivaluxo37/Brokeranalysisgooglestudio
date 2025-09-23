@@ -1,4 +1,4 @@
-import { Broker, Review, AIRecommendation, NewsArticle } from '../types';
+import { Broker, Review, AIRecommendation, NewsArticle, Signal } from '../types';
 import * as backend from './backendService';
 
 // This file now acts as a secure frontend client. It calls the simulated
@@ -69,6 +69,11 @@ export interface TrustScore {
 export const getRegulatoryTrustScore = async (brokerName: string, regulators: string[]): Promise<TrustScore> => {
     return backend.handleRegulatoryTrustScore(brokerName, regulators);
 };
+
+// --- Scam Broker Shield ---
+export const getRiskAnalysis = async (brokerName: string, signals: Signal[]): Promise<string> => {
+    return backend.handleRiskAnalysis(brokerName, signals);
+}
 
 // --- AI Comparison Summary ---
 export const getComparisonSummary = async (brokers: Broker[]): Promise<string> => {

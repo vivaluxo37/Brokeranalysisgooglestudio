@@ -21,6 +21,8 @@ import useMetaDescription from '../hooks/useMetaDescription';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useReviews } from '../hooks/useReviews';
 import Tooltip from '../components/ui/Tooltip';
+import RiskProfileCard from '../components/brokers/RiskProfileCard';
+import ReportBrokerModal from '../components/brokers/ReportBrokerModal';
 
 // New component for responsive key-value tables
 const DetailTable: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -236,6 +238,7 @@ const BrokerDetailPage: React.FC = () => {
   const [newRating, setNewRating] = useState(0);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   
   const [sortOrder, setSortOrder] = useState('date-desc');
   const [filterRating, setFilterRating] = useState(0);
@@ -365,6 +368,7 @@ const BrokerDetailPage: React.FC = () => {
         imageUrl={broker.logoUrl}
       />
       {brokerJsonLd && <JsonLdSchema data={brokerJsonLd} />}
+      <ReportBrokerModal isOpen={isReportModalOpen} onClose={() => setIsReportModalOpen(false)} brokerName={broker.name} />
 
       {/* Table of contents column (appears first in code for mobile flow) */}
       <div className="lg:w-1/4 lg:order-2">
@@ -404,15 +408,21 @@ const BrokerDetailPage: React.FC = () => {
                         {inCompare ? "Remove from Compare" : "Add to Compare"}
                     </Button>
                   </Tooltip>
-                   <Tooltip content={isFavorite ? 'Remove from your favorites' : 'Add this broker to your favorites'}>
+                   <Tooltip content={isFavorite ? 'Remove from your favorites' : 'Add to favorites to receive alerts'}>
                     <Button onClick={handleFavoriteClick} variant="secondary">
                         {isFavorite ? <Icons.starFull className="h-5 w-5 ltr:mr-2 rtl:ml-2 text-yellow-400" /> : <Icons.star className="h-5 w-5 ltr:mr-2 rtl:ml-2" />}
                         {isFavorite ? "Favorited" : "Add to Favorites"}
                     </Button>
                   </Tooltip>
+                   <Button onClick={() => setIsReportModalOpen(true)} variant="secondary">
+                        <Icons.shieldAlert className="h-5 w-5 ltr:mr-2 rtl:ml-2" />
+                        Report this Broker
+                    </Button>
               </div>
           </div>
         </div>
+
+        {broker.riskProfile && <RiskProfileCard broker={broker} />}
 
         <Section title="At a Glance" id="glance">
             <DetailTable>

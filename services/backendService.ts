@@ -3,7 +3,7 @@
 // ENDPOINT, AND THE API KEY WOULD BE A SERVER ENVIRONMENT VARIABLE.
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { Broker, Review, AIRecommendation, NewsArticle } from '../types';
+import { Broker, Review, AIRecommendation, NewsArticle, Signal } from '../types';
 import { brokers } from '../data/brokers';
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -277,6 +277,20 @@ export const handleRegulatoryTrustScore = async (brokerName: string, regulators:
 
     return { score, reasoning, sources };
 };
+
+// --- Scam Broker Shield Analysis ---
+export const handleRiskAnalysis = async (brokerName: string, signals: Signal[]): Promise<string> => {
+    const prompt = `
+        You are a succinct financial risk analyst. Based on the following risk signals for the forex broker "${brokerName}", write a 2-3 sentence summary for a retail trader.
+        Explain the practical implications of these risks in simple terms. Do not use jargon. Focus on what the user should be cautious about.
+
+        Signals:
+        ${JSON.stringify(signals, null, 2)}
+    `;
+    const response = await ai.models.generateContent({ model, contents: prompt });
+    return response.text;
+}
+
 
 // --- AI Comparison Summary ---
 export const handleComparisonSummary = async (brokers: Broker[]): Promise<string> => {

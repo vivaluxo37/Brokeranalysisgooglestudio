@@ -39,6 +39,7 @@ const initialFilters = {
     algoSupport: [] as string[],
     copyTrading: 'any',
     minLotSize: 'any',
+    riskProfile: 'all', // New filter for risk
 };
 
 type TradingStyle = 'Scalping' | 'Algorithmic' | 'Copy Trading' | 'Swing Trading' | 'News Trading' | 'Low Cost';
@@ -278,6 +279,9 @@ const AllBrokersPage: React.FC = () => {
             if (filters.minLotSize === 'micro' && lotSize > 0.01) return false;
             if (filters.minLotSize === 'mini' && lotSize > 0.1) return false;
         }
+        if (filters.riskProfile === 'exclude_high' && broker.riskProfile && broker.riskProfile.score >= 60) {
+            return false;
+        }
         return true;
     });
   }, [filters]);
@@ -332,6 +336,9 @@ const AllBrokersPage: React.FC = () => {
                         onChange={(e) => setFilters(p => ({...p, searchTerm: e.target.value}))}
                         className="mb-4"
                     />
+                     <Accordion title="Risk Profile">
+                        {[{v: 'all', l: 'Show All Brokers'}, {v: 'exclude_high', l: 'Exclude High & Critical Risk'}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="riskProfile" value={opt.v} checked={filters.riskProfile === opt.v} onChange={(e) => handleRadioChange('riskProfile', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
+                    </Accordion>
                     <Accordion title={t('allBrokersPage.presetsTitle')}>
                         <div className="grid grid-cols-2 gap-2">
                             {(['Scalping', 'Algorithmic', 'Copy Trading', 'Swing Trading', 'News Trading', 'Low Cost'] as TradingStyle[]).map(style => (

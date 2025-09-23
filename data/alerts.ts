@@ -54,5 +54,23 @@ export const mockAlerts: Alert[] = [
     date: '2025-09-01T08:00:00Z',
     severity: 'High',
     read: false,
+  },
+  {
+    id: 'alert7',
+    brokerId: 'ironfx',
+    title: 'Critical Risk Detected: Regulatory Warning',
+    description: 'IronFX was fined by CySEC for compliance failures. We have raised their risk score to Critical. We advise extreme caution.',
+    date: '2025-08-15T11:00:00Z',
+    severity: 'High',
+    read: false,
+  },
+  {
+    id: 'alert8',
+    brokerId: 'bitget',
+    title: 'Medium Risk Detected: URL Flagged',
+    description: 'The domain for Bitget has been flagged by security vendors for suspicious activities. Their risk score is now Medium.',
+    date: '2025-08-20T18:00:00Z',
+    severity: 'Medium',
+    read: false,
   }
 ];

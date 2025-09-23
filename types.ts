@@ -1,6 +1,7 @@
 
 
 
+
 export interface Review {
   id: string;
   brokerId: string;
@@ -99,6 +100,24 @@ export interface Transparency {
     tradingVolumeDisclosed: boolean;
     clientBase?: string; // e.g., "1M+ clients in 150 countries"
 }
+
+// Scam Broker Shield Types
+export interface Signal {
+  type: 'REGULATOR_WARNING' | 'URL_FLAG' | 'BLACKLIST' | 'USER_COMPLAINTS' | 'HEURISTIC';
+  source: string;
+  description: string;
+  scoreWeight: number;
+  evidenceUrl?: string;
+  timestamp: string;
+}
+
+export interface RiskProfile {
+  score: number; // 0-100
+  level: 'Low' | 'Medium' | 'High' | 'Critical';
+  summary?: string; // Statically defined, can be replaced by AI later
+  signals: Signal[];
+}
+
 
 // Update the main Broker interface
 export interface Broker {
@@ -212,6 +231,7 @@ export interface Broker {
       platforms: string[];
   };
   reviews?: Review[];
+  riskProfile?: RiskProfile;
 }
 
 

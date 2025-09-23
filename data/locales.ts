@@ -240,30 +240,72 @@ export const translations = {
     brokerMatcherPage: {
         title: "AI Broker Matcher",
         subtitle: "Answer a few questions and let our AI do the work.",
-        steps: {
-            "0": {
-                title: "First, what's your trading experience?",
-                options: ["Beginner", "Intermediate", "Expert"]
-            },
-            "1": {
-                title: "What is your planned initial deposit?",
-                options: ["Under $200", "$200 - $1000", "$1000 - $5000", "$5000+"]
-            },
-            "2": {
-                title: "Any preferred trading platforms?",
-                options: ["MetaTrader 4/5", "cTrader", "TradingView", "Proprietary", "I don't mind"],
-                placeholder: "Or type your own..."
-            },
-            "3": {
-                title: "Finally, what's most important to you?",
-                options: ["Lowest Possible Spreads", "Top-Tier Regulation", "Best Trading Platform", "Beginner Friendly"],
-                placeholder: "Or type your own..."
-            }
-        },
         back: "Back",
         findMyBroker: "Find My Broker",
         tooltip: "Uses AI to analyze your preferences and recommend the best brokers for you.",
         loading: "Our AI is finding your perfect broker...",
+        steps: {
+            country: {
+                title: "Where do you live?",
+                tooltip: "Brokers are regulated differently in each country. This ensures we only recommend brokers available to you."
+            },
+            experience: {
+                title: "How familiar are you with trading?",
+                tooltip: "This helps us match you with a platform that suits your skill level, from simple interfaces for beginners to advanced tools for experts.",
+                options: [
+                    { key: "I'm a first-timer", text: "I'm a first-timer" },
+                    { key: "I've made a few trades", text: "I've made a few trades" },
+                    { key: "I have experience", text: "I have experience" },
+                    { key: "I'm a professional", text: "I'm a professional" }
+                ]
+            },
+            feeStructure: {
+                title: "What fee structure would you prefer?",
+                tooltip: "Choose 'Low spreads' for scalping, 'Low overnight fee' for long-term trades, or 'Both' for a balanced approach.",
+                options: [
+                    { key: "Low spreads", text: "Low spreads" },
+                    { key: "Low overnight fee", text: "Low overnight fee" },
+                    { key: "Both", text: "Both" },
+                    { key: "I don't know", text: "I don't know" }
+                ]
+            },
+            depositMethod: {
+                title: "How would you like to deposit funds?",
+                tooltip: "Select your preferred method to ensure a smooth and convenient funding process.",
+                options: [
+                    { key: "Bank transfer", text: "Bank transfer" },
+                    { key: "Credit/debit card", text: "Credit/debit card" },
+                    { key: "PayPal", text: "PayPal" },
+                    { key: "Skrill", text: "Skrill" },
+                    { key: "I don't know", text: "I don't know" }
+                ]
+            },
+            currencyPairs: {
+                title: "Which currency pairs would you like to trade?",
+                tooltip: "Majors have the lowest spreads, while exotics can offer more volatility and opportunity.",
+                options: [
+                    { key: "Major currencies", text: "Major currencies" },
+                    { key: "Minor currencies", text: "Minor currencies" },
+                    { key: "Exotic currencies", text: "Exotic currencies" },
+                    { key: "I don't know", text: "I don't know" }
+                ]
+            },
+            specialPreferences: {
+                title: "Any special preferences? (Pick up to 5)",
+                options: [
+                    { key: 'Fast account opening', text: 'Fast account opening', tooltip: 'Look for brokers with a fully digital and quick onboarding process.' },
+                    { key: 'Quick withdrawal', text: 'Quick withdrawal', tooltip: 'Prioritize brokers known for processing withdrawals quickly and with low fees.' },
+                    { key: 'Exclude risky countries', text: 'Exclude risky countries', tooltip: 'Filter out brokers regulated in jurisdictions with lower investor protection standards.' },
+                    { key: 'Educational resources', text: 'Educational resources', tooltip: 'Find brokers who provide extensive articles, videos, and webinars to help you learn.' },
+                    { key: 'Great research tools', text: 'Great research tools', tooltip: 'Get access to advanced charting, market analysis, and news feeds.' },
+                    { key: 'ECN account', text: 'ECN account', tooltip: 'For direct market access with raw spreads and a fixed commission, ideal for scalpers.' },
+                    { key: 'Islamic account', text: 'Islamic account', tooltip: 'Find brokers offering swap-free accounts that comply with Sharia law.' },
+                    { key: 'Copy trading', text: 'Copy trading', tooltip: 'Follow and automatically copy the trades of successful traders.' },
+                    { key: 'Superb customer service', text: 'Superb customer service', tooltip: 'Choose brokers with highly-rated, responsive support via live chat, phone, and email.' },
+                    { key: 'API access', text: 'API access', tooltip: 'For algorithmic traders who want to connect their own custom trading software.' },
+                ]
+            }
+        },
         results: {
             title: "Your Top Matches",
             aiAnalysis: "AI Analysis",
@@ -778,26 +820,6 @@ export const translations = {
     brokerMatcherPage: {
         title: "KI-Broker-Matcher",
         subtitle: "Beantworten Sie ein paar Fragen und lassen Sie unsere KI die Arbeit machen.",
-        steps: {
-            "0": {
-                title: "Zuerst, was ist Ihre Handelserfahrung?",
-                options: ["Anfänger", "Mittel", "Experte"]
-            },
-            "1": {
-                title: "Was ist Ihre geplante Ersteinzahlung?",
-                options: ["Unter $200", "$200 - $1000", "$1000 - $5000", "$5000+"]
-            },
-            "2": {
-                title: "Gibt es bevorzugte Handelsplattformen?",
-                options: ["MetaTrader 4/5", "cTrader", "TradingView", "Proprietär", "Ist mir egal"],
-                placeholder: "Oder geben Sie Ihre eigene ein..."
-            },
-            "3": {
-                title: "Zuletzt, was ist Ihnen am wichtigsten?",
-                options: ["Niedrigstmögliche Spreads", "Erstklassige Regulierung", "Beste Handelsplattform", "Anfängerfreundlich"],
-                placeholder: "Oder geben Sie Ihre eigene ein..."
-            }
-        },
         back: "Zurück",
         findMyBroker: "Meinen Broker finden",
         tooltip: "Verwendet KI, um Ihre Präferenzen zu analysieren und die besten Broker für Sie zu empfehlen.",
@@ -1316,26 +1338,6 @@ export const translations = {
     brokerMatcherPage: {
         title: "AIブローカーマッチャー",
         subtitle: "いくつかの質問に答えて、残りはAIにお任せください。",
-        steps: {
-            "0": {
-                title: "まず、あなたの取引経験は？",
-                options: ["初心者", "中級者", "専門家"]
-            },
-            "1": {
-                title: "予定している初回入金額はいくらですか？",
-                options: ["$200未満", "$200 - $1000", "$1000 - $5000", "$5000以上"]
-            },
-            "2": {
-                title: "希望する取引プラットフォームはありますか？",
-                options: ["MetaTrader 4/5", "cTrader", "TradingView", "独自プラットフォーム", "気にしない"],
-                placeholder: "または、ご自身で入力..."
-            },
-            "3": {
-                title: "最後に、あなたにとって最も重要なことは何ですか？",
-                options: ["可能な限り低いスプレッド", "トップティアの規制", "最高の取引プラットフォーム", "初心者向け"],
-                placeholder: "または、ご自身で入力..."
-            }
-        },
         back: "戻る",
         findMyBroker: "私のブローカーを探す",
         tooltip: "AIを使用してあなたの好みを分析し、最適なブローカーを推奨します。",
@@ -1537,7 +1539,7 @@ export const translations = {
                 q2: { question: "取引における1:3のリスク/リワード比率は何を意味しますか？", options: ["潜在的に1ドルを稼ぐために3ドルをリスクにさらしている。", "潜在的に3ドルを稼ぐために1ドルをリスクにさらしている。", "その取引の成功確率は33.3%である。", "その取引は3時間以内に終了しなければならない。"], correctAnswer: "潜在的に3ドルを稼ぐために1ドルをリスクにさらしている。", explanation: "リスク/リワード比率は、取引の潜在的な損失（エントリーからストップロスまでの距離）とその潜在的な利益（テイクプロフィットまでの距離）を比較します。1:3の比率は一般的に有利と見なされます。なぜなら、あなたの潜在的な利益は潜在的な損失の3倍だからです。" },
                 q3: { question: "「ポジションサイジング」とは何ですか？", options: ["取引するのに最適な時間帯を選ぶこと。", "口座サイズとリスク許容度に基づいて、取引するロット数またはユニット数を決定すること。", "市場の方向を予測すること。", "モニターの物理的なサイズ。"], correctAnswer: "口座サイズとリスク許容度に基づいて、取引するロット数またはユニット数を決定すること。", explanation: "適切なポジションサイジングはリスク管理の鍵です。これには、単一の取引からの潜在的な損失が総口座残高の小さく許容できる割合（例：1〜2%）になるように、適切な取引サイズを計算することが含まれます。" },
                 q4: { question: "「マージンコール」とは何ですか？", options: ["収益性の高い取引についてブローカーからのお祝いの電話。", "口座の資本が、必要な維持証拠金を下回ったという通知。", "スリッページがないことを保証する注文タイプ。", "取引心理学に関するセミナー。"], correctAnswer: "口座の資本が、必要な維持証拠金を下回ったという通知。", explanation: "マージンコールは、損失ポジションによって利用可能な口座資本がブローカーの要件を満たさなくなったときに発生します。証拠金要件を満たすためには、さらに資金を入金するか、ポジションを閉じる必要があります。" },
-                q5: { question: "なぜ一般的に、単一の取引で資本の1〜2%以上をリスクにさらさないようにアドバイスされるのですか？", options: ["ブローカーがより大きなリスクを許可しないため。", "口座を枯渇させることなく、一連の負け取引を乗り切ることができるようにするため。", "取引が利益を上げることを保証するため。", "賞金にかかる税金を低くするため。"], correctAnswer: "口座を枯渇させることなく、一連の負け取引を乗り切ることができるようにするため。", explanation: "最高の取引戦略でさえ、連敗することがあります。取引ごとに資本のほんのわずかな割合をリスクにさらすことで、数回の連続した損失によって口座が全滅するのを防ぎ、戦略が利益を上げるのに十分な時間、ゲームに留まることができます。" }
+                q5: { question: "なぜ一般的に、単一の取引で資本の1〜2%以上をリスクにさらさないようにアドバイスされるのですか？", options: ["ブローカーがより大きなリスクを許可しないため。", "口座を枯渇させることなく、一連の負け取引を乗り切ることができるようにするため。", "取引が利益を上げることを保証するため。", "賞金にかかる税金を低くするため。"], correctAnswer: "口座を枯裂させることなく、一連の負け取引を乗り切ることができるようにするため。", explanation: "最高の取引戦略でさえ、連敗することがあります。取引ごとに資本のほんのわずかな割合をリスクにさらすことで、数回の連続した損失によって口座が全滅するのを防ぎ、戦略が利益を上げるのに十分な時間、ゲームに留まることができます。" }
             },
             orders: {
                 title: "注文タイプの理解",
@@ -1611,6 +1613,1017 @@ export const translations = {
                 calculate: "証拠金を計算",
                 result: "{leverage}のレバレッジで{pair}の{lots}ロットのポジションを開設するために必要な証拠金は"
             }
+        }
+    }
+  },
+  es: {
+    header: {
+        brokers: "Corredores",
+        tools: "Herramientas",
+        education: "Educación",
+        marketNews: "Noticias del Mercado",
+        methodology: "Metodología",
+        login: "Iniciar Sesión",
+        register: "Registrarse",
+        logout: "Cerrar Sesión",
+        dashboard: "Mi Panel",
+        megaMenu: {
+            coreTools: "Herramientas Principales",
+            allBrokers: "Todos los Corredores",
+            compareBrokers: "Comparar Corredores",
+            costAnalyzer: "Analizador de Costos",
+            aiBrokerMatcher: "Recomendador de Corredores IA",
+            byCountry: "Por País",
+            platformsAndTypes: "Plataformas y Tipos"
+        },
+        toolsMenu: {
+            economicCalendar: "Calendario Económico",
+            calculators: "Calculadoras de Forex",
+            marketData: "Datos del Mercado"
+        }
+    },
+    footer: {
+        subtitle: "Descubra su corredor de forex perfecto con el poder de la IA.",
+        copyright: "© {year} Brokeranalysis. Todos los derechos reservados.",
+        links: {
+            home: "Inicio",
+            allBrokers: "Todos los Corredores",
+            compareBrokers: "Comparar Corredores",
+            costAnalyzer: "Analizador de Costos",
+            brokerMatcher: "Recomendador de Corredores",
+            marketNews: "Noticias del Mercado",
+            educationHub: "Centro de Educación",
+            economicCalendar: "Calendario Económico",
+            calculators: "Calculadoras",
+            marketData: "Datos del Mercado",
+            methodology: "Metodología",
+            sources: "Fuentes"
+        }
+    }
+  },
+  fr: {
+    header: {
+        brokers: "Courtiers",
+        tools: "Outils",
+        education: "Éducation",
+        marketNews: "Actualités du Marché",
+        methodology: "Méthodologie",
+        login: "Connexion",
+        register: "S'inscrire",
+        logout: "Déconnexion",
+        dashboard: "Mon Tableau de Bord",
+        megaMenu: {
+            coreTools: "Outils Principaux",
+            allBrokers: "Tous les Courtiers",
+            compareBrokers: "Comparer les Courtiers",
+            costAnalyzer: "Analyseur de Coûts",
+            aiBrokerMatcher: "Assistant IA Courtiers",
+            byCountry: "Par Pays",
+            platformsAndTypes: "Plateformes & Types"
+        },
+        toolsMenu: {
+            economicCalendar: "Calendrier Économique",
+            calculators: "Calculatrices Forex",
+            marketData: "Données du Marché"
+        }
+    },
+    footer: {
+        subtitle: "Découvrez votre courtier forex idéal grâce à la puissance de l'IA.",
+        copyright: "© {year} Brokeranalysis. Tous droits réservés.",
+        links: {
+            home: "Accueil",
+            allBrokers: "Tous les Courtiers",
+            compareBrokers: "Comparer les Courtiers",
+            costAnalyzer: "Analyseur de Coûts",
+            brokerMatcher: "Assistant Courtiers",
+            marketNews: "Actualités du Marché",
+            educationHub: "Centre Éducatif",
+            economicCalendar: "Calendrier Économique",
+            calculators: "Calculatrices",
+            marketData: "Données du Marché",
+            methodology: "Méthodologie",
+            sources: "Sources"
+        }
+    }
+  },
+  it: {
+    header: {
+        brokers: "Broker",
+        tools: "Strumenti",
+        education: "Formazione",
+        marketNews: "Notizie di Mercato",
+        methodology: "Metodologia",
+        login: "Accedi",
+        register: "Registrati",
+        logout: "Esci",
+        dashboard: "La Mia Dashboard",
+        megaMenu: {
+            coreTools: "Strumenti Principali",
+            allBrokers: "Tutti i Broker",
+            compareBrokers: "Confronta Broker",
+            costAnalyzer: "Analizzatore Costi",
+            aiBrokerMatcher: "Assistente IA Broker",
+            byCountry: "Per Paese",
+            platformsAndTypes: "Piattaforme e Tipi"
+        },
+        toolsMenu: {
+            economicCalendar: "Calendario Economico",
+            calculators: "Calcolatori Forex",
+            marketData: "Dati di Mercato"
+        }
+    },
+    footer: {
+        subtitle: "Scopri il tuo broker forex perfetto con la potenza dell'IA.",
+        copyright: "© {year} Brokeranalysis. Tutti i diritti riservati.",
+        links: {
+            home: "Home",
+            allBrokers: "Tutti i Broker",
+            compareBrokers: "Confronta Broker",
+            costAnalyzer: "Analizzatore Costi",
+            brokerMatcher: "Assistente Broker",
+            marketNews: "Notizie di Mercato",
+            educationHub: "Centro Formazione",
+            economicCalendar: "Calendario Economico",
+            calculators: "Calcolatori",
+            marketData: "Dati di Mercato",
+            methodology: "Metodologia",
+            sources: "Fonti"
+        }
+    }
+  },
+  pt: {
+    header: {
+        brokers: "Corretoras",
+        tools: "Ferramentas",
+        education: "Educação",
+        marketNews: "Notícias do Mercado",
+        methodology: "Metodologia",
+        login: "Entrar",
+        register: "Registrar",
+        logout: "Sair",
+        dashboard: "Meu Painel",
+        megaMenu: {
+            coreTools: "Ferramentas Principais",
+            allBrokers: "Todas as Corretoras",
+            compareBrokers: "Comparar Corretoras",
+            costAnalyzer: "Analisador de Custos",
+            aiBrokerMatcher: "Assistente IA de Corretoras",
+            byCountry: "Por País",
+            platformsAndTypes: "Plataformas e Tipos"
+        },
+        toolsMenu: {
+            economicCalendar: "Calendário Econômico",
+            calculators: "Calculadoras Forex",
+            marketData: "Dados de Mercado"
+        }
+    },
+    footer: {
+        subtitle: "Descubra a sua corretora de forex perfeita com o poder da IA.",
+        copyright: "© {year} Brokeranalysis. Todos os direitos reservados.",
+        links: {
+            home: "Início",
+            allBrokers: "Todas as Corretoras",
+            compareBrokers: "Comparar Corretoras",
+            costAnalyzer: "Analisador de Custos",
+            brokerMatcher: "Assistente de Corretoras",
+            marketNews: "Notícias do Mercado",
+            educationHub: "Centro de Educação",
+            economicCalendar: "Calendário Econômico",
+            calculators: "Calculadoras",
+            marketData: "Dados de Mercado",
+            methodology: "Metodologia",
+            sources: "Fontes"
+        }
+    }
+  },
+  nl: {
+    header: {
+        brokers: "Brokers",
+        tools: "Hulpmiddelen",
+        education: "Educatie",
+        marketNews: "Marktnieuws",
+        methodology: "Methodologie",
+        login: "Inloggen",
+        register: "Registreren",
+        logout: "Uitloggen",
+        dashboard: "Mijn Dashboard",
+        megaMenu: {
+            coreTools: "Kernhulpmiddelen",
+            allBrokers: "Alle Brokers",
+            compareBrokers: "Brokers Vergelijken",
+            costAnalyzer: "Kostenanalyse",
+            aiBrokerMatcher: "AI Broker Vinder",
+            byCountry: "Per Land",
+            platformsAndTypes: "Platforms & Typen"
+        },
+        toolsMenu: {
+            economicCalendar: "Economische Kalender",
+            calculators: "Forex Rekenmachines",
+            marketData: "Marktgegevens"
+        }
+    },
+    footer: {
+        subtitle: "Ontdek uw perfecte forex broker met de kracht van AI.",
+        copyright: "© {year} Brokeranalysis. Alle rechten voorbehouden.",
+        links: {
+            home: "Home",
+            allBrokers: "Alle Brokers",
+            compareBrokers: "Brokers Vergelijken",
+            costAnalyzer: "Kostenanalyse",
+            brokerMatcher: "Broker Vinder",
+            marketNews: "Marktnieuws",
+            educationHub: "Educatiecentrum",
+            economicCalendar: "Economische Kalender",
+            calculators: "Rekenmachines",
+            marketData: "Marktgegevens",
+            methodology: "Methodologie",
+            sources: "Bronnen"
+        }
+    }
+  },
+  ru: {
+    header: {
+        brokers: "Брокеры",
+        tools: "Инструменты",
+        education: "Обучение",
+        marketNews: "Новости рынка",
+        methodology: "Методология",
+        login: "Войти",
+        register: "Регистрация",
+        logout: "Выйти",
+        dashboard: "Моя панель",
+        megaMenu: {
+            coreTools: "Основные инструменты",
+            allBrokers: "Все брокеры",
+            compareBrokers: "Сравнить брокеров",
+            costAnalyzer: "Анализатор затрат",
+            aiBrokerMatcher: "ИИ-подбор брокера",
+            byCountry: "По странам",
+            platformsAndTypes: "Платформы и типы"
+        },
+        toolsMenu: {
+            economicCalendar: "Экономический календарь",
+            calculators: "Калькуляторы Forex",
+            marketData: "Рыночные данные"
+        }
+    },
+    chatbot: {
+        greeting: "Здравствуйте! Я BrokerBot. Задавайте мне любые вопросы о наших брокерах или попробуйте одно из предложений ниже!",
+        suggestions: [
+            "Лучшие ECN форекс-брокеры",
+            "Лучшие форекс-брокеры для начинающих",
+            "Какой брокер лучше всего подходит для скальперов?",
+            "Сравнить Pepperstone и IC Markets",
+            "Какие спреды у XTB?",
+            "Показать брокеров с высоким плечом"
+        ]
+    },
+    footer: {
+        subtitle: "Найдите своего идеального форекс-брокера с помощью ИИ.",
+        byCountry: "По странам",
+        platformsAndTypes: "Платформы и типы",
+        resources: "Ресурсы",
+        tools: "Инструменты",
+        copyright: "© {year} Brokeranalysis. Все права защищены.",
+        links: {
+            home: "Главная",
+            allBrokers: "Все брокеры",
+            compareBrokers: "Сравнить брокеров",
+            costAnalyzer: "Анализатор затрат",
+            brokerMatcher: "Подбор брокера",
+            marketNews: "Новости рынка",
+            educationHub: "Центр обучения",
+            economicCalendar: "Экономический календарь",
+            calculators: "Калькуляторы",
+            marketData: "Рыночные данные",
+            methodology: "Методология",
+            sources: "Источники",
+        }
+    },
+    home: {
+      heroTitle: "Найдите своего идеального форекс-брокера",
+      heroSubtitle: "Используйте возможности ИИ для анализа, сравнения и выбора лучшего брокера, соответствующего вашему стилю торговли.",
+      heroDataDriven: "Аналитические данные по десяткам регулируемых брокеров по всему миру.",
+      useAiMatcher: "Использовать ИИ-подбор брокера",
+      exploreAllBrokers: "Посмотреть всех брокеров",
+      trustedBy: "Нам доверяют лучшие трейдеры",
+      whyChoose: "Почему стоит выбрать Brokeranalysis?",
+      features: {
+        data: {
+          title: "Полные данные",
+          description: "Получите доступ к подробной информации о десятках брокеров, от регулирования до торговых условий."
+        },
+        matching: {
+          title: "Подбор с помощью ИИ",
+          description: "Наш интеллектуальный подборщик брокеров находит идеального брокера на основе ваших уникальных предпочтений."
+        },
+        comparison: {
+          title: "Сравнение бок о бок",
+          description: "Легко сравнивайте ключевые особенности нескольких брокеров в понятной и краткой таблице."
+        },
+        trust: {
+          title: "Доверие и безопасность",
+          description: "Мы проверяем регуляторные данные и используем ИИ для создания динамического рейтинга доверия для каждого брокера."
+        }
+      },
+      newTools: {
+          title: "Мощные новые торговые инструменты",
+          calendar: {
+              title: "Экономический календарь",
+              description: "Будьте в курсе событий, влияющих на рынок, с нашим экономическим календарем в реальном времени."
+          },
+          calculators: {
+              title: "Калькуляторы Forex",
+              description: "Основные инструменты для управления рисками, включая калькуляторы размера позиции и стоимости пункта."
+          }
+      },
+      popularCategoriesTitle: "Популярные категории",
+      categories: {
+        beginners: {
+          title: "Лучшие для начинающих",
+          description: "Найдите удобные платформы с низкими депозитами и отличными образовательными материалами."
+        },
+        ecn: {
+          title: "Низкий спред и ECN-брокеры",
+          description: "Для серьезных трейдеров, которым нужен прямой доступ к рынку и самые узкие спреды."
+        },
+        copy: {
+          title: "Лучшие платформы для копи-трейдинга",
+          description: "Используйте опыт успешных трейдеров, автоматически копируя их сделки."
+        },
+        leverage: {
+          title: "Брокеры с высоким плечом",
+          description: "Максимизируйте свой торговый потенциал с брокерами, предлагающими плечо 1:500 и выше."
+        }
+      },
+      howItWorksTitle: "Как это работает за 3 простых шага",
+      steps: {
+        "1": {
+          title: "Ответьте на вопросы",
+          description: "Расскажите нам о своем стиле торговли, опыте и о том, что для вас важнее всего в брокере."
+        },
+        "2": {
+          title: "Получите подбор от ИИ",
+          description: "Наш ИИ анализирует ваш профиль и рекомендует лучших брокеров из нашей базы данных."
+        },
+        "3": {
+          title: "Сравните и выберите",
+          description: "Используйте наши инструменты для сравнения затрат, функций и рейтингов доверия, чтобы сделать окончательный выбор."
+        }
+      },
+      socialProofTitle: "Нам доверяют трейдеры по всему миру",
+      testimonials: {
+        "1": {
+          quote: "\"ИИ-подборщик брокеров — это прорыв. Он нашел мне брокера с низкими спредами, о котором я никогда не слышал. Сэкономил мне часы исследований.\"",
+          author: "- Алексей Р., Дневной трейдер"
+        },
+        "2": {
+          quote: "\"Наконец-то появился действительно полезный сайт для сравнения. Анализатор затрат в реальном времени — это гениально для отслеживания комиссий. Очень рекомендую.\"",
+          author: "- Светлана Т., Свинг-трейдер"
+        }
+      },
+      faqTitle: "Часто задаваемые вопросы",
+      faqs: {
+        "1": {
+          q: "Какой форекс-брокер самый надежный?",
+          a: "Надежность во многом зависит от регулирования. Самыми надежными обычно являются брокеры, регулируемые несколькими ведущими органами, такими как FCA (Великобритания), ASIC (Австралия) и FINMA (Швейцария). Наша платформа предоставляет регуляторные данные и рейтинг доверия от ИИ, чтобы помочь вам оценить надежность брокера."
+        },
+        "2": {
+          q: "Как ИИ выбирает подходящего для меня брокера?",
+          a: "Наш ИИ-подборщик брокеров анализирует ваши ответы на вопросы о вашем стиле торговли и приоритетах. Затем он сравнивает ваш профиль с нашей базой данных атрибутов брокеров — таких как затраты, платформы и регулирование — чтобы найти наиболее подходящие варианты. Это процесс, основанный на данных, предназначенный для персонализации вашего поиска."
+        },
+        "3": {
+          q: "У какого брокера самые низкие торговые издержки?",
+          a: "Торговые издержки динамичны и зависят от инструмента, которым вы торгуете. Наш анализатор затрат в реальном времени предоставляет данные о спредах и комиссиях для выбранных вами брокеров, помогая вам определить самый дешевый вариант в любой момент. В целом, ECN/STP брокеры, такие как Pepperstone или IC Markets, предлагают очень низкие сырые спреды, но взимают комиссию."
+        }
+      }
+    },
+    allBrokersPage: {
+        title: "Все форекс-брокеры",
+        subtitle: "Используйте наши расширенные фильтры, чтобы найти брокера, который идеально соответствует вашему стилю торговли и потребностям.",
+        filtersTitle: "Фильтры",
+        reset: "Сбросить",
+        searchPlaceholder: "Поиск по названию брокера...",
+        presetsTitle: "Пресеты по стилю торговли",
+        presets: {
+            scalping: "Скальпинг",
+            algorithmic: "Алгоритмический",
+            copytrading: "Копи-трейдинг",
+            swingtrading: "Свинг-трейдинг",
+            newstrading: "Торговля на новостях",
+            lowcost: "Низкие затраты"
+        },
+        generalTitle: "Общие",
+        minDeposit: "Минимальный депозит",
+        minDepositOptions: {
+            any: "Любая сумма",
+            "100": "До $100",
+            "250": "До $250",
+            "1000": "До $1000"
+        },
+        regulator: "Регулятор",
+        regulatorOptions: {
+            any: "Любой регулятор"
+        },
+        executionCostsTitle: "Исполнение и затраты",
+        executionType: "Тип исполнения",
+        spread: "Спред EUR/USD",
+        spreadOptions: {
+            any: "Любой",
+            ultraLow: "Ультранизкий (≤ 0.5 пункта)",
+            low: "Низкий (0.6 - 1.0 пункта)",
+            standard: "Стандартный (> 1.0 пункта)"
+        },
+        commissions: "Комиссии",
+        commissionOptions: {
+            any: "Любые",
+            commission: "На основе комиссии",
+            zero: "Нулевая комиссия"
+        },
+        techPlatformsTitle: "Технологии и платформы",
+        platform: "Платформа",
+        algoTrading: "Алгоритмическая торговля",
+        algoTradingOptions: {
+            eaSupport: "Поддержка MQL5/EA",
+            apiAccess: "Доступ к API"
+        },
+        socialTrading: "Социальная торговля",
+        socialTradingOptions: {
+            any: "Любая",
+            yes: "Поддерживает копи-трейдинг",
+            no: "Нет копи-трейдинга"
+        },
+        tradingConditionsTitle: "Торговые условия",
+        minLotSize: "Минимальный размер лота",
+        minLotSizeOptions: {
+            any: "Любой",
+            micro: "Микро (0.01)",
+            mini: "Мини (0.1)"
+        },
+        maxLeverage: "Макс. кредитное плечо",
+        maxLeverageOptions: {
+            any: "Любое",
+            low: "До 1:100",
+            medium: "1:101 - 1:499",
+            high: "1:500+"
+        },
+        results: {
+            showing: "Показано {count} из {total} брокеров",
+            getAiRec: "Получить рекомендацию ИИ",
+            aiRecTooltip: "Чтобы получить рекомендацию, выберите не менее 2 брокеров.",
+            aiError: "К сожалению, ИИ не смог дать рекомендацию. Пожалуйста, попробуйте с другим фильтром.",
+            aiPicksTitle: "Лучшие выборы ИИ из вашего списка",
+            aiAnalysisTitle: "Анализ ИИ",
+            noResultsTitle: "Нет брокеров, соответствующих вашим критериям",
+            noResultsSubtitle: "Попробуйте изменить фильтры, чтобы найти больше результатов."
+        }
+    },
+    brokerMatcherPage: {
+        title: "ИИ-подбор брокера",
+        subtitle: "Ответьте на несколько вопросов, и наш ИИ сделает всю работу.",
+        back: "Назад",
+        findMyBroker: "Найти моего брокера",
+        tooltip: "Использует ИИ для анализа ваших предпочтений и рекомендации лучших брокеров для вас.",
+        loading: "Наш ИИ ищет вашего идеального брокера...",
+        steps: {
+            country: {
+                title: "Где вы живете?",
+                tooltip: "Брокеры регулируются по-разному в каждой стране. Это гарантирует, что мы рекомендуем только тех брокеров, которые доступны для вас."
+            },
+            experience: {
+                title: "Насколько вы знакомы с трейдингом?",
+                tooltip: "Это помогает нам подобрать для вас платформу, соответствующую вашему уровню навыков, от простых интерфейсов для начинающих до продвинутых инструментов для экспертов.",
+                options: [
+                    { key: "I'm a first-timer", text: "Я новичок" },
+                    { key: "I've made a few trades", text: "Я совершил несколько сделок" },
+                    { key: "I have experience", text: "У меня есть опыт" },
+                    { key: "I'm a professional", text: "Я профессионал" }
+                ]
+            },
+            feeStructure: {
+                title: "Какую структуру комиссий вы предпочитаете?",
+                tooltip: "Выберите 'Низкие спреды' для скальпинга, 'Низкая комиссия за перенос на ночь' для долгосрочных сделок или 'Оба варианта' для сбалансированного подхода.",
+                options: [
+                    { key: "Low spreads", text: "Низкие спреды" },
+                    { key: "Low overnight fee", text: "Низкая комиссия за перенос на ночь" },
+                    { key: "Both", text: "Оба варианта" },
+                    { key: "I don't know", text: "Я не знаю" }
+                ]
+            },
+            depositMethod: {
+                title: "Как вы хотите пополнить счет?",
+                tooltip: "Выберите предпочтительный способ, чтобы обеспечить простой и удобный процесс пополнения.",
+                options: [
+                    { key: "Bank transfer", text: "Банковский перевод" },
+                    { key: "Credit/debit card", text: "Кредитная/дебетовая карта" },
+                    { key: "PayPal", text: "PayPal" },
+                    { key: "Skrill", text: "Skrill" },
+                    { key: "I don't know", text: "Я не знаю" }
+                ]
+            },
+            currencyPairs: {
+                title: "Какими валютными парами вы хотите торговать?",
+                tooltip: "Основные пары имеют самые низкие спреды, в то время как экзотические могут предложить большую волатильность и возможности.",
+                options: [
+                    { key: "Major currencies", text: "Основные валюты" },
+                    { key: "Minor currencies", text: "Второстепенные валюты" },
+                    { key: "Exotic currencies", text: "Экзотические валюты" },
+                    { key: "I don't know", text: "Я не знаю" }
+                ]
+            },
+            specialPreferences: {
+                title: "Есть ли особые предпочтения? (Выберите до 5)",
+                options: [
+                    { key: 'Fast account opening', text: 'Быстрое открытие счета', tooltip: 'Ищите брокеров с полностью цифровым и быстрым процессом регистрации.' },
+                    { key: 'Quick withdrawal', text: 'Быстрый вывод средств', tooltip: 'Отдавайте предпочтение брокерам, известным быстрой обработкой вывода средств и низкими комиссиями.' },
+                    { key: 'Exclude risky countries', text: 'Исключить рискованные страны', tooltip: 'Отфильтруйте брокеров, регулируемых в юрисдикциях с более низкими стандартами защиты инвесторов.' },
+                    { key: 'Educational resources', text: 'Образовательные ресурсы', tooltip: 'Найдите брокеров, предоставляющих обширные статьи, видео и вебинары для обучения.' },
+                    { key: 'Great research tools', text: 'Отличные инструменты для исследований', tooltip: 'Получите доступ к продвинутым графикам, анализу рынка и новостным лентам.' },
+                    { key: 'ECN account', text: 'ECN-счет', tooltip: 'Для прямого доступа к рынку с сырыми спредами и фиксированной комиссией, идеально для скальперов.' },
+                    { key: 'Islamic account', text: 'Исламский счет', tooltip: 'Найдите брокеров, предлагающих счета без свопов, соответствующие законам шариата.' },
+                    { key: 'Copy trading', text: 'Копи-трейдинг', tooltip: 'Следите за успешными трейдерами и автоматически копируйте их сделки.' },
+                    { key: 'Superb customer service', text: 'Превосходное обслуживание клиентов', tooltip: 'Выбирайте брокеров с высоко оцененной и отзывчивой поддержкой через чат, телефон и электронную почту.' },
+                    { key: 'API access', text: 'Доступ к API', tooltip: 'Для алгоритмических трейдеров, которые хотят подключить свое собственное торговое программное обеспечение.' },
+                ]
+            }
+        },
+        results: {
+            title: "Ваши лучшие совпадения",
+            aiAnalysis: "Анализ ИИ",
+            startOver: "Начать сначала",
+            error: "Не удалось получить рекомендации. Пожалуйста, попробуйте еще раз."
+        }
+    },
+    comparePage: {
+        title: "Сравнить брокеров",
+        subtitle: "Сравнительный анализ выбранных вами брокеров.",
+        startDuel: "Начать дуэль",
+        clearAll: "Очистить все",
+        getAiSummary: "Получить сводку сравнения от ИИ",
+        aiAnalysis: "Анализ ИИ",
+        empty: {
+            title: "Ваш список для сравнения пуст.",
+            subtitle: "Добавьте брокеров, чтобы сравнить их характеристики.",
+            button: "Посмотреть брокеров"
+        }
+    },
+    compareTable: {
+        feature: "Характеристика",
+        visit: "Посетить",
+        remove: "Удалить",
+        features: {
+            overallScore: "Общий балл",
+            score: "Балл",
+            tradingCosts: "Торговые издержки",
+            commission: "Комиссия",
+            swap: "Категория своп-комиссии",
+            tradingConditions: "Торговые условия",
+            maxLeverage: "Макс. плечо",
+            executionType: "Тип исполнения",
+            accessibility: "Доступность",
+            minDeposit: "Мин. депозит",
+            depositMethods: "Методы пополнения",
+            withdrawalMethods: "Методы вывода",
+            support: "Поддержка клиентов",
+            technology: "Технологии",
+            platforms: "Платформы",
+            tradableInstruments: "Торговые инструменты",
+            forexPairs: "Валютные пары",
+            stocks: "CFD на акции",
+            cryptocurrencies: "Криптовалюты",
+            trust: "Надежность и история",
+            regulators: "Регуляторы",
+            founded: "Основан",
+            headquarters: "Штаб-квартира"
+        }
+    },
+    loginPage: {
+        title: "Вход в аккаунт",
+        emailLabel: "Электронная почта",
+        passwordLabel: "Пароль",
+        button: "Войти",
+        noAccount: "Нет аккаунта?",
+        registerLink: "Зарегистрируйтесь здесь"
+    },
+    registerPage: {
+        title: "Создать аккаунт",
+        nameLabel: "Полное имя",
+        emailLabel: "Электронная почта",
+        passwordLabel: "Пароль",
+        button: "Зарегистрироваться",
+        haveAccount: "Уже есть аккаунт?",
+        loginLink: "Войдите здесь"
+    },
+    dashboardPage: {
+        welcome: "С возвращением, {name}!",
+        subtitle: "Это ваша личная панель для отслеживания и управления исследованием брокеров.",
+        quickActions: {
+            newMatch: {
+                title: "Новый подбор ИИ",
+                description: "Найдите нового брокера, подходящего именно вам."
+            },
+            compare: {
+                title: "Сравнить брокеров",
+                description: "Просмотреть ваш список для сравнения."
+            },
+            analyzer: {
+                title: "Анализатор затрат",
+                description: "Анализируйте торговые комиссии в реальном времени."
+            },
+            explore: {
+                title: "Посмотреть всех брокеров",
+                description: "Просмотрите наш полный список брокеров."
+            }
+        },
+        alerts: {
+            title: "Мои оповещения",
+            empty: "Нет оповещений для ваших избранных брокеров. Добавьте брокеров в избранное, чтобы начать получать обновления!",
+            button: "Посмотреть брокеров"
+        },
+        history: {
+            title: "Ваша история подборов брокеров ИИ",
+            aiAnalysis: "Анализ ИИ:",
+            recommendations: "Рекомендованные брокеры для этого подбора:",
+            empty: "Вы еще не использовали ИИ-подбор брокера.",
+            button: "Найти свой первый подбор"
+        },
+        reviews: {
+            title: "Мои отзывы",
+            reviewFor: "Отзыв о",
+            unknownBroker: "Неизвестный брокер",
+            verify: "Подтвердить отзыв",
+            empty: "Вы еще не написали ни одного отзыва.",
+            button: "Найти брокера для отзыва"
+        },
+        favorites: {
+            title: "Ваши избранные брокеры",
+            empty: "Вы еще не добавили брокеров в избранное. Нажмите на значок звезды у брокера, чтобы сохранить его здесь.",
+            button: "Посмотреть брокеров"
+        },
+        settings: {
+            title: "Настройки аккаунта",
+            email: "Электронная почта",
+            name: "Полное имя",
+            password: "Новый пароль",
+            passwordPlaceholder: "Оставьте пустым, чтобы сохранить текущий пароль",
+            button: "Сохранить изменения",
+            success: "Профиль успешно обновлен!",
+            dangerZone: "Опасная зона",
+            dangerDescription: "Удаление аккаунта является необратимым действием.",
+            deleteButton: "Удалить мой аккаунт",
+            deleteModal: {
+                title: "Подтвердите удаление аккаунта",
+                text: "Вы уверены, что хотите навсегда удалить свой аккаунт? Все ваши данные, включая избранное и историю подборов, будут потеряны.",
+                cancel: "Отмена",
+                confirm: "Да, удалить аккаунт"
+            }
+        }
+    },
+    education: {
+      hub: {
+          title: "Образовательный центр",
+          subtitle: "Изучайте, практикуйтесь и осваивайте концепции торговли на Форекс с помощью наших интерактивных инструментов.",
+          quizzes: {
+              title: "Интерактивные викторины",
+              description: "Проверьте свои знания по ключевым темам, таким как торговые сборы, управление рисками и технический анализ."
+          },
+          webinars: {
+              title: "Вебинары от экспертов",
+              description: "Присоединяйтесь к живым сессиям с аналитиками рынка или смотрите записи, чтобы углубить свое понимание."
+          },
+          simulators: {
+              title: "Торговые симуляторы",
+              description: "Практикуйте свои навыки в безрисковой среде. Изучайте типы ордеров, тестируйте стратегии и многое другое."
+          }
+      },
+      quizzes: {
+          title: "Викторины",
+          subtitle: "Выберите викторину, чтобы проверить свои знания.",
+      },
+      webinars: {
+          title: "Вебинары",
+          subtitle: "Углубите свои знания с помощью идей от экспертов рынка.",
+          register: "Зарегистрироваться сейчас",
+          watch: "Смотреть запись",
+          upcomingTitle: "Предстоящие вебинары",
+          pastTitle: "Прошедшие вебинары",
+      },
+      simulators: {
+          title: "Торговые симуляторы",
+          subtitle: "Практикуйте свои навыки в безрисковой среде.",
+          execution: {
+              title: "Симулятор исполнения ордеров",
+              description: "Изучите разницу между рыночными, лимитными и стоп-ордерами в живой, симулированной рыночной среде."
+          }
+      }
+    },
+    tools: {
+      calendar: {
+          title: "Экономический календарь",
+          subtitle: "Будьте в курсе ключевых экономических событий, которые двигают рынки."
+      },
+      marketData: {
+          title: "Рыночные данные",
+          subtitle: "Получите всесторонний обзор рынка форекс с котировками в реальном времени и техническими анализами."
+      },
+      calculators: {
+          title: "Калькуляторы Forex",
+          subtitle: "Основные инструменты, которые помогут вам эффективно управлять сделками и рисками.",
+          pipValue: {
+              title: "Стоимость пункта",
+              accountCurrency: "Валюта счета",
+              currencyPair: "Валютная пара",
+              positionSize: "Размер позиции (лоты)",
+              calculate: "Рассчитать стоимость пункта",
+              result: "Стоимость одного пункта для позиции в {lots} лот по паре {pair} составляет примерно"
+          },
+          positionSize: {
+              title: "Размер позиции",
+              accountBalance: "Баланс счета",
+              riskPercentage: "Процент риска (%)",
+              stopLoss: "Стоп-лосс (пункты)",
+              calculate: "Рассчитать размер позиции",
+              result: "Чтобы рискнуть {risk}% вашего счета со стоп-лоссом в {sl} пунктов, ваш рекомендуемый размер позиции:",
+              lots: "Лоты",
+              units: "Единицы"
+          },
+          margin: {
+              title: "Маржа",
+              leverage: "Кредитное плечо",
+              tradeSize: "Размер сделки (лоты)",
+              calculate: "Рассчитать маржу",
+              result: "Маржа, необходимая для открытия позиции в {lots} лот по паре {pair} с плечом {leverage}, составляет"
+          }
+      }
+    }
+  },
+  ar: {
+    header: {
+        brokers: "الوسطاء",
+        tools: "الأدوات",
+        education: "التعليم",
+        marketNews: "أخبار السوق",
+        methodology: "المنهجية",
+        login: "تسجيل الدخول",
+        register: "التسجيل",
+        logout: "تسجيل الخروج",
+        dashboard: "لوحة التحكم الخاصة بي",
+        megaMenu: {
+            coreTools: "الأدوات الأساسية",
+            allBrokers: "جميع الوسطاء",
+            compareBrokers: "مقارنة الوسطاء",
+            costAnalyzer: "محلل التكاليف",
+            aiBrokerMatcher: "مساعد الذكاء الاصطناعي للوسطاء",
+            byCountry: "حسب البلد",
+            platformsAndTypes: "المنصات والأنواع"
+        },
+        toolsMenu: {
+            economicCalendar: "التقويم الاقتصادي",
+            calculators: "حاسبات الفوركس",
+            marketData: "بيانات السوق"
+        }
+    },
+    footer: {
+        subtitle: "اكتشف وسيط الفوركس المثالي لك بقوة الذكاء الاصطناعي.",
+        copyright: "© {year} Brokeranalysis. جميع الحقوق محفوظة.",
+        links: {
+            home: "الرئيسية",
+            allBrokers: "جميع الوسطاء",
+            compareBrokers: "مقارنة الوسطاء",
+            costAnalyzer: "محلل التكاليف",
+            brokerMatcher: "مساعد الوسطاء",
+            marketNews: "أخبار السوق",
+            educationHub: "المركز التعليمي",
+            economicCalendar: "التقويم الاقتصادي",
+            calculators: "الحاسبات",
+            marketData: "بيانات السوق",
+            methodology: "المنهجية",
+            sources: "المصادر"
+        }
+    }
+  },
+  zh: {
+    header: {
+        brokers: "经纪商",
+        tools: "工具",
+        education: "教育",
+        marketNews: "市场新闻",
+        methodology: "方法论",
+        login: "登录",
+        register: "注册",
+        logout: "登出",
+        dashboard: "我的仪表板",
+        megaMenu: {
+            coreTools: "核心工具",
+            allBrokers: "所有经纪商",
+            compareBrokers: "比较经纪商",
+            costAnalyzer: "成本分析器",
+            aiBrokerMatcher: "AI经纪商匹配器",
+            byCountry: "按国家",
+            platformsAndTypes: "平台与类型"
+        },
+        toolsMenu: {
+            economicCalendar: "经济日历",
+            calculators: "外汇计算器",
+            marketData: "市场数据"
+        }
+    },
+    footer: {
+        subtitle: "借助人工智能的力量，发现您完美的外汇经纪商。",
+        copyright: "© {year} Brokeranalysis. 版权所有。",
+        links: {
+            home: "首页",
+            allBrokers: "所有经纪商",
+            compareBrokers: "比较经纪商",
+            costAnalyzer: "成本分析器",
+            brokerMatcher: "经纪商匹配器",
+            marketNews: "市场新闻",
+            educationHub: "教育中心",
+            economicCalendar: "经济日历",
+            calculators: "计算器",
+            marketData: "市场数据",
+            methodology: "方法论",
+            sources: "来源"
+        }
+    }
+  },
+  hi: {
+    header: {
+        brokers: "ब्रोकर",
+        tools: "उपकरण",
+        education: "शिक्षा",
+        marketNews: "बाजार समाचार",
+        methodology: "कार्यप्रणाली",
+        login: "लॉग इन करें",
+        register: "पंजीकरण करें",
+        logout: "लॉग आउट करें",
+        dashboard: "मेरा डैशबोर्ड",
+        megaMenu: {
+            coreTools: "मुख्य उपकरण",
+            allBrokers: "सभी ब्रोकर",
+            compareBrokers: "ब्रोकर की तुलना करें",
+            costAnalyzer: "लागत विश्लेषक",
+            aiBrokerMatcher: "एआई ब्रोकर मैचर",
+            byCountry: "देश के अनुसार",
+            platformsAndTypes: "प्लेटफार्म और प्रकार"
+        },
+        toolsMenu: {
+            economicCalendar: "आर्थिक कैलेंडर",
+            calculators: "विदेशी मुद्रा कैलकुलेटर",
+            marketData: "बाजार डेटा"
+        }
+    },
+    footer: {
+        subtitle: "एआई की शक्ति से अपने आदर्श विदेशी मुद्रा ब्रोकर की खोज करें।",
+        copyright: "© {year} Brokeranalysis. सर्वाधिकार सुरक्षित।",
+        links: {
+            home: "होम",
+            allBrokers: "सभी ब्रोकर",
+            compareBrokers: "ब्रोकर की तुलना करें",
+            costAnalyzer: "लागत विश्लेषक",
+            brokerMatcher: "ब्रोकर मैचर",
+            marketNews: "बाजार समाचार",
+            educationHub: "शिक्षा केंद्र",
+            economicCalendar: "आर्थिक कैलेंडर",
+            calculators: "कैलकुलेटर",
+            marketData: "बाजार डेटा",
+            methodology: "कार्यप्रणाली",
+            sources: "स्रोत"
+        }
+    }
+  },
+  ko: {
+    header: {
+        brokers: "브로커",
+        tools: "도구",
+        education: "교육",
+        marketNews: "시장 뉴스",
+        methodology: "방법론",
+        login: "로그인",
+        register: "회원 가입",
+        logout: "로그아웃",
+        dashboard: "내 대시보드",
+        megaMenu: {
+            coreTools: "핵심 도구",
+            allBrokers: "모든 브로커",
+            compareBrokers: "브로커 비교",
+            costAnalyzer: "비용 분석기",
+            aiBrokerMatcher: "AI 브로커 매칭",
+            byCountry: "국가별",
+            platformsAndTypes: "플랫폼 및 유형"
+        },
+        toolsMenu: {
+            economicCalendar: "경제 캘린더",
+            calculators: "외환 계산기",
+            marketData: "시장 데이터"
+        }
+    },
+    footer: {
+        subtitle: "AI의 힘으로 완벽한 외환 브로커를 찾아보세요.",
+        copyright: "© {year} Brokeranalysis. 모든 권리 보유.",
+        links: {
+            home: "홈",
+            allBrokers: "모든 브로커",
+            compareBrokers: "브로커 비교",
+            costAnalyzer: "비용 분석기",
+            brokerMatcher: "브로커 매칭",
+            marketNews: "시장 뉴스",
+            educationHub: "교육 허브",
+            economicCalendar: "경제 캘린더",
+            calculators: "계산기",
+            marketData: "시장 데이터",
+            methodology: "방법론",
+            sources: "출처"
+        }
+    }
+  },
+  tr: {
+    header: {
+        brokers: "Brokerlar",
+        tools: "Araçlar",
+        education: "Eğitim",
+        marketNews: "Piyasa Haberleri",
+        methodology: "Metodoloji",
+        login: "Giriş Yap",
+        register: "Kayıt Ol",
+        logout: "Çıkış Yap",
+        dashboard: "Panelim",
+        megaMenu: {
+            coreTools: "Ana Araçlar",
+            allBrokers: "Tüm Brokerlar",
+            compareBrokers: "Brokerları Karşılaştır",
+            costAnalyzer: "Maliyet Analizörü",
+            aiBrokerMatcher: "Yapay Zeka Broker Eşleştirici",
+            byCountry: "Ülkeye Göre",
+            platformsAndTypes: "Platformlar ve Türler"
+        },
+        toolsMenu: {
+            economicCalendar: "Ekonomik Takvim",
+            calculators: "Forex Hesaplayıcıları",
+            marketData: "Piyasa Verileri"
+        }
+    },
+    footer: {
+        subtitle: "Yapay zekanın gücüyle mükemmel forex brokerınızı keşfedin.",
+        copyright: "© {year} Brokeranalysis. Tüm hakları saklıdır.",
+        links: {
+            home: "Anasayfa",
+            allBrokers: "Tüm Brokerlar",
+            compareBrokers: "Brokerları Karşılaştır",
+            costAnalyzer: "Maliyet Analizörü",
+            brokerMatcher: "Broker Eşleştirici",
+            marketNews: "Piyasa Haberleri",
+            educationHub: "Eğitim Merkezi",
+            economicCalendar: "Ekonomik Takvim",
+            calculators: "Hesaplayıcılar",
+            marketData: "Piyasa Verileri",
+            methodology: "Metodoloji",
+            sources: "Kaynaklar"
+        }
+    }
+  },
+  id: {
+    header: {
+        brokers: "Broker",
+        tools: "Alat",
+        education: "Edukasi",
+        marketNews: "Berita Pasar",
+        methodology: "Metodologi",
+        login: "Masuk",
+        register: "Daftar",
+        logout: "Keluar",
+        dashboard: "Dasbor Saya",
+        megaMenu: {
+            coreTools: "Alat Inti",
+            allBrokers: "Semua Broker",
+            compareBrokers: "Bandingkan Broker",
+            costAnalyzer: "Penganalisis Biaya",
+            aiBrokerMatcher: "Pencocok Broker AI",
+            byCountry: "Berdasarkan Negara",
+            platformsAndTypes: "Platform & Jenis"
+        },
+        toolsMenu: {
+            economicCalendar: "Kalender Ekonomi",
+            calculators: "Kalkulator Forex",
+            marketData: "Data Pasar"
+        }
+    },
+    footer: {
+        subtitle: "Temukan broker forex sempurna Anda dengan kekuatan AI.",
+        copyright: "© {year} Brokeranalysis. Hak cipta dilindungi undang-undang.",
+        links: {
+            home: "Beranda",
+            allBrokers: "Semua Broker",
+            compareBrokers: "Bandingkan Broker",
+            costAnalyzer: "Penganalisis Biaya",
+            brokerMatcher: "Pencocok Broker",
+            marketNews: "Berita Pasar",
+            educationHub: "Pusat Edukasi",
+            economicCalendar: "Kalender Ekonomi",
+            calculators: "Kalkulator",
+            marketData: "Data Pasar",
+            methodology: "Metodologi",
+            sources: "Sumber"
         }
     }
   }

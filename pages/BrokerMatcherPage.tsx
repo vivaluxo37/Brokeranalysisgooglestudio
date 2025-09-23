@@ -32,23 +32,13 @@ const BrokerMatcherPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     const steps = [
-        { name: 'country', title: "Where do you live?", tooltip: "Brokers are regulated differently in each country. This ensures we only recommend brokers available to you.", isSelect: true, options: countries },
-        { name: 'experience', title: "How familiar are you with trading?", tooltip: "This helps us match you with a platform that suits your skill level, from simple interfaces for beginners to advanced tools for experts.", options: ["I'm a first-timer", "I've made a few trades", "I have experience", "I'm a professional"] },
-        { name: 'feeStructure', title: "What fee structure would you prefer?", tooltip: "Choose 'Low spreads' for scalping, 'Low overnight fee' for long-term trades, or 'Both' for a balanced approach.", options: ["Low spreads", "Low overnight fee", "Both", "I don't know"] },
-        { name: 'depositMethod', title: "How would you like to deposit funds?", tooltip: "Select your preferred method to ensure a smooth and convenient funding process.", options: ["Bank transfer", "Credit/debit card", "PayPal", "Skrill", "I don't know"] },
-        { name: 'currencyPairs', title: "Which currency pairs would you like to trade?", tooltip: "Majors have the lowest spreads, while exotics can offer more volatility and opportunity.", options: ["Major currencies", "Minor currencies", "Exotic currencies", "I don't know"] },
-        { name: 'specialPreferences', title: "Any special preferences? (Pick up to 5)", isMultiSelect: true, options: [
-            { value: 'Fast account opening', tooltip: 'Look for brokers with a fully digital and quick onboarding process.' },
-            { value: 'Quick withdrawal', tooltip: 'Prioritize brokers known for processing withdrawals quickly and with low fees.' },
-            { value: 'Exclude risky countries', tooltip: 'Filter out brokers regulated in jurisdictions with lower investor protection standards.' },
-            { value: 'Educational resources', tooltip: 'Find brokers who provide extensive articles, videos, and webinars to help you learn.' },
-            { value: 'Great research tools', tooltip: 'Get access to advanced charting, market analysis, and news feeds.' },
-            { value: 'ECN account', tooltip: 'For direct market access with raw spreads and a fixed commission, ideal for scalpers.' },
-            { value: 'Islamic account', tooltip: 'Find brokers offering swap-free accounts that comply with Sharia law.' },
-            { value: 'Copy trading', tooltip: 'Follow and automatically copy the trades of successful traders.' },
-            { value: 'Superb customer service', tooltip: 'Choose brokers with highly-rated, responsive support via live chat, phone, and email.' },
-            { value: 'API access', tooltip: 'For algorithmic traders who want to connect their own custom trading software.' },
-        ]}
+        { name: 'country', title: t('brokerMatcherPage.steps.country.title'), tooltip: t('brokerMatcherPage.steps.country.tooltip'), isSelect: true, options: countries },
+        { name: 'experience', title: t('brokerMatcherPage.steps.experience.title'), tooltip: t('brokerMatcherPage.steps.experience.tooltip'), options: t('brokerMatcherPage.steps.experience.options') },
+        { name: 'feeStructure', title: t('brokerMatcherPage.steps.feeStructure.title'), tooltip: t('brokerMatcherPage.steps.feeStructure.tooltip'), options: t('brokerMatcherPage.steps.feeStructure.options') },
+        { name: 'depositMethod', title: t('brokerMatcherPage.steps.depositMethod.title'), tooltip: t('brokerMatcherPage.steps.depositMethod.tooltip'), options: t('brokerMatcherPage.steps.depositMethod.options') },
+        { name: 'currencyPairs', title: t('brokerMatcherPage.steps.currencyPairs.title'), tooltip: t('brokerMatcherPage.steps.currencyPairs.tooltip'), options: t('brokerMatcherPage.steps.currencyPairs.options') },
+        { name: 'specialPreferences', title: t('brokerMatcherPage.steps.specialPreferences.title'), isMultiSelect: true, options: t('brokerMatcherPage.steps.specialPreferences.options')
+        }
     ];
 
     const handleSingleSelect = (name: keyof BrokerMatcherPreferences, value: string) => {
@@ -58,14 +48,14 @@ const BrokerMatcherPage: React.FC = () => {
         }
     };
     
-    const handleMultiSelect = (value: string) => {
+    const handleMultiSelect = (key: string) => {
         setPreferences(prev => {
             const currentPrefs = prev.specialPreferences;
-            if (currentPrefs.includes(value)) {
-                return { ...prev, specialPreferences: currentPrefs.filter(p => p !== value) };
+            if (currentPrefs.includes(key)) {
+                return { ...prev, specialPreferences: currentPrefs.filter(p => p !== key) };
             }
             if (currentPrefs.length < 5) {
-                return { ...prev, specialPreferences: [...currentPrefs, value] };
+                return { ...prev, specialPreferences: [...currentPrefs, key] };
             }
             return prev; // Do nothing if 5 are already selected
         });
@@ -112,13 +102,13 @@ const BrokerMatcherPage: React.FC = () => {
 
     const isFinalStep = currentStep === steps.length - 1;
 
-    if (loading) return <div className="flex flex-col items-center justify-center py-20"><Spinner size="lg"/><p className="mt-4 text-lg text-foreground/80">Our AI is finding your perfect broker...</p></div>;
+    if (loading) return <div className="flex flex-col items-center justify-center py-20"><Spinner size="lg"/><p className="mt-4 text-lg text-foreground/80">{t('brokerMatcherPage.loading')}</p></div>;
     
     if (results) return (
         <div className="mt-4 animate-fade-in">
-            <h2 className="text-3xl font-bold text-center mb-4">Your Top Matches</h2>
+            <h2 className="text-3xl font-bold text-center mb-4">{t('brokerMatcherPage.results.title')}</h2>
             <Card className="max-w-3xl mx-auto mb-8 animate-fade-in">
-                <CardHeader><h3 className="text-xl font-bold flex items-center gap-2"><Icons.bot className="h-6 w-6 text-primary-400" /> AI Analysis</h3></CardHeader>
+                <CardHeader><h3 className="text-xl font-bold flex items-center gap-2"><Icons.bot className="h-6 w-6 text-primary-400" /> {t('brokerMatcherPage.results.aiAnalysis')}</h3></CardHeader>
                 <CardContent><p className="text-card-foreground/90 italic">{results.reasoning}</p></CardContent>
             </Card>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -129,7 +119,7 @@ const BrokerMatcherPage: React.FC = () => {
                 ))}
             </div>
             <div className="text-center mt-8">
-                <Button variant="secondary" onClick={() => { setResults(null); setCurrentStep(0); setPreferences(initialPreferences); }}>Start Over</Button>
+                <Button variant="secondary" onClick={() => { setResults(null); setCurrentStep(0); setPreferences(initialPreferences); }}>{t('brokerMatcherPage.results.startOver')}</Button>
             </div>
         </div>
     );
@@ -138,7 +128,7 @@ const BrokerMatcherPage: React.FC = () => {
 
     return (
         <div>
-            <div className="text-center mb-10"><h1 className="text-4xl font-bold">AI Broker Matcher</h1><p className="text-lg text-foreground/80 mt-2">Answer a few questions and let our AI do the work.</p></div>
+            <div className="text-center mb-10"><h1 className="text-4xl font-bold">{t('brokerMatcherPage.title')}</h1><p className="text-lg text-foreground/80 mt-2">{t('brokerMatcherPage.subtitle')}</p></div>
             <Card className="max-w-3xl mx-auto">
                 <CardContent>
                     <div className="mb-4"><div className="w-full bg-input rounded-full h-2.5"><div className="bg-primary-600 h-2.5 rounded-full transition-all duration-500 ease-in-out" style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}></div></div></div>
@@ -153,29 +143,29 @@ const BrokerMatcherPage: React.FC = () => {
                                     {currentStepData.options.map(option => <option key={option} value={option}>{option}</option>)}
                                 </select>
                             )}
-                            {!currentStepData.isSelect && !currentStepData.isMultiSelect && currentStepData.options.map(option => (
-                                <Button key={option} variant={preferences[currentStepData.name as keyof typeof preferences] === option ? 'primary' : 'secondary'} onClick={() => handleSingleSelect(currentStepData.name as keyof BrokerMatcherPreferences, option)} className="justify-center h-12 text-base">{option}</Button>
+                            {!currentStepData.isSelect && !currentStepData.isMultiSelect && Array.isArray(currentStepData.options) && currentStepData.options.map((option: {key: string, text: string}) => (
+                                <Button key={option.key} variant={preferences[currentStepData.name as keyof typeof preferences] === option.key ? 'primary' : 'secondary'} onClick={() => handleSingleSelect(currentStepData.name as keyof BrokerMatcherPreferences, option.key)} className="justify-center h-12 text-base">{option.text}</Button>
                             ))}
-                            {currentStepData.isMultiSelect && currentStepData.options.map(option => (
-                                <Tooltip key={option.value} content={option.tooltip}>
+                            {currentStepData.isMultiSelect && Array.isArray(currentStepData.options) && currentStepData.options.map((option: { key: string, text: string, tooltip: string }) => (
+                                <Tooltip key={option.key} content={option.tooltip}>
                                 <button
-                                    onClick={() => handleMultiSelect(option.value)}
-                                    disabled={preferences.specialPreferences.length >= 5 && !preferences.specialPreferences.includes(option.value)}
+                                    onClick={() => handleMultiSelect(option.key)}
+                                    disabled={preferences.specialPreferences.length >= 5 && !preferences.specialPreferences.includes(option.key)}
                                     className={`px-4 py-2 rounded-full border-2 transition-colors text-sm font-semibold
-                                        ${preferences.specialPreferences.includes(option.value) ? 'bg-primary-600 border-primary-500 text-white' : 'bg-card border-input hover:border-primary-400'}
-                                        ${preferences.specialPreferences.length >= 5 && !preferences.specialPreferences.includes(option.value) ? 'opacity-50 cursor-not-allowed' : ''}
+                                        ${preferences.specialPreferences.includes(option.key) ? 'bg-primary-600 border-primary-500 text-white' : 'bg-card border-input hover:border-primary-400'}
+                                        ${preferences.specialPreferences.length >= 5 && !preferences.specialPreferences.includes(option.key) ? 'opacity-50 cursor-not-allowed' : ''}
                                     `}
-                                >{option.value}</button>
+                                >{option.text}</button>
                                 </Tooltip>
                             ))}
                         </div>
                     </div>
                     <div className="flex justify-between items-center p-4 border-t border-input">
-                        <Button variant="ghost" onClick={() => setCurrentStep(Math.max(0, currentStep - 1))} disabled={currentStep === 0}>Back</Button>
+                        <Button variant="ghost" onClick={() => setCurrentStep(Math.max(0, currentStep - 1))} disabled={currentStep === 0}>{t('brokerMatcherPage.back')}</Button>
                         {isFinalStep ? (
-                            <Button onClick={handleSubmit} size="lg">Find My Broker</Button>
+                            <Button onClick={handleSubmit} size="lg">{t('brokerMatcherPage.findMyBroker')}</Button>
                         ) : (
-                             <Button onClick={() => setCurrentStep(currentStep + 1)} disabled={!preferences[currentStepData.name as keyof BrokerMatcherPreferences]}>Next</Button>
+                             <Button onClick={() => setCurrentStep(currentStep + 1)} disabled={!preferences[currentStepData.name as keyof BrokerMatcherPreferences] && currentStepData.name !== 'country'}>{t('allBrokersPage.results.noResultsSubtitle') === 'Try adjusting your filters to find more results.' ? 'Next' : 'Далее'}</Button>
                         )}
                     </div>
                 </CardContent>

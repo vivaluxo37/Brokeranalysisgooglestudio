@@ -35,6 +35,18 @@ const LanguageSelector: React.FC = () => {
         en: 'English',
         de: 'Deutsch',
         ja: '日本語',
+        es: 'Español',
+        fr: 'Français',
+        it: 'Italiano',
+        pt: 'Português',
+        nl: 'Nederlands',
+        ru: 'Русский',
+        ar: 'العربية',
+        zh: '中文 (简体)',
+        hi: 'हिन्दी',
+        ko: '한국어',
+        tr: 'Türkçe',
+        id: 'Bahasa Indonesia'
     };
 
     const supportedLanguageCodes = Object.keys(translations);
@@ -56,7 +68,7 @@ const LanguageSelector: React.FC = () => {
                 <span className="text-sm uppercase">{language}</span>
             </button>
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-card rounded-md shadow-lg border border-input z-50 animate-fade-in max-h-60 overflow-y-auto">
+                <div className="absolute right-0 mt-2 w-40 bg-card rounded-md shadow-lg border border-input z-50 animate-fade-in max-h-60 overflow-y-auto">
                     <ul>
                         {supportedLanguageCodes.map(code => (
                             <li key={code}>

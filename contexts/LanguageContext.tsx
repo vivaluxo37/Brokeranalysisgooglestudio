@@ -10,7 +10,7 @@ interface LanguageContextType {
 
 export const LanguageContext = createContext<LanguageContextType | null>(null);
 
-const supportedLanguages = ['en', 'es', 'ar', 'zh', 'hi', 'fr', 'ru', 'pt', 'de', 'ja'];
+const supportedLanguages = ['en', 'de', 'ja', 'es', 'fr', 'it', 'pt', 'nl', 'ru', 'ar', 'zh', 'hi', 'ko', 'tr', 'id'];
 const defaultLanguage = 'en';
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

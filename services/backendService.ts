@@ -3,7 +3,7 @@
 // ENDPOINT, AND THE API KEY WOULD BE A SERVER ENVIRONMENT VARIABLE.
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { Broker, Review, AIRecommendation, NewsArticle, Signal } from '../types';
+import { Broker, Review, AIRecommendation, NewsArticle, Signal, BrokerMatcherPreferences } from '../types';
 import { brokers } from '../data/brokers';
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -52,13 +52,6 @@ User's question: "${message}"`;
 
 // --- Broker Matcher Functionality ---
 
-interface BrokerMatcherPreferences {
-  experience: string;
-  platforms: string;
-  minDeposit: string;
-  priority: string;
-}
-
 interface BrokerRecommendationResponse {
   reasoning: string;
   recommendedBrokerIds: string[];
@@ -68,32 +61,53 @@ export const handleBrokerRecommendations = async (
   preferences: BrokerMatcherPreferences,
   brokers: Broker[]
 ): Promise<BrokerRecommendationResponse> => {
-  const brokerData = brokers.map(b => ({
-    id: b.id,
-    name: b.name,
-    score: b.score,
-    regulators: b.regulation.regulators,
-    platforms: b.technology.platforms,
-    minDeposit: b.accessibility.minDeposit,
-    eurusdSpread: b.tradingConditions.spreads.eurusd,
-    executionType: b.technology.executionType,
-  }));
+    const brokerData = brokers.map(b => ({
+        id: b.id,
+        name: b.name,
+        score: b.score,
+        regulatedBy: b.security.regulatedBy.map(r => r.regulator),
+        headquarters: b.headquarters,
+        minDeposit: b.accessibility.minDeposit,
+        executionType: b.technology.executionType,
+        commissionStructure: b.fees.trading.commissionStructure,
+        eurusdSpread: b.tradingConditions.spreads.eurusd,
+        swapFeeCategory: b.tradingConditions.swapFeeCategory,
+        depositMethods: b.depositWithdrawal.depositMethods,
+        hasIslamicAccount: b.accountManagement.islamicAccount.available,
+        hasCopyTrading: !!b.copyTrading,
+        hasApiAccess: !!b.technology.apiAccess,
+    }));
 
-  const prompt = `
-    Based on the user's preferences and the provided list of forex brokers, recommend the top 3 brokers that are the best match.
+    // FIX: Removed invalid template literal substitutions (`${...}`) from the prompt string.
+    // These were causing compilation errors as the variables were not in scope.
+    // The prompt is intended as instructions for the AI, so plain text is correct.
+    const prompt = `
+    You are an expert forex broker analyst. Your task is to recommend the top 3 brokers from a provided list that best match the user's detailed preferences.
 
-    User Preferences:
+    **User Preferences:**
+    - Country of Residence: ${preferences.country}
     - Trading Experience: ${preferences.experience}
-    - Preferred Platforms: ${preferences.platforms || 'Any'}
-    - Maximum Initial Deposit: $${preferences.minDeposit}
-    - Main Priority: ${preferences.priority}
+    - Preferred Fee Structure: ${preferences.feeStructure}
+    - Preferred Deposit Method: ${preferences.depositMethod}
+    - Preferred Currency Pairs: ${preferences.currencyPairs}
+    - Special Preferences: ${preferences.specialPreferences.join(', ')}
 
-    Available Brokers (JSON format):
+    **Available Brokers (JSON format):**
     ${JSON.stringify(brokerData, null, 2)}
 
-    Your task is to analyze the brokers against the user's preferences.
-    Provide a brief reasoning for your choices (2-3 sentences), explaining why they are a good fit.
-    Then, provide a list of the top 3 broker IDs that you recommend.
+    **Your Analysis Process:**
+    1.  **Filter by Country:** First, check if a broker is likely available in the user's country. A broker is considered available if their \`regulatedBy\` array contains a major regulator for that region (e.g., 'FCA' for UK, 'ASIC' for Australia) OR if their \`headquarters\` is in that country. For "offshore" brokers, assume they are generally available unless specified otherwise. THIS IS A SOFT FILTER.
+    2.  **Filter by Special Preferences:** Heavily prioritize brokers that match the user's specific requests (e.g., if they ask for 'ECN account', strongly favor brokers with \`executionType: 'ECN'\`).
+    3.  **Analyze Other Preferences:**
+        - For 'Low spreads', prioritize brokers with low \`eurusdSpread\` and 'ECN' \`executionType\`.
+        - For 'Low overnight fee', prioritize brokers with \`swapFeeCategory: 'Low'\`.
+        - For 'Beginner' experience, favor brokers with high \`score\` and low \`minDeposit\`.
+        - For 'Expert' experience, favor brokers with 'ECN' \`executionType\`, 'API access', and lower costs.
+    4.  **Final Selection:** From the filtered and prioritized list, select the top 3 brokers. The overall \`score\` should be the final tie-breaker.
+
+    **Your Output:**
+    Provide a brief reasoning (3-4 sentences) explaining your choices. Start by acknowledging their top priority and explain how your picks meet it. Then, provide a list of the top 3 broker IDs.
+
     Respond ONLY in the specified JSON format.
   `;
 

@@ -1,4 +1,4 @@
-import { Broker, Review, AIRecommendation, NewsArticle, Signal } from '../types';
+import { Broker, Review, AIRecommendation, NewsArticle, Signal, BrokerMatcherPreferences } from '../types';
 import * as backend from './backendService';
 
 // This file now acts as a secure frontend client. It calls the simulated
@@ -10,12 +10,6 @@ export const getChatbotResponseStream = async (message: string) => {
 };
 
 // --- Broker Matcher Functionality ---
-interface BrokerMatcherPreferences {
-  experience: string;
-  platforms: string;
-  minDeposit: string;
-  priority: string;
-}
 interface BrokerRecommendationResponse {
   reasoning: string;
   recommendedBrokerIds: string[];

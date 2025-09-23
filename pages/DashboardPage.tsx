@@ -238,18 +238,23 @@ const DashboardPage: React.FC = () => {
             <div className="divide-y divide-input">
               {history.map(item => {
                 const matchedBrokers = allBrokers.filter(b => item.recommendedBrokerIds.includes(b.id));
-                const title = t('dashboardPage.history.matchTitle', { experience: item.preferences.experience });
-                const subtitle = t('dashboardPage.history.matchSubtitle', { priority: item.preferences.priority, date: new Date(item.timestamp).toLocaleDateString()});
+                const title = `Match for a ${item.preferences.experience} trader`;
+                const subtitle = `Based on preferences from ${new Date(item.timestamp).toLocaleDateString()}`;
                 return (
                     <AccordionItem key={item.id} title={title} subtitle={subtitle}>
                         <div className="space-y-6">
                             <div>
-                                <h4 className="font-semibold text-primary-400 mb-2">{t('dashboardPage.history.preferences')}</h4>
+                                <h4 className="font-semibold text-primary-400 mb-2">Your Preferences:</h4>
                                 <div className="text-sm text-foreground/80 grid grid-cols-[auto,1fr] gap-x-4 gap-y-1">
-                                    <span>{t('dashboardPage.history.experience')}</span> <span className="font-semibold">{item.preferences.experience}</span>
-                                    <span>{t('dashboardPage.history.deposit')}</span> <span className="font-semibold">{item.preferences.minDeposit}</span>
-                                    <span>{t('dashboardPage.history.platforms')}</span> <span className="font-semibold">{item.preferences.platforms || t('dashboardPage.history.any')}</span>
-                                    <span>{t('dashboardPage.history.priority')}</span> <span className="font-semibold">{item.preferences.priority}</span>
+                                    <span>Country:</span> <span className="font-semibold">{item.preferences.country}</span>
+                                    <span>Experience:</span> <span className="font-semibold">{item.preferences.experience}</span>
+                                    <span>Fee Structure:</span> <span className="font-semibold">{item.preferences.feeStructure}</span>
+                                    <span>Deposit Method:</span> <span className="font-semibold">{item.preferences.depositMethod}</span>
+                                    <span>Currency Pairs:</span> <span className="font-semibold">{item.preferences.currencyPairs}</span>
+                                    <span>Special:</span> 
+                                    <span className="font-semibold">
+                                        {item.preferences.specialPreferences.length > 0 ? item.preferences.specialPreferences.join(', ') : 'None'}
+                                    </span>
                                 </div>
                             </div>
                             <div>

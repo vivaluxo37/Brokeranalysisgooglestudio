@@ -55,6 +55,10 @@ export const Icons = {
   brainCircuit: (props: React.SVGProps<SVGSVGElement>) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M12 2a4.5 4.5 0 0 0-4.5 4.5v1.42A4.5 4.5 0 0 0 12 12a4.5 4.5 0 0 0 4.5-4.08V6.5A4.5 4.5 0 0 0 12 2Z"/><path d="M12 12v2.53c0 .82-.16 1.62-.47 2.35a5.01 5.01 0 0 1-4.03 4.12H6.5a4.5 4.5 0 0 1 0-9H8"/><path d="m12 12 1-1 1 1"/><path d="M12 12v5.53a5.01 5.01 0 0 0 4.5-4.6V12h-2"/><path d="M16 12h-2"/><path d="M15 9.5V7.5"/><path d="M9 9.5V7.5"/><path d="M12 12h.5a2.5 2.5 0 0 1 2.5 2.5v1.42a2.5 2.5 0 0 1-2.5 2.5h-1a2.5 2.5 0 0 1-2.5-2.5V14.5A2.5 2.5 0 0 1 11.5 12H12Z"/></svg>
   ),
+  // FIX: Add the missing 'helpCircle' icon.
+  helpCircle: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+  ),
   layers: (props: React.SVGProps<SVGSVGElement>) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
   ),

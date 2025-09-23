@@ -2,6 +2,7 @@
 
 
 
+
 export interface Review {
   id: string;
   brokerId: string;
@@ -280,15 +281,19 @@ export interface AIRecommendation {
   reasoning: string;
 }
 
+export interface BrokerMatcherPreferences {
+    country: string;
+    experience: string;
+    feeStructure: string;
+    depositMethod: string;
+    currencyPairs: string;
+    specialPreferences: string[];
+}
+
 export interface MatcherHistoryItem {
     id: string;
     timestamp: string;
-    preferences: {
-        experience: string;
-        platforms: string;
-        minDeposit: string;
-        priority: string;
-    };
+    preferences: BrokerMatcherPreferences;
     reasoning: string;
     recommendedBrokerIds: string[];
 }

@@ -41,7 +41,7 @@ const initialFilters = {
     minLotSize: 'any',
 };
 
-type TradingStyle = 'Scalping' | 'Algorithmic' | 'Copy Trading' | 'Swing Trading';
+type TradingStyle = 'Scalping' | 'Algorithmic' | 'Copy Trading' | 'Swing Trading' | 'News Trading' | 'Low Cost';
 type FilterKeys = keyof typeof initialFilters;
 
 const Accordion: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
@@ -226,6 +226,12 @@ const AllBrokersPage: React.FC = () => {
           case 'Swing Trading':
                newFilters = { ...newFilters, maxLeverage: 'low' }; // Low leverage for long-term holds
               break;
+          case 'News Trading':
+               newFilters = { ...newFilters, executionTypes: ['ECN', 'STP'], spread: 'ultra-low' };
+               break;
+          case 'Low Cost':
+               newFilters = { ...newFilters, spread: 'ultra-low', commission: 'commission' };
+               break;
       }
       setFilters(newFilters);
   };
@@ -328,7 +334,7 @@ const AllBrokersPage: React.FC = () => {
                     />
                     <Accordion title={t('allBrokersPage.presetsTitle')}>
                         <div className="grid grid-cols-2 gap-2">
-                            {(['Scalping', 'Algorithmic', 'Copy Trading', 'Swing Trading'] as TradingStyle[]).map(style => (
+                            {(['Scalping', 'Algorithmic', 'Copy Trading', 'Swing Trading', 'News Trading', 'Low Cost'] as TradingStyle[]).map(style => (
                                 <Button key={style} variant="secondary" size="sm" onClick={() => applyStylePreset(style)}>{t(`allBrokersPage.presets.${style.toLowerCase().replace(' ', '')}`)}</Button>
                             ))}
                         </div>

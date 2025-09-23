@@ -167,8 +167,10 @@ export const translations = {
         presets: {
             scalping: "Scalping",
             algorithmic: "Algorithmic",
-            copyTrading: "Copy Trading",
-            swingTrading: "Swing Trading"
+            copytrading: "Copy Trading",
+            swingtrading: "Swing Trading",
+            newstrading: "News Trading",
+            lowcost: "Low Cost"
         },
         generalTitle: "General",
         minDeposit: "Minimum Deposit",
@@ -703,8 +705,10 @@ export const translations = {
         presets: {
             scalping: "Scalping",
             algorithmic: "Algorithmisch",
-            copyTrading: "Copy Trading",
-            swingTrading: "Swing Trading"
+            copytrading: "Copy Trading",
+            swingtrading: "Swing Trading",
+            newstrading: "Nachrichtenhandel",
+            lowcost: "Niedrige Kosten"
         },
         generalTitle: "Allgemein",
         minDeposit: "Mindesteinzahlung",
@@ -1239,8 +1243,10 @@ export const translations = {
         presets: {
             scalping: "スキャルピング",
             algorithmic: "アルゴリズム取引",
-            copyTrading: "コピートレード",
-            swingTrading: "スイングトレード"
+            copytrading: "コピートレード",
+            swingtrading: "スイングトレード",
+            newstrading: "ニューストレード",
+            lowcost: "低コスト"
         },
         generalTitle: "一般",
         minDeposit: "最低入金額",
@@ -1531,7 +1537,7 @@ export const translations = {
                 q2: { question: "取引における1:3のリスク/リワード比率は何を意味しますか？", options: ["潜在的に1ドルを稼ぐために3ドルをリスクにさらしている。", "潜在的に3ドルを稼ぐために1ドルをリスクにさらしている。", "その取引の成功確率は33.3%である。", "その取引は3時間以内に終了しなければならない。"], correctAnswer: "潜在的に3ドルを稼ぐために1ドルをリスクにさらしている。", explanation: "リスク/リワード比率は、取引の潜在的な損失（エントリーからストップロスまでの距離）とその潜在的な利益（テイクプロフィットまでの距離）を比較します。1:3の比率は一般的に有利と見なされます。なぜなら、あなたの潜在的な利益は潜在的な損失の3倍だからです。" },
                 q3: { question: "「ポジションサイジング」とは何ですか？", options: ["取引するのに最適な時間帯を選ぶこと。", "口座サイズとリスク許容度に基づいて、取引するロット数またはユニット数を決定すること。", "市場の方向を予測すること。", "モニターの物理的なサイズ。"], correctAnswer: "口座サイズとリスク許容度に基づいて、取引するロット数またはユニット数を決定すること。", explanation: "適切なポジションサイジングはリスク管理の鍵です。これには、単一の取引からの潜在的な損失が総口座残高の小さく許容できる割合（例：1〜2%）になるように、適切な取引サイズを計算することが含まれます。" },
                 q4: { question: "「マージンコール」とは何ですか？", options: ["収益性の高い取引についてブローカーからのお祝いの電話。", "口座の資本が、必要な維持証拠金を下回ったという通知。", "スリッページがないことを保証する注文タイプ。", "取引心理学に関するセミナー。"], correctAnswer: "口座の資本が、必要な維持証拠金を下回ったという通知。", explanation: "マージンコールは、損失ポジションによって利用可能な口座資本がブローカーの要件を満たさなくなったときに発生します。証拠金要件を満たすためには、さらに資金を入金するか、ポジションを閉じる必要があります。" },
-                q5: { question: "なぜ一般的に、単一の取引で資本の1〜2%以上をリスクにさらさないようにアドバイスされるのですか？", options: ["ブローカーがより大きなリスクを許可しないため。", "口座を枯渇させることなく、一連の負け取引を乗り切ることができるようにするため。", "取引が利益を上げることを保証するため。", "賞金にかかる税金を低くするため。"], correctAnswer: "口座を枯裂させることなく、一連の負け取引を乗り切ることができるようにするため。", explanation: "最高の取引戦略でさえ、連敗することがあります。取引ごとに資本のほんのわずかな割合をリスクにさらすことで、数回の連続した損失によって口座が全滅するのを防ぎ、戦略が利益を上げるのに十分な時間、ゲームに留まることができます。" }
+                q5: { question: "なぜ一般的に、単一の取引で資本の1〜2%以上をリスクにさらさないようにアドバイスされるのですか？", options: ["ブローカーがより大きなリスクを許可しないため。", "口座を枯渇させることなく、一連の負け取引を乗り切ることができるようにするため。", "取引が利益を上げることを保証するため。", "賞金にかかる税金を低くするため。"], correctAnswer: "口座を枯渇させることなく、一連の負け取引を乗り切ることができるようにするため。", explanation: "最高の取引戦略でさえ、連敗することがあります。取引ごとに資本のほんのわずかな割合をリスクにさらすことで、数回の連続した損失によって口座が全滅するのを防ぎ、戦略が利益を上げるのに十分な時間、ゲームに留まることができます。" }
             },
             orders: {
                 title: "注文タイプの理解",

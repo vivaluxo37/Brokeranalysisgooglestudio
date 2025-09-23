@@ -73,6 +73,9 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
             'High': 'text-red-400'
         }[category];
         return <span className={`font-semibold ${color}`}>{category}</span>;
+      case 'tradableInstruments.forexPairs': return broker.tradableInstruments.forexPairs.total > 0 ? broker.tradableInstruments.forexPairs.total : '-';
+      case 'tradableInstruments.stocks': return broker.tradableInstruments.stocks.total > 0 ? broker.tradableInstruments.stocks.total : '-';
+      case 'tradableInstruments.cryptocurrencies': return broker.tradableInstruments.cryptocurrencies.total > 0 ? broker.tradableInstruments.cryptocurrencies.total : '-';
       default:
         // Generic getter for simple values like 'foundingYear', 'headquarters', etc.
         const keys = key.split('.');

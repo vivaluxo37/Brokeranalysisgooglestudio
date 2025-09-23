@@ -505,8 +505,19 @@ export const brokers: Broker[] = [
     customerSupport: { languages: ['English', 'German', 'French', 'Spanish', 'Italian'], channels: ['Live Chat', 'Phone', 'Email'], hours: '24/5' },
     security: { regulatedBy: [{ regulator: 'FCA' }, { regulator: 'ASIC' }, { regulator: 'NFA' }, { regulator: 'FINMA' }], segregatedAccounts: true, investorCompensationScheme: { available: true, amount: '£85,000' }, twoFactorAuth: true },
     tradingEnvironment: { executionSpeedMs: 60, slippage: 'Low', requotes: false, marketDepth: true, orderTypes: ['Market', 'Limit', 'Stop', 'GSLO'], guaranteedStopLoss: { available: true, cost: "Premium on spread" } },
-    platformFeatures: { charting: { indicators: 100, drawingTools: 50 }, automatedTrading: ['EAs (MT4)', 'ProRealTime', 'API'], copyTrading: { available: true, platforms: ['Built-in Signals'] }, backtesting: true, newsIntegration: true },
-    accountManagement: { islamicAccount: { available: true }, baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD', 'SGD'], mamPammSupport: false, corporateAccounts: true },
+    platformFeatures: {
+        charting: { indicators: 100, drawingTools: 50 },
+        automatedTrading: ['EAs (MT4)', 'ProRealTime', 'API'],
+        copyTrading: { available: true, platforms: ['Built-in Signals'] },
+        backtesting: true,
+        newsIntegration: true
+    },
+    accountManagement: {
+        islamicAccount: { available: true },
+        baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD', 'SGD'],
+        mamPammSupport: false,
+        corporateAccounts: true
+    },
     transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 1974, tradingVolumeDisclosed: true },
     regulation: { regulators: ['FCA', 'ASIC', 'NFA', 'FINMA'] },
     ratings: { regulation: 9.9, costs: 8.2, platforms: 9.3, support: 9.0 },
@@ -538,8 +549,19 @@ export const brokers: Broker[] = [
     customerSupport: { languages: ['English', 'Danish', 'German', 'French', 'Italian'], channels: ['Phone', 'Email'], hours: '24/5' },
     security: { regulatedBy: [{ regulator: 'FSA (Denmark)' }, { regulator: 'FCA' }, { regulator: 'FINMA' }], segregatedAccounts: true, investorCompensationScheme: { available: true, amount: '€100,000' }, twoFactorAuth: true },
     tradingEnvironment: { executionSpeedMs: 90, slippage: 'Low', requotes: false, marketDepth: true, orderTypes: ['Market', 'Limit', 'Stop', 'Trailing Stop'], guaranteedStopLoss: { available: false } },
-    platformFeatures: { charting: { indicators: 50, drawingTools: 20 }, automatedTrading: ['API'], copyTrading: { available: false, platforms: [] }, backtesting: true, newsIntegration: true },
-    accountManagement: { islamicAccount: { available: false }, baseCurrencies: ['USD', 'EUR', 'GBP', 'CHF', 'AUD', 'JPY'], mamPammSupport: false, corporateAccounts: true },
+    platformFeatures: {
+        charting: { indicators: 50, drawingTools: 20 },
+        automatedTrading: ['API'],
+        copyTrading: { available: false, platforms: [] },
+        backtesting: true,
+        newsIntegration: true
+    },
+    accountManagement: {
+        islamicAccount: { available: false },
+        baseCurrencies: ['USD', 'EUR', 'GBP', 'CHF', 'AUD', 'JPY'],
+        mamPammSupport: false,
+        corporateAccounts: true
+    },
     transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 1992, tradingVolumeDisclosed: true },
     regulation: { regulators: ['FSA (Denmark)', 'FCA', 'FINMA'] },
     ratings: { regulation: 9.8, costs: 7.5, platforms: 9.8, support: 9.2 },
@@ -571,8 +593,19 @@ export const brokers: Broker[] = [
     customerSupport: { languages: ['English', 'Chinese', 'Spanish', 'French', 'German'], channels: ['Phone', 'Email', 'Chat'], hours: '24/5' },
     security: { regulatedBy: [{ regulator: 'SEC' }, { regulator: 'NYSE' }, { regulator: 'FCA' }, { regulator: 'ASIC' }], segregatedAccounts: true, investorCompensationScheme: { available: true, amount: '$500,000 (SIPC)' }, twoFactorAuth: true },
     tradingEnvironment: { executionSpeedMs: 20, slippage: 'Low', requotes: false, marketDepth: true, orderTypes: ['All major types, plus complex algo orders'], guaranteedStopLoss: { available: false } },
-    platformFeatures: { charting: { indicators: 100, drawingTools: 50 }, automatedTrading: ['API (REST, FIX)'], copyTrading: { available: false, platforms: [] }, backtesting: true, newsIntegration: true },
-    accountManagement: { islamicAccount: { available: false }, baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY', 'CHF'], mamPammSupport: true, corporateAccounts: true },
+    platformFeatures: {
+        charting: { indicators: 100, drawingTools: 50 },
+        automatedTrading: ['API (REST, FIX)'],
+        copyTrading: { available: false, platforms: [] },
+        backtesting: true,
+        newsIntegration: true
+    },
+    accountManagement: {
+        islamicAccount: { available: false },
+        baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY', 'CHF'],
+        mamPammSupport: true,
+        corporateAccounts: true
+    },
     transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 1978, tradingVolumeDisclosed: true },
     regulation: { regulators: ['SEC', 'NYSE', 'FCA', 'ASIC'] },
     ratings: { regulation: 9.9, costs: 9.8, platforms: 9.0, support: 8.5 },
@@ -653,8 +686,19 @@ export const brokers: Broker[] = [
     customerSupport: { languages: ['English', 'German', 'Spanish'], channels: ['Live Chat', 'Email', 'WhatsApp'], hours: '24/7' },
     security: { regulatedBy: [{ regulator: 'FCA', licenseNumber: '509909' }, { regulator: 'ASIC', licenseNumber: '417727' }, { regulator: 'CySEC', licenseNumber: '250/14' }], segregatedAccounts: true, investorCompensationScheme: { available: true, amount: 'Up to £85,000 (FCA)' }, twoFactorAuth: true },
     tradingEnvironment: { executionSpeedMs: 120, slippage: 'Standard', requotes: false, marketDepth: false, orderTypes: ['Market', 'Stop', 'Trailing Stop'], guaranteedStopLoss: { available: true, cost: "Wider spread" } },
-    platformFeatures: { charting: { indicators: 100, drawingTools: 20 }, automatedTrading: [], copyTrading: { available: false, platforms: [] }, backtesting: false, newsIntegration: false },
-    accountManagement: { islamicAccount: { available: false }, baseCurrencies: ['USD', 'EUR', 'GBP'], mamPammSupport: false, corporateAccounts: false },
+    platformFeatures: {
+        charting: { indicators: 100, drawingTools: 20 },
+        automatedTrading: [],
+        copyTrading: { available: false, platforms: [] },
+        backtesting: false,
+        newsIntegration: false
+    },
+    accountManagement: {
+        islamicAccount: { available: false },
+        baseCurrencies: ['USD', 'EUR', 'GBP'],
+        mamPammSupport: false,
+        corporateAccounts: false
+    },
     transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 2008, tradingVolumeDisclosed: true, clientBase: "22M+ registered customers" },
     regulation: { regulators: ['FCA', 'ASIC', 'CySEC'] },
     ratings: { regulation: 9.0, costs: 8.0, platforms: 8.5, support: 8.3 },
@@ -687,8 +731,19 @@ export const brokers: Broker[] = [
     customerSupport: { languages: ['English', 'Spanish', 'French', 'German', 'Italian', 'Arabic'], channels: ['Live Chat', 'Phone', 'Email'], hours: '24/5' },
     security: { regulatedBy: [{ regulator: 'Central Bank of Ireland' }, { regulator: 'ASIC' }, { regulator: 'FSA (Japan)' }, { regulator: 'FSCA (South Africa)' }], segregatedAccounts: true, investorCompensationScheme: { available: true, amount: 'Up to €20,000 (ICCL)' }, twoFactorAuth: false },
     tradingEnvironment: { executionSpeedMs: 130, slippage: 'Standard', requotes: false, marketDepth: false, orderTypes: ['Market', 'Limit', 'Stop'], guaranteedStopLoss: { available: false } },
-    platformFeatures: { charting: { indicators: 90, drawingTools: 40 }, automatedTrading: ['EAs (MT4/5)', 'DupliTrade', 'ZuluTrade'], copyTrading: { available: true, platforms: ['DupliTrade', 'ZuluTrade'] }, backtesting: true, newsIntegration: true },
-    accountManagement: { islamicAccount: { available: true }, baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD'], mamPammSupport: true, corporateAccounts: true },
+    platformFeatures: {
+        charting: { indicators: 90, drawingTools: 40 },
+        automatedTrading: ['EAs (MT4/5)', 'DupliTrade', 'ZuluTrade'],
+        copyTrading: { available: true, platforms: ['DupliTrade', 'ZuluTrade'] },
+        backtesting: true,
+        newsIntegration: true
+    },
+    accountManagement: {
+        islamicAccount: { available: true },
+        baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD'],
+        mamPammSupport: true,
+        corporateAccounts: true
+    },
     transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 2006, tradingVolumeDisclosed: false },
     regulation: { regulators: ['CBI', 'ASIC', 'FSA', 'FSCA'] },
     ratings: { regulation: 9.3, costs: 8.0, platforms: 8.8, support: 8.5 },
@@ -724,8 +779,19 @@ export const brokers: Broker[] = [
     customerSupport: { languages: ['English', 'Chinese', 'German'], channels: ['Live Chat', 'Phone', 'Email'], hours: '24/5' },
     security: { regulatedBy: [{ regulator: 'NFA', licenseNumber: '0325821' }, { regulator: 'FCA' }, { regulator: 'ASIC' }], segregatedAccounts: true, investorCompensationScheme: { available: true, amount: 'Up to £85,000 (FCA)' }, twoFactorAuth: true },
     tradingEnvironment: { executionSpeedMs: 70, slippage: 'Low', requotes: false, marketDepth: false, orderTypes: ['Market', 'Limit', 'Stop'], guaranteedStopLoss: { available: false } },
-    platformFeatures: { charting: { indicators: 100, drawingTools: 50 }, automatedTrading: ['EAs (MT4)', 'API'], copyTrading: { available: false, platforms: [] }, backtesting: true, newsIntegration: true },
-    accountManagement: { islamicAccount: { available: false }, baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY'], mamPammSupport: false, corporateAccounts: true },
+    platformFeatures: {
+        charting: { indicators: 100, drawingTools: 50 },
+        automatedTrading: ['EAs (MT4)', 'API'],
+        copyTrading: { available: false, platforms: [] },
+        backtesting: true,
+        newsIntegration: true
+    },
+    accountManagement: {
+        islamicAccount: { available: false },
+        baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY'],
+        mamPammSupport: false,
+        corporateAccounts: true
+    },
     transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 1996, tradingVolumeDisclosed: false },
     regulation: { regulators: ['NFA', 'FCA', 'ASIC'] },
     ratings: { regulation: 9.5, costs: 8.4, platforms: 9.0, support: 8.0 },
@@ -2697,5 +2763,118 @@ export const brokers: Broker[] = [
     accessibility: { minDeposit: 25, depositMethods: ['Credit Card', 'Skrill'], withdrawalMethods: ['Credit Card', 'Skrill'], customerSupport: ['24/5 Live Chat', 'Phone'] },
     technology: { platforms: ['easyMarkets Platform', 'MT4', 'TradingView'], executionType: 'Market Maker', apiAccess: false, eaSupport: true },
     reviews: [], isIslamic: true, copyTrading: false, providesSignals: true
-  }
+  },
+  {
+    id: 'vantage',
+    name: 'Vantage',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1701103848/Broker_Logos/Vantage_logo_logotype_2022.svg',
+    websiteUrl: 'https://www.vantagemarkets.com/',
+    score: 8.8,
+    foundingYear: 2009,
+    headquarters: 'Sydney, Australia',
+    description: 'Vantage is a multi-asset broker offering a powerful trading experience with tight spreads, fast execution, and a wide range of markets.',
+    summary: 'Vantage is a strong choice for traders seeking low costs and a robust platform selection, including MT4, MT5, and TradingView. Its RAW ECN account is highly competitive, making it a favorite among scalpers and automated traders.',
+    pros: ["ASIC, FCA, and CIMA regulated", "Very low spreads on RAW ECN account", "No deposit or withdrawal fees", "Multiple platforms including TradingView", "Social trading features"],
+    cons: ["Higher spreads on Standard account", "Limited educational content"],
+    coreInfo: { brokerType: 'ECN', mobileTrading: true, demoAccount: true },
+    accountTypes: [
+        { name: 'Standard STP', type: 'STP', minDeposit: 50, spreads: 'From 1.0 pips', commission: 'Zero', bestFor: 'Beginners' },
+        { name: 'Raw ECN', type: 'ECN', minDeposit: 50, spreads: 'From 0.0 pips', commission: '$3.00 per lot side', bestFor: 'Active traders' },
+    ],
+    fees: {
+        trading: { spreadType: 'Raw', averageSpreads: [{ pair: 'EUR/USD', spread: '0.1 pips + commission' }], commissionStructure: '$3.00 per side on Raw ECN', overnightSwapFees: 'Standard' },
+        nonTrading: { inactivityFee: 'None', withdrawalFee: 'None', depositFee: 'None' }
+    },
+    tradableInstruments: {
+        forexPairs: { total: 49, details: 'Majors, Minors, Exotics' },
+        commodities: { total: 24, details: 'Metals, Energies, Softs' },
+        indices: { total: 15, details: 'Global indices' },
+        stocks: { total: 500, details: 'US, UK, EU, AU stock CFDs' },
+        cryptocurrencies: { total: 34, details: 'Major crypto CFDs' },
+    },
+    tradingConditionsExtended: { minTradeSize: 0.01, scalpingAllowed: true, hedgingAllowed: true, eaAllowed: true, negativeBalanceProtection: true, marginCallLevel: '100%', stopOutLevel: '50%' },
+    depositWithdrawal: {
+        depositMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'],
+        withdrawalMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'],
+        depositFees: 'None', withdrawalFees: 'None', processingTime: { deposits: 'Instant', withdrawals: '1-2 days' }, minWithdrawal: 20,
+    },
+    customerSupport: { languages: ['English', 'Chinese', 'Spanish'], channels: ['Live Chat', 'Phone', 'Email'], hours: '24/7' },
+    security: {
+        regulatedBy: [{ regulator: 'ASIC' }, { regulator: 'FCA' }, { regulator: 'CIMA' }],
+        segregatedAccounts: true, investorCompensationScheme: { available: true, amount: 'Up to £85,000 (FCA)' }, twoFactorAuth: true,
+    },
+    tradingEnvironment: { executionSpeedMs: 50, slippage: 'Low', requotes: false, marketDepth: true, orderTypes: ['Market', 'Limit', 'Stop', 'Trailing Stop'], guaranteedStopLoss: { available: false } },
+    platformFeatures: {
+        charting: { indicators: 50, drawingTools: 30 },
+        automatedTrading: ['EAs (MT4/5)'],
+        copyTrading: { available: true, platforms: ['ZuluTrade', 'DupliTrade'] },
+        backtesting: true, newsIntegration: true
+    },
+    accountManagement: { islamicAccount: { available: true }, baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD', 'CAD'], mamPammSupport: true, corporateAccounts: true },
+    transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 2009, tradingVolumeDisclosed: false },
+    regulation: { regulators: ['ASIC', 'FCA', 'CIMA'] },
+    ratings: { regulation: 9.0, costs: 9.0, platforms: 8.8, support: 8.5 },
+    tradingConditions: { spreads: { eurusd: 1.0, gbpusd: 1.2, usdjpy: 1.1 }, commission: '$3.00 on Raw', swapFeeCategory: 'Standard', maxLeverage: '1:500', minLotSize: 0.01 },
+    accessibility: { minDeposit: 50, depositMethods: ['Credit Card', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Skrill', 'Neteller'], customerSupport: ['24/7 Live Chat', 'Phone'] },
+    technology: { platforms: ['MT4', 'MT5', 'TradingView', 'Vantage App'], executionType: 'ECN', apiAccess: false, eaSupport: true },
+    isIslamic: true, copyTrading: true, providesSignals: true, reviews: [],
+  },
+  {
+    id: 'eightcap',
+    name: 'Eightcap',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1701103848/Broker_Logos/Eightcap_logo_logotype_2022.svg',
+    websiteUrl: 'https://www.eightcap.com/',
+    score: 8.7,
+    foundingYear: 2009,
+    headquarters: 'Melbourne, Australia',
+    description: 'Eightcap is an ASIC-regulated MT4/MT5 broker, known for its extensive range of cryptocurrency CFDs and its integration with advanced tools like Capitalise.ai.',
+    summary: 'Eightcap is a top choice for crypto CFD traders due to its vast selection and competitive pricing. It also excels in providing modern trading tools like TradingView and Capitalise.ai for code-free automation, making it ideal for tech-savvy traders.',
+    pros: ["Regulated by ASIC and FCA", "Huge range of cryptocurrency CFDs", "Low spreads on Raw account", "TradingView and Capitalise.ai integration", "No fees for deposits or withdrawals"],
+    cons: ["Limited educational content", "Customer support is not 24/7"],
+    coreInfo: { brokerType: 'ECN', mobileTrading: true, demoAccount: true },
+    accountTypes: [
+        { name: 'Standard', type: 'STP', minDeposit: 100, spreads: 'From 1.0 pips', commission: 'Zero', bestFor: 'Beginners' },
+        { name: 'Raw', type: 'ECN', minDeposit: 100, spreads: 'From 0.0 pips', commission: '$3.50 per lot side', bestFor: 'Active traders' },
+    ],
+    fees: {
+        trading: { spreadType: 'Raw', averageSpreads: [{ pair: 'EUR/USD', spread: '0.06 pips + commission' }], commissionStructure: '$3.50 per side on Raw', overnightSwapFees: 'Standard' },
+        nonTrading: { inactivityFee: 'None', withdrawalFee: 'None', depositFee: 'None' }
+    },
+    tradableInstruments: {
+        forexPairs: { total: 40, details: 'Majors, Minors, Exotics' },
+        commodities: { total: 10, details: 'Metals, Energies' },
+        indices: { total: 11, details: 'Global indices' },
+        stocks: { total: 300, details: 'US, UK, EU, AU stock CFDs' },
+        cryptocurrencies: { total: 250, details: 'Extensive range of crypto CFDs' },
+    },
+    tradingConditionsExtended: { minTradeSize: 0.01, scalpingAllowed: true, hedgingAllowed: true, eaAllowed: true, negativeBalanceProtection: true, marginCallLevel: '80%', stopOutLevel: '50%' },
+    depositWithdrawal: {
+        depositMethods: ['Credit/Debit Card', 'Bank Transfer', 'PayPal', 'Skrill', 'Neteller'],
+        withdrawalMethods: ['Credit/Debit Card', 'Bank Transfer', 'PayPal', 'Skrill', 'Neteller'],
+        depositFees: 'None', withdrawalFees: 'None', processingTime: { deposits: 'Instant', withdrawals: '1 business day' }, minWithdrawal: 100,
+    },
+    customerSupport: { languages: ['English', 'Chinese', 'Spanish', 'German'], channels: ['Live Chat', 'Phone', 'Email'], hours: '24/5' },
+    security: {
+        regulatedBy: [{ regulator: 'ASIC' }, { regulator: 'FCA' }, { regulator: 'CySEC' }],
+        segregatedAccounts: true, investorCompensationScheme: { available: true, amount: 'Up to £85,000 (FCA)' }, 
+// Fix: Corrected typo from 'twoFactor' to 'twoFactorAuth' and added a boolean value.
+twoFactorAuth: true
+    },
+    accountManagement: { islamicAccount: { available: true }, baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD'], mamPammSupport: true, corporateAccounts: true },
+    transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 2009, tradingVolumeDisclosed: false },
+    regulation: { regulators: ['ASIC', 'FCA', 'CySEC'] },
+    ratings: { regulation: 9.1, costs: 9.0, platforms: 8.9, support: 8.5 },
+    tradingConditions: { spreads: { eurusd: 1.0, gbpusd: 1.2, usdjpy: 1.1 }, commission: '$3.50 on Raw', swapFeeCategory: 'Standard', maxLeverage: '1:500', minLotSize: 0.01 },
+    accessibility: { minDeposit: 100, depositMethods: ['Credit Card', 'Skrill', 'PayPal'], withdrawalMethods: ['Credit Card', 'Skrill', 'PayPal'], customerSupport: ['24/5 Live Chat', 'Phone'] },
+    technology: { platforms: ['MT4', 'MT5', 'TradingView'], executionType: 'ECN', apiAccess: true, eaSupport: true },
+    reviews: [], isIslamic: true, copyTrading: true, providesSignals: false,
+    platformFeatures: {
+        charting: { indicators: 50, drawingTools: 30 },
+        automatedTrading: ['EAs (MT4/5)', 'Capitalise.ai'],
+        copyTrading: { available: true, platforms: ['Social Trading'] },
+        backtesting: true,
+        newsIntegration: true
+    },
+    tradingEnvironment: { executionSpeedMs: 60, slippage: 'Low', requotes: false, marketDepth: true, orderTypes: ['Market', 'Limit', 'Stop', 'Trailing Stop'], guaranteedStopLoss: { available: false } },
+},
 ];

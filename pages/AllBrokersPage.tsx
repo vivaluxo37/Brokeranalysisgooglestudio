@@ -427,9 +427,9 @@ const AllBrokersPage: React.FC = () => {
                 <div className="mb-12 animate-fade-in">
                     <h2 className="text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-500">{t('allBrokersPage.results.aiPicksTitle')}</h2>
                     <div className="max-w-4xl mx-auto mb-6">
-                       <Card className="h-full flex flex-col">
+                       <Card className="flex flex-col">
                             <CardHeader><h3 className="text-xl font-bold flex items-center gap-2"><Icons.bot className="h-6 w-6 text-primary-400"/> {t('allBrokersPage.results.aiAnalysisTitle')}</h3></CardHeader>
-                            <CardContent className="flex-grow">
+                            <CardContent>
                                 <p className="text-card-foreground/90 italic">{aiRecommendation.reasoning}</p>
                             </CardContent>
                         </Card>

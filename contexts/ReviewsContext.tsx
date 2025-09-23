@@ -59,8 +59,26 @@ export const ReviewsProvider: React.FC<{ children: React.ReactNode }> = ({ child
     );
   };
 
+  const getAverageWithdrawalTime = (brokerId: string): { averageDays: number | null; reportCount: number } => {
+    const relevantReviews = reviews.filter(
+        review => review.brokerId === brokerId && review.withdrawalExperience?.days !== undefined && review.withdrawalExperience.days >= 0
+    );
+
+    if (relevantReviews.length === 0) {
+        return { averageDays: null, reportCount: 0 };
+    }
+
+    const totalDays = relevantReviews.reduce(
+        (sum, review) => sum + (review.withdrawalExperience?.days || 0),
+        0
+    );
+
+    const averageDays = totalDays / relevantReviews.length;
+    return { averageDays: parseFloat(averageDays.toFixed(1)), reportCount: relevantReviews.length };
+  };
+
   return (
-    <ReviewsContext.Provider value={{ reviews, getReviewsByBrokerId, getReviewsByUserId, addReview, verifyReview }}>
+    <ReviewsContext.Provider value={{ reviews, getReviewsByBrokerId, getReviewsByUserId, addReview, verifyReview, getAverageWithdrawalTime }}>
       {children}
     </ReviewsContext.Provider>
   );

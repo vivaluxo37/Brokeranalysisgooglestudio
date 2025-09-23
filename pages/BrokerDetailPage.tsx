@@ -23,6 +23,7 @@ import { useReviews } from '../hooks/useReviews';
 import Tooltip from '../components/ui/Tooltip';
 import RiskProfileCard from '../components/brokers/RiskProfileCard';
 import ReportBrokerModal from '../components/brokers/ReportBrokerModal';
+import Input from '../components/ui/Input';
 
 // New component for responsive key-value tables
 const DetailTable: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -231,7 +232,7 @@ const BrokerDetailPage: React.FC = () => {
   const { addBrokerToComparison, removeBrokerFromComparison, isBrokerInComparison } = useComparison();
   const { addBrokerToFavorites, removeBrokerFromFavorites, isBrokerInFavorites } = useFavorites();
   const { user } = useAuth();
-  const { getReviewsByBrokerId, addReview } = useReviews();
+  const { getReviewsByBrokerId, addReview, getAverageWithdrawalTime } = useReviews();
 
   const reviews = useMemo(() => getReviewsByBrokerId(broker?.id || ''), [getReviewsByBrokerId, broker]);
   
@@ -239,11 +240,25 @@ const BrokerDetailPage: React.FC = () => {
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [showWithdrawalFields, setShowWithdrawalFields] = useState(false);
+  const [withdrawalDays, setWithdrawalDays] = useState('');
+  const [withdrawalMethod, setWithdrawalMethod] = useState('');
   
   const [sortOrder, setSortOrder] = useState('date-desc');
   const [filterRating, setFilterRating] = useState(0);
+  const [showVerifiedOnly, setShowVerifiedOnly] = useState(false);
 
   const description = useMetaDescription(broker);
+  
+  const { averageDays, reportCount } = useMemo(() => getAverageWithdrawalTime(broker?.id || ''), [getAverageWithdrawalTime, broker, reviews]);
+
+  let speedColorClass = 'text-card-foreground';
+    if (averageDays !== null) {
+      if (averageDays <= 2) speedColorClass = 'text-green-400';
+      else if (averageDays <= 5) speedColorClass = 'text-yellow-400';
+      else speedColorClass = 'text-red-400';
+    }
+
 
   const brokerJsonLd = useMemo(() => {
     if (!broker) return null;
@@ -303,6 +318,7 @@ const BrokerDetailPage: React.FC = () => {
         { id: 'fees', title: 'Fees & Costs', show: true },
         { id: 'accounts', title: 'Account Types', show: !!broker.accountTypes },
         { id: 'platforms', title: 'Platforms & Technology', show: true },
+        { id: 'execution', title: 'Trading Environment', show: !!broker.tradingEnvironment },
         { id: 'instruments', title: 'Tradable Instruments', show: true },
         { id: 'deposits', title: 'Deposit & Withdrawal', show: true },
         { id: 'support', title: 'Customer Support', show: true },
@@ -317,19 +333,36 @@ const BrokerDetailPage: React.FC = () => {
   
   const handleReviewSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (newRating === 0 || !newComment.trim() || !user) return;
+    if (newRating === 0 || !newComment.trim() || !user || !broker) return;
 
     setIsSubmitting(true);
     setTimeout(() => {
-        addReview({
+        const reviewPayload: Omit<Review, 'id' | 'date' | 'verified'> = {
             brokerId: broker.id,
             userId: user.id,
             userName: user.name,
             rating: newRating,
             comment: newComment,
-        });
+        };
+
+        if (showWithdrawalFields && withdrawalDays && withdrawalMethod) {
+            const days = parseInt(withdrawalDays, 10);
+            if (!isNaN(days) && days >= 0) {
+                reviewPayload.withdrawalExperience = {
+                    days,
+                    method: withdrawalMethod,
+                };
+            }
+        }
+
+        addReview(reviewPayload);
+
+        // Reset form
         setNewRating(0);
         setNewComment('');
+        setShowWithdrawalFields(false);
+        setWithdrawalDays('');
+        setWithdrawalMethod('');
         setIsSubmitting(false);
     }, 500);
   };
@@ -348,7 +381,12 @@ const BrokerDetailPage: React.FC = () => {
   
   const displayedReviews = useMemo(() => {
     return reviews
-      .filter(review => filterRating === 0 || review.rating === filterRating)
+      .filter(review => {
+        if (showVerifiedOnly && !review.verified) {
+          return false;
+        }
+        return filterRating === 0 || review.rating === filterRating;
+      })
       .sort((a, b) => {
         switch (sortOrder) {
           case 'date-asc': return new Date(a.date).getTime() - new Date(b.date).getTime();
@@ -357,7 +395,7 @@ const BrokerDetailPage: React.FC = () => {
           case 'date-desc': default: return new Date(b.date).getTime() - new Date(a.date).getTime();
         }
       });
-  }, [reviews, sortOrder, filterRating]);
+  }, [reviews, sortOrder, filterRating, showVerifiedOnly]);
 
   return (
     <div className="max-w-7xl mx-auto lg:flex lg:flex-row lg:gap-12">
@@ -479,7 +517,28 @@ const BrokerDetailPage: React.FC = () => {
                     </ul>
                   </DetailRow>
                   <DetailRow label="Segregated Accounts"><BooleanIcon value={broker.security.segregatedAccounts} /></DetailRow>
-                  <DetailRow label="Investor Compensation"><BooleanIcon value={broker.security.investorCompensationScheme.available} /> {broker.security.investorCompensationScheme.amount && `(${broker.security.investorCompensationScheme.amount})`}</DetailRow>
+                  <DetailRow label="Investor Compensation" helpText="A scheme that protects client funds up to a certain amount in case of broker insolvency.">
+                    <div className="flex items-center gap-2">
+                        {broker.security.investorCompensationScheme.available ? (
+                        <>
+                            <Icons.shieldCheck className="h-5 w-5 text-green-500 flex-shrink-0" />
+                            <div className="flex flex-col">
+                            <span className="font-semibold text-green-400">
+                                Available
+                            </span>
+                            <span className="text-xs text-foreground/70">
+                                {broker.security.investorCompensationScheme.amount}
+                            </span>
+                            </div>
+                        </>
+                        ) : (
+                        <>
+                            <Icons.shieldAlert className="h-5 w-5 text-red-500 flex-shrink-0" />
+                            <span className="font-semibold text-red-400">Not Available</span>
+                        </>
+                        )}
+                    </div>
+                    </DetailRow>
                   <DetailRow label="Negative Balance Protection"><BooleanIcon value={broker.tradingConditionsExtended.negativeBalanceProtection} /></DetailRow>
                    <DetailRow label="Two-Factor Authentication (2FA)"><BooleanIcon value={broker.security.twoFactorAuth} /></DetailRow>
               </DetailTable>
@@ -553,19 +612,38 @@ const BrokerDetailPage: React.FC = () => {
                         <DetailRow label="Copy Trading"><BooleanIcon value={broker.platformFeatures.copyTrading.available} /> {broker.platformFeatures.copyTrading.available && `(${broker.platformFeatures.copyTrading.platforms.join(', ')})`}</DetailRow>
                     </DetailTable>
                 </div>
-                <div>
-                    <h3 className="p-3 font-semibold bg-input/30 md:rounded-none">Trading Environment</h3>
-                    <DetailTable>
-                        <DetailRow label="Execution Type">{broker.technology.executionType}</DetailRow>
-                        {broker.tradingEnvironment.executionSpeedMs && <DetailRow label="Execution Speed">{`< ${broker.tradingEnvironment.executionSpeedMs}ms`}</DetailRow>}
-                        <DetailRow label="Scalping Allowed"><BooleanIcon value={broker.tradingConditionsExtended.scalpingAllowed} /></DetailRow>
-                        <DetailRow label="EAs / Algo Trading"><BooleanIcon value={broker.tradingConditionsExtended.eaAllowed} /></DetailRow>
-                        <DetailRow label="Order Types">{broker.tradingEnvironment.orderTypes.join(', ')}</DetailRow>
-                    </DetailTable>
-                </div>
             </div>
         </Section>
         
+        <Section title="Trading Environment & Execution" id="execution">
+            <DetailTable>
+                <DetailRow label="Avg. Execution Speed" helpText="The average time for a trade to be executed, in milliseconds. Lower is better.">
+                    {broker.tradingEnvironment.executionSpeedMs ? `< ${broker.tradingEnvironment.executionSpeedMs}ms` : 'Not Disclosed'}
+                </DetailRow>
+                <DetailRow label="Slippage" helpText="The difference between the expected price of a trade and the price at which the trade is actually executed.">
+                    {broker.tradingEnvironment.slippage}
+                </DetailRow>
+                <DetailRow label="Requotes" helpText="Whether the broker may provide a new price for you to accept during volatile market conditions. 'No' is generally better.">
+                    <div className="flex items-center gap-2">
+                        <BooleanIcon value={!broker.tradingEnvironment.requotes} />
+                        <span>{broker.tradingEnvironment.requotes ? 'May Occur' : 'No Requotes'}</span>
+                    </div>
+                </DetailRow>
+                <DetailRow label="Market Depth (Level II)" helpText="Provides insight into a currency's liquidity and order book.">
+                    <BooleanIcon value={broker.tradingEnvironment.marketDepth} />
+                </DetailRow>
+                <DetailRow label="Guaranteed Stop Loss" helpText="An order that guarantees to close your trade at the specified price, regardless of market gaps. Often incurs a premium.">
+                    <div className="flex items-center gap-2">
+                        <BooleanIcon value={broker.tradingEnvironment.guaranteedStopLoss.available} />
+                        <span>{broker.tradingEnvironment.guaranteedStopLoss.available ? `Available ${broker.tradingEnvironment.guaranteedStopLoss.cost ? `(${broker.tradingEnvironment.guaranteedStopLoss.cost})` : ''}` : 'Not Available'}</span>
+                    </div>
+                </DetailRow>
+                 <DetailRow label="Order Types" helpText="The types of orders the broker supports.">
+                    {broker.tradingEnvironment.orderTypes.join(', ')}
+                </DetailRow>
+            </DetailTable>
+        </Section>
+
         <Section title="Tradable Instruments" id="instruments">
             <DetailTable>
               <DetailRow label="Forex Pairs">{`${broker.tradableInstruments.forexPairs.total} (${broker.tradableInstruments.forexPairs.details})`}</DetailRow>
@@ -585,6 +663,24 @@ const BrokerDetailPage: React.FC = () => {
                 <DetailRow label="Withdrawal Fees">{broker.depositWithdrawal.withdrawalFees}</DetailRow>
                 <DetailRow label="Avg. Withdrawal Time">{broker.depositWithdrawal.processingTime.withdrawals}</DetailRow>
             </DetailTable>
+             <div className="mt-6 p-4 bg-input/50 rounded-lg">
+                <h4 className="text-lg font-semibold text-primary-400 mb-3 text-center">Withdrawal Speed Tracker</h4>
+                {reportCount > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                    <div>
+                        <p className="text-sm text-foreground/70">Broker's Stated Time</p>
+                        <p className="text-xl font-bold text-card-foreground mt-1">{broker.depositWithdrawal.processingTime.withdrawals}</p>
+                    </div>
+                    <div>
+                        <p className="text-sm text-foreground/70">User-Reported Average</p>
+                        <p className={`text-xl font-bold ${speedColorClass} mt-1`}>{averageDays} day{averageDays !== 1 ? 's' : ''}</p>
+                        <p className="text-xs text-foreground/60">based on {reportCount} report{reportCount !== 1 ? 's' : ''}</p>
+                    </div>
+                    </div>
+                ) : (
+                    <p className="text-sm text-center text-foreground/70">No user-reported withdrawal data yet. Be the first to contribute by leaving a review!</p>
+                )}
+            </div>
         </Section>
 
          <Section title="Customer Support" id="support">
@@ -601,6 +697,16 @@ const BrokerDetailPage: React.FC = () => {
               <h2 className="text-3xl font-bold">User Reviews ({reviews.length})</h2>
                {reviews.length > 0 && (
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                      <label htmlFor="verified-toggle" className="flex items-center cursor-pointer text-sm font-medium text-foreground/80">
+                        <div className="relative">
+                            <input type="checkbox" id="verified-toggle" className="sr-only peer" checked={showVerifiedOnly} onChange={() => setShowVerifiedOnly(!showVerifiedOnly)} />
+                            <div className="block bg-input w-12 h-6 rounded-full peer-checked:bg-primary-600 transition"></div>
+                            <div className="dot absolute left-1 top-1 bg-card w-4 h-4 rounded-full transition-transform peer-checked:translate-x-6"></div>
+                        </div>
+                        <div className="ml-3">
+                            Verified Only
+                        </div>
+                    </label>
                       <div>
                           <label htmlFor="filter-rating" className="text-sm font-medium text-foreground/80 ltr:mr-2 rtl:ml-2">Filter:</label>
                           <select id="filter-rating" value={filterRating} onChange={(e) => setFilterRating(Number(e.target.value))} className="bg-input border-input rounded-md shadow-sm p-2 w-full sm:w-auto">
@@ -626,7 +732,37 @@ const BrokerDetailPage: React.FC = () => {
                       <form onSubmit={handleReviewSubmit}>
                           <div className="mb-4"><label className="block text-sm font-medium text-card-foreground/90 mb-2">Your Rating</label><StarRatingInput rating={newRating} setRating={setNewRating} /></div>
                           <div className="mb-4"><label htmlFor="comment" className="block text-sm font-medium text-card-foreground/90 mb-2">Your Comment</label><textarea id="comment" rows={4} className="block w-full bg-input border-input rounded-md shadow-sm p-2 placeholder:text-foreground/60" value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder={`Share your experience with ${broker.name}...`} required></textarea></div>
-                          <Button type="submit" disabled={isSubmitting || newRating === 0 || !newComment.trim()}>{isSubmitting ? 'Submitting...' : 'Submit Review'}</Button>
+                          
+                           <div className="mb-4">
+                                <label htmlFor="share-withdrawal" className="flex items-center gap-2 text-sm text-card-foreground/80 cursor-pointer">
+                                    <input type="checkbox" id="share-withdrawal" checked={showWithdrawalFields} onChange={e => setShowWithdrawalFields(e.target.checked)} className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"/>
+                                    <span>Share your withdrawal experience (optional)</span>
+                                </label>
+                            </div>
+
+                            {showWithdrawalFields && (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 p-4 bg-input/30 rounded-lg animate-fade-in">
+                                    <Input 
+                                        label="Withdrawal Time (days)" 
+                                        id="withdrawal-days" 
+                                        type="number" 
+                                        min="0"
+                                        placeholder="e.g., 3"
+                                        value={withdrawalDays}
+                                        onChange={e => setWithdrawalDays(e.target.value)}
+                                    />
+                                    <Input 
+                                        label="Withdrawal Method" 
+                                        id="withdrawal-method" 
+                                        type="text" 
+                                        placeholder="e.g., Bank Transfer"
+                                        value={withdrawalMethod}
+                                        onChange={e => setWithdrawalMethod(e.target.value)}
+                                    />
+                                </div>
+                            )}
+
+                          <Button type="submit" disabled={isSubmitting || newRating === 0 || !newComment.trim()}>{isSubmitting ? <Spinner size="sm" /> : 'Submit Review'}</Button>
                       </form>
                   </CardContent>
               </Card>

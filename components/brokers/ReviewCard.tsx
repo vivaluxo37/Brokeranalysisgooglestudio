@@ -42,6 +42,12 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             <StarRating score={review.rating * 2} />
         </div>
         <p className="text-card-foreground/90 mt-4 ltr:pl-11 rtl:pr-11">{review.comment}</p>
+        {review.withdrawalExperience && (
+            <div className="mt-3 pt-3 ltr:pl-11 rtl:pr-11 border-t border-input/50 flex items-center gap-2 text-xs text-card-foreground/70">
+                <Icons.clock className="h-4 w-4" />
+                <span>Withdrawal took <strong>{review.withdrawalExperience.days} day{review.withdrawalExperience.days !== 1 ? 's' : ''}</strong> via <strong>{review.withdrawalExperience.method}</strong></span>
+            </div>
+        )}
       </CardContent>
     </Card>
   );

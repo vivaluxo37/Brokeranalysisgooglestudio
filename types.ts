@@ -1,8 +1,4 @@
 
-
-
-
-
 export interface Review {
   id: string;
   brokerId: string;
@@ -12,6 +8,10 @@ export interface Review {
   comment: string;
   date: string; // ISO 8601 format
   verified?: boolean;
+  withdrawalExperience?: {
+    days: number;
+    method: string;
+  };
 }
 
 export interface AccountType {
@@ -304,6 +304,7 @@ export interface ReviewsContextType {
   getReviewsByUserId: (userId: string) => Review[];
   addReview: (review: Omit<Review, 'id' | 'date' | 'verified'>) => void;
   verifyReview: (reviewId: string) => void;
+  getAverageWithdrawalTime: (brokerId: string) => { averageDays: number | null; reportCount: number };
 }
 
 export interface Alert {

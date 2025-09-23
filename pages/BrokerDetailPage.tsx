@@ -22,9 +22,17 @@ import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useReviews } from '../hooks/useReviews';
 import Tooltip from '../components/ui/Tooltip';
 
+// New component for responsive key-value tables
+const DetailTable: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="md:table w-full text-left text-sm border-separate md:border-spacing-0">
+    <div className="md:table-row-group">{children}</div>
+  </div>
+);
+
+// Modified DetailRow to stack on mobile
 const DetailRow: React.FC<{ label: string; children: React.ReactNode; helpText?: string }> = ({ label, children, helpText }) => (
-  <tr className="border-b border-input last:border-b-0">
-    <td className="p-3 font-semibold text-card-foreground/80 align-top">
+  <div className="md:table-row flex flex-col md:flex-none py-3 md:py-0 border-b border-input last:border-b-0 md:border-b">
+    <div className="md:table-cell px-3 pt-3 md:p-3 font-semibold text-card-foreground/80 align-top md:w-1/3">
       <div className="flex items-center gap-1">
         <span>{label}</span>
         {helpText && (
@@ -35,10 +43,11 @@ const DetailRow: React.FC<{ label: string; children: React.ReactNode; helpText?:
           </Tooltip>
         )}
       </div>
-    </td>
-    <td className="p-3 text-card-foreground align-top">{children}</td>
-  </tr>
+    </div>
+    <div className="md:table-cell px-3 pb-3 md:p-3 text-card-foreground align-top">{children}</div>
+  </div>
 );
+
 
 const BooleanIcon: React.FC<{ value: boolean }> = ({ value }) => (
   value ? <Icons.checkCircle className="h-5 w-5 text-green-500" /> : <Icons.xCircle className="h-5 w-5 text-red-500" />
@@ -168,20 +177,49 @@ const Section: React.FC<{ title: string; id: string; children: React.ReactNode; 
   </div>
 );
 
-const TableOfContents: React.FC<{ items: { id: string; title: string }[] }> = ({ items }) => (
-    <div className="hidden lg:block sticky top-24 self-start">
-        <h3 className="font-semibold mb-3 text-card-foreground">On this page</h3>
-        <ul className="space-y-2 ltr:border-l-2 rtl:border-r-2 border-input">
-            {items.map(item => (
-                <li key={item.id}>
-                    <a href={`#${item.id}`} className="block ltr:pl-4 rtl:pr-4 text-foreground/70 hover:text-primary-400 hover:border-primary-400 ltr:border-l-2 rtl:border-r-2 border-transparent ltr:-ml-px rtl:-mr-px transition-colors">
-                        {item.title}
-                    </a>
-                </li>
-            ))}
-        </ul>
-    </div>
-);
+const TableOfContents: React.FC<{ items: { id: string; title: string }[] }> = ({ items }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+    <>
+        {/* Desktop Sticky Table of Contents */}
+        <div className="hidden lg:block sticky top-24 self-start">
+            <h3 className="font-semibold mb-3 text-card-foreground">On this page</h3>
+            <ul className="space-y-2 ltr:border-l-2 rtl:border-r-2 border-input">
+                {items.map(item => (
+                    <li key={item.id}>
+                        <a href={`#${item.id}`} className="block ltr:pl-4 rtl:pr-4 text-foreground/70 hover:text-primary-400 hover:border-primary-400 ltr:border-l-2 rtl:border-r-2 border-transparent ltr:-ml-px rtl:-mr-px transition-colors">
+                            {item.title}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+        {/* Mobile Collapsible Table of Contents */}
+        <div className="lg:hidden border border-input rounded-lg bg-card mb-8">
+            <button
+            className="flex justify-between items-center w-full p-4 font-semibold"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
+            >
+            <span>On this page</span>
+            <Icons.chevronDown className={`h-5 w-5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                <div className="overflow-hidden">
+                    <ul className="py-2 px-4 border-t border-input">
+                        {items.map(item => (
+                            <li key={item.id}>
+                                <a href={`#${item.id}`} onClick={() => setIsOpen(false)} className="block py-2 text-foreground/80 hover:text-primary-400">{item.title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </>
+    );
+};
 
 
 const BrokerDetailPage: React.FC = () => {
@@ -319,7 +357,7 @@ const BrokerDetailPage: React.FC = () => {
   }, [reviews, sortOrder, filterRating]);
 
   return (
-    <div className="max-w-7xl mx-auto lg:grid lg:grid-cols-4 lg:gap-12">
+    <div className="max-w-7xl mx-auto lg:flex lg:flex-row lg:gap-12">
        <MetaTags
         title={`${broker.name} Review & Analysis (Updated 2025) | Brokeranalysis`}
         description={description}
@@ -328,7 +366,13 @@ const BrokerDetailPage: React.FC = () => {
       />
       {brokerJsonLd && <JsonLdSchema data={brokerJsonLd} />}
 
-      <div className="lg:col-span-3">
+      {/* Table of contents column (appears first in code for mobile flow) */}
+      <div className="lg:w-1/4 lg:order-2">
+        <TableOfContents items={tableOfContents} />
+      </div>
+
+      {/* Main content column */}
+      <div className="lg:w-3/4 lg:order-1">
         {/* --- HERO SECTION --- */}
         <div className="bg-card rounded-lg shadow-xl overflow-hidden border border-input">
           <div className="p-6 md:flex md:items-center md:justify-between bg-input/30">
@@ -371,9 +415,7 @@ const BrokerDetailPage: React.FC = () => {
         </div>
 
         <Section title="At a Glance" id="glance">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <tbody>
+            <DetailTable>
                 <DetailRow label="Founded">{broker.foundingYear}</DetailRow>
                 <DetailRow label="Headquarters">{broker.headquarters}</DetailRow>
                 <DetailRow label="Broker Type">{broker.coreInfo.brokerType}</DetailRow>
@@ -381,9 +423,7 @@ const BrokerDetailPage: React.FC = () => {
                 <DetailRow label="Minimum Deposit">{`$${broker.accessibility.minDeposit}`}</DetailRow>
                 <DetailRow label="Max Leverage">{broker.tradingConditions.maxLeverage}</DetailRow>
                 <DetailRow label="Platforms">{broker.technology.platforms.join(', ')}</DetailRow>
-              </tbody>
-            </table>
-          </div>
+            </DetailTable>
         </Section>
 
         {broker.summary && (
@@ -421,9 +461,8 @@ const BrokerDetailPage: React.FC = () => {
 
         <Section title="Regulation & Safety" id="safety">
             <RegulatoryTrustScore brokerName={broker.name} regulators={broker.regulation.regulators} />
-            <div className="overflow-x-auto mt-4">
-              <table className="w-full text-left text-sm">
-                <tbody>
+            <div className="mt-4">
+              <DetailTable>
                   <DetailRow label="Regulated By">
                     <ul className="list-disc list-inside">
                       {broker.security.regulatedBy.map(reg => <li key={reg.regulator}>{reg.regulator} {reg.licenseNumber && `(${reg.licenseNumber})`}</li>)}
@@ -433,37 +472,34 @@ const BrokerDetailPage: React.FC = () => {
                   <DetailRow label="Investor Compensation"><BooleanIcon value={broker.security.investorCompensationScheme.available} /> {broker.security.investorCompensationScheme.amount && `(${broker.security.investorCompensationScheme.amount})`}</DetailRow>
                   <DetailRow label="Negative Balance Protection"><BooleanIcon value={broker.tradingConditionsExtended.negativeBalanceProtection} /></DetailRow>
                    <DetailRow label="Two-Factor Authentication (2FA)"><BooleanIcon value={broker.security.twoFactorAuth} /></DetailRow>
-                </tbody>
-              </table>
+              </DetailTable>
             </div>
         </Section>
         
         <Section title="Fees & Costs" id="fees">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="bg-input/30"><th className="p-3 font-semibold" colSpan={2}>Trading Fees</th></tr>
-                </thead>
-                <tbody>
-                  <DetailRow label="Spread Type">{broker.fees.trading.spreadType}</DetailRow>
-                  <DetailRow label="Average Spreads">
-                    <ul className="list-disc list-inside">
-                        {broker.fees.trading.averageSpreads.map(s => <li key={s.pair}><strong>{s.pair}:</strong> {s.spread}</li>)}
-                    </ul>
-                  </DetailRow>
-                  <DetailRow label="Commission Structure">{broker.fees.trading.commissionStructure}</DetailRow>
-                  <DetailRow label="Overnight / Swap Fees">{broker.fees.trading.overnightSwapFees}</DetailRow>
-                </tbody>
-                <thead>
-                  <tr className="bg-input/30"><th className="p-3 font-semibold" colSpan={2}>Non-Trading Fees</th></tr>
-                </thead>
-                <tbody>
-                   <DetailRow label="Inactivity Fee">{broker.fees.nonTrading.inactivityFee}</DetailRow>
-                   <DetailRow label="Withdrawal Fee">{broker.fees.nonTrading.withdrawalFee}</DetailRow>
-                   <DetailRow label="Deposit Fee">{broker.fees.nonTrading.depositFee}</DetailRow>
-                   {broker.fees.nonTrading.conversionFee && <DetailRow label="Currency Conversion Fee">{broker.fees.nonTrading.conversionFee}</DetailRow>}
-                </tbody>
-              </table>
+            <div className="space-y-6">
+                <div>
+                    <h3 className="p-3 font-semibold bg-input/30 rounded-t-lg md:rounded-none">Trading Fees</h3>
+                    <DetailTable>
+                        <DetailRow label="Spread Type">{broker.fees.trading.spreadType}</DetailRow>
+                        <DetailRow label="Average Spreads">
+                            <ul className="list-disc list-inside">
+                                {broker.fees.trading.averageSpreads.map(s => <li key={s.pair}><strong>{s.pair}:</strong> {s.spread}</li>)}
+                            </ul>
+                        </DetailRow>
+                        <DetailRow label="Commission Structure">{broker.fees.trading.commissionStructure}</DetailRow>
+                        <DetailRow label="Overnight / Swap Fees">{broker.fees.trading.overnightSwapFees}</DetailRow>
+                    </DetailTable>
+                </div>
+                 <div>
+                    <h3 className="p-3 font-semibold bg-input/30 md:rounded-none">Non-Trading Fees</h3>
+                    <DetailTable>
+                        <DetailRow label="Inactivity Fee">{broker.fees.nonTrading.inactivityFee}</DetailRow>
+                        <DetailRow label="Withdrawal Fee">{broker.fees.nonTrading.withdrawalFee}</DetailRow>
+                        <DetailRow label="Deposit Fee">{broker.fees.nonTrading.depositFee}</DetailRow>
+                        {broker.fees.nonTrading.conversionFee && <DetailRow label="Currency Conversion Fee">{broker.fees.nonTrading.conversionFee}</DetailRow>}
+                    </DetailTable>
+                </div>
             </div>
              <div className="mt-6 p-4 bg-input/50 rounded-lg text-center">
                 <p className="text-foreground/80">Need help calculating your potential costs?</p>
@@ -481,13 +517,13 @@ const BrokerDetailPage: React.FC = () => {
                     <table className="w-full text-left">
                         <thead className="bg-input/50">
                             <tr>
-                                <th className="p-3">Account</th><th className="p-3">Best For</th><th className="p-3">Min. Deposit</th><th className="p-3">Spreads</th><th className="p-3">Commission</th>
+                                <th className="p-3">Account</th><th className="p-3">Best For</th><th className="p-3 hidden sm:table-cell">Min. Deposit</th><th className="p-3 hidden md:table-cell">Spreads</th><th className="p-3 hidden md:table-cell">Commission</th>
                             </tr>
                         </thead>
                         <tbody>
                             {broker.accountTypes.map(acc => (
                                 <tr key={acc.name} className="border-b border-input last:border-b-0">
-                                    <td className="p-3 font-semibold">{acc.name}</td><td className="p-3">{acc.bestFor}</td><td className="p-3">${acc.minDeposit}</td><td className="p-3">{acc.spreads}</td><td className="p-3">{acc.commission}</td>
+                                    <td className="p-3 font-semibold">{acc.name}</td><td className="p-3">{acc.bestFor}</td><td className="p-3 hidden sm:table-cell">${acc.minDeposit}</td><td className="p-3 hidden md:table-cell">{acc.spreads}</td><td className="p-3 hidden md:table-cell">{acc.commission}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -497,70 +533,56 @@ const BrokerDetailPage: React.FC = () => {
         )}
         
          <Section title="Platforms & Technology" id="platforms">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                 <thead>
-                  <tr className="bg-input/30"><th className="p-3 font-semibold" colSpan={2}>Platform Features</th></tr>
-                </thead>
-                <tbody>
-                  <DetailRow label="Platforms">{broker.technology.platforms.join(', ')}</DetailRow>
-                  <DetailRow label="Charting Indicators">{broker.platformFeatures.charting.indicators}+</DetailRow>
-                  <DetailRow label="Automated Trading">{broker.platformFeatures.automatedTrading.join(', ')}</DetailRow>
-                  <DetailRow label="Copy Trading"><BooleanIcon value={broker.platformFeatures.copyTrading.available} /> {broker.platformFeatures.copyTrading.available && `(${broker.platformFeatures.copyTrading.platforms.join(', ')})`}</DetailRow>
-                </tbody>
-                 <thead>
-                  <tr className="bg-input/30"><th className="p-3 font-semibold" colSpan={2}>Trading Environment</th></tr>
-                </thead>
-                <tbody>
-                   <DetailRow label="Execution Type">{broker.technology.executionType}</DetailRow>
-                   {broker.tradingEnvironment.executionSpeedMs && <DetailRow label="Execution Speed">{`< ${broker.tradingEnvironment.executionSpeedMs}ms`}</DetailRow>}
-                   <DetailRow label="Scalping Allowed"><BooleanIcon value={broker.tradingConditionsExtended.scalpingAllowed} /></DetailRow>
-                   <DetailRow label="EAs / Algo Trading"><BooleanIcon value={broker.tradingConditionsExtended.eaAllowed} /></DetailRow>
-                   <DetailRow label="Order Types">{broker.tradingEnvironment.orderTypes.join(', ')}</DetailRow>
-                </tbody>
-              </table>
+            <div className="space-y-6">
+                <div>
+                    <h3 className="p-3 font-semibold bg-input/30 md:rounded-none">Platform Features</h3>
+                    <DetailTable>
+                        <DetailRow label="Platforms">{broker.technology.platforms.join(', ')}</DetailRow>
+                        <DetailRow label="Charting Indicators">{broker.platformFeatures.charting.indicators}+</DetailRow>
+                        <DetailRow label="Automated Trading">{broker.platformFeatures.automatedTrading.join(', ')}</DetailRow>
+                        <DetailRow label="Copy Trading"><BooleanIcon value={broker.platformFeatures.copyTrading.available} /> {broker.platformFeatures.copyTrading.available && `(${broker.platformFeatures.copyTrading.platforms.join(', ')})`}</DetailRow>
+                    </DetailTable>
+                </div>
+                <div>
+                    <h3 className="p-3 font-semibold bg-input/30 md:rounded-none">Trading Environment</h3>
+                    <DetailTable>
+                        <DetailRow label="Execution Type">{broker.technology.executionType}</DetailRow>
+                        {broker.tradingEnvironment.executionSpeedMs && <DetailRow label="Execution Speed">{`< ${broker.tradingEnvironment.executionSpeedMs}ms`}</DetailRow>}
+                        <DetailRow label="Scalping Allowed"><BooleanIcon value={broker.tradingConditionsExtended.scalpingAllowed} /></DetailRow>
+                        <DetailRow label="EAs / Algo Trading"><BooleanIcon value={broker.tradingConditionsExtended.eaAllowed} /></DetailRow>
+                        <DetailRow label="Order Types">{broker.tradingEnvironment.orderTypes.join(', ')}</DetailRow>
+                    </DetailTable>
+                </div>
             </div>
         </Section>
         
         <Section title="Tradable Instruments" id="instruments">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <tbody>
-                  <DetailRow label="Forex Pairs">{`${broker.tradableInstruments.forexPairs.total} (${broker.tradableInstruments.forexPairs.details})`}</DetailRow>
-                  <DetailRow label="Indices">{`${broker.tradableInstruments.indices.total} (${broker.tradableInstruments.indices.details})`}</DetailRow>
-                  <DetailRow label="Commodities">{`${broker.tradableInstruments.commodities.total} (${broker.tradableInstruments.commodities.details})`}</DetailRow>
-                  <DetailRow label="Stock CFDs">{`${broker.tradableInstruments.stocks.total} (${broker.tradableInstruments.stocks.details})`}</DetailRow>
-                  <DetailRow label="Cryptocurrencies">{`${broker.tradableInstruments.cryptocurrencies.total} (${broker.tradableInstruments.cryptocurrencies.details})`}</DetailRow>
-                  {broker.tradableInstruments.etfs && <DetailRow label="ETFs">{`${broker.tradableInstruments.etfs.total} (${broker.tradableInstruments.etfs.details})`}</DetailRow>}
-                </tbody>
-              </table>
-            </div>
+            <DetailTable>
+              <DetailRow label="Forex Pairs">{`${broker.tradableInstruments.forexPairs.total} (${broker.tradableInstruments.forexPairs.details})`}</DetailRow>
+              <DetailRow label="Indices">{`${broker.tradableInstruments.indices.total} (${broker.tradableInstruments.indices.details})`}</DetailRow>
+              <DetailRow label="Commodities">{`${broker.tradableInstruments.commodities.total} (${broker.tradableInstruments.commodities.details})`}</DetailRow>
+              <DetailRow label="Stock CFDs">{`${broker.tradableInstruments.stocks.total} (${broker.tradableInstruments.stocks.details})`}</DetailRow>
+              <DetailRow label="Cryptocurrencies">{`${broker.tradableInstruments.cryptocurrencies.total} (${broker.tradableInstruments.cryptocurrencies.details})`}</DetailRow>
+              {broker.tradableInstruments.etfs && <DetailRow label="ETFs">{`${broker.tradableInstruments.etfs.total} (${broker.tradableInstruments.etfs.details})`}</DetailRow>}
+            </DetailTable>
         </Section>
 
         <Section title="Deposit & Withdrawal" id="deposits">
-             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <tbody>
-                  <DetailRow label="Deposit Methods">{broker.depositWithdrawal.depositMethods.join(', ')}</DetailRow>
-                  <DetailRow label="Withdrawal Methods">{broker.depositWithdrawal.withdrawalMethods.join(', ')}</DetailRow>
-                  <DetailRow label="Deposit Fees">{broker.depositWithdrawal.depositFees}</DetailRow>
-                   <DetailRow label="Withdrawal Fees">{broker.depositWithdrawal.withdrawalFees}</DetailRow>
-                   <DetailRow label="Avg. Withdrawal Time">{broker.depositWithdrawal.processingTime.withdrawals}</DetailRow>
-                </tbody>
-              </table>
-            </div>
+             <DetailTable>
+                <DetailRow label="Deposit Methods">{broker.depositWithdrawal.depositMethods.join(', ')}</DetailRow>
+                <DetailRow label="Withdrawal Methods">{broker.depositWithdrawal.withdrawalMethods.join(', ')}</DetailRow>
+                <DetailRow label="Deposit Fees">{broker.depositWithdrawal.depositFees}</DetailRow>
+                <DetailRow label="Withdrawal Fees">{broker.depositWithdrawal.withdrawalFees}</DetailRow>
+                <DetailRow label="Avg. Withdrawal Time">{broker.depositWithdrawal.processingTime.withdrawals}</DetailRow>
+            </DetailTable>
         </Section>
 
          <Section title="Customer Support" id="support">
-             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <tbody>
-                  <DetailRow label="Support Hours">{broker.customerSupport.hours}</DetailRow>
-                  <DetailRow label="Support Channels">{broker.customerSupport.channels.join(', ')}</DetailRow>
-                  <DetailRow label="Support Languages">{broker.customerSupport.languages.slice(0, 5).join(', ')}{broker.customerSupport.languages.length > 5 ? '...' : ''}</DetailRow>
-                </tbody>
-              </table>
-            </div>
+            <DetailTable>
+              <DetailRow label="Support Hours">{broker.customerSupport.hours}</DetailRow>
+              <DetailRow label="Support Channels">{broker.customerSupport.channels.join(', ')}</DetailRow>
+              <DetailRow label="Support Languages">{broker.customerSupport.languages.slice(0, 5).join(', ')}{broker.customerSupport.languages.length > 5 ? '...' : ''}</DetailRow>
+            </DetailTable>
         </Section>
         
         {/* --- REVIEWS SECTION --- */}
@@ -568,16 +590,16 @@ const BrokerDetailPage: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between md:items-center my-6 gap-4 pt-8">
               <h2 className="text-3xl font-bold">User Reviews ({reviews.length})</h2>
                {reviews.length > 0 && (
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                       <div>
                           <label htmlFor="filter-rating" className="text-sm font-medium text-foreground/80 ltr:mr-2 rtl:ml-2">Filter:</label>
-                          <select id="filter-rating" value={filterRating} onChange={(e) => setFilterRating(Number(e.target.value))} className="bg-input border-input rounded-md shadow-sm p-2">
+                          <select id="filter-rating" value={filterRating} onChange={(e) => setFilterRating(Number(e.target.value))} className="bg-input border-input rounded-md shadow-sm p-2 w-full sm:w-auto">
                               <option value="0">All Ratings</option> <option value="5">5 Stars</option> <option value="4">4 Stars</option> <option value="3">3 Stars</option> <option value="2">2 Stars</option> <option value="1">1 Star</option>
                           </select>
                       </div>
                        <div>
                           <label htmlFor="sort-order" className="text-sm font-medium text-foreground/80 ltr:mr-2 rtl:ml-2">Sort by:</label>
-                          <select id="sort-order" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="bg-input border-input rounded-md shadow-sm p-2">
+                          <select id="sort-order" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="bg-input border-input rounded-md shadow-sm p-2 w-full sm:w-auto">
                               <option value="date-desc">Newest First</option> <option value="date-asc">Oldest First</option> <option value="rating-desc">Highest Rating</option> <option value="rating-asc">Lowest Rating</option>
                           </select>
                       </div>
@@ -608,10 +630,6 @@ const BrokerDetailPage: React.FC = () => {
               ) : (<p className="text-center text-foreground/70 py-8">{reviews.length > 0 ? 'No reviews match your selected filters.' : 'No reviews yet for this broker. Be the first to leave one!'}</p>)}
           </div>
         </div>
-      </div>
-
-      <div className="lg:col-span-1">
-        <TableOfContents items={tableOfContents} />
       </div>
 
     </div>

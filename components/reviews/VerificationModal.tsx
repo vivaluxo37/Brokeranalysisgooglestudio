@@ -15,7 +15,7 @@ const VerificationModal: React.FC<VerificationModalProps> = ({ isOpen, isVerifyi
 
   return (
     <div 
-      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center animate-fade-in" 
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" 
       aria-modal="true" 
       role="dialog"
     >

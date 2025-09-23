@@ -200,42 +200,40 @@ const Header: React.FC = () => {
             </nav>
 
             {/* Mobile Menu Panel */}
-            {isMobileMenuOpen && (
-                <div className="lg:hidden" id="mobile-menu">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-input">
-                        <NavLink to="/brokers" onClick={closeMobileMenu}>{t('header.megaMenu.allBrokers')}</NavLink>
-                        <NavLink to="/compare" onClick={closeMobileMenu}>{t('header.megaMenu.compareBrokers')}</NavLink>
-                        <NavLink to="/cost-analyzer" onClick={closeMobileMenu}>{t('header.megaMenu.costAnalyzer')}</NavLink>
-                        <NavLink to="/broker-matcher" onClick={closeMobileMenu}>{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
-                        <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu}>{t('header.toolsMenu.economicCalendar')}</NavLink>
-                        <NavLink to="/tools/calculators" onClick={closeMobileMenu}>{t('header.toolsMenu.calculators')}</NavLink>
-                        <NavLink to="/tools/market-data" onClick={closeMobileMenu}>{t('header.toolsMenu.marketData')}</NavLink>
-                        <NavLink to="/education" onClick={closeMobileMenu}>{t('header.education')}</NavLink>
-                        <NavLink to="/market-news" onClick={closeMobileMenu}>{t('header.marketNews')}</NavLink>
-                        <NavLink to="/methodology" onClick={closeMobileMenu}>{t('header.methodology')}</NavLink>
+            <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen' : 'max-h-0'}`} id="mobile-menu">
+                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-input">
+                    <NavLink to="/brokers" onClick={closeMobileMenu}>{t('header.megaMenu.allBrokers')}</NavLink>
+                    <NavLink to="/compare" onClick={closeMobileMenu}>{t('header.megaMenu.compareBrokers')}</NavLink>
+                    <NavLink to="/cost-analyzer" onClick={closeMobileMenu}>{t('header.megaMenu.costAnalyzer')}</NavLink>
+                    <NavLink to="/broker-matcher" onClick={closeMobileMenu}>{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
+                    <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu}>{t('header.toolsMenu.economicCalendar')}</NavLink>
+                    <NavLink to="/tools/calculators" onClick={closeMobileMenu}>{t('header.toolsMenu.calculators')}</NavLink>
+                    <NavLink to="/tools/market-data" onClick={closeMobileMenu}>{t('header.toolsMenu.marketData')}</NavLink>
+                    <NavLink to="/education" onClick={closeMobileMenu}>{t('header.education')}</NavLink>
+                    <NavLink to="/market-news" onClick={closeMobileMenu}>{t('header.marketNews')}</NavLink>
+                    <NavLink to="/methodology" onClick={closeMobileMenu}>{t('header.methodology')}</NavLink>
 
-                        {/* Fix: Replaced truncated and incorrect code with proper mobile authentication links. */}
-                        <div className="pt-4 mt-4 border-t border-input">
-                            {user ? (
-                                <>
-                                    <NavLink to="/dashboard" onClick={closeMobileMenu}>{t('header.dashboard')}</NavLink>
-                                    <button
-                                        onClick={() => { logout(); closeMobileMenu(); }}
-                                        className="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-foreground/70 hover:bg-input hover:text-foreground"
-                                    >
-                                        {t('header.logout')}
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                    <NavLink to="/login" onClick={closeMobileMenu}>{t('header.login')}</NavLink>
-                                    <NavLink to="/register" onClick={closeMobileMenu}>{t('header.register')}</NavLink>
-                                </>
-                            )}
-                        </div>
+                    {/* Fix: Replaced truncated and incorrect code with proper mobile authentication links. */}
+                    <div className="pt-4 mt-4 border-t border-input">
+                        {user ? (
+                            <>
+                                <NavLink to="/dashboard" onClick={closeMobileMenu}>{t('header.dashboard')}</NavLink>
+                                <button
+                                    onClick={() => { logout(); closeMobileMenu(); }}
+                                    className="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-foreground/70 hover:bg-input hover:text-foreground"
+                                >
+                                    {t('header.logout')}
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <NavLink to="/login" onClick={closeMobileMenu}>{t('header.login')}</NavLink>
+                                <NavLink to="/register" onClick={closeMobileMenu}>{t('header.register')}</NavLink>
+                            </>
+                        )}
                     </div>
                 </div>
-            )}
+            </div>
         </header>
     );
 };

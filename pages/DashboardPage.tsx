@@ -386,7 +386,7 @@ const DashboardPage: React.FC = () => {
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center animate-fade-in" aria-modal="true" role="dialog">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" aria-modal="true" role="dialog">
           <Card className="max-w-md w-full animate-fade-in">
             <CardHeader>
               <h3 className="text-xl font-bold">{t('dashboardPage.settings.deleteModal.title')}</h3>

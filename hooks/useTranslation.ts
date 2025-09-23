@@ -8,7 +8,7 @@ export const useTranslation = () => {
   }
   return { 
     t: context.t, 
-    language: context.language, 
-    setLanguage: context.setLanguage 
+    language: context.language,
+    setLanguage: context.setLanguage
   };
 };

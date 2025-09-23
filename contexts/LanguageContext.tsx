@@ -3,36 +3,45 @@ import { translations } from '../data/locales';
 
 interface LanguageContextType {
   language: string;
-  setLanguage: (lang: string) => void;
-  // Fix: Allow `t` function to return non-string types (like arrays) for translation keys that have array values.
+  setLanguage: (language: string) => void;
   t: (key: string, replacements?: { [key: string]: string | number }) => any;
 }
 
 export const LanguageContext = createContext<LanguageContextType | null>(null);
 
-const supportedLanguages = ['en', 'de', 'ja', 'es', 'fr', 'it', 'pt', 'nl', 'ru', 'ar', 'zh', 'hi', 'ko', 'tr', 'id'];
-const defaultLanguage = 'en';
+const supportedLanguages = ['en', 'de', 'ja', 'ru', 'es', 'fr'];
+const rtlLanguages: string[] = [];
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState(() => {
-    const savedLang = localStorage.getItem('language');
-    return savedLang && supportedLanguages.includes(savedLang) ? savedLang : defaultLanguage;
-  });
+  const [language, setLanguageState] = useState<string>('en');
 
   useEffect(() => {
-    document.documentElement.lang = language;
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-    localStorage.setItem('language', language);
-  }, [language]);
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage && supportedLanguages.includes(savedLanguage)) {
+      setLanguageState(savedLanguage);
+    } else {
+      // Auto-detect browser language
+      const browserLang = navigator.language.split('-')[0];
+      if (supportedLanguages.includes(browserLang)) {
+        setLanguageState(browserLang);
+      }
+    }
+  }, []);
 
   const setLanguage = (lang: string) => {
     if (supportedLanguages.includes(lang)) {
       setLanguageState(lang);
+      localStorage.setItem('language', lang);
     }
   };
 
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.documentElement.dir = rtlLanguages.includes(language) ? 'rtl' : 'ltr';
+  }, [language]);
+
   const t = useCallback((key: string, replacements?: { [key: string]: string | number }) => {
-    const langTranslations = translations[language as keyof typeof translations] || translations.en;
+    const langTranslations: any = translations[language as keyof typeof translations] || translations.en;
     
     const keys = key.split('.');
     let result: any = langTranslations;
@@ -44,6 +53,19 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       result = result[k];
     }
     
+    // Fallback to English if translation is missing
+    if (result === undefined && language !== 'en') {
+        let englishResult: any = translations.en;
+        for (const k of keys) {
+            if (englishResult === undefined) {
+                englishResult = undefined;
+                break;
+            }
+            englishResult = englishResult[k];
+        }
+        result = englishResult;
+    }
+
     const translation = result === undefined ? key : result;
 
     if (typeof translation === 'string' && replacements) {

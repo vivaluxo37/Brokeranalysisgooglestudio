@@ -165,7 +165,7 @@ const BrokerMatcherPage: React.FC = () => {
                         {isFinalStep ? (
                             <Button onClick={handleSubmit} size="lg">{t('brokerMatcherPage.findMyBroker')}</Button>
                         ) : (
-                             <Button onClick={() => setCurrentStep(currentStep + 1)} disabled={!preferences[currentStepData.name as keyof BrokerMatcherPreferences] && currentStepData.name !== 'country'}>{t('allBrokersPage.results.noResultsSubtitle') === 'Try adjusting your filters to find more results.' ? 'Next' : 'Далее'}</Button>
+                             <Button onClick={() => setCurrentStep(currentStep + 1)} disabled={!preferences[currentStepData.name as keyof BrokerMatcherPreferences] && currentStepData.name !== 'country'}>{t('brokerMatcherPage.next')}</Button>
                         )}
                     </div>
                 </CardContent>

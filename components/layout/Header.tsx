@@ -8,7 +8,6 @@ import Button from '../ui/Button';
 import AlertsDropdown from '../common/AlertsDropdown';
 import { categoryPageGroups } from '../../pages/categoryPageData';
 import { useTranslation } from '../../hooks/useTranslation';
-import { translations } from '../../data/locales';
 
 const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () => void, className?: string }> = ({ to, children, onClick, className = '' }) => (
     <ReactRouterDOM.NavLink
@@ -25,67 +24,6 @@ const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () =>
         {children}
     </ReactRouterDOM.NavLink>
 );
-
-const LanguageSelector: React.FC = () => {
-    const { language, setLanguage } = useTranslation();
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const availableLanguages: { [key: string]: string } = {
-        en: 'English',
-        de: 'Deutsch',
-        ja: '日本語',
-        es: 'Español',
-        fr: 'Français',
-        it: 'Italiano',
-        pt: 'Português',
-        nl: 'Nederlands',
-        ru: 'Русский',
-        ar: 'العربية',
-        zh: '中文 (简体)',
-        hi: 'हिन्दी',
-        ko: '한국어',
-        tr: 'Türkçe',
-        id: 'Bahasa Indonesia'
-    };
-
-    const supportedLanguageCodes = Object.keys(translations);
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-    return (
-        <div className="relative" ref={dropdownRef}>
-            <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-md text-foreground/70 hover:bg-input hover:text-foreground flex items-center gap-1">
-                <Icons.globe className="h-5 w-5" />
-                <span className="text-sm uppercase">{language}</span>
-            </button>
-            {isOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-card rounded-md shadow-lg border border-input z-50 animate-fade-in max-h-60 overflow-y-auto">
-                    <ul>
-                        {supportedLanguageCodes.map(code => (
-                            <li key={code}>
-                                <button
-                                    onClick={() => { setLanguage(code); setIsOpen(false); }}
-                                    className={`w-full text-left px-4 py-2 text-sm ${language === code ? 'bg-primary-600 text-white' : 'hover:bg-input'}`}
-                                >
-                                    {availableLanguages[code] || code}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </div>
-    );
-};
 
 // New component for collapsible sections in the mobile menu
 const MobileAccordionLink: React.FC<{ title: string; children: React.ReactNode; }> = ({ title, children }) => {
@@ -107,6 +45,71 @@ const MobileAccordionLink: React.FC<{ title: string; children: React.ReactNode; 
                     </div>
                 </div>
             </div>
+        </div>
+    );
+};
+
+const LanguageSelector: React.FC<{ onSelect?: () => void }> = ({ onSelect }) => {
+    const { language, setLanguage } = useTranslation();
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const availableLanguages: Record<string, string> = {
+        en: 'English',
+        de: 'Deutsch',
+        ja: '日本語',
+        ru: 'Русский',
+        es: 'Español',
+        fr: 'Français',
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleLanguageChange = (lang: string) => {
+        setLanguage(lang);
+        setIsOpen(false);
+        if(onSelect) onSelect();
+    };
+
+    return (
+        <div className="relative" ref={dropdownRef}>
+            <Button
+                variant="ghost"
+                size="sm"
+                className="p-2"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label="Change language"
+            >
+                <Icons.globe className="h-5 w-5" />
+            </Button>
+            {isOpen && (
+                <div className="absolute ltr:right-0 rtl:left-0 mt-2 w-48 bg-card rounded-md shadow-lg border border-input z-50 animate-fade-in">
+                    <ul className="py-1 max-h-60 overflow-y-auto">
+                        {Object.entries(availableLanguages).map(([code, name]) => (
+                            <li key={code}>
+                                <button
+                                    onClick={() => handleLanguageChange(code)}
+                                    className={`w-full text-left px-4 py-2 text-sm ${
+                                        language === code
+                                            ? 'bg-primary-500 text-white'
+                                            : 'text-card-foreground hover:bg-input'
+                                    }`}
+                                >
+                                    {name}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };
@@ -174,10 +177,10 @@ const Header: React.FC = () => {
                                         {t('header.tools')} <Icons.chevronDown className="h-4 w-4 ltr:ml-1 rtl:mr-1" />
                                     </button>
                                     <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-56 bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
-                                        <div className="p-2 space-y-1">
-                                            <NavLink to="/tools/economic-calendar" className="block w-full text-left">{t('header.toolsMenu.economicCalendar')}</NavLink>
-                                            <NavLink to="/tools/calculators" className="block w-full text-left">{t('header.toolsMenu.calculators')}</NavLink>
-                                            <NavLink to="/tools/market-data" className="block w-full text-left">{t('header.toolsMenu.marketData')}</NavLink>
+                                        <div className="p-2">
+                                            <NavLink to="/tools/economic-calendar">{t('header.toolsMenu.economicCalendar')}</NavLink>
+                                            <NavLink to="/tools/calculators">{t('header.toolsMenu.calculators')}</NavLink>
+                                            <NavLink to="/tools/market-data">{t('header.toolsMenu.marketData')}</NavLink>
                                         </div>
                                     </div>
                                 </div>
@@ -187,103 +190,117 @@ const Header: React.FC = () => {
                                         {t('header.education')} <Icons.chevronDown className="h-4 w-4 ltr:ml-1 rtl:mr-1" />
                                     </button>
                                     <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-56 bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
-                                        <div className="p-2 space-y-1">
-                                            <NavLink to="/education" className="block w-full text-left">{t('education.hub.title')}</NavLink>
-                                            <NavLink to="/education/quizzes" className="block w-full text-left">{t('education.quizzes.title')}</NavLink>
-                                            <NavLink to="/education/webinars" className="block w-full text-left">{t('education.webinars.title')}</NavLink>
-                                            <NavLink to="/education/simulators" className="block w-full text-left">{t('education.simulators.title')}</NavLink>
+                                        <div className="p-2">
+                                            <NavLink to="/education">{t('footer.links.educationHub')}</NavLink>
+                                            <NavLink to="/education/quizzes">{t('education.quizzes.title')}</NavLink>
+                                            <NavLink to="/education/webinars">{t('education.webinars.title')}</NavLink>
+                                            <NavLink to="/education/simulators">{t('education.simulators.title')}</NavLink>
                                         </div>
                                     </div>
                                 </div>
+
                                 <NavLink to="/market-news">{t('header.marketNews')}</NavLink>
                                 <NavLink to="/methodology">{t('header.methodology')}</NavLink>
                             </div>
                         </div>
                     </div>
 
-                    {/* Right side actions */}
-                    <div className="hidden lg:flex items-center space-x-2">
-                        {user && <AlertsDropdown />}
-                        <ThemeToggle />
+                    {/* Right side items */}
+                    <div className="hidden lg:flex items-center">
+                        <AlertsDropdown />
                         <LanguageSelector />
+                        <ThemeToggle />
                         {user ? (
-                            <>
-                                <ReactRouterDOM.Link to="/dashboard" className="text-sm font-medium text-foreground/80 hover:text-foreground">{user.name}</ReactRouterDOM.Link>
-                                <Button onClick={logout} variant="secondary" size="sm">{t('header.logout')}</Button>
-                            </>
+                            <div className="ltr:ml-3 rtl:mr-3 relative group">
+                                <Button variant="ghost" size="sm" className="p-2">
+                                    <Icons.user className="h-5 w-5 ltr:mr-2 rtl:ml-2"/> {user.name}
+                                </Button>
+                                <div className="absolute ltr:right-0 rtl:left-0 mt-2 w-48 bg-card rounded-md shadow-lg border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
+                                    <div className="py-1">
+                                        <ReactRouterDOM.Link to="/dashboard" className="block px-4 py-2 text-sm text-card-foreground hover:bg-input">{t('header.dashboard')}</ReactRouterDOM.Link>
+                                        <button onClick={logout} className="w-full text-left block px-4 py-2 text-sm text-card-foreground hover:bg-input">{t('header.logout')}</button>
+                                    </div>
+                                </div>
+                            </div>
                         ) : (
-                            <>
-                                <ReactRouterDOM.Link to="/login"><Button variant="ghost" size="sm">{t('header.login')}</Button></ReactRouterDOM.Link>
-                                <ReactRouterDOM.Link to="/register"><Button variant="primary" size="sm">{t('header.register')}</Button></ReactRouterDOM.Link>
-                            </>
+                            <div className="ltr:ml-3 rtl:mr-3 flex items-center space-x-2">
+                                <ReactRouterDOM.Link to="/login">
+                                    <Button variant="ghost" size="sm">{t('header.login')}</Button>
+                                </ReactRouterDOM.Link>
+                                <ReactRouterDOM.Link to="/register">
+                                    <Button variant="primary" size="sm">{t('header.register')}</Button>
+                                </ReactRouterDOM.Link>
+                            </div>
                         )}
                     </div>
-                    
+
                     {/* Mobile Menu Button */}
-                    <div className="lg:hidden flex items-center">
-                        <ThemeToggle />
-                        <LanguageSelector />
-                        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-controls="mobile-menu" aria-expanded={isMobileMenuOpen} className="p-2 rounded-md text-foreground/70 hover:bg-input hover:text-foreground">
+                    <div className="ltr:-mr-2 rtl:-ml-2 flex lg:hidden">
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="inline-flex items-center justify-center p-2 rounded-md text-foreground/70 hover:text-foreground hover:bg-input focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+                            aria-controls="mobile-menu"
+                            aria-expanded={isMobileMenuOpen}
+                        >
                             <span className="sr-only">Open main menu</span>
-                            <Icons.menu className="h-6 w-6" />
+                            {isMobileMenuOpen ? <Icons.close className="block h-6 w-6" /> : <Icons.menu className="block h-6 w-6" />}
                         </button>
                     </div>
                 </div>
             </nav>
 
-            {/* Mobile Menu Panel */}
-            <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[85vh]' : 'max-h-0'}`} id="mobile-menu">
-                <div className="border-t border-input overflow-y-auto max-h-[85vh] bg-card">
-                    <MobileAccordionLink title={t('header.brokers')}>
-                        <NavLink to="/brokers" onClick={closeMobileMenu} className="block">{t('header.megaMenu.allBrokers')}</NavLink>
-                        <NavLink to="/compare" onClick={closeMobileMenu} className="block">{t('header.megaMenu.compareBrokers')}</NavLink>
-                        <NavLink to="/cost-analyzer" onClick={closeMobileMenu} className="block">{t('header.megaMenu.costAnalyzer')}</NavLink>
-                        <NavLink to="/broker-matcher" onClick={closeMobileMenu} className="block">{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
-                    </MobileAccordionLink>
-                    <MobileAccordionLink title={t('header.tools')}>
-                        <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.economicCalendar')}</NavLink>
-                        <NavLink to="/tools/calculators" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.calculators')}</NavLink>
-                        <NavLink to="/tools/market-data" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.marketData')}</NavLink>
-                    </MobileAccordionLink>
-                    <MobileAccordionLink title={t('header.education')}>
-                        <NavLink to="/education" onClick={closeMobileMenu} className="block">{t('education.hub.title')}</NavLink>
-                        <NavLink to="/education/quizzes" onClick={closeMobileMenu} className="block">{t('education.quizzes.title')}</NavLink>
-                        <NavLink to="/education/webinars" onClick={closeMobileMenu} className="block">{t('education.webinars.title')}</NavLink>
-                        <NavLink to="/education/simulators" onClick={closeMobileMenu} className="block">{t('education.simulators.title')}</NavLink>
-                    </MobileAccordionLink>
-
-                    {/* Standalone links */}
-                    <div className="border-b border-input/50">
-                        <NavLink to="/market-news" onClick={closeMobileMenu} className="block w-full px-3 py-3 font-semibold text-card-foreground">{t('header.marketNews')}</NavLink>
-                    </div>
-                    <div className="border-b border-input/50">
-                        <NavLink to="/methodology" onClick={closeMobileMenu} className="block w-full px-3 py-3 font-semibold text-card-foreground">{t('header.methodology')}</NavLink>
-                    </div>
-
-                    {/* Auth links */}
-                    <div className="p-4">
-                        {user ? (
-                            <div className="space-y-2">
-                                <NavLink to="/dashboard" onClick={closeMobileMenu} className="block w-full text-center">{t('header.dashboard')}</NavLink>
-                                <Button
-                                    onClick={() => { logout(); closeMobileMenu(); }}
-                                    variant="secondary"
-                                    size="sm"
-                                    className="w-full"
-                                >
-                                    {t('header.logout')}
-                                </Button>
+            {/* Mobile Menu */}
+            <div className={`lg:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`} id="mobile-menu">
+                <div className="bg-card border-b border-input shadow-lg">
+                    {user ? (
+                        <div className="pt-4 pb-3 border-t border-input">
+                            <div className="flex items-center px-5">
+                                <div className="flex-shrink-0">
+                                    <span className="flex items-center justify-center h-10 w-10 rounded-full bg-input text-foreground"><Icons.user className="h-6 w-6"/></span>
+                                </div>
+                                <div className="ltr:ml-3 rtl:mr-3">
+                                    <div className="text-base font-medium leading-none text-card-foreground">{user.name}</div>
+                                    <div className="text-sm font-medium leading-none text-foreground/70">{user.email}</div>
+                                </div>
                             </div>
-                        ) : (
-                            <div className="flex items-center gap-2">
-                                <ReactRouterDOM.Link to="/login" className="flex-1" onClick={closeMobileMenu}>
-                                    <Button variant="ghost" size="sm" className="w-full">{t('header.login')}</Button>
-                                </ReactRouterDOM.Link>
-                                <ReactRouterDOM.Link to="/register" className="flex-1" onClick={closeMobileMenu}>
-                                    <Button variant="primary" size="sm" className="w-full">{t('header.register')}</Button>
-                                </ReactRouterDOM.Link>
+                            <div className="mt-3 px-2 space-y-1">
+                                <NavLink to="/dashboard" onClick={closeMobileMenu} className="block">{t('header.dashboard')}</NavLink>
+                                <button onClick={() => { logout(); closeMobileMenu(); }} className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-foreground/70 hover:bg-input hover:text-foreground">{t('header.logout')}</button>
                             </div>
-                        )}
+                        </div>
+                    ) : (
+                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                            <NavLink to="/login" onClick={closeMobileMenu} className="block">{t('header.login')}</NavLink>
+                            <NavLink to="/register" onClick={closeMobileMenu} className="block">{t('header.register')}</NavLink>
+                        </div>
+                    )}
+                    <div className="border-t border-input/50">
+                        <MobileAccordionLink title={t('header.brokers')}>
+                           <NavLink to="/brokers" onClick={closeMobileMenu} className="block">{t('header.megaMenu.allBrokers')}</NavLink>
+                           <NavLink to="/compare" onClick={closeMobileMenu} className="block">{t('header.megaMenu.compareBrokers')}</NavLink>
+                           <NavLink to="/cost-analyzer" onClick={closeMobileMenu} className="block">{t('header.megaMenu.costAnalyzer')}</NavLink>
+                           <NavLink to="/broker-matcher" onClick={closeMobileMenu} className="block">{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
+                        </MobileAccordionLink>
+                        <MobileAccordionLink title={t('header.tools')}>
+                           <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.economicCalendar')}</NavLink>
+                           <NavLink to="/tools/calculators" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.calculators')}</NavLink>
+                           <NavLink to="/tools/market-data" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.marketData')}</NavLink>
+                        </MobileAccordionLink>
+                        <MobileAccordionLink title={t('header.education')}>
+                           <NavLink to="/education" onClick={closeMobileMenu} className="block">{t('footer.links.educationHub')}</NavLink>
+                           <NavLink to="/education/quizzes" onClick={closeMobileMenu} className="block">{t('education.quizzes.title')}</NavLink>
+                           <NavLink to="/education/webinars" onClick={closeMobileMenu} className="block">{t('education.webinars.title')}</NavLink>
+                           <NavLink to="/education/simulators" onClick={closeMobileMenu} className="block">{t('education.simulators.title')}</NavLink>
+                        </MobileAccordionLink>
+                        <NavLink to="/market-news" onClick={closeMobileMenu} className="block m-3">{t('header.marketNews')}</NavLink>
+                        <NavLink to="/methodology" onClick={closeMobileMenu} className="block m-3">{t('header.methodology')}</NavLink>
+                    </div>
+                     <div className="px-5 py-4 border-t border-input/50 flex items-center justify-between">
+                         <span className="text-sm font-medium text-card-foreground/70">Settings</span>
+                         <div className="flex items-center gap-2">
+                            <LanguageSelector />
+                            <ThemeToggle />
+                         </div>
                     </div>
                 </div>
             </div>

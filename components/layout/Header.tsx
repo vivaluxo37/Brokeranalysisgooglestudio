@@ -79,6 +79,30 @@ const LanguageSelector: React.FC = () => {
     );
 };
 
+// New component for collapsible sections in the mobile menu
+const MobileAccordionLink: React.FC<{ title: string; children: React.ReactNode; }> = ({ title, children }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+        <div className="border-b border-input/50 last:border-b-0">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex justify-between items-center px-3 py-3 text-left font-semibold text-card-foreground"
+                aria-expanded={isOpen}
+            >
+                <span>{title}</span>
+                <Icons.chevronDown className={`h-5 w-5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <div className={`grid transition-all duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                <div className="overflow-hidden">
+                    <div className="pt-2 pb-3 ltr:pl-4 rtl:pr-4 space-y-1">
+                        {children}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 
 const Header: React.FC = () => {
     const { user, logout } = useAuth();
@@ -200,36 +224,57 @@ const Header: React.FC = () => {
             </nav>
 
             {/* Mobile Menu Panel */}
-            <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen' : 'max-h-0'}`} id="mobile-menu">
-                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-input">
-                    <NavLink to="/brokers" onClick={closeMobileMenu}>{t('header.megaMenu.allBrokers')}</NavLink>
-                    <NavLink to="/compare" onClick={closeMobileMenu}>{t('header.megaMenu.compareBrokers')}</NavLink>
-                    <NavLink to="/cost-analyzer" onClick={closeMobileMenu}>{t('header.megaMenu.costAnalyzer')}</NavLink>
-                    <NavLink to="/broker-matcher" onClick={closeMobileMenu}>{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
-                    <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu}>{t('header.toolsMenu.economicCalendar')}</NavLink>
-                    <NavLink to="/tools/calculators" onClick={closeMobileMenu}>{t('header.toolsMenu.calculators')}</NavLink>
-                    <NavLink to="/tools/market-data" onClick={closeMobileMenu}>{t('header.toolsMenu.marketData')}</NavLink>
-                    <NavLink to="/education" onClick={closeMobileMenu}>{t('header.education')}</NavLink>
-                    <NavLink to="/market-news" onClick={closeMobileMenu}>{t('header.marketNews')}</NavLink>
-                    <NavLink to="/methodology" onClick={closeMobileMenu}>{t('header.methodology')}</NavLink>
+            <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-[85vh]' : 'max-h-0'}`} id="mobile-menu">
+                <div className="border-t border-input overflow-y-auto max-h-[85vh] bg-card">
+                    <MobileAccordionLink title={t('header.brokers')}>
+                        <NavLink to="/brokers" onClick={closeMobileMenu} className="block">{t('header.megaMenu.allBrokers')}</NavLink>
+                        <NavLink to="/compare" onClick={closeMobileMenu} className="block">{t('header.megaMenu.compareBrokers')}</NavLink>
+                        <NavLink to="/cost-analyzer" onClick={closeMobileMenu} className="block">{t('header.megaMenu.costAnalyzer')}</NavLink>
+                        <NavLink to="/broker-matcher" onClick={closeMobileMenu} className="block">{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
+                    </MobileAccordionLink>
+                    <MobileAccordionLink title={t('header.tools')}>
+                        <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.economicCalendar')}</NavLink>
+                        <NavLink to="/tools/calculators" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.calculators')}</NavLink>
+                        <NavLink to="/tools/market-data" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.marketData')}</NavLink>
+                    </MobileAccordionLink>
+                    <MobileAccordionLink title={t('header.education')}>
+                        <NavLink to="/education" onClick={closeMobileMenu} className="block">{t('education.hub.title')}</NavLink>
+                        <NavLink to="/education/quizzes" onClick={closeMobileMenu} className="block">{t('education.quizzes.title')}</NavLink>
+                        <NavLink to="/education/webinars" onClick={closeMobileMenu} className="block">{t('education.webinars.title')}</NavLink>
+                        <NavLink to="/education/simulators" onClick={closeMobileMenu} className="block">{t('education.simulators.title')}</NavLink>
+                    </MobileAccordionLink>
 
-                    {/* Fix: Replaced truncated and incorrect code with proper mobile authentication links. */}
-                    <div className="pt-4 mt-4 border-t border-input">
+                    {/* Standalone links */}
+                    <div className="border-b border-input/50">
+                        <NavLink to="/market-news" onClick={closeMobileMenu} className="block w-full px-3 py-3 font-semibold text-card-foreground">{t('header.marketNews')}</NavLink>
+                    </div>
+                    <div className="border-b border-input/50">
+                        <NavLink to="/methodology" onClick={closeMobileMenu} className="block w-full px-3 py-3 font-semibold text-card-foreground">{t('header.methodology')}</NavLink>
+                    </div>
+
+                    {/* Auth links */}
+                    <div className="p-4">
                         {user ? (
-                            <>
-                                <NavLink to="/dashboard" onClick={closeMobileMenu}>{t('header.dashboard')}</NavLink>
-                                <button
+                            <div className="space-y-2">
+                                <NavLink to="/dashboard" onClick={closeMobileMenu} className="block w-full text-center">{t('header.dashboard')}</NavLink>
+                                <Button
                                     onClick={() => { logout(); closeMobileMenu(); }}
-                                    className="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-foreground/70 hover:bg-input hover:text-foreground"
+                                    variant="secondary"
+                                    size="sm"
+                                    className="w-full"
                                 >
                                     {t('header.logout')}
-                                </button>
-                            </>
+                                </Button>
+                            </div>
                         ) : (
-                            <>
-                                <NavLink to="/login" onClick={closeMobileMenu}>{t('header.login')}</NavLink>
-                                <NavLink to="/register" onClick={closeMobileMenu}>{t('header.register')}</NavLink>
-                            </>
+                            <div className="flex items-center gap-2">
+                                <ReactRouterDOM.Link to="/login" className="flex-1" onClick={closeMobileMenu}>
+                                    <Button variant="ghost" size="sm" className="w-full">{t('header.login')}</Button>
+                                </ReactRouterDOM.Link>
+                                <ReactRouterDOM.Link to="/register" className="flex-1" onClick={closeMobileMenu}>
+                                    <Button variant="primary" size="sm" className="w-full">{t('header.register')}</Button>
+                                </ReactRouterDOM.Link>
+                            </div>
                         )}
                     </div>
                 </div>

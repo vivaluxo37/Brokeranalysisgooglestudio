@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import * as ReactRouterDOM from 'react-router-dom';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import Input from '../components/ui/Input';
@@ -10,6 +11,10 @@ import Spinner from '../components/ui/Spinner';
 import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import { useTranslation } from '../hooks/useTranslation';
 import BrokerCardSkeleton from '../components/brokers/BrokerCardSkeleton';
+import StarRating from '../components/ui/StarRating';
+import Tag from '../components/ui/Tag';
+import Tooltip from '../components/ui/Tooltip';
+import { useComparison } from '../hooks/useComparison';
 
 // Utility to parse leverage string like "1:500" into a number 500
 const parseLeverage = (leverageStr: string): number => {
@@ -60,6 +65,123 @@ const Accordion: React.FC<{ title: string; children: React.ReactNode }> = ({ tit
     );
 };
 
+type SortableBrokerKeys = 'name' | 'score' | 'minDeposit';
+
+const BrokerTable: React.FC<{ brokers: Broker[], t: (key: string) => string }> = ({ brokers, t }) => {
+    const [sortConfig, setSortConfig] = useState<{ key: SortableBrokerKeys; direction: 'asc' | 'desc' }>({ key: 'score', direction: 'desc' });
+    const { addBrokerToComparison, removeBrokerFromComparison, isBrokerInComparison } = useComparison();
+
+    const sortedBrokers = useMemo(() => {
+        let sortableItems = [...brokers];
+        sortableItems.sort((a, b) => {
+            let aValue: string | number, bValue: string | number;
+
+            switch (sortConfig.key) {
+                case 'minDeposit':
+                    aValue = a.accessibility.minDeposit;
+                    bValue = b.accessibility.minDeposit;
+                    break;
+                case 'score':
+                    aValue = a.score;
+                    bValue = b.score;
+                    break;
+                case 'name':
+                default:
+                    aValue = a.name;
+                    bValue = b.name;
+                    break;
+            }
+
+            if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+            return 0;
+        });
+        return sortableItems;
+    }, [brokers, sortConfig]);
+
+    const requestSort = (key: SortableBrokerKeys) => {
+        let direction: 'asc' | 'desc' = 'asc';
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    const SortIcon: React.FC<{ direction?: 'asc' | 'desc' }> = ({ direction }) => {
+      // Fix: Explicitly type commonProps to satisfy SVG attribute types.
+      const commonProps: React.SVGProps<SVGSVGElement> = { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "inline-block ml-1" };
+      if (direction === 'asc') return <svg {...commonProps}><path d="m18 15-6-6-6 6"/></svg>;
+      if (direction === 'desc') return <svg {...commonProps}><path d="m6 9 6 6 6-6"/></svg>;
+      return <svg {...commonProps} className={`${commonProps.className} opacity-30 group-hover:opacity-100`}><path d="M8 9l4-4 4 4"/><path d="M16 15l-4 4-4-4"/></svg>;
+    };
+
+    const SortableHeader: React.FC<{ children: React.ReactNode; sortKey: SortableBrokerKeys; className?: string }> = ({ children, sortKey, className = '' }) => (
+      <th className={`p-4 ${className}`}>
+        <button className="flex items-center group" onClick={() => requestSort(sortKey)}>
+          <span className={sortConfig.key === sortKey ? 'text-primary-400' : ''}>{children}</span>
+          <SortIcon direction={sortConfig.key === sortKey ? sortConfig.direction : undefined} />
+        </button>
+      </th>
+    );
+
+    return (
+        <div className="overflow-x-auto bg-card rounded-lg border border-input animate-fade-in">
+            <table className="w-full min-w-max text-left">
+                <thead>
+                    <tr className="border-b border-input">
+                        <SortableHeader sortKey="name">Broker</SortableHeader>
+                        <SortableHeader sortKey="score">Score</SortableHeader>
+                        <th className="p-4">Regulators</th>
+                        <SortableHeader sortKey="minDeposit">Min. Deposit</SortableHeader>
+                        <th className="p-4 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {sortedBrokers.map(broker => {
+                        const inCompare = isBrokerInComparison(broker.id);
+                        return (
+                            <tr key={broker.id} className="border-b border-input last:border-b-0 hover:bg-input/30">
+                                <td className="p-4">
+                                    <ReactRouterDOM.Link to={`/broker/${broker.id}`} className="flex items-center gap-3 group">
+                                        <img src={broker.logoUrl} alt={broker.name} className="h-10 bg-white p-1 rounded-md" />
+                                        <span className="font-semibold text-card-foreground group-hover:text-primary-400 transition-colors">{broker.name}</span>
+                                    </ReactRouterDOM.Link>
+                                </td>
+                                <td className="p-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="font-bold text-lg text-primary-400">{broker.score.toFixed(1)}</span>
+                                        <StarRating score={broker.score} />
+                                    </div>
+                                </td>
+                                <td className="p-4">
+                                    <div className="flex flex-wrap gap-1">
+                                        {broker.regulation.regulators.slice(0, 2).map(reg => <Tag key={reg}>{reg}</Tag>)}
+                                        {broker.regulation.regulators.length > 2 && <Tag>+{broker.regulation.regulators.length - 2}</Tag>}
+                                    </div>
+                                </td>
+                                <td className="p-4 font-semibold">${broker.accessibility.minDeposit}</td>
+                                <td className="p-4">
+                                    <div className="flex justify-center items-center gap-2">
+                                        <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer">
+                                            <Button variant="primary" size="sm">Visit</Button>
+                                        </a>
+                                        <Tooltip content={inCompare ? 'Remove from comparison' : 'Add to comparison'}>
+                                            <Button onClick={(e) => { e.stopPropagation(); inCompare ? removeBrokerFromComparison(broker.id) : addBrokerToComparison(broker.id) }} variant="secondary" size="sm" className="p-2">
+                                                {inCompare ? <Icons.compareRemove className="h-4 w-4" /> : <Icons.compare className="h-4 w-4" />}
+                                            </Button>
+                                        </Tooltip>
+                                    </div>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
+
 const AllBrokersPage: React.FC = () => {
   const [filters, setFilters] = useState(initialFilters);
   const [aiRecommendation, setAiRecommendation] = useState<AIRecommendation | null>(null);
@@ -67,6 +189,7 @@ const AllBrokersPage: React.FC = () => {
   const [aiError, setAiError] = useState<string | null>(null);
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
+  const [view, setView] = useState<'grid' | 'table'>('grid');
 
   useEffect(() => {
     // Simulate initial data fetching/processing delay
@@ -131,7 +254,7 @@ const AllBrokersPage: React.FC = () => {
             if (filters.spread === 'standard' && spread <= 1.0) return false;
         }
         if (filters.commission !== 'any') {
-             const hasCommission = !broker.tradingConditions.commission.toLowerCase().includes('zero');
+             const hasCommission = !/zero|included in spread/i.test(broker.tradingConditions.commission);
              if (filters.commission === 'commission' && !hasCommission) return false;
              if (filters.commission === 'zero' && hasCommission) return false;
         }
@@ -257,11 +380,25 @@ const AllBrokersPage: React.FC = () => {
 
         <main className="lg:col-span-3">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4">
-                {!isLoading && (
-                    <p className="text-sm text-foreground/70">
-                        {t('allBrokersPage.results.showing', { count: filteredBrokers.length, total: allBrokers.length })}
-                    </p>
-                )}
+                <div className="flex items-center gap-4">
+                  {!isLoading && (
+                      <p className="text-sm text-foreground/70">
+                          {t('allBrokersPage.results.showing', { count: filteredBrokers.length, total: allBrokers.length })}
+                      </p>
+                  )}
+                  <div className="flex items-center bg-input p-1 rounded-md">
+                    <Tooltip content="Grid View">
+                      <button onClick={() => setView('grid')} className={`p-1.5 rounded-md transition-colors ${view === 'grid' ? 'bg-card shadow-md' : 'text-foreground/60 hover:bg-card/50'}`} aria-label="Grid View">
+                        <Icons.grid className="h-5 w-5" />
+                      </button>
+                    </Tooltip>
+                    <Tooltip content="Table View">
+                      <button onClick={() => setView('table')} className={`p-1.5 rounded-md transition-colors ${view === 'table' ? 'bg-card shadow-md' : 'text-foreground/60 hover:bg-card/50'}`} aria-label="Table View">
+                        <Icons.list className="h-5 w-5" />
+                      </button>
+                    </Tooltip>
+                  </div>
+                </div>
                 <Button 
                     onClick={handleGetAIRecommendation} 
                     disabled={isAiLoading || filteredBrokers.length < 2}
@@ -301,9 +438,13 @@ const AllBrokersPage: React.FC = () => {
                     ))}
                 </div>
             ) : filteredBrokers.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} />)}
-                </div>
+                view === 'grid' ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                      {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} />)}
+                  </div>
+                ) : (
+                  <BrokerTable brokers={filteredBrokers} t={t} />
+                )
             ) : (
                 <div className="text-center py-20 bg-card rounded-lg border border-input">
                     <h3 className="text-xl font-semibold">{t('allBrokersPage.results.noResultsTitle')}</h3>

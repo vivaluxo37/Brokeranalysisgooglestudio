@@ -1,4 +1,5 @@
 
+
 export interface Review {
   id: string;
   brokerId: string;
@@ -13,6 +14,29 @@ export interface Review {
     method: string;
   };
 }
+
+export interface DiscussionReply {
+  id: string;
+  postId: string;
+  userId: string;
+  userName: string;
+  content: string;
+  date: string;
+  upvotes: number;
+}
+
+export interface DiscussionPost {
+  id: string;
+  brokerId: string;
+  userId: string;
+  userName: string;
+  title: string;
+  content: string;
+  date: string;
+  upvotes: number;
+  replies: DiscussionReply[];
+}
+
 
 export interface AccountType {
     name: string;
@@ -305,6 +329,15 @@ export interface ReviewsContextType {
   addReview: (review: Omit<Review, 'id' | 'date' | 'verified'>) => void;
   verifyReview: (reviewId: string) => void;
   getAverageWithdrawalTime: (brokerId: string) => { averageDays: number | null; reportCount: number };
+}
+
+export interface DiscussionContextType {
+  posts: DiscussionPost[];
+  getPostsByBrokerId: (brokerId: string) => DiscussionPost[];
+  addPost: (post: Omit<DiscussionPost, 'id' | 'date' | 'upvotes' | 'replies'>) => void;
+  addReply: (reply: Omit<DiscussionReply, 'id' | 'date' | 'upvotes'>) => void;
+  upvotePost: (postId: string) => void;
+  upvoteReply: (replyId: string) => void;
 }
 
 export interface Alert {

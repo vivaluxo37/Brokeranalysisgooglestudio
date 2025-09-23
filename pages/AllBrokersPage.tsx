@@ -40,6 +40,7 @@ const initialFilters = {
     copyTrading: 'any',
     minLotSize: 'any',
     riskProfile: 'all', // New filter for risk
+    socialTradingFeatures: [] as string[],
 };
 
 type TradingStyle = 'Scalping' | 'Algorithmic' | 'Copy Trading' | 'Swing Trading' | 'News Trading' | 'Low Cost';
@@ -200,7 +201,7 @@ const AllBrokersPage: React.FC = () => {
 
   const handleCheckboxChange = (group: FilterKeys, value: string) => {
     setFilters(prev => {
-        const currentGroup = prev[group as 'executionTypes' | 'platforms' | 'algoSupport'];
+        const currentGroup = prev[group as 'executionTypes' | 'platforms' | 'algoSupport' | 'socialTradingFeatures'];
         const newGroup = currentGroup.includes(value)
             ? currentGroup.filter(item => item !== value)
             : [...currentGroup, value];
@@ -222,7 +223,7 @@ const AllBrokersPage: React.FC = () => {
               newFilters = { ...newFilters, executionTypes: ['ECN'], algoSupport: ['eaSupport', 'apiAccess'] };
               break;
           case 'Copy Trading':
-              newFilters = { ...newFilters, copyTrading: 'yes' };
+              newFilters = { ...newFilters, socialTradingFeatures: ['copyTrading'] };
               break;
           case 'Swing Trading':
                newFilters = { ...newFilters, maxLeverage: 'low' }; // Low leverage for long-term holds
@@ -270,10 +271,19 @@ const AllBrokersPage: React.FC = () => {
             if (filters.algoSupport.includes('eaSupport') && !broker.technology.eaSupport) return false;
             if (filters.algoSupport.includes('apiAccess') && !broker.technology.apiAccess) return false;
         }
-        if (filters.copyTrading !== 'any') {
-             if (filters.copyTrading === 'yes' && !broker.copyTrading) return false;
-             if (filters.copyTrading === 'no' && broker.copyTrading) return false;
+        
+        if (filters.socialTradingFeatures.length > 0) {
+            const checks = {
+                copyTrading: (b: Broker) => b.copyTrading || b.platformFeatures.copyTrading.available,
+                pammMam: (b: Broker) => b.accountManagement.mamPammSupport,
+                zuluTrade: (b: Broker) => b.platformFeatures.copyTrading.platforms.includes('ZuluTrade'),
+                myfxbook: (b: Broker) => b.platformFeatures.copyTrading.platforms.includes('Myfxbook'),
+            };
+            if (!filters.socialTradingFeatures.every(feature => checks[feature as keyof typeof checks] && checks[feature as keyof typeof checks](broker))) {
+                return false;
+            }
         }
+        
         if (filters.minLotSize !== 'any') {
             const lotSize = broker.tradingConditions.minLotSize || 0.01;
             if (filters.minLotSize === 'micro' && lotSize > 0.01) return false;
@@ -376,10 +386,26 @@ const AllBrokersPage: React.FC = () => {
 
                         <h4 className="font-semibold text-sm mb-2 mt-4">{t('allBrokersPage.algoTrading')}</h4>
                         {[{v: 'eaSupport', l: t('allBrokersPage.algoTradingOptions.eaSupport')}, {v: 'apiAccess', l: t('allBrokersPage.algoTradingOptions.apiAccess')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={filters.algoSupport.includes(opt.v)} onChange={() => handleCheckboxChange('algoSupport', opt.v)} className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
-
-                        <h4 className="font-semibold text-sm mb-2 mt-4">{t('allBrokersPage.socialTrading')}</h4>
-                        {[{v: 'any', l: t('allBrokersPage.socialTradingOptions.any')}, {v: 'yes', l: t('allBrokersPage.socialTradingOptions.yes')}, {v: 'no', l: t('allBrokersPage.socialTradingOptions.no')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="copyTrading" value={opt.v} checked={filters.copyTrading === opt.v} onChange={(e) => handleRadioChange('copyTrading', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
                      </Accordion>
+                    <Accordion title="Social & Copy Trading">
+                        <h4 className="font-semibold text-sm mb-2">Features</h4>
+                        {[
+                            { v: 'copyTrading', l: 'Supports Copy Trading' },
+                            { v: 'pammMam', l: 'PAMM/MAM Accounts' },
+                            { v: 'zuluTrade', l: 'ZuluTrade Integration' },
+                            { v: 'myfxbook', l: 'Myfxbook Integration' },
+                        ].map(opt => (
+                            <label key={opt.v} className="flex items-center gap-2 text-sm">
+                                <input
+                                    type="checkbox"
+                                    checked={filters.socialTradingFeatures.includes(opt.v)}
+                                    onChange={() => handleCheckboxChange('socialTradingFeatures', opt.v)}
+                                    className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"
+                                />
+                                {opt.l}
+                            </label>
+                        ))}
+                    </Accordion>
                      <Accordion title={t('allBrokersPage.tradingConditionsTitle')}>
                          <h4 className="font-semibold text-sm mb-2">{t('allBrokersPage.minLotSize')}</h4>
                         {[{v: 'any', l: t('allBrokersPage.minLotSizeOptions.any')}, {v: 'micro', l: t('allBrokersPage.minLotSizeOptions.micro')}, {v: 'mini', l: t('allBrokersPage.minLotSizeOptions.mini')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="minLotSize" value={opt.v} checked={filters.minLotSize === opt.v} onChange={(e) => handleRadioChange('minLotSize', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}

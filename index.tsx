@@ -10,6 +10,7 @@ import { FavoritesProvider } from './contexts/FavoritesContext';
 import { ReviewsProvider } from './contexts/ReviewsContext';
 import { AlertsProvider } from './contexts/AlertsContext';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { DiscussionProvider } from './contexts/DiscussionContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -25,9 +26,11 @@ const app = (
             <ComparisonProvider>
               <FavoritesProvider>
                 <ReviewsProvider>
-                  <AlertsProvider>
-                    <App />
-                  </AlertsProvider>
+                  <DiscussionProvider>
+                    <AlertsProvider>
+                      <App />
+                    </AlertsProvider>
+                  </DiscussionProvider>
                 </ReviewsProvider>
               </FavoritesProvider>
             </ComparisonProvider>

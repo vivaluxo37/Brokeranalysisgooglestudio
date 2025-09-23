@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/useAuth';
 import { Icons } from '../constants';
 import StarRating from '../components/ui/StarRating';
 import StarRatingInput from '../components/ui/StarRatingInput';
-import { Review } from '../types';
+import { Review, DiscussionPost } from '../types';
 import ReviewCard from '../components/brokers/ReviewCard';
 import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import { getReviewSummary, ReviewSummary, getRegulatoryTrustScore, TrustScore } from '../services/geminiService';
@@ -24,6 +24,8 @@ import Tooltip from '../components/ui/Tooltip';
 import RiskProfileCard from '../components/brokers/RiskProfileCard';
 import ReportBrokerModal from '../components/brokers/ReportBrokerModal';
 import Input from '../components/ui/Input';
+import { DiscussionContext } from '../contexts/DiscussionContext';
+import DiscussionPostCard from '../components/brokers/DiscussionPostCard';
 
 // New component for responsive key-value tables
 const DetailTable: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -233,8 +235,11 @@ const BrokerDetailPage: React.FC = () => {
   const { addBrokerToFavorites, removeBrokerFromFavorites, isBrokerInFavorites } = useFavorites();
   const { user } = useAuth();
   const { getReviewsByBrokerId, addReview, getAverageWithdrawalTime } = useReviews();
+  const discussionContext = React.useContext(DiscussionContext);
+
 
   const reviews = useMemo(() => getReviewsByBrokerId(broker?.id || ''), [getReviewsByBrokerId, broker]);
+  const posts = useMemo(() => discussionContext?.getPostsByBrokerId(broker?.id || '') || [], [discussionContext, broker]);
   
   const [newRating, setNewRating] = useState(0);
   const [newComment, setNewComment] = useState('');
@@ -247,6 +252,11 @@ const BrokerDetailPage: React.FC = () => {
   const [sortOrder, setSortOrder] = useState('date-desc');
   const [filterRating, setFilterRating] = useState(0);
   const [showVerifiedOnly, setShowVerifiedOnly] = useState(false);
+
+  // State for new discussion post
+  const [postTitle, setPostTitle] = useState('');
+  const [postContent, setPostContent] = useState('');
+  const [isSubmittingPost, setIsSubmittingPost] = useState(false);
 
   const description = useMetaDescription(broker);
   
@@ -323,11 +333,12 @@ const BrokerDetailPage: React.FC = () => {
         { id: 'deposits', title: 'Deposit & Withdrawal', show: true },
         { id: 'support', title: 'Customer Support', show: true },
         { id: 'reviews', title: 'User Reviews', show: true },
+        { id: 'discussion', title: 'Community Q&A', show: true },
     ];
     return toc.filter(item => item.show);
   }, [broker]);
 
-  if (!broker) {
+  if (!broker || !discussionContext) {
     return <NotFoundPage />;
   }
   
@@ -364,6 +375,25 @@ const BrokerDetailPage: React.FC = () => {
         setWithdrawalDays('');
         setWithdrawalMethod('');
         setIsSubmitting(false);
+    }, 500);
+  };
+
+  const handlePostSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!postTitle.trim() || !postContent.trim() || !user || !broker) return;
+
+    setIsSubmittingPost(true);
+    setTimeout(() => {
+        discussionContext.addPost({
+            brokerId: broker.id,
+            userId: user.id,
+            userName: user.name,
+            title: postTitle,
+            content: postContent,
+        });
+        setPostTitle('');
+        setPostContent('');
+        setIsSubmittingPost(false);
     }, 500);
   };
 
@@ -776,6 +806,53 @@ const BrokerDetailPage: React.FC = () => {
               ) : (<p className="text-center text-foreground/70 py-8">{reviews.length > 0 ? 'No reviews match your selected filters.' : 'No reviews yet for this broker. Be the first to leave one!'}</p>)}
           </div>
         </div>
+
+        <Section title="Community Q&A" id="discussion">
+            {user ? (
+                <Card className="my-6 bg-input/40">
+                    <CardContent>
+                        <h3 className="text-xl font-semibold mb-4">Ask a Question</h3>
+                        <form onSubmit={handlePostSubmit} className="space-y-4">
+                            <Input
+                                label="Question Title"
+                                id="post-title"
+                                type="text"
+                                placeholder="e.g., How is customer support response time?"
+                                value={postTitle}
+                                onChange={(e) => setPostTitle(e.target.value)}
+                                required
+                            />
+                            <div>
+                                <label htmlFor="post-content" className="block text-sm font-medium text-card-foreground/90 mb-1">Your Question</label>
+                                <textarea
+                                    id="post-content"
+                                    rows={3}
+                                    className="block w-full bg-input border-input rounded-md shadow-sm p-2 placeholder:text-foreground/60"
+                                    placeholder="Provide more details here..."
+                                    value={postContent}
+                                    onChange={(e) => setPostContent(e.target.value)}
+                                    required
+                                ></textarea>
+                            </div>
+                            <Button type="submit" disabled={isSubmittingPost || !postTitle.trim() || !postContent.trim()}>
+                                {isSubmittingPost ? <Spinner size="sm" /> : 'Post Question'}
+                            </Button>
+                        </form>
+                    </CardContent>
+                </Card>
+            ) : (
+                <div className="text-center p-6 bg-card rounded-lg border border-input my-8">
+                    <p className="text-card-foreground/80"><ReactRouterDOM.Link to="/login" className="text-primary-400 font-semibold hover:underline">Log in</ReactRouterDOM.Link> to ask a question.</p>
+                </div>
+            )}
+            <div className="space-y-6 mt-8">
+                {posts.length > 0 ? (
+                    posts.map(post => <DiscussionPostCard key={post.id} post={post} />)
+                ) : (
+                    <p className="text-center text-foreground/70 py-8">No questions have been asked about this broker yet. Be the first!</p>
+                )}
+            </div>
+        </Section>
       </div>
 
     </div>

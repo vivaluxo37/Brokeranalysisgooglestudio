@@ -15,6 +15,7 @@ import StarRating from '../components/ui/StarRating';
 import Tag from '../components/ui/Tag';
 import Tooltip from '../components/ui/Tooltip';
 import { useComparison } from '../hooks/useComparison';
+import { countries } from '../data/countries';
 
 // Utility to parse leverage string like "1:500" into a number 500
 const parseLeverage = (leverageStr: string): number => {
@@ -41,6 +42,7 @@ const initialFilters = {
     minLotSize: 'any',
     riskProfile: 'all', // New filter for risk
     socialTradingFeatures: [] as string[],
+    country: 'any',
 };
 
 type TradingStyle = 'Scalping' | 'Algorithmic' | 'Copy Trading' | 'Swing Trading' | 'News Trading' | 'Low Cost';
@@ -220,7 +222,7 @@ const AllBrokersPage: React.FC = () => {
               newFilters = { ...newFilters, executionTypes: ['ECN', 'STP'], spread: 'ultra-low', commission: 'commission', minLotSize: 'micro' };
               break;
           case 'Algorithmic':
-              newFilters = { ...newFilters, executionTypes: ['ECN'], algoSupport: ['eaSupport', 'apiAccess'] };
+              newFilters = { ...newFilters, executionTypes: ['ECN'], algoSupport: ['EAs', 'API'] };
               break;
           case 'Copy Trading':
               newFilters = { ...newFilters, socialTradingFeatures: ['copyTrading'] };
@@ -244,6 +246,7 @@ const AllBrokersPage: React.FC = () => {
 
     return allBrokers.filter(broker => {
         if (filters.searchTerm && !broker.name.toLowerCase().includes(filters.searchTerm.toLowerCase())) return false;
+        if (filters.country !== 'any' && broker.restrictedCountries?.includes(filters.country)) return false;
         if (filters.minDeposit !== 'any') {
             if (broker.accessibility.minDeposit > parseInt(filters.minDeposit, 10)) return false;
         }
@@ -268,8 +271,7 @@ const AllBrokersPage: React.FC = () => {
         }
         if (filters.platforms.length > 0 && !filters.platforms.every(p => broker.technology.platforms.includes(p))) return false;
         if (filters.algoSupport.length > 0) {
-            if (filters.algoSupport.includes('eaSupport') && !broker.technology.eaSupport) return false;
-            if (filters.algoSupport.includes('apiAccess') && !broker.technology.apiAccess) return false;
+            if (!filters.algoSupport.every(feature => broker.platformFeatures.automatedTrading.includes(feature))) return false;
         }
         
         if (filters.socialTradingFeatures.length > 0) {
@@ -346,6 +348,13 @@ const AllBrokersPage: React.FC = () => {
                         onChange={(e) => setFilters(p => ({...p, searchTerm: e.target.value}))}
                         className="mb-4"
                     />
+                    <Accordion title="Country Availability">
+                        <label className="text-sm font-semibold">I am trading from</label>
+                        <select value={filters.country} onChange={(e) => setFilters(p => ({...p, country: e.target.value}))} className="w-full mt-1 bg-input border-input rounded-md shadow-sm p-2">
+                            <option value="any">Any Country</option>
+                            {countries.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
+                    </Accordion>
                      <Accordion title="Risk Profile">
                         {[{v: 'all', l: 'Show All Brokers'}, {v: 'exclude_high', l: 'Exclude High & Critical Risk'}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="radio" name="riskProfile" value={opt.v} checked={filters.riskProfile === opt.v} onChange={(e) => handleRadioChange('riskProfile', e.target.value)} className="form-radio h-4 w-4 bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
                     </Accordion>
@@ -385,7 +394,7 @@ const AllBrokersPage: React.FC = () => {
                         {['MT4', 'MT5', 'cTrader', 'TradingView'].map(val => <label key={val} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={filters.platforms.includes(val)} onChange={() => handleCheckboxChange('platforms', val)} className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"/>{val}</label>)}
 
                         <h4 className="font-semibold text-sm mb-2 mt-4">{t('allBrokersPage.algoTrading')}</h4>
-                        {[{v: 'eaSupport', l: t('allBrokersPage.algoTradingOptions.eaSupport')}, {v: 'apiAccess', l: t('allBrokersPage.algoTradingOptions.apiAccess')}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={filters.algoSupport.includes(opt.v)} onChange={() => handleCheckboxChange('algoSupport', opt.v)} className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
+                        {[{v: 'EAs', l: 'EA Support'}, {v: 'API', l: 'API Access'}].map(opt => <label key={opt.v} className="flex items-center gap-2 text-sm"><input type="checkbox" checked={filters.algoSupport.includes(opt.v)} onChange={() => handleCheckboxChange('algoSupport', opt.v)} className="form-checkbox h-4 w-4 rounded bg-input border-input text-primary-600 focus:ring-primary-500"/>{opt.l}</label>)}
                      </Accordion>
                     <Accordion title="Social & Copy Trading">
                         <h4 className="font-semibold text-sm mb-2">Features</h4>

@@ -8,6 +8,7 @@ import Button from '../ui/Button';
 import AlertsDropdown from '../common/AlertsDropdown';
 import { categoryPageGroups } from '../../pages/categoryPageData';
 import { useTranslation } from '../../hooks/useTranslation';
+import { translations } from '../../data/locales';
 
 const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () => void, className?: string }> = ({ to, children, onClick, className = '' }) => (
     <ReactRouterDOM.NavLink
@@ -30,18 +31,13 @@ const LanguageSelector: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const languages = {
+    const availableLanguages: { [key: string]: string } = {
         en: 'English',
-        es: 'Español',
-        ar: 'العربية',
-        zh: '中文',
-        hi: 'हिन्दी',
-        fr: 'Français',
-        ru: 'Русский',
-        pt: 'Português',
         de: 'Deutsch',
         ja: '日本語',
     };
+
+    const supportedLanguageCodes = Object.keys(translations);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -62,13 +58,13 @@ const LanguageSelector: React.FC = () => {
             {isOpen && (
                 <div className="absolute right-0 mt-2 w-32 bg-card rounded-md shadow-lg border border-input z-50 animate-fade-in max-h-60 overflow-y-auto">
                     <ul>
-                        {Object.entries(languages).map(([code, name]) => (
+                        {supportedLanguageCodes.map(code => (
                             <li key={code}>
                                 <button
                                     onClick={() => { setLanguage(code); setIsOpen(false); }}
                                     className={`w-full text-left px-4 py-2 text-sm ${language === code ? 'bg-primary-600 text-white' : 'hover:bg-input'}`}
                                 >
-                                    {name}
+                                    {availableLanguages[code] || code}
                                 </button>
                             </li>
                         ))}

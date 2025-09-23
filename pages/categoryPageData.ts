@@ -8,6 +8,19 @@ const parseLeverage = (leverageStr: string): number => {
   return isNaN(num) ? 0 : num;
 };
 
+// Helper to parse commission string like "$3.50 per lot" into a round-trip number
+const parseCommission = (commissionStr: string): number => {
+  if (!commissionStr || typeof commissionStr !== 'string') return 0;
+  if (commissionStr.toLowerCase().includes('zero')) return 0;
+  const match = commissionStr.match(/(\d+\.?\d*)/);
+  if (match) {
+    // Assume the value is per side and double it for round-trip
+    return parseFloat(match[1]) * 2;
+  }
+  return 0;
+};
+
+
 interface CategoryPageInfo {
   name: string;
   path: string;
@@ -74,7 +87,6 @@ const platformAndTypeFilters: CategoryPageInfo[] = [
     path: '/brokers/type/beginners',
     title: 'Best Forex Brokers for Beginners',
     description: 'Start your trading journey with brokers offering user-friendly platforms, low minimum deposits, and comprehensive educational resources.',
-    // Fix: Removed check for non-existent `education` property.
     filterFn: (b) => b.accessibility.minDeposit <= 100 && b.score > 8.0,
   },
   {
@@ -96,21 +108,25 @@ const platformAndTypeFilters: CategoryPageInfo[] = [
     path: '/brokers/type/scalping',
     title: 'Best Brokers for Scalping',
     description: 'Maximize your high-frequency trading strategy with brokers offering the lowest spreads, fastest execution, and ECN/STP environments.',
-    filterFn: (b) => b.technology.executionType.includes('ECN') && (b.tradingConditions.spreads.eurusd + (parseLeverage(b.tradingConditions.commission) / 10)) < 0.8,
+    filterFn: (b) => {
+      const commissionCost = parseCommission(b.tradingConditions.commission) / 10; // Convert commission from $ to pips
+      const totalCost = b.tradingConditions.spreads.eurusd + commissionCost;
+      return b.technology.executionType.includes('ECN') && totalCost < 0.8;
+    },
   },
   {
     name: 'Copy Trading',
     path: '/brokers/type/copy-trading',
     title: 'Best Copy Trading Brokers',
     description: 'Leverage the expertise of seasoned traders. Explore the best platforms for social and copy trading to automate your strategy.',
-    filterFn: (b) => b.copyTrading === true,
+    filterFn: (b) => b.copyTrading === true || b.platformFeatures.copyTrading.available,
   },
   {
     name: 'Islamic Brokers',
     path: '/brokers/type/islamic',
     title: 'Best Islamic (Swap-Free) Forex Brokers',
     description: 'Find Sharia-compliant forex brokers that offer swap-free accounts, ensuring your trading aligns with Islamic finance principles.',
-    filterFn: (b) => b.isIslamic === true,
+    filterFn: (b) => b.isIslamic === true || b.accountManagement.islamicAccount.available,
   },
   {
     name: 'High Leverage',
@@ -124,7 +140,6 @@ const platformAndTypeFilters: CategoryPageInfo[] = [
     path: '/brokers/type/stock-trading',
     title: 'Best Brokers for Stock Trading',
     description: 'Diversify your portfolio with brokers that offer a wide range of stock CFDs and other equity instruments from global markets.',
-    // Fix: Correctly access the `total` property on the `stocks` object.
     filterFn: (b) => (b.tradableInstruments?.stocks?.total ?? 0) > 100,
   },
   {
@@ -139,7 +154,6 @@ const platformAndTypeFilters: CategoryPageInfo[] = [
     path: '/brokers/type/gold-trading',
     title: 'Best Brokers for Gold (XAU/USD) Trading',
     description: 'Trade one of the world\'s most popular commodities. Find brokers with low spreads and excellent conditions for trading Gold.',
-    // Fix: Correctly access the `total` property on the `commodities` object.
     filterFn: (b) => (b.tradableInstruments?.commodities?.total ?? 0) > 0,
   },
 ];

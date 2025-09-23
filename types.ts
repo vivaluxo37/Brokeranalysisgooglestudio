@@ -157,6 +157,7 @@ export interface Broker {
   summary?: string;
   pros?: string[];
   cons?: string[];
+  restrictedCountries?: string[];
   
   // New detailed fields
   coreInfo: {

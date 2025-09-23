@@ -20,50 +20,48 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
     { type: 'header', title: t('compareTable.features.overallScore') },
     { title: t('compareTable.features.score'), key: 'score' },
     { type: 'header', title: t('compareTable.features.tradingCosts') },
-    { title: t('compareTable.features.eurusd'), key: 'tradingConditions.spreads.eurusd' },
-    { title: t('compareTable.features.gbpusd'), key: 'tradingConditions.spreads.gbpusd' },
-    { title: t('compareTable.features.usdjpy'), key: 'tradingConditions.spreads.usdjpy' },
-    { title: t('compareTable.features.commission'), key: 'tradingConditions.commission' },
-    { title: t('compareTable.features.swap'), key: 'tradingConditions.swapFeeCategory' },
+    { title: 'Avg. EUR/USD Spread', key: 'fees.trading.averageSpreads.eurusd' },
+    { title: 'Commission', key: 'fees.trading.commissionStructure' },
+    { title: 'Swap Fee Category', key: 'tradingConditions.swapFeeCategory' },
     { type: 'header', title: t('compareTable.features.tradingConditions') },
-    { title: t('compareTable.features.maxLeverage'), key: 'tradingConditions.maxLeverage' },
-    { title: t('compareTable.features.executionType'), key: 'technology.executionType' },
+    { title: 'Max Leverage', key: 'tradingConditions.maxLeverage' },
+    { title: 'Execution Model', key: 'coreInfo.brokerType' },
     { type: 'header', title: t('compareTable.features.accessibility') },
-    { title: t('compareTable.features.minDeposit'), key: 'accessibility.minDeposit' },
-    { title: t('compareTable.features.depositMethods'), key: 'accessibility.depositMethods' },
-    { title: t('compareTable.features.withdrawalMethods'), key: 'accessibility.withdrawalMethods' },
-    { title: t('compareTable.features.support'), key: 'accessibility.customerSupport' },
+    { title: 'Min. Deposit', key: 'accessibility.minDeposit' },
+    { title: 'Deposit Methods', key: 'depositWithdrawal.depositMethods' },
+    { title: 'Withdrawal Methods', key: 'depositWithdrawal.withdrawalMethods' },
+    { title: 'Support Channels', key: 'customerSupport.channels' },
     { type: 'header', title: t('compareTable.features.technology') },
-    { title: t('compareTable.features.platforms'), key: 'technology.platforms' },
+    { title: 'Platforms', key: 'technology.platforms' },
+    { title: 'Copy Trading', key: 'platformFeatures.copyTrading.available' },
     { type: 'header', title: t('compareTable.features.tradableInstruments') },
-    { title: t('compareTable.features.forexPairs'), key: 'tradableInstruments.forexPairs' },
-    { title: t('compareTable.features.stocks'), key: 'tradableInstruments.stocks' },
-    { title: t('compareTable.features.cryptocurrencies'), key: 'tradableInstruments.cryptocurrencies' },
+    { title: 'Forex Pairs', key: 'tradableInstruments.forexPairs.total' },
+    { title: 'Stock CFDs', key: 'tradableInstruments.stocks.total' },
+    { title: 'Cryptocurrencies', key: 'tradableInstruments.cryptocurrencies.total' },
     { type: 'header', title: t('compareTable.features.trust') },
-    { title: t('compareTable.features.regulators'), key: 'regulation.regulators' },
-    { title: t('compareTable.features.founded'), key: 'foundingYear' },
-    { title: t('compareTable.features.headquarters'), key: 'headquarters' },
+    { title: 'Regulators', key: 'security.regulatedBy' },
+    { title: 'Founded', key: 'foundingYear' },
+    { title: 'Headquarters', key: 'headquarters' },
   ];
 
   const renderValue = (broker: Broker, key: string) => {
-    // Helper to render array values as tags, showing up to 3
-    const renderArrayWithTags = (arr: string[]) => (
+    const renderArrayWithTags = (arr: any[]) => (
       <div className="flex flex-wrap justify-center gap-1">
-          {arr.slice(0, 3).map(item => <Tag key={item}>{item}</Tag>)}
+          {arr.slice(0, 3).map(item => <Tag key={typeof item === 'string' ? item : JSON.stringify(item)}>{typeof item === 'object' ? item.regulator : item}</Tag>)}
           {arr.length > 3 && <Tag>+{arr.length - 3} more</Tag>}
       </div>
     );
     
     switch (key) {
       case 'score': return <span className="text-2xl font-bold text-primary-400">{broker.score.toFixed(1)}</span>;
-      case 'regulation.regulators': return renderArrayWithTags(broker.regulation.regulators);
-      case 'accessibility.depositMethods': return renderArrayWithTags(broker.accessibility.depositMethods);
-      case 'accessibility.withdrawalMethods': return renderArrayWithTags(broker.accessibility.withdrawalMethods);
-      case 'accessibility.minDeposit': return `$${broker.accessibility.minDeposit}`;
-      case 'accessibility.customerSupport': return broker.accessibility.customerSupport.join(', ');
-      case 'tradingConditions.spreads.eurusd': return `${broker.tradingConditions.spreads.eurusd} pips`;
-      case 'tradingConditions.spreads.gbpusd': return `${broker.tradingConditions.spreads.gbpusd} pips`;
-      case 'tradingConditions.spreads.usdjpy': return `${broker.tradingConditions.spreads.usdjpy} pips`;
+      case 'security.regulatedBy': return renderArrayWithTags(broker.security.regulatedBy);
+      case 'depositWithdrawal.depositMethods': return renderArrayWithTags(broker.depositWithdrawal.depositMethods);
+      case 'depositWithdrawal.withdrawalMethods': return renderArrayWithTags(broker.depositWithdrawal.withdrawalMethods);
+      case 'accessibility.minDeposit': return broker.accountTypes && broker.accountTypes.length > 0 ? `$${broker.accountTypes[0].minDeposit}` : `$${broker.accessibility.minDeposit}`;
+      case 'customerSupport.channels': return broker.customerSupport.channels.join(', ');
+      case 'fees.trading.averageSpreads.eurusd': 
+        const eurusdSpread = broker.fees.trading.averageSpreads.find(s => s.pair === 'EUR/USD');
+        return eurusdSpread ? eurusdSpread.spread : '-';
       case 'technology.platforms': return broker.technology.platforms.join(', ');
       case 'tradingConditions.swapFeeCategory':
         const category = broker.tradingConditions.swapFeeCategory;
@@ -73,11 +71,13 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
             'High': 'text-red-400'
         }[category];
         return <span className={`font-semibold ${color}`}>{category}</span>;
-      case 'tradableInstruments.forexPairs': return broker.tradableInstruments.forexPairs.total > 0 ? broker.tradableInstruments.forexPairs.total : '-';
-      case 'tradableInstruments.stocks': return broker.tradableInstruments.stocks.total > 0 ? broker.tradableInstruments.stocks.total : '-';
-      case 'tradableInstruments.cryptocurrencies': return broker.tradableInstruments.cryptocurrencies.total > 0 ? broker.tradableInstruments.cryptocurrencies.total : '-';
+      case 'platformFeatures.copyTrading.available':
+        return broker.platformFeatures.copyTrading.available ? <span className="text-green-400 font-semibold">Yes</span> : <span>No</span>;
+      case 'tradableInstruments.forexPairs.total': return broker.tradableInstruments.forexPairs.total > 0 ? broker.tradableInstruments.forexPairs.total : '-';
+      case 'tradableInstruments.stocks.total': return broker.tradableInstruments.stocks.total > 0 ? broker.tradableInstruments.stocks.total : '-';
+      case 'tradableInstruments.cryptocurrencies.total': return broker.tradableInstruments.cryptocurrencies.total > 0 ? broker.tradableInstruments.cryptocurrencies.total : '-';
       default:
-        // Generic getter for simple values like 'foundingYear', 'headquarters', etc.
+        // Generic getter for simple values
         const keys = key.split('.');
         let value: any = broker;
         for (const k of keys) {

@@ -102,17 +102,17 @@ export const translations = {
           title: "Best for Beginners",
           description: "Find user-friendly platforms with low deposits and great educational content."
         },
-        uk: {
-          title: "UK Forex Brokers",
-          description: "Explore top-tier, FCA-regulated brokers known for their robust client protection."
-        },
         ecn: {
-          title: "ECN Brokers",
+          title: "Low Spread & ECN Brokers",
           description: "For serious traders seeking direct market access and the tightest possible spreads."
         },
         copy: {
-          title: "Copy Trading",
+          title: "Top Copy Trading Platforms",
           description: "Leverage the expertise of seasoned traders by automatically copying their trades."
+        },
+        leverage: {
+          title: "High Leverage Brokers",
+          description: "Maximize your trading potential with brokers offering leverage of 1:500 or more."
         }
       },
       howItWorksTitle: "How It Works in 3 Simple Steps",
@@ -640,17 +640,17 @@ export const translations = {
           title: "Am besten für Anfänger",
           description: "Finden Sie benutzerfreundliche Plattformen mit niedrigen Einzahlungen und großartigen Bildungsinhalten."
         },
-        uk: {
-          title: "UK Forex Broker",
-          description: "Entdecken Sie erstklassige, von der FCA regulierte Broker, die für ihren robusten Kundenschutz bekannt sind."
-        },
         ecn: {
-          title: "ECN Broker",
+          title: "Broker mit niedrigen Spreads & ECN",
           description: "Für ernsthafte Händler, die direkten Marktzugang und die engstmöglichen Spreads suchen."
         },
         copy: {
-          title: "Copy Trading",
+          title: "Top-Copy-Trading-Plattformen",
           description: "Nutzen Sie das Fachwissen erfahrener Händler, indem Sie deren Trades automatisch kopieren."
+        },
+        leverage: {
+          title: "Broker mit hohem Hebel",
+          description: "Maximieren Sie Ihr Handelspotenzial mit Brokern, die einen Hebel von 1:500 oder mehr anbieten."
         }
       },
       howItWorksTitle: "So funktioniert es in 3 einfachen Schritten",
@@ -1178,17 +1178,17 @@ export const translations = {
           title: "初心者向け",
           description: "低額の入金と優れた教育コンテンツを備えた使いやすいプラットフォームを見つけましょう。"
         },
-        uk: {
-          title: "英国のFXブローカー",
-          description: "堅牢な顧客保護で知られる、FCA規制のトップクラスのブローカーを探索しましょう。"
-        },
         ecn: {
-          title: "ECNブローカー",
+          title: "低スプレッド＆ECNブローカー",
           description: "直接的な市場アクセスと可能な限り狭いスプレッドを求める真剣なトレーダー向けです。"
         },
         copy: {
-          title: "コピートレード",
+          title: "トップコピートレードプラットフォーム",
           description: "経験豊富なトレーダーの取引を自動的にコピーして、彼らの専門知識を活用しましょう。"
+        },
+        leverage: {
+          title: "ハイレバレッジブローカー",
+          description: "1:500以上のレバレッジを提供するブローカーで、あなたの取引ポテンシャルを最大限に引き出しましょう。"
         }
       },
       howItWorksTitle: "3つの簡単なステップで仕組みを解説",

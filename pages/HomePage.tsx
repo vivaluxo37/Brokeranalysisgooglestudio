@@ -83,16 +83,10 @@ const HomePage: React.FC = () => {
 
   const popularCategories = [
     { 
-      icon: <Icons.user className="h-8 w-8 text-primary-400" />, 
+      icon: <Icons.bookOpen className="h-8 w-8 text-primary-400" />, 
       title: t('home.categories.beginners.title'), 
       path: "/brokers/type/beginners",
       description: t('home.categories.beginners.description')
-    },
-     { 
-      icon: <Icons.globe className="h-8 w-8 text-primary-400" />, 
-      title: t('home.categories.uk.title'), 
-      path: "/brokers/country/uk",
-      description: t('home.categories.uk.description')
     },
      { 
       icon: <Icons.layers className="h-8 w-8 text-primary-400" />, 
@@ -105,6 +99,12 @@ const HomePage: React.FC = () => {
       title: t('home.categories.copy.title'), 
       path: "/brokers/type/copy-trading",
       description: t('home.categories.copy.description')
+    },
+     { 
+      icon: <Icons.trendingUp className="h-8 w-8 text-primary-400" />, 
+      title: t('home.categories.leverage.title'), 
+      path: "/brokers/type/high-leverage",
+      description: t('home.categories.leverage.description')
     }
   ];
 

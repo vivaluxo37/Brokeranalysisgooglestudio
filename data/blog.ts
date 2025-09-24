@@ -9,12 +9,12 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Our comprehensive 2025 guide to choosing a forex broker. We cover regulation, fees, platforms, and AI tools to help you find the best broker for your needs.',
     summary: 'Choosing the right forex broker is the most important decision you\'ll make as a trader. In this guide, we break down the key factors to consider in 2025, from regulatory safety to understanding the true cost of trading.',
     author: {
-      name: 'John Analyst',
-      avatarUrl: 'https://i.pravatar.cc/150?u=johnanalyst',
+      name: 'Darren Cole – Senior Trading Strategist',
+      avatarUrl: 'https://i.pravatar.cc/150?u=darrencole',
     },
     date: '2025-09-20T10:00:00Z',
     tags: ['Beginner Guide', 'Regulation', 'Trading Costs'],
-    imageUrl: 'https://picsum.photos/seed/blog1/1200/630',
+    imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04421cd6e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     readTimeMinutes: 8,
     content: `
 Choosing a forex broker in 2025 can feel overwhelming. With hundreds of options, each promising the best platform and lowest fees, how do you make the right choice? This guide will break down the five most critical factors to consider, ensuring you partner with a broker that is safe, reliable, and suits your trading style.
@@ -24,12 +24,12 @@ Before you even look at spreads or platforms, you must verify a broker's regulat
 
 **What to look for:**
 - **Top-Tier Regulators:** A broker regulated by multiple top-tier authorities is the gold standard. Look for licenses from:
-  - Financial Conduct Authority (**FCA**) in the UK
-  - Australian Securities and Investments Commission (**ASIC**)
-  - U.S. National Futures Association (**NFA**)
-  - Swiss Financial Market Supervisory Authority (**FINMA**)
+  - Financial Conduct Authority ([**FCA**](https://www.fca.org.uk/)) in the UK
+  - Australian Securities and Investments Commission ([**ASIC**](https://asic.gov.au/))
+  - U.S. National Futures Association ([**NFA**](https://www.nfa.futures.org/))
+  - Swiss Financial Market Supervisory Authority ([**FINMA**](https://www.finma.ch/en/))
 - **Client Fund Segregation:** Ensure the broker keeps your funds in segregated bank accounts, separate from their own operational capital. This protects your money if the broker becomes insolvent.
-- **Investor Compensation Schemes:** Regulators like the FCA (via FSCS) and CySEC (via ICF) offer compensation schemes that protect your funds up to a certain amount. This is a critical safety net.
+- **Investor Compensation Schemes:** Regulators like the [**FCA**](https://www.fca.org.uk/) (via FSCS) and [**CySEC**](https://www.cysec.gov.cy/en-GB/home/) (via ICF) offer compensation schemes that protect your funds up to a certain amount. This is a critical safety net.
 
 You can verify a broker's license by checking the regulator's public register. A trustworthy broker like **[Pepperstone](/#/broker/pepperstone)** will prominently display its license numbers.
 
@@ -83,12 +83,12 @@ A: Almost all reputable brokers offer a free demo account. Use it to test their 
     metaDescription: 'A detailed 2025 comparison of ECN and Market Maker forex brokers. Learn the pros and cons of each model regarding spreads, commissions, execution speed, and conflicts of interest to find the best fit for your trading style.',
     summary: 'The terms "ECN" and "Market Maker" are thrown around a lot, but what do they actually mean for you as a trader? This article demystifies the two main broker models and helps you decide which one aligns with your trading strategy.',
     author: {
-      name: 'Jane Trader',
-      avatarUrl: 'https://i.pravatar.cc/150?u=janetrader',
+      name: 'Darren Cole – Senior Trading Strategist',
+      avatarUrl: 'https://i.pravatar.cc/150?u=darrencole',
     },
     date: '2025-09-15T14:30:00Z',
     tags: ['Broker Types', 'ECN', 'Advanced'],
-    imageUrl: 'https://picsum.photos/seed/blog2/1200/630',
+    imageUrl: 'https://images.unsplash.com/photo-1642052519154-15f333333642?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     readTimeMinutes: 9,
     content: `
 ### Key Takeaways
@@ -112,7 +112,7 @@ The primary way a Market Maker profits is through the _spread_. They quote two p
 Because they manage their own order book, they can offer benefits like fixed spreads, which remain constant even during volatile market news. This provides cost predictability for traders.
 
 ### The Conflict of Interest Explained
-The most significant criticism of the Market Maker model is the inherent conflict of interest. Since the broker takes the opposite side of a client's trade, a client's loss is the broker's direct profit. This has historically led to concerns about practices like _requotes_ (where the broker changes the price at the moment of execution) or stop-loss hunting, although such practices are heavily policed by top-tier regulators like the **FCA** and **ASIC**. Reputable Market Makers like **[XTB](/#/broker/xtb)** manage this risk through sophisticated internal hedging strategies, but the fundamental conflict remains part of the business model.
+The most significant criticism of the Market Maker model is the inherent conflict of interest. Since the broker takes the opposite side of a client's trade, a client's loss is the broker's direct profit. This has historically led to concerns about practices like _requotes_ (where the broker changes the price at the moment of execution) or stop-loss hunting, although such practices are heavily policed by top-tier regulators like the [**FCA**](https://www.fca.org.uk/) and [**ASIC**](https://asic.gov.au/). Reputable Market Makers like **[XTB](/#/broker/xtb)** manage this risk through sophisticated internal hedging strategies, but the fundamental conflict remains part of the business model.
 
 ### Pros and Cons of Market Makers
 *   <span class="font-bold">Pros:</span>
@@ -197,7 +197,7 @@ The best advice is to use a broker's demo account to test both account types. Se
 ### FAQ
 
 **Q: Are Market Maker brokers scams?**
-A: Not at all. A broker being a Market Maker does not make it a scam. As long as the broker is regulated by a top-tier authority like the FCA or ASIC, they must adhere to strict rules of conduct that ensure fair pricing and execution. The conflict of interest is a structural part of the model, but regulation keeps it in check.
+A: Not at all. A broker being a Market Maker does not make it a scam. As long as the broker is regulated by a top-tier authority like the [**FCA**](https://www.fca.org.uk/) or [**ASIC**](https://asic.gov.au/), they must adhere to strict rules of conduct that ensure fair pricing and execution. The conflict of interest is a structural part of the model, but regulation keeps it in check.
 
 **Q: Is ECN always cheaper than a Market Maker?**
 A: For active traders, almost always. The combined cost of the raw spread plus a small commission on an ECN account is typically lower than the wider, commission-free spread offered by a Market Maker. If you only make a few small trades a month, the difference may be negligible.

@@ -113,6 +113,37 @@ const InteractiveQuiz: React.FC = () => {
 const parseMarkdown = (markdown: string) => {
     const tableRegex = /^\|.*\|$/m;
 
+    const processInlineFormatting = (text: string) => {
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<span class="font-bold">$1</span>')
+            .replace(/_([^_]+)_/g, '<span class="italic">$1</span>')
+            .replace(/`([^`]+)`/g, '<code class="bg-input text-primary-400 font-mono py-1 px-2 rounded text-sm">$1</code>');
+    };
+    
+    const processLinksAndFormatting = (text: string) => {
+        // Temporarily replace links with placeholders to avoid nested processing
+        const links: string[] = [];
+        const textWithPlaceholders = text.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
+            const formattedText = processInlineFormatting(linkText);
+            const linkType = url.startsWith('/#/') 
+                ? `<a href="${url}" class="text-primary-400 hover:underline">${formattedText}</a>`
+                : `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${formattedText}</a>`;
+            links.push(linkType);
+            return `__LINK_${links.length - 1}__`;
+        });
+
+        // Process remaining formatting
+        let formattedText = processInlineFormatting(textWithPlaceholders);
+
+        // Restore links
+        links.forEach((link, index) => {
+            formattedText = formattedText.replace(`__LINK_${index}__`, link);
+        });
+        
+        return formattedText;
+    };
+
+
     const blocks = markdown.trim().split(/\n\n+/);
 
     const html = blocks.map(block => {
@@ -130,7 +161,7 @@ const parseMarkdown = (markdown: string) => {
             const headerCells = rows[0].split('|').map(h => h.trim()).slice(1, -1);
             const bodyRows = rows.slice(2).map(row => row.split('|').map(c => c.trim()).slice(1, -1));
 
-            let tableHtml = '<div class="my-6 overflow-x-auto rounded-lg border border-input"><table class="w-full text-left text-base">';
+            let tableHtml = '<div class="my-6 overflow-x-auto rounded-lg border border-input"><table class="w-full text-base">';
             tableHtml += '<thead class="bg-input/50"><tr>';
             headerCells.forEach(h => {
                 tableHtml += `<th class="p-4 font-semibold">${h}</th>`;
@@ -141,16 +172,7 @@ const parseMarkdown = (markdown: string) => {
             bodyRows.forEach(row => {
                 tableHtml += '<tr class="border-t border-input">';
                 row.forEach(cell => {
-                    const formattedCell = cell
-                        .replace(/\*\*(.*?)\*\*/g, '<span class="font-bold">$1</span>')
-                        .replace(/_([^_]+)_/g, '<span class="italic">$1</span>')
-                         .replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
-                            if (url.startsWith('/#/')) {
-                                return `<a href="${url}" class="text-primary-400 hover:underline">${text}</a>`;
-                            }
-                            return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${text}</a>`;
-                        });
-                    tableHtml += `<td class="p-4">${formattedCell}</td>`;
+                    tableHtml += `<td class="p-4">${processLinksAndFormatting(cell)}</td>`;
                 });
                 tableHtml += '</tr>';
             });
@@ -160,32 +182,13 @@ const parseMarkdown = (markdown: string) => {
         // Unordered List
         if (block.startsWith('* ')) {
             const items = block.split('\n').map(item => {
-                const content = item.replace(/^\* /, '').trim()
-                    .replace(/\*\*(.*?)\*\*/g, '<span class="font-bold">$1</span>')
-                    .replace(/_([^_]+)_/g, '<span class="italic">$1</span>')
-                    .replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
-                        if (url.startsWith('/#/')) {
-                            return `<a href="${url}" class="text-primary-400 hover:underline">${text}</a>`;
-                        }
-                        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${text}</a>`;
-                    });
-                return `<li class="ml-5">${content}</li>`;
+                const content = item.replace(/^\* /, '').trim();
+                return `<li class="ml-5">${processLinksAndFormatting(content)}</li>`;
             }).join('');
             return `<ul class="list-disc pl-5 space-y-2 my-6">${items}</ul>`;
         }
         // Paragraphs
-        const pContent = block
-             .replace(/\*\*(.*?)\*\*/g, '<span class="font-bold">$1</span>')
-             .replace(/_([^_]+)_/g, '<span class="italic">$1</span>')
-             .replace(/`([^`]+)`/g, '<code class="bg-input text-primary-400 font-mono py-1 px-2 rounded text-sm">$1</code>')
-             .replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
-                if (url.startsWith('/#/')) {
-                    return `<a href="${url}" class="text-primary-400 hover:underline">${text}</a>`;
-                }
-                return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${text}</a>`;
-            });
-        
-        return `<p class="my-6 leading-relaxed">${pContent}</p>`;
+        return `<p class="my-6 leading-relaxed">${processLinksAndFormatting(block)}</p>`;
     }).join('');
 
     return html;

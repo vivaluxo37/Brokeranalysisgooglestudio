@@ -2603,4 +2603,41 @@ For the vast majority of pairs, like EUR/USD, GBP/USD, and AUD/USD, the pip is t
 
 ### For Japanese Yen (JPY) Pairs
 For any pair that includes the Japanese Yen, like USD/JPY or EUR/JPY, the pip is the **second decimal place**.
-> **Example:** If the price of USD/JPY moves from **145.2_5_** to **14
+> **Example:** If the price of USD/JPY moves from **145.2_5_** to **145.2_6_**, it has moved up by **1 pip**.
+
+## Fractional Pips (Pipettes) {#fractional-pips}
+You may notice that most brokers now quote currency pairs to an extra decimal place. This smaller unit is called a **pipette** or a fractional pip.
+
+- **EUR/USD:** The price might be quoted as 1.0855**2**. The last digit is the pipette.
+- **USD/JPY:** The price might be quoted as 145.25**8**. The last digit is the pipette.
+
+While professional traders almost always think in pips, it's good to be aware that the 5th (or 3rd for JPY) decimal place represents tenths of a pip.
+
+## Calculating the Value of a Pip {#calculating-pip-value}
+The monetary value of one pip is not fixed. It depends on two things:
+1.  **The currency pair you are trading.**
+2.  **The size of your position (your lot size).**
+
+For a standard lot (100,000 units) of any pair where the USD is the second (quote) currency (like EUR/USD, GBP/USD), the value of one pip is always **$10**.
+
+> **Calculation:** (0.0001 / 1) * 100,000 = $10
+
+For other pairs, the calculation can be more complex, but you don't need to do it manually. Our **[Pip Value Calculator](/#/tools/calculators)** can do the work for you instantly.
+
+Understanding pip value is critical for **[risk management](/#/blog/risk-management-in-forex)**. It's how you translate a stop-loss distance in pips into a specific dollar amount that you are risking.
+
+## Conclusion: The Building Block of Trading {#conclusion}
+Pips are the language of profit and loss in the forex market. Mastering this simple concept is the first step on your journey. Once you can confidently read and count pips on a chart, you can move on to the next essential concepts of calculating position size and managing your risk.
+
+### FAQ
+**Q: Why do JPY pairs use the 2nd decimal place for pips?**
+A: This is because the value of one Japanese Yen is very small compared to other major currencies like the USD or EUR. One pip needs to represent a meaningful, albeit small, change in value, and for JPY, that corresponds to the 0.01 level.
+
+**Q: What is a 'basis point'?**
+A: A basis point is a term often used when discussing interest rates and is equal to 1/100th of a percentage point (0.01%). In forex, a pip is sometimes considered a basis point for currency pairs.
+
+**Q: Does the pip value change as the exchange rate changes?**
+A: Yes, for pairs where your account currency is not the quote currency. For example, if you have a USD account and are trading EUR/GBP, the value of a pip (which is in GBP) will fluctuate as the GBP/USD exchange rate changes.
+`
+  }
+];

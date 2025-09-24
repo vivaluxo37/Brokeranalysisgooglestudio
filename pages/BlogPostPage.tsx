@@ -9,7 +9,7 @@ import { Icons } from '../constants';
 import Tag from '../components/ui/Tag';
 import ShareButtons from '../components/blog/ShareButtons';
 import BlogPostCard from '../components/blog/BlogPostCard';
-import Card, { CardContent } from '../ui/Card';
+import Card, { CardContent } from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { DiscussionContext } from '../contexts/DiscussionContext';
 import { useAuth } from '../hooks/useAuth';
@@ -212,6 +212,90 @@ const BeginnerQuiz: React.FC = () => {
     );
 };
 
+const AutomatedTradingQuiz: React.FC = () => {
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const question = "What is the biggest risk of creating a trading bot that performs perfectly on historical data?";
+    const options = ["The bot will trade too fast", "Over-optimization (curve-fitting)", "The VPS will fail"];
+    const correctAnswer = "Over-optimization (curve-fitting)";
+
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswer(answer);
+        setIsCorrect(answer === correctAnswer);
+    };
+
+    return (
+        <div className="my-10 p-6 border-2 border-input rounded-lg bg-card">
+            <h3 className="text-xl font-bold text-center mb-4">Automation Knowledge Check!</h3>
+            <p className="text-center text-card-foreground/90 mb-6">{question}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {options.map(option => {
+                    const isSelected = selectedAnswer === option;
+                    let stateClass = 'bg-input hover:bg-input/70';
+                    if (isSelected) {
+                        stateClass = isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+                    }
+                    return (
+                        <button 
+                            key={option} 
+                            onClick={() => handleAnswer(option)}
+                            disabled={selectedAnswer !== null}
+                            className={`p-4 rounded-lg font-semibold transition-colors ${stateClass}`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+            {isCorrect === true && <p className="text-center mt-4 text-green-400 font-semibold animate-fade-in">Correct! A bot perfectly tuned to past data often fails in live markets because it has been 'curve-fitted' and cannot adapt.</p>}
+            {isCorrect === false && <p className="text-center mt-4 text-red-400 font-semibold animate-fade-in">That's a risk, but the biggest danger is over-optimization. A bot that never loses in backtesting is often a red flag.</p>}
+        </div>
+    );
+};
+
+const LeverageQuiz: React.FC = () => {
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const question = "With 1:100 leverage, a 1% price move against your position can cause approximately how much loss to your account equity?";
+    const options = ["1% loss", "10% loss", "100% loss (wipeout)"];
+    const correctAnswer = "100% loss (wipeout)";
+
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswer(answer);
+        setIsCorrect(answer === correctAnswer);
+    };
+
+    return (
+        <div className="my-10 p-6 border-2 border-input rounded-lg bg-card">
+            <h3 className="text-xl font-bold text-center mb-4">Leverage Risk Check!</h3>
+            <p className="text-center text-card-foreground/90 mb-6">{question}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {options.map(option => {
+                    const isSelected = selectedAnswer === option;
+                    let stateClass = 'bg-input hover:bg-input/70';
+                    if (isSelected) {
+                        stateClass = isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+                    }
+                    return (
+                        <button 
+                            key={option} 
+                            onClick={() => handleAnswer(option)}
+                            disabled={selectedAnswer !== null}
+                            className={`p-4 rounded-lg font-semibold transition-colors ${stateClass}`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+            {isCorrect === true && <p className="text-center mt-4 text-green-400 font-semibold animate-fade-in">Correct! Leverage magnifies moves. A 1% market move multiplied by 100x leverage results in a 100% loss of your margin.</p>}
+            {isCorrect === false && <p className="text-center mt-4 text-red-400 font-semibold animate-fade-in">Not quite. Remember that leverage magnifies the market's movement. 1% x 100 leverage = 100% potential loss.</p>}
+        </div>
+    );
+};
+
 
 
 // --- Enhanced Markdown Parser ---
@@ -351,7 +435,7 @@ const BlogPostPage: React.FC = () => {
     const faqs = extractFaqs(post.content);
     
     // Split content by shortcodes to inject React components
-    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\])/);
+    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\]|\[AUTOMATED_TRADING_QUIZ\]|\[LEVERAGE_QUIZ\])/);
 
     const blogPostJsonLd: any = {
         "@context": "https://schema.org",
@@ -494,6 +578,12 @@ const BlogPostPage: React.FC = () => {
                             }
                             if (part === '[BEGINNER_QUIZ]') {
                                 return <BeginnerQuiz key={index} />;
+                            }
+                            if (part === '[AUTOMATED_TRADING_QUIZ]') {
+                                return <AutomatedTradingQuiz key={index} />;
+                            }
+                            if (part === '[LEVERAGE_QUIZ]') {
+                                return <LeverageQuiz key={index} />;
                             }
                             return <div key={index} dangerouslySetInnerHTML={{ __html: parseMarkdown(part) }} />;
                         })}

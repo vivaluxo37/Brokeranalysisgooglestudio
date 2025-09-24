@@ -5,9 +5,11 @@ const darrenCole = authors.find(a => a.slug === 'darren-cole');
 const mayaTorres = authors.find(a => a.slug === 'maya-torres');
 const elenaPrice = authors.find(a => a.slug === 'elena-price');
 const marcusKlein = authors.find(a => a.slug === 'marcus-klein');
+const victorHuang = authors.find(a => a.slug === 'victor-huang');
+const sophiaGrant = authors.find(a => a.slug === 'sophia-grant');
 
 
-if (!darrenCole || !mayaTorres || !elenaPrice || !marcusKlein) {
+if (!darrenCole || !mayaTorres || !elenaPrice || !marcusKlein || !victorHuang || !sophiaGrant) {
   throw new Error("Could not find author data");
 }
 
@@ -364,7 +366,7 @@ A: No. All trading involves risk. The goal of risk management is not to eliminat
 A: A margin call is a demand from your broker to deposit more funds into your account or close losing positions to bring your account equity back up to the minimum required level. It's a sign that you are over-leveraged and at risk of having your positions automatically liquidated.
 
 **Q: What is Negative Balance Protection?**
-A: This is a crucial feature offered by many regulated brokers. It ensures that you cannot lose more money than the total amount you have deposited in your account. We highly recommend choosing a broker that offers this protection.
+A: This is a crucial feature offered by many regulated brokers. It ensures that you cannot lose more than the total amount you have deposited in your account. We highly recommend choosing a broker that offers this protection.
 `
   },
   {
@@ -728,6 +730,197 @@ A: Major currency pairs (like EUR/USD, GBP/USD) are always cheaper to trade. The
 
 **Q: What is a 'rebate'?**
 A: Some brokers offer rebates to high-volume traders. This is a program where the broker gives you back a small portion of the spread or commission you've paid as a reward for your trading activity.
+`
+  },
+  {
+    id: 'bp9',
+    slug: 'guide-to-automated-forex-trading-2025',
+    title: 'The Ultimate Guide to Automated Forex Trading in 2025',
+    metaTitle: 'Automated Forex Trading: The Ultimate 2025 Guide to Bots & EAs',
+    metaDescription: 'Explore automated forex trading, Expert Advisors (EAs), and trading bots in our 2025 guide. Learn the pros, cons, risks, and how to choose the best platform.',
+    summary: 'Automated trading offers a disciplined, 24/7 approach to the forex market, but it comes with its own unique set of challenges. This guide covers everything you need to know about trading bots, from choosing a platform to the critical importance of backtesting.',
+    keyTakeaways: [
+      "Automated trading uses software (Expert Advisors or EAs) to execute trades based on pre-set rules, removing emotion from the process.",
+      "The main benefits are emotion-free trading, the ability to backtest strategies on historical data, and operating 24/7 without manual intervention.",
+      "Major risks include over-optimization to past data, technical failures (internet/power loss), and an inability to adapt to sudden market changes.",
+      "Platforms like MT4, MT5, and cTrader are the industry standards for developing and running trading bots.",
+      "Never run a trading bot with real money until it has been rigorously backtested and then forward-tested on a demo account for several weeks."
+    ],
+    author: {
+      name: victorHuang.name,
+      slug: victorHuang.slug,
+      avatarUrl: victorHuang.avatarUrl,
+    },
+    date: '2025-10-10T10:00:00Z',
+    reviewedBy: {
+        name: sophiaGrant.name,
+        slug: sophiaGrant.slug,
+    },
+    tags: ['Automated Trading', 'Advanced', 'Trading Bots', 'EAs'],
+    imageUrl: 'https://images.unsplash.com/photo-1612287230202-95a041628d2a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    readTimeMinutes: 11,
+    content: `
+The concept of **automated Forex trading**—using software to trade on your behalf—is highly appealing. It promises a world of emotionless discipline, lightning-fast execution, and the ability to trade the market 24 hours a day without being glued to a screen. While trading bots, often called Expert Advisors (EAs), can be powerful tools, they are not a "get rich quick" solution.
+
+This guide will provide a realistic and comprehensive overview of automated trading in 2025. We'll explore what it is, weigh the significant pros and cons, discuss the best platforms, and outline the critical steps you must take before letting an algorithm trade with your hard-earned capital.
+
+## What is Automated Forex Trading? {#what-is-automated-trading}
+Automated forex trading is the practice of using a computer program to execute trades in the market. This program, or algorithm, is designed to follow a specific set of rules and conditions for entering and exiting trades.
+
+- **Expert Advisors (EAs):** This is the term for automated trading programs specifically designed for the MetaTrader 4 (MT4) and MetaTrader 5 (MT5) platforms.
+- **Trading Bots / cBots:** These are more general terms, with cBots being specific to the cTrader platform.
+- **Algorithmic Trading:** This is a broader term often used in institutional contexts, referring to complex strategies executed by powerful computers.
+
+Essentially, you define a complete trading strategy—with entry rules, exit rules, and risk management parameters—and the software executes it for you automatically.
+
+## The Pros and Cons of Automation {#pros-and-cons}
+Automated trading offers powerful advantages, but it's crucial to understand the drawbacks as well.
+
+| Pros | Cons |
+|---|---|
+| **Eliminates Emotion:** Bots are immune to fear and greed, sticking to the strategy's logic without hesitation. | **Inflexibility:** A bot cannot adapt to unforeseen market events (like major news) unless it's specifically programmed to. |
+| **Backtesting:** You can test your strategy on years of historical price data to see how it would have performed. | **Over-Optimization:** A strategy can be "curve-fitted" to perform perfectly on past data but fail in live market conditions. |
+| **Speed:** A bot can react to opportunities and execute trades far faster than any human. | **Technical Failures:** Requires a constant, stable internet connection. A VPS (Virtual Private Server) is often necessary. |
+| **Discipline:** The bot enforces discipline by always following the pre-defined rules, preventing impulsive decisions. | **Requires Monitoring:** No system is "set and forget." You must still monitor its performance and the market environment. |
+
+## Popular Platforms for Automated Trading {#platforms-for-automation}
+The platform you choose is critical, as it determines the programming language and the community you can tap into.
+
+- **MetaTrader 4 (MT4):** The undisputed king of retail automated trading. It has the largest library of pre-built EAs and a massive community of developers using the MQL4 language. See our list of top **[MT4 brokers](/#/brokers/platform/mt4)**.
+- **MetaTrader 5 (MT5):** The successor to MT4, offering more advanced backtesting features and using the more modern MQL5 language.
+- **cTrader:** A strong competitor with a C#-based API (cAlgo), favored by many for its clean interface and advanced order types. Brokers like **[Pepperstone](/#/broker/pepperstone)** offer this platform.
+- **Proprietary APIs:** Advanced traders and institutions may use a broker's FIX or REST API to connect their custom-built software directly to the broker's servers. **[Interactive Brokers](/#/broker/interactive-brokers)** is renowned for its powerful API.
+
+[AUTOMATED_TRADING_QUIZ]
+
+## The Critical Role of Backtesting and Optimization {#backtesting-and-optimization}
+Backtesting is the process of applying your automated strategy to historical price data to simulate its performance. This is the single most important step in developing an automated system. A good backtest should cover several years and include various market conditions (trending, ranging, volatile).
+
+However, backtesting comes with a major pitfall: **over-optimization**. This is the process of tweaking a strategy's parameters until it produces a perfect result on historical data. A strategy that is too finely tuned to the past will likely fail as soon as it encounters new market dynamics.
+
+> **Pro Tip:** After backtesting, always perform forward testing (or paper trading) on a demo account for at least a month. This tests your strategy in real-time, live market conditions without risking capital and is the best way to see if it's truly viable.
+
+For more on backtesting methodologies, this article from **[QuantConnect](https://www.quantconnect.com/docs/v2/learning-center/key-concepts/research/backtesting)** is an excellent technical resource.
+
+## How to Get Started with Your First Trading Bot {#getting-started}
+1.  **Define a Mechanical Strategy:** Start with a simple, rule-based strategy. For example: "Buy when the 50-period moving average crosses above the 200-period moving average. Place stop-loss 20 pips below the entry. Take profit at a 1:2 risk-reward ratio."
+2.  **Find or Build Your Bot:** You can purchase thousands of EAs from the **[MQL5 Marketplace](https://www.mql5.com/en/market)** or hire a developer to code your strategy.
+3.  **Backtest Rigorously:** Use MT5's Strategy Tester to run your bot on several years of data for your chosen currency pair.
+4.  **Forward Test on a Demo Account:** Let the bot run on a demo account for several weeks to see how it performs in the current market.
+5.  **Go Live with Low Risk:** If the results are still positive, start on a live account but with the smallest possible trade size to manage your risk effectively, following our **[risk management rules](/#/blog/risk-management-in-forex)**.
+
+### FAQ
+
+**Q: Can forex robots guarantee profits?**
+A: Absolutely not. This is the biggest myth in automated trading. No robot can guarantee profits. Any product that makes such a claim is almost certainly a scam. Performance depends on the strategy's logic and the market conditions.
+
+**Q: Do I need to know how to code to use automated trading?**
+A: No. Many traders buy pre-made EAs or use visual strategy builders that don't require coding. However, understanding the basics of programming can be a significant advantage.
+
+**Q: What's the difference between an EA and a trading bot?**
+A: The terms are often used interchangeably. "Expert Advisor" or "EA" specifically refers to automated programs running on the MetaTrader platforms (MT4/MT5). "Trading bot" is a more general term that can apply to any platform.
+
+**Q: How much does a good trading robot cost?**
+A: Prices vary wildly, from free to thousands of dollars. A high price does not guarantee high quality. The most important factor is the logic of the strategy and how well it has been tested, not the cost.
+`
+  },
+  {
+    id: 'bp10',
+    slug: 'what-is-leverage-in-forex-2025',
+    title: "What is Leverage in Forex? A Trader's Guide for 2025",
+    metaTitle: "What is Leverage in Forex? A 2025 Guide to Risks & Rewards",
+    metaDescription: "Our 2025 guide explains what leverage is in forex, how it works, and the critical risks involved. Learn to use leverage safely and effectively.",
+    summary: 'Leverage is one of the most powerful—and most misunderstood—tools in forex trading. It can dramatically amplify your profits, but it can also magnify your losses just as quickly. This guide breaks down exactly what leverage is, how it relates to margin, and how to use it safely.',
+    keyTakeaways: [
+      "Leverage is borrowed capital from a broker that allows you to control a larger trading position with a smaller amount of your own money.",
+      "It magnifies both potential profits and potential losses equally, making it a double-edged sword.",
+      "Margin is the deposit you must put down to open and maintain a leveraged position; it is not a fee, but collateral.",
+      "A margin call is a warning from your broker that your account equity is too low to support your open trades.",
+      "The key to using leverage safely is not choosing a low leverage ratio, but implementing strict risk management through proper position sizing."
+    ],
+    author: {
+      name: mayaTorres.name,
+      slug: mayaTorres.slug,
+      avatarUrl: mayaTorres.avatarUrl,
+    },
+    date: '2025-10-12T15:00:00Z',
+    reviewedBy: {
+        name: marcusKlein.name,
+        slug: marcusKlein.slug,
+    },
+    tags: ['Leverage', 'Risk Management', 'Forex Basics', 'Beginner Guide'],
+    imageUrl: 'https://images.unsplash.com/photo-1624953901969-22a3f726916a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    readTimeMinutes: 9,
+    content: `
+When you first enter the world of forex, you'll constantly hear the term **leverage**. It's often advertised as a major benefit, with brokers offering ratios like 1:100, 1:500, or even higher. But what does this actually mean? And more importantly, how does it affect your trading and your risk?
+
+Understanding leverage is not just important; it is absolutely critical for survival in the forex market. Misusing it is the single fastest way a new trader can lose their entire account balance. This guide will demystify leverage, explain its relationship with margin, illustrate its power with clear examples, and show you the professional way to manage it safely.
+
+## What is Leverage? A Simple Analogy {#what-is-leverage}
+At its core, **leverage is a loan provided by your broker**. It allows you to open a trading position that is much larger than the capital you have in your account. The leverage ratio tells you how much larger your position can be.
+
+> **The Real Estate Analogy:** Think of leverage like getting a mortgage to buy a house. If you want to buy a $300,000 house, you don't need the full $300,000. You might put down a 10% deposit of $30,000, and the bank lends you the remaining $270,000. In this case, you are using 1:10 leverage. You are controlling a $300,000 asset with $30,000 of your own money.
+
+In forex, it's the same principle. With a 1:100 leverage and $1,000 in your account, you can control a position worth $100,000.
+
+## How Leverage and Margin Work Together {#leverage-and-margin}
+If leverage is the loan, then **margin is the down payment**. Margin is the amount of your own money that your broker requires you to set aside as collateral to open and maintain a leveraged trade. It is *not* a fee; it's a portion of your account equity that is temporarily locked up while your trade is open.
+
+- **Required Margin:** The amount needed to open the position. This is determined by your trade size and leverage ratio. \`Required Margin = (TradeSize / LeverageRatio)\`
+- **Free Margin:** The money left in your account that is available for opening new trades.
+- **Equity:** Your total account balance plus or minus the profit/loss of your open positions.
+
+## The Double-Edged Sword: Magnified Profits and Losses {#profits-and-losses}
+The power of leverage is that it amplifies the results of your trades relative to your margin. Let's look at an example with a $10,000 account trading EUR/USD.
+
+**Scenario: EUR/USD rises by 100 pips (from 1.0800 to 1.0900)**
+
+| Feature | Without Leverage | With 1:100 Leverage |
+|---|---|---|
+| **Your Capital** | $10,000 | $1,000 (Margin) |
+| **Position Size** | $10,000 (0.1 lots) | $100,000 (1 standard lot) |
+| **Pip Value** | $1 | $10 |
+| **Profit** | 100 pips * $1 = **$100** | 100 pips * $10 = **$1,000** |
+| **Return on Capital** | 1% | **100%** |
+
+As you can see, leverage dramatically increased the return on the required capital. However, this sword cuts both ways.
+
+**Scenario 2: EUR/USD falls by 100 pips**
+- **Without Leverage:** You would lose $100, or 1% of your account.
+- **With 1:100 Leverage:** You would lose $1,000, or **10%** of your total account equity, from a single trade.
+
+This example clearly shows how quickly high leverage can lead to substantial losses. For more on this, regulators like **[ASIC](https://asic.gov.au/for-consumers/investments/complex-products-cfds/contracts-for-difference-and-margin-forex/)** provide excellent resources on the risks of CFD trading.
+
+[LEVERAGE_QUIZ]
+
+## Understanding Margin Calls and Stop Outs {#margin-calls}
+When you have losing trades, your account equity decreases. Your broker continuously monitors your **margin level**, which is a percentage calculated as \`(Equity / UsedMargin) * 100\`.
+
+- **Margin Call:** If your margin level falls to a certain percentage (e.g., 100%), your broker will issue a margin call. This is a warning that you are close to having your positions liquidated.
+- **Stop Out:** If the market continues to move against you and your margin level drops to an even lower percentage (e.g., 50%), the broker will start automatically closing your trades—starting with the most unprofitable one—to prevent further losses and ensure you don't end up owing them money.
+
+This is a protective mechanism for the broker, but for the trader, it means their losing trades are realized, often at the worst possible time.
+
+## How to Use Leverage Safely in 2025 {#using-leverage-safely}
+The secret to using leverage safely has very little to do with the leverage ratio your broker offers. Whether you have 1:30 or 1:1000 leverage, the professional approach is the same: **control your risk through your position size.**
+
+The leverage ratio offered by a broker only determines how much margin is *required* to open a trade. It does not dictate how much you *should* risk. Your risk should always be determined by the 1% rule and a pre-defined stop-loss, as explained in our **[Guide to Risk Management](/#/blog/risk-management-in-forex)**.
+
+By using our **[Position Size Calculator](/#/tools/calculators)**, you ensure that no matter where your stop-loss is, the trade will only ever risk 1% of your account. This makes the broker's leverage ratio largely irrelevant to your actual risk on any single trade.
+
+### FAQ
+
+**Q: Is higher leverage better?**
+A: No. For most traders, higher leverage simply means higher risk. While it allows you to open larger positions with less margin, it doesn't change the underlying risk of the trade itself and can lead to rapid losses if not managed with strict position sizing.
+
+**Q: What is the best leverage for a beginner?**
+A: A beginner should focus on learning to use a stop-loss and proper position sizing first. A leverage ratio of 1:30, which is standard in highly-regulated regions like the UK and EU, is more than sufficient for any sound trading strategy. Avoid brokers offering extreme leverage like 1:1000 until you are very experienced.
+
+**Q: Can I lose more than my deposit with leverage?**
+A: This depends on your broker. Brokers regulated in the UK and EU are required to provide **Negative Balance Protection**, which means you cannot lose more than the funds in your account. Always choose a broker that offers this protection.
+
+**Q: Does leverage affect the spread or commission?**
+A: No. Leverage is a separate concept from trading costs. Spreads and commissions are the fees you pay to the broker to execute a trade, while leverage relates to the size of the position you are able to control.
 `
   }
 ];

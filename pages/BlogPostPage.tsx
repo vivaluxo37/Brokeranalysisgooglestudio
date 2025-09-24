@@ -380,6 +380,48 @@ const CopyTradingQuiz: React.FC = () => {
     );
 };
 
+const DemoVsLiveQuiz: React.FC = () => {
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const question = "What is the single biggest difference a trader faces when moving from a demo to a live account?";
+    const options = ["The spreads are wider", "The platform is slower", "The psychological pressure of real money"];
+    const correctAnswer = "The psychological pressure of real money";
+
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswer(answer);
+        setIsCorrect(answer === correctAnswer);
+    };
+
+    return (
+        <div className="my-10 p-6 border-2 border-input rounded-lg bg-card">
+            <h3 className="text-xl font-bold text-center mb-4">Ready to Go Live?</h3>
+            <p className="text-center text-card-foreground/90 mb-6">{question}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {options.map(option => {
+                    const isSelected = selectedAnswer === option;
+                    let stateClass = 'bg-input hover:bg-input/70';
+                    if (isSelected) {
+                        stateClass = isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+                    }
+                    return (
+                        <button 
+                            key={option} 
+                            onClick={() => handleAnswer(option)}
+                            disabled={selectedAnswer !== null}
+                            className={`p-4 rounded-lg font-semibold transition-colors ${stateClass}`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+            {isCorrect === true && <p className="text-center mt-4 text-green-400 font-semibold animate-fade-in">Correct! The emotions of fear and greed are absent in demo trading but become powerful forces when real capital is at risk.</p>}
+            {isCorrect === false && <p className="text-center mt-4 text-red-400 font-semibold animate-fade-in">While technical differences can exist, the overwhelming challenge is managing the emotional impact of trading real money.</p>}
+        </div>
+    );
+};
+
 
 // --- Enhanced Markdown Parser ---
 
@@ -518,7 +560,7 @@ const BlogPostPage: React.FC = () => {
     const faqs = extractFaqs(post.content);
     
     // Split content by shortcodes to inject React components
-    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\]|\[AUTOMATED_TRADING_QUIZ\]|\[LEVERAGE_QUIZ\]|\[PLATFORM_QUIZ\]|\[COPY_TRADING_QUIZ\])/);
+    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\]|\[AUTOMATED_TRADING_QUIZ\]|\[LEVERAGE_QUIZ\]|\[PLATFORM_QUIZ\]|\[COPY_TRADING_QUIZ\]|\[DEMO_VS_LIVE_QUIZ\])/);
 
     const blogPostJsonLd: any = {
         "@context": "https://schema.org",
@@ -568,17 +610,6 @@ const BlogPostPage: React.FC = () => {
             }
         }))
     } : null;
-
-    const renderInteractiveComponent = (slug: string, key: number) => {
-        if (slug === 'ecn-vs-market-maker-broker') {
-            return <InteractiveQuiz key={key} />;
-        }
-        if (slug === 'forex-trading-strategies') {
-            return <StrategyQuiz key={key} />;
-        }
-        return null;
-    };
-
 
     return (
         <div className="max-w-7xl mx-auto lg:grid lg:grid-cols-4 lg:gap-12">
@@ -657,7 +688,7 @@ const BlogPostPage: React.FC = () => {
                                 return <DownloadableResource key={index} />;
                             }
                             if (part === '[INTERACTIVE_QUIZ]') {
-                                return renderInteractiveComponent(post.slug, index);
+                                 return <InteractiveQuiz key={index} />;
                             }
                             if (part === '[BEGINNER_QUIZ]') {
                                 return <BeginnerQuiz key={index} />;
@@ -673,6 +704,9 @@ const BlogPostPage: React.FC = () => {
                             }
                             if (part === '[COPY_TRADING_QUIZ]') {
                                 return <CopyTradingQuiz key={index} />;
+                            }
+                            if (part === '[DEMO_VS_LIVE_QUIZ]') {
+                                return <DemoVsLiveQuiz key={index} />;
                             }
                             return <div key={index} dangerouslySetInnerHTML={{ __html: parseMarkdown(part) }} />;
                         })}

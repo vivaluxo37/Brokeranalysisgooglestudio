@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
@@ -15,7 +14,7 @@ const RegisterPage: React.FC = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
-  const navigate = ReactRouterDOM.useNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -71,9 +70,9 @@ const RegisterPage: React.FC = () => {
           </form>
           <p className="mt-6 text-center text-sm text-card-foreground/80">
             {t('registerPage.haveAccount')}{' '}
-            <ReactRouterDOM.Link to="/login" className="font-medium text-primary-500 hover:text-primary-400">
+            <Link to="/login" className="font-medium text-primary-500 hover:text-primary-400">
               {t('registerPage.loginLink')}
-            </ReactRouterDOM.Link>
+            </Link>
           </p>
         </CardContent>
       </Card>

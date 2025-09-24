@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import Input from '../components/ui/Input';
@@ -146,10 +146,10 @@ const BrokerTable: React.FC<{ brokers: Broker[], t: (key: string) => string }> =
                         return (
                             <tr key={broker.id} className="border-b border-input last:border-b-0 hover:bg-input/30 group">
                                 <td className="p-4 sticky left-0 bg-card group-hover:bg-input/30 transition-colors z-10">
-                                    <ReactRouterDOM.Link to={`/broker/${broker.id}`} className="flex items-center gap-3 group">
+                                    <Link to={`/broker/${broker.id}`} className="flex items-center gap-3 group">
                                         <img src={broker.logoUrl} alt={broker.name} className="h-10 bg-white p-1 rounded-md" />
                                         <span className="font-semibold text-card-foreground group-hover:text-primary-400 transition-colors">{broker.name}</span>
-                                    </ReactRouterDOM.Link>
+                                    </Link>
                                 </td>
                                 <td className="p-4">
                                     <div className="flex items-center gap-2">

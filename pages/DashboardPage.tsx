@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useFavorites } from '../hooks/useFavorites';
 import { MatcherHistoryItem } from '../types';
@@ -49,7 +48,7 @@ const AccordionItem: React.FC<{ title: string; subtitle: string; children: React
 // Component for the "Quick Actions" section
 // FIX: Changed icon prop from React.ReactElement to React.ElementType and updated component to render it directly to fix a TypeScript error with React.cloneElement.
 const QuickActionCard: React.FC<{ to: string, icon: React.ElementType<{ className?: string }>, title: string, description: string }> = ({ to, icon: Icon, title, description }) => (
-    <ReactRouterDOM.Link to={to} className="block group">
+    <Link to={to} className="group block">
         <Card className="h-full hover:border-primary-600 hover:-translate-y-1 transition-all">
             <CardContent className="flex items-start gap-4">
                 <div className="p-3 bg-input rounded-lg text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-colors">
@@ -61,7 +60,7 @@ const QuickActionCard: React.FC<{ to: string, icon: React.ElementType<{ classNam
                 </div>
             </CardContent>
         </Card>
-    </ReactRouterDOM.Link>
+    </Link>
 );
 
 
@@ -72,7 +71,7 @@ const DashboardPage: React.FC = () => {
   const { getAlertsForFavorites } = useAlerts();
   const { t } = useTranslation();
   const [history, setHistory] = useState<MatcherHistoryItem[]>([]);
-  const navigate = ReactRouterDOM.useNavigate();
+  const navigate = useNavigate();
 
   // State for account settings
   const [name, setName] = useState(user?.name || '');
@@ -220,9 +219,9 @@ const DashboardPage: React.FC = () => {
           ) : (
             <div className="text-center py-12 px-6">
               <p className="text-card-foreground/70">{t('dashboardPage.alerts.empty')}</p>
-              <ReactRouterDOM.Link to="/brokers" className="mt-4 inline-block">
+              <Link to="/brokers" className="mt-4 inline-block">
                 <Button variant="secondary">{t('dashboardPage.alerts.button')}</Button>
-              </ReactRouterDOM.Link>
+              </Link>
             </div>
           )}
         </CardContent>
@@ -275,9 +274,9 @@ const DashboardPage: React.FC = () => {
           ) : (
             <div className="text-center py-12 px-6">
                 <p className="text-card-foreground/70">{t('dashboardPage.history.empty')}</p>
-                <ReactRouterDOM.Link to="/broker-matcher" className="mt-4 inline-block">
+                <Link to="/broker-matcher" className="mt-4 inline-block">
                     <Button variant="primary">{t('dashboardPage.history.button')}</Button>
-                </ReactRouterDOM.Link>
+                </Link>
             </div>
           )}
         </CardContent>
@@ -298,9 +297,9 @@ const DashboardPage: React.FC = () => {
                     <div>
                       <p className="font-semibold text-card-foreground">
                         {t('dashboardPage.reviews.reviewFor')}{' '}
-                        <ReactRouterDOM.Link to={`/broker/${broker?.id}`} className="text-primary-400 hover:underline">
+                        <Link to={`/broker/${broker?.id}`} className="text-primary-400 hover:underline">
                             {broker?.name || t('dashboardPage.reviews.unknownBroker')}
-                        </ReactRouterDOM.Link>
+                        </Link>
                       </p>
                       <StarRating score={review.rating * 2} size="sm" className="my-1"/>
                       <p className="text-sm text-card-foreground/80 italic">"{review.comment}"</p>
@@ -321,9 +320,9 @@ const DashboardPage: React.FC = () => {
           ) : (
             <div className="text-center py-12 px-6">
               <p className="text-card-foreground/70">{t('dashboardPage.reviews.empty')}</p>
-              <ReactRouterDOM.Link to="/brokers" className="mt-4 inline-block">
+              <Link to="/brokers" className="mt-4 inline-block">
                 <Button variant="secondary">{t('dashboardPage.reviews.button')}</Button>
-              </ReactRouterDOM.Link>
+              </Link>
             </div>
           )}
         </CardContent>
@@ -348,9 +347,9 @@ const DashboardPage: React.FC = () => {
             ) : (
                 <div className="text-center py-12 px-6">
                     <p className="text-card-foreground/70">{t('dashboardPage.favorites.empty')}</p>
-                     <ReactRouterDOM.Link to="/brokers" className="mt-4 inline-block">
+                     <Link to="/brokers" className="mt-4 inline-block">
                         <Button variant="secondary">{t('dashboardPage.favorites.button')}</Button>
-                    </ReactRouterDOM.Link>
+                    </Link>
                 </div>
             )}
         </CardContent>

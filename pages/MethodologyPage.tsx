@@ -1,9 +1,5 @@
-
-
-
 import React from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 
@@ -69,7 +65,7 @@ const MethodologyPage: React.FC = () => {
               <li><strong>User Reviews:</strong> The experiences of real traders provide invaluable qualitative insights that complement our quantitative data.</li>
             </ul>
             <p>
-                For a list of our primary regulatory and news sources, please see our <ReactRouterDOM.Link to="/sources" className="text-primary-400 hover:underline">Sources page</ReactRouterDOM.Link>.
+                For a list of our primary regulatory and news sources, please see our <Link to="/sources" className="text-primary-400 hover:underline">Sources page</Link>.
             </p>
             <p className="text-sm text-card-foreground/70 italic">
               Disclaimer: The forex market is dynamic. While we strive for accuracy, information such as spreads and fees can change. Always verify details with the broker before opening an account.

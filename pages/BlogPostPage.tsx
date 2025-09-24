@@ -20,6 +20,19 @@ import Spinner from '../components/ui/Spinner';
 
 // --- Components for Enhanced Blog Post ---
 
+const KeyTakeaways: React.FC<{ items: string[] }> = ({ items }) => (
+    <div className="my-8 p-6 bg-card rounded-lg border-2 border-primary-500/30 shadow-lg">
+        <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <Icons.checkCircle className="h-6 w-6 text-primary-400" />
+            Key Takeaways
+        </h3>
+        <ul className="space-y-2 list-disc pl-5 text-card-foreground/90">
+            {items.map((item, index) => <li key={index}>{item}</li>)}
+        </ul>
+    </div>
+);
+
+
 interface TocItem {
   id: string;
   title: string;
@@ -114,6 +127,50 @@ const InteractiveQuiz: React.FC = () => {
         </div>
     );
 };
+
+const StrategyQuiz: React.FC = () => {
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const question = "If you prefer making many small trades throughout the day and closing them within minutes, which trading style suits you best?";
+    const options = ["Swing Trading", "Scalping", "Position Trading"];
+    const correctAnswer = "Scalping";
+
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswer(answer);
+        setIsCorrect(answer === correctAnswer);
+    };
+
+    return (
+        <div className="my-10 p-6 border-2 border-input rounded-lg bg-card">
+            <h3 className="text-xl font-bold text-center mb-4">What's Your Style?</h3>
+            <p className="text-center text-card-foreground/90 mb-6">{question}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {options.map(option => {
+                    const isSelected = selectedAnswer === option;
+                    let stateClass = 'bg-input hover:bg-input/70';
+                    if (isSelected) {
+                        stateClass = isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+                    }
+                    return (
+                        <button 
+                            key={option} 
+                            onClick={() => handleAnswer(option)}
+                            disabled={selectedAnswer !== null}
+                            className={`p-4 rounded-lg font-semibold transition-colors ${stateClass}`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+            {isCorrect === true && <p className="text-center mt-4 text-green-400 font-semibold animate-fade-in">Correct! Scalping is a high-frequency strategy focused on capturing small profits from minor price movements.</p>}
+            {isCorrect === false && <p className="text-center mt-4 text-red-400 font-semibold animate-fade-in">Not quite. That description fits Scalping perfectly.</p>}
+        </div>
+    );
+};
+
+
 
 // --- Enhanced Markdown Parser ---
 
@@ -303,6 +360,17 @@ const BlogPostPage: React.FC = () => {
         }))
     } : null;
 
+    const renderInteractiveComponent = (slug: string, key: number) => {
+        if (slug === 'ecn-vs-market-maker-broker') {
+            return <InteractiveQuiz key={key} />;
+        }
+        if (slug === 'forex-trading-strategies') {
+            return <StrategyQuiz key={key} />;
+        }
+        return null;
+    };
+
+
     return (
         <div className="max-w-7xl mx-auto lg:grid lg:grid-cols-4 lg:gap-12">
             <MetaTags
@@ -365,6 +433,8 @@ const BlogPostPage: React.FC = () => {
                             <Icons.clock className="h-3 w-3" /> {post.readTimeMinutes} min read
                         </div>
                     </header>
+                    
+                    {post.keyTakeaways && <KeyTakeaways items={post.keyTakeaways} />}
 
                     <img src={post.imageUrl} alt={post.title} className="w-full h-auto aspect-video object-cover rounded-lg mb-8" loading="lazy" decoding="async" />
                     
@@ -378,7 +448,7 @@ const BlogPostPage: React.FC = () => {
                                 return <DownloadableResource key={index} />;
                             }
                             if (part === '[INTERACTIVE_QUIZ]') {
-                                return <InteractiveQuiz key={index} />;
+                                return renderInteractiveComponent(post.slug, index);
                             }
                             return <div key={index} dangerouslySetInnerHTML={{ __html: parseMarkdown(part) }} />;
                         })}

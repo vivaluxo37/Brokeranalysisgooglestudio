@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useComparison } from '../hooks/useComparison';
 import { brokers as allBrokers } from '../data/brokers';
 import { useLiveData, Instrument } from '../services/liveDataService';
@@ -130,7 +129,7 @@ const CostAnalyzerPage: React.FC = () => {
     };
     
     if (brokersToCompare.length === 0) return (
-        <div className="text-center py-20 bg-card rounded-lg border border-input"><h2 className="text-2xl font-semibold text-card-foreground/90">Your comparison list is empty.</h2><p className="mt-2 text-card-foreground/70">Add brokers to the comparison list to use the Cost Analyzer.</p><ReactRouterDOM.Link to="/brokers" className="mt-6 inline-block"><Button>Browse Brokers</Button></ReactRouterDOM.Link></div>
+        <div className="text-center py-20 bg-card rounded-lg border border-input"><h2 className="text-2xl font-semibold text-card-foreground/90">Your comparison list is empty.</h2><p className="mt-2 text-card-foreground/70">Add brokers to the comparison list to use the Cost Analyzer.</p><Link to="/brokers" className="mt-6 inline-block"><Button>Browse Brokers</Button></Link></div>
     );
     
     const renderHeader = (label: string, key: SortableKeys, align: 'start' | 'end' = 'start') => (
@@ -165,10 +164,10 @@ const CostAnalyzerPage: React.FC = () => {
                             
                             return (<tr key={broker.id} className={`border-b last:border-b-0 transition-colors ${highlightClass}`}>
                                 <td className="p-4 flex items-center gap-3">
-                                    <ReactRouterDOM.Link to={`/broker/${broker.id}`} className="flex items-center gap-3 group">
+                                    <Link to={`/broker/${broker.id}`} className="flex items-center gap-3 group">
                                         <img src={broker.logoUrl} alt={broker.name} className="h-8 bg-white p-1 rounded-md" />
                                         <span className={`font-semibold ${isCheapestMonthly ? 'text-green-300' : ''} group-hover:underline`}>{broker.name}</span>
-                                    </ReactRouterDOM.Link>
+                                    </Link>
                                 </td>
                                 <td className="p-4 text-end font-mono">{broker.spread.toFixed(2)}</td>
                                 <td className="p-4 text-end font-mono">{broker.commission.toFixed(2)}</td>

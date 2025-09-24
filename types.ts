@@ -22,6 +22,7 @@ export interface BlogPost {
   metaTitle: string;
   metaDescription: string;
   summary: string;
+  keyTakeaways?: string[];
   content: string; // Markdown content
   author: {
     name: string;

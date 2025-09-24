@@ -1,6 +1,5 @@
 import React from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Broker } from '../../types';
 import Card from '../ui/Card';
 import StarRating from '../ui/StarRating';
@@ -20,9 +19,9 @@ const MiniBrokerCard: React.FC<MiniBrokerCardProps> = ({ broker }) => {
             <h4 className="font-bold text-card-foreground">{broker.name}</h4>
             <StarRating score={broker.score} size="sm" />
           </div>
-          <ReactRouterDOM.Link to={`/broker/${broker.id}`}>
+          <Link to={`/broker/${broker.id}`}>
             <Button variant="secondary" size="sm">View</Button>
-          </ReactRouterDOM.Link>
+          </Link>
         </div>
       </div>
     </Card>

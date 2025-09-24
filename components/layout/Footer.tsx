@@ -1,6 +1,5 @@
 import React from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { categoryPageGroups } from '../../pages/categoryPageData';
 import { useTranslation } from '../../hooks/useTranslation';
 
@@ -45,7 +44,7 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.byCountry')}</h4>
             <ul className="space-y-2 text-sm">
               {categoryPageGroups.country.slice(0, 6).map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</Link></li>
               ))}
             </ul>
           </div>
@@ -55,7 +54,7 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.platformsAndTypes')}</h4>
             <ul className="space-y-2 text-sm">
                {categoryPageGroups.platform.slice(0, 6).map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</Link></li>
               ))}
             </ul>
           </div>
@@ -65,7 +64,7 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.resources')}</h4>
             <ul className="space-y-2 text-sm">
                {mainLinks.map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</Link></li>
               ))}
             </ul>
           </div>
@@ -75,10 +74,10 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-card-foreground mb-4">{t('footer.tools')}</h4>
             <ul className="space-y-2 text-sm">
                {toolLinks.map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</Link></li>
               ))}
                {aboutLinks.map(link => (
-                <li key={link.name}><ReactRouterDOM.Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</ReactRouterDOM.Link></li>
+                <li key={link.name}><Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</Link></li>
               ))}
             </ul>
           </div>

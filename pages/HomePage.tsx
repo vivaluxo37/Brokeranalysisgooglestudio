@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { Icons } from '../constants';
 import { brokers } from '../data/brokers';
@@ -151,16 +150,16 @@ const HomePage: React.FC = () => {
             {t('home.hero.supportLine')}
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-            <ReactRouterDOM.Link to="/broker-matcher">
+            <Link to="/broker-matcher">
                 <Button size="lg" variant="primary" className="animate-pulse w-full sm:w-auto">
                     <span role="img" aria-label="search" className="ltr:mr-2 rtl:ml-2">🔍</span> {t('home.hero.ctaPrimary')}
                 </Button>
-            </ReactRouterDOM.Link>
-            <ReactRouterDOM.Link to="/brokers">
+            </Link>
+            <Link to="/brokers">
                 <Button size="lg" variant="secondary" className="w-full sm:w-auto">
                     {t('home.hero.ctaSecondary')}
                 </Button>
-            </ReactRouterDOM.Link>
+            </Link>
         </div>
         <div className="mt-10 flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm text-foreground/70">
             {(t('home.hero.trustBadges') as string[]).map((badge: string, index: number) => (
@@ -207,20 +206,20 @@ const HomePage: React.FC = () => {
        <div className="text-center">
         <h2 className="text-3xl font-bold mb-10">{t('home.newTools.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <ReactRouterDOM.Link to="/tools/economic-calendar" className="group block p-6 bg-card rounded-lg border border-input text-left hover:border-primary-600 hover:-translate-y-1 transition-all">
+            <Link to="/tools/economic-calendar" className="group block p-6 bg-card rounded-lg border border-input text-left hover:border-primary-600 hover:-translate-y-1 transition-all">
                 <div className="p-3 bg-input rounded-full mb-4 inline-block group-hover:bg-primary-600 group-hover:text-white transition-colors">
                     <Icons.calendar className="h-8 w-8 text-primary-400"/>
                 </div>
                 <h3 className="text-xl font-bold text-primary-400">{t('home.newTools.calendar.title')}</h3>
                 <p className="mt-2 text-card-foreground/80">{t('home.newTools.calendar.description')}</p>
-            </ReactRouterDOM.Link>
-             <ReactRouterDOM.Link to="/tools/calculators" className="group block p-6 bg-card rounded-lg border border-input text-left hover:border-primary-600 hover:-translate-y-1 transition-all">
+            </Link>
+             <Link to="/tools/calculators" className="group block p-6 bg-card rounded-lg border border-input text-left hover:border-primary-600 hover:-translate-y-1 transition-all">
                 <div className="p-3 bg-input rounded-full mb-4 inline-block group-hover:bg-primary-600 group-hover:text-white transition-colors">
                     <Icons.calculator className="h-8 w-8 text-primary-400"/>
                 </div>
                 <h3 className="text-xl font-bold text-primary-400">{t('home.newTools.calculators.title')}</h3>
                 <p className="mt-2 text-card-foreground/80">{t('home.newTools.calculators.description')}</p>
-            </ReactRouterDOM.Link>
+            </Link>
         </div>
        </div>
 
@@ -229,13 +228,13 @@ const HomePage: React.FC = () => {
         <h2 className="text-3xl font-bold mb-10">{t('home.popularCategoriesTitle')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {popularCategories.map(category => (
-            <ReactRouterDOM.Link to={category.path} key={category.title} className="group block p-6 bg-card rounded-lg border border-input text-left hover:border-primary-600 hover:-translate-y-1 transition-all">
+            <Link to={category.path} key={category.title} className="group block p-6 bg-card rounded-lg border border-input text-left hover:border-primary-600 hover:-translate-y-1 transition-all">
                 <div className="p-3 bg-input rounded-full mb-4 inline-block group-hover:bg-primary-600 group-hover:text-white transition-colors">
                     {category.icon}
                 </div>
                 <h3 className="text-xl font-bold text-primary-400">{category.title}</h3>
                 <p className="mt-2 text-card-foreground/80">{category.description}</p>
-            </ReactRouterDOM.Link>
+            </Link>
             ))}
         </div>
       </div>

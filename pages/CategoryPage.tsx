@@ -4,8 +4,7 @@ import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import MetaTags from '../components/common/MetaTags';
 import JsonLdSchema from '../components/common/JsonLdSchema';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface CategoryPageProps {
   title: string;
@@ -14,7 +13,7 @@ interface CategoryPageProps {
 }
 
 const CategoryPage: React.FC<CategoryPageProps> = ({ title, description, filterFn }) => {
-  const location = ReactRouterDOM.useLocation();
+  const location = useLocation();
   const filteredBrokers = useMemo(() => allBrokers.filter(filterFn), [filterFn]);
   
   const canonicalUrl = `https://brokeranalysis.com/#${location.pathname}`;

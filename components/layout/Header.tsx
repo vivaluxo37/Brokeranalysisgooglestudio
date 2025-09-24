@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { NavLink as RRNavLink, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Icons } from '../../constants';
 import ThemeToggle from '../ui/ThemeToggle';
@@ -10,7 +9,7 @@ import { categoryPageGroups } from '../../pages/categoryPageData';
 import { useTranslation } from '../../hooks/useTranslation';
 
 const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () => void, className?: string }> = ({ to, children, onClick, className = '' }) => (
-    <ReactRouterDOM.NavLink
+    <RRNavLink
         to={to}
         onClick={onClick}
         className={({ isActive }) =>
@@ -22,7 +21,7 @@ const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () =>
         }
     >
         {children}
-    </ReactRouterDOM.NavLink>
+    </RRNavLink>
 );
 
 // New component for collapsible sections in the mobile menu
@@ -123,7 +122,7 @@ const Header: React.FC = () => {
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
     // Close mobile menu on route change
-    const location = ReactRouterDOM.useLocation();
+    const location = useLocation();
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location]);
@@ -134,9 +133,9 @@ const Header: React.FC = () => {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo and Desktop Nav */}
                     <div className="flex items-center">
-                        <ReactRouterDOM.Link to="/" className="text-lg lg:text-2xl font-bold text-primary-500">
+                        <Link to="/" className="text-lg lg:text-2xl font-bold text-primary-500">
                             Brokeranalysis
-                        </ReactRouterDOM.Link>
+                        </Link>
                         <div className="hidden lg:block ltr:ml-10 rtl:mr-10">
                             <div className="flex items-baseline space-x-1">
                                 
@@ -159,13 +158,13 @@ const Header: React.FC = () => {
                                             <div className="col-span-1">
                                                 <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.byCountry')}</h3>
                                                 <ul className="space-y-1 text-sm">
-                                                    {categoryPageGroups.country.slice(0, 5).map(link => <li key={link.path}><ReactRouterDOM.Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</ReactRouterDOM.Link></li>)}
+                                                    {categoryPageGroups.country.slice(0, 5).map(link => <li key={link.path}><Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</Link></li>)}
                                                 </ul>
                                             </div>
                                             <div className="col-span-1">
                                                 <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.platformsAndTypes')}</h3>
                                                 <ul className="space-y-1 text-sm">
-                                                    {categoryPageGroups.platform.slice(0, 5).map(link => <li key={link.path}><ReactRouterDOM.Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</ReactRouterDOM.Link></li>)}
+                                                    {categoryPageGroups.platform.slice(0, 5).map(link => <li key={link.path}><Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</Link></li>)}
                                                 </ul>
                                             </div>
                                         </div>
@@ -218,19 +217,19 @@ const Header: React.FC = () => {
                                 </Button>
                                 <div className="absolute ltr:right-0 rtl:left-0 mt-2 w-48 bg-card rounded-md shadow-lg border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
                                     <div className="py-1">
-                                        <ReactRouterDOM.Link to="/dashboard" className="block px-4 py-2 text-sm text-card-foreground hover:bg-input">{t('header.dashboard')}</ReactRouterDOM.Link>
+                                        <Link to="/dashboard" className="block px-4 py-2 text-sm text-card-foreground hover:bg-input">{t('header.dashboard')}</Link>
                                         <button onClick={logout} className="w-full text-left block px-4 py-2 text-sm text-card-foreground hover:bg-input">{t('header.logout')}</button>
                                     </div>
                                 </div>
                             </div>
                         ) : (
                             <div className="ltr:ml-3 rtl:mr-3 flex items-center space-x-2">
-                                <ReactRouterDOM.Link to="/login">
+                                <Link to="/login">
                                     <Button variant="ghost" size="sm">{t('header.login')}</Button>
-                                </ReactRouterDOM.Link>
-                                <ReactRouterDOM.Link to="/register">
+                                </Link>
+                                <Link to="/register">
                                     <Button variant="primary" size="sm">{t('header.register')}</Button>
-                                </ReactRouterDOM.Link>
+                                </Link>
                             </div>
                         )}
                     </div>

@@ -1,6 +1,5 @@
 import React from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import HomePage from './pages/HomePage';
 import AllBrokersPage from './pages/AllBrokersPage';
@@ -40,61 +39,61 @@ import AuthorPage from './pages/AuthorPage';
 const App: React.FC = () => {
   return (
     <Layout>
-      <ReactRouterDOM.Routes>
-        <ReactRouterDOM.Route path="/" element={<HomePage />} />
-        <ReactRouterDOM.Route path="/brokers" element={<AllBrokersPage />} />
-        <ReactRouterDOM.Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
-        <ReactRouterDOM.Route path="/compare" element={<ComparePage />} />
-        <ReactRouterDOM.Route path="/compare/:brokerId1/vs/:brokerId2" element={<BrokerDuelPage />} />
-        <ReactRouterDOM.Route path="/cost-analyzer" element={<CostAnalyzerPage />} />
-        <ReactRouterDOM.Route path="/login" element={<LoginPage />} />
-        <ReactRouterDOM.Route path="/register" element={<RegisterPage />} />
-        <ReactRouterDOM.Route path="/methodology" element={<MethodologyPage />} />
-        <ReactRouterDOM.Route path="/sources" element={<SourcesPage />} />
-        <ReactRouterDOM.Route path="/market-news" element={<MarketNewsPage />} />
-        <ReactRouterDOM.Route path="/blog" element={<BlogPage />} />
-        <ReactRouterDOM.Route path="/blog/:slug" element={<BlogPostPage />} />
-        <ReactRouterDOM.Route path="/author/:authorSlug" element={<AuthorPage />} />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/brokers" element={<AllBrokersPage />} />
+        <Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
+        <Route path="/compare" element={<ComparePage />} />
+        <Route path="/compare/:brokerId1/vs/:brokerId2" element={<BrokerDuelPage />} />
+        <Route path="/cost-analyzer" element={<CostAnalyzerPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/methodology" element={<MethodologyPage />} />
+        <Route path="/sources" element={<SourcesPage />} />
+        <Route path="/market-news" element={<MarketNewsPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
+        <Route path="/author/:authorSlug" element={<AuthorPage />} />
 
         {/* Education Routes */}
-        <ReactRouterDOM.Route path="/education" element={<EducationHubPage />} />
-        <ReactRouterDOM.Route path="/education/quizzes" element={<QuizzesPage />} />
-        <ReactRouterDOM.Route path="/education/quizzes/broker-fees" element={<BrokerFeesQuizPage />} />
-        <ReactRouterDOM.Route path="/education/quizzes/forex-basics" element={<ForexBasicsQuizPage />} />
-        <ReactRouterDOM.Route path="/education/quizzes/charting-intro" element={<ChartingIntroQuizPage />} />
-        <ReactRouterDOM.Route path="/education/quizzes/risk-management" element={<RiskManagementQuizPage />} />
-        <ReactRouterDOM.Route path="/education/quizzes/order-types" element={<OrderTypesQuizPage />} />
-        <ReactRouterDOM.Route path="/education/webinars" element={<WebinarsPage />} />
-        <ReactRouterDOM.Route path="/education/simulators" element={<SimulatorsPage />} />
-        <ReactRouterDOM.Route path="/education/simulators/order-execution" element={<OrderExecutionSimulatorPage />} />
+        <Route path="/education" element={<EducationHubPage />} />
+        <Route path="/education/quizzes" element={<QuizzesPage />} />
+        <Route path="/education/quizzes/broker-fees" element={<BrokerFeesQuizPage />} />
+        <Route path="/education/quizzes/forex-basics" element={<ForexBasicsQuizPage />} />
+        <Route path="/education/quizzes/charting-intro" element={<ChartingIntroQuizPage />} />
+        <Route path="/education/quizzes/risk-management" element={<RiskManagementQuizPage />} />
+        <Route path="/education/quizzes/order-types" element={<OrderTypesQuizPage />} />
+        <Route path="/education/webinars" element={<WebinarsPage />} />
+        <Route path="/education/simulators" element={<SimulatorsPage />} />
+        <Route path="/education/simulators/order-execution" element={<OrderExecutionSimulatorPage />} />
         
         {/* Tools Routes */}
-        <ReactRouterDOM.Route path="/tools/economic-calendar" element={<EconomicCalendarPage />} />
-        <ReactRouterDOM.Route path="/tools/market-data" element={<MarketDataPage />} />
-        <ReactRouterDOM.Route path="/tools/calculators" element={<CalculatorsPage />} />
+        <Route path="/tools/economic-calendar" element={<EconomicCalendarPage />} />
+        <Route path="/tools/market-data" element={<MarketDataPage />} />
+        <Route path="/tools/calculators" element={<CalculatorsPage />} />
 
         {/* Dynamically create routes for all category pages */}
         {categoryPages.map(({ path, title, description, filterFn }) => (
-          <ReactRouterDOM.Route 
+          <Route 
             key={path}
             path={path}
             element={<CategoryPage title={title} description={description} filterFn={filterFn} />} 
           />
         ))}
 
-        <ReactRouterDOM.Route path="/broker-matcher" element={
+        <Route path="/broker-matcher" element={
           <ProtectedRoute>
             <BrokerMatcherPage />
           </ProtectedRoute>
         } />
-        <ReactRouterDOM.Route path="/dashboard" element={
+        <Route path="/dashboard" element={
           <ProtectedRoute>
             <DashboardPage />
           </ProtectedRoute>
         } />
 
-        <ReactRouterDOM.Route path="*" element={<NotFoundPage />} />
-      </ReactRouterDOM.Routes>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
       <Chatbot />
     </Layout>
   );

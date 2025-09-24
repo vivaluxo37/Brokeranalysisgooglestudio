@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useComparison } from '../hooks/useComparison';
 import { brokers as allBrokers } from '../data/brokers';
 import ComparisonTable from '../components/brokers/ComparisonTable';
@@ -44,12 +43,12 @@ const ComparePage: React.FC = () => {
         </div>
         <div className="flex items-center gap-2">
             {brokersToCompare.length === 2 && (
-                 <ReactRouterDOM.Link to={`/compare/${brokersToCompare[0].id}/vs/${brokersToCompare[1].id}`}>
+                 <Link to={`/compare/${brokersToCompare[0].id}/vs/${brokersToCompare[1].id}`}>
                     <Button variant="primary">
                         <Icons.duel className="h-5 w-5 mr-2" />
                         {t('comparePage.startDuel')}
                     </Button>
-                 </ReactRouterDOM.Link>
+                 </Link>
             )}
              {brokersToCompare.length > 0 && (
                 <Button onClick={clearComparison} variant="danger">
@@ -90,9 +89,9 @@ const ComparePage: React.FC = () => {
         <div className="text-center py-20 bg-card rounded-lg border border-input">
           <h2 className="text-2xl font-semibold text-card-foreground/90">{t('comparePage.empty.title')}</h2>
           <p className="mt-2 text-card-foreground/70">{t('comparePage.empty.subtitle')}</p>
-          <ReactRouterDOM.Link to="/brokers" className="mt-6 inline-block">
+          <Link to="/brokers" className="mt-6 inline-block">
             <Button>{t('comparePage.empty.button')}</Button>
-          </ReactRouterDOM.Link>
+          </Link>
         </div>
       )}
     </div>

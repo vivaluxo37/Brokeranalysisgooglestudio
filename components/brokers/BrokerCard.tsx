@@ -1,6 +1,5 @@
 import React from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Broker } from '../../types';
 import Card, { CardContent } from '../ui/Card';
 import Button from '../ui/Button';
@@ -56,7 +55,7 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
   return (
     <Card className={`flex flex-col h-full ${recommendationClasses}`}>
       <div className="relative flex-grow">
-        <ReactRouterDOM.Link to={`/broker/${broker.id}`} className="block h-full">
+        <Link to={`/broker/${broker.id}`} className="block h-full">
           <RiskBadge broker={broker} />
           <CardContent>
             <div className="flex justify-between items-start">
@@ -90,7 +89,7 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
                 )}
             </div>
           </CardContent>
-        </ReactRouterDOM.Link>
+        </Link>
       </div>
       <div className="p-4 border-t border-input flex items-center gap-2">
         <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex-1">

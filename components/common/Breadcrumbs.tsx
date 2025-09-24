@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-// Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
-import * as ReactRouterDOM from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { brokers } from '../../data/brokers';
 import { categoryPages } from '../../pages/categoryPageData';
 import { Icons } from '../../constants';
@@ -21,7 +20,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
 };
 
 const Breadcrumbs: React.FC = () => {
-  const location = ReactRouterDOM.useLocation();
+  const location = useLocation();
   const pathnames = location.pathname.split('/').filter(x => x);
   
   const crumbs = useMemo(() => {
@@ -89,10 +88,10 @@ const Breadcrumbs: React.FC = () => {
       <JsonLdSchema data={breadcrumbJsonLd} />
       <ol className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-12 space-x-2 text-sm text-foreground/70">
         <li>
-          <ReactRouterDOM.Link to="/" className="hover:text-primary-400 flex items-center gap-2">
+          <Link to="/" className="hover:text-primary-400 flex items-center gap-2">
             <Icons.home className="h-4 w-4" />
             <span className="sr-only">Home</span>
-          </ReactRouterDOM.Link>
+          </Link>
         </li>
         {crumbs.map((crumb, index) => (
           <li key={crumb.path} className="flex items-center">
@@ -100,9 +99,9 @@ const Breadcrumbs: React.FC = () => {
             {crumb.isLast ? (
               <span className="ml-2 font-semibold text-foreground">{crumb.name}</span>
             ) : (
-              <ReactRouterDOM.Link to={crumb.path} className="ml-2 hover:text-primary-400">
+              <Link to={crumb.path} className="ml-2 hover:text-primary-400">
                 {crumb.name}
-              </ReactRouterDOM.Link>
+              </Link>
             )}
           </li>
         ))}

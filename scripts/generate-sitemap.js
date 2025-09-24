@@ -8,6 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const BASE_URL = 'https://brokeranalysis.com';
 const BROKERS_TS_PATH = path.join(__dirname, '../data/brokers.ts');
+const BLOG_TS_PATH = path.join(__dirname, '../data/blog.ts');
 const OUTPUT_DIR = path.join(__dirname, '../public');
 
 // --- Main Function ---
@@ -25,7 +26,10 @@ function generateSitemaps() {
     // --- 1. Generate sitemap-brokers.xml ---
     generateBrokerSitemap(today);
 
-    // --- 2. Generate sitemap-index.xml ---
+    // --- 2. Generate sitemap-blog.xml ---
+    generateBlogSitemap(today);
+
+    // --- 3. Generate sitemap-index.xml ---
     generateSitemapIndex(today);
     
     console.log('\nSitemap generation complete!');
@@ -51,7 +55,7 @@ function generateBrokerSitemap(lastmod) {
   // Build XML URL entries
   const urlEntries = brokerIds.map(id => `
   <url>
-    <loc>${BASE_URL}/broker/${id}</loc>
+    <loc>${BASE_URL}/#/broker/${id}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -66,10 +70,44 @@ function generateBrokerSitemap(lastmod) {
   console.log(`    ✅ Generated sitemap with ${brokerIds.length} broker URLs.`);
 }
 
+function generateBlogSitemap(lastmod) {
+  console.log(' -> Generating sitemap-blog.xml...');
+  if (!fs.existsSync(BLOG_TS_PATH)) {
+    console.log('    ⚠️ blog.ts not found, skipping blog sitemap.');
+    return;
+  }
+  const fileContent = fs.readFileSync(BLOG_TS_PATH, 'utf8');
+  
+  const postSlugs = [];
+  const slugRegex = /slug:\s*'([^']+)'/g;
+  let match;
+  while ((match = slugRegex.exec(fileContent)) !== null) {
+    postSlugs.push(match[1]);
+  }
+
+  const urlEntries = postSlugs.map(slug => `
+  <url>
+    <loc>${BASE_URL}/#/blog/${slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`).join('');
+
+  const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urlEntries}
+</urlset>`;
+
+  const outputPath = path.join(OUTPUT_DIR, 'sitemap-blog.xml');
+  fs.writeFileSync(outputPath, sitemapContent.trim());
+  console.log(`    ✅ Generated sitemap with ${postSlugs.length} blog post URLs.`);
+}
+
+
 function generateSitemapIndex(lastmod) {
     console.log(' -> Generating sitemap-index.xml...');
     const childSitemaps = [
         'sitemap-brokers.xml',
+        'sitemap-blog.xml',
     ];
 
     const sitemapEntries = childSitemaps.map(sitemapFile => `

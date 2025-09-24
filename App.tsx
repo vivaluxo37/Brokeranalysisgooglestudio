@@ -33,6 +33,8 @@ import OrderTypesQuizPage from './pages/OrderTypesQuizPage';
 import EconomicCalendarPage from './pages/EconomicCalendarPage';
 import MarketDataPage from './pages/MarketDataPage';
 import CalculatorsPage from './pages/CalculatorsPage';
+import BlogPage from './pages/BlogPage';
+import BlogPostPage from './pages/BlogPostPage';
 
 const App: React.FC = () => {
   return (
@@ -49,6 +51,8 @@ const App: React.FC = () => {
         <ReactRouterDOM.Route path="/methodology" element={<MethodologyPage />} />
         <ReactRouterDOM.Route path="/sources" element={<SourcesPage />} />
         <ReactRouterDOM.Route path="/market-news" element={<MarketNewsPage />} />
+        <ReactRouterDOM.Route path="/blog" element={<BlogPage />} />
+        <ReactRouterDOM.Route path="/blog/:slug" element={<BlogPostPage />} />
 
         {/* Education Routes */}
         <ReactRouterDOM.Route path="/education" element={<EducationHubPage />} />

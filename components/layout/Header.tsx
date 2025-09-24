@@ -200,6 +200,7 @@ const Header: React.FC = () => {
                                 </div>
 
                                 <NavLink to="/market-news">{t('header.marketNews')}</NavLink>
+                                <NavLink to="/blog">Blog</NavLink>
                                 <NavLink to="/methodology">{t('header.methodology')}</NavLink>
                             </div>
                         </div>
@@ -293,6 +294,7 @@ const Header: React.FC = () => {
                            <NavLink to="/education/simulators" onClick={closeMobileMenu} className="block">{t('education.simulators.title')}</NavLink>
                         </MobileAccordionLink>
                         <NavLink to="/market-news" onClick={closeMobileMenu} className="block m-3">{t('header.marketNews')}</NavLink>
+                        <NavLink to="/blog" onClick={closeMobileMenu} className="block m-3">Blog</NavLink>
                         <NavLink to="/methodology" onClick={closeMobileMenu} className="block m-3">{t('header.methodology')}</NavLink>
                     </div>
                      <div className="px-5 py-4 border-t border-input/50 flex items-center justify-between">

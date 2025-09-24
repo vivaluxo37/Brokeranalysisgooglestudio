@@ -5,6 +5,7 @@ import { brokers } from '../../data/brokers';
 import { categoryPages } from '../../pages/categoryPageData';
 import { Icons } from '../../constants';
 import JsonLdSchema from './JsonLdSchema';
+import { blogPosts } from '../../data/blog';
 
 const breadcrumbNameMap: { [key: string]: string } = {
   '/brokers': 'All Brokers',
@@ -16,6 +17,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   '/dashboard': 'My Dashboard',
   '/methodology': 'Methodology',
   '/sources': 'Sources',
+  '/blog': 'Blog',
 };
 
 const Breadcrumbs: React.FC = () => {
@@ -41,6 +43,9 @@ const Breadcrumbs: React.FC = () => {
             if (pathParts[1] === 'broker' && pathParts[2]) {
                 const broker = brokers.find(b => b.id === pathParts[2]);
                 name = broker ? broker.name : value;
+            } else if (pathParts[1] === 'blog' && pathParts[2]) {
+                const post = blogPosts.find(p => p.slug === pathParts[2]);
+                name = post ? post.title : value;
             } else if (pathParts[1] === 'compare' && pathParts.length > 2) {
                 name = "Duel"
             }

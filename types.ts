@@ -1,5 +1,23 @@
 
 
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  metaTitle: string;
+  metaDescription: string;
+  summary: string;
+  content: string; // Markdown content
+  author: {
+    name: string;
+    avatarUrl: string;
+  };
+  date: string; // ISO 8601
+  tags: string[];
+  imageUrl: string;
+  readTimeMinutes: number;
+}
+
 export interface Review {
   id: string;
   brokerId: string;

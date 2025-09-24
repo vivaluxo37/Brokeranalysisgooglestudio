@@ -18,7 +18,7 @@ interface TocItem {
   title: string;
 }
 
-const TableOfContents: React.FC<{ items: TocItem[] }> = ({ items }) => (
+const StickyTableOfContents: React.FC<{ items: TocItem[] }> = ({ items }) => (
     <div className="sticky top-24 self-start">
         <h3 className="font-bold mb-4 text-lg text-card-foreground">On this page</h3>
         <ul className="space-y-2 border-l-2 border-input">
@@ -35,6 +35,25 @@ const TableOfContents: React.FC<{ items: TocItem[] }> = ({ items }) => (
         </ul>
     </div>
 );
+
+const InlineTableOfContents: React.FC<{ items: TocItem[] }> = ({ items }) => (
+    <div className="my-10 p-6 border-l-4 border-primary-500 bg-card rounded-r-lg shadow-md">
+        <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><Icons.list className="h-5 w-5" /> Table of Contents</h3>
+        <ul className="space-y-2 list-inside">
+            {items.map(item => (
+                <li key={item.id}>
+                    <a 
+                        href={`#${item.id}`} 
+                        className="text-primary-400 hover:underline"
+                    >
+                        {item.title}
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </div>
+);
+
 
 const DownloadableResource: React.FC = () => (
     <div className="my-10 p-6 bg-primary-900/40 rounded-lg flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
@@ -269,7 +288,7 @@ const BlogPostPage: React.FC = () => {
             {faqJsonLd && <JsonLdSchema data={faqJsonLd} />}
             
             <aside className="hidden lg:block lg:col-span-1">
-                <TableOfContents items={tocItems} />
+                <StickyTableOfContents items={tocItems} />
             </aside>
 
             <main className="lg:col-span-3">
@@ -293,6 +312,8 @@ const BlogPostPage: React.FC = () => {
 
                     <img src={post.imageUrl} alt={post.title} className="w-full h-auto aspect-video object-cover rounded-lg mb-8" />
                     
+                    <InlineTableOfContents items={tocItems} />
+
                     <div className="prose dark:prose-invert max-w-none text-card-foreground/90 text-lg" dangerouslySetInnerHTML={{ __html: parsedContent }} />
 
                     <DownloadableResource />

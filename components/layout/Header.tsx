@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink as RRNavLink, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -180,6 +181,7 @@ const Header: React.FC = () => {
                                             <NavLink to="/tools/economic-calendar">{t('header.toolsMenu.economicCalendar')}</NavLink>
                                             <NavLink to="/tools/calculators">{t('header.toolsMenu.calculators')}</NavLink>
                                             <NavLink to="/tools/market-data">{t('header.toolsMenu.marketData')}</NavLink>
+                                            <NavLink to="/tools/broker-fees-calculator">{t('header.toolsMenu.brokerFeesCalculator')}</NavLink>
                                         </div>
                                     </div>
                                 </div>
@@ -285,6 +287,7 @@ const Header: React.FC = () => {
                            <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.economicCalendar')}</NavLink>
                            <NavLink to="/tools/calculators" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.calculators')}</NavLink>
                            <NavLink to="/tools/market-data" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.marketData')}</NavLink>
+                           <NavLink to="/tools/broker-fees-calculator" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.brokerFeesCalculator')}</NavLink>
                         </MobileAccordionLink>
                         <MobileAccordionLink title={t('header.education')}>
                            <NavLink to="/education" onClick={closeMobileMenu} className="block">{t('footer.links.educationHub')}</NavLink>

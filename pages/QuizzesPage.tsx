@@ -59,6 +59,66 @@ const QuizzesPage: React.FC = () => {
             icon: <Icons.cpu className="h-8 w-8" />,
             title: t('education.quizzes.orders.title'),
             description: t('education.quizzes.orders.description')
+        },
+        {
+            to: '/education/quizzes/technical-indicators',
+            icon: <Icons.trendingUp className="h-8 w-8" />,
+            title: t('education.quizzes.indicators.title'),
+            description: t('education.quizzes.indicators.description')
+        },
+        {
+            to: '/education/quizzes/candlestick-patterns',
+            icon: <Icons.layers className="h-8 w-8" />,
+            title: t('education.quizzes.candlesticks.title'),
+            description: t('education.quizzes.candlesticks.description')
+        },
+        {
+            to: '/education/quizzes/fundamental-analysis',
+            icon: <Icons.globe className="h-8 w-8" />,
+            title: t('education.quizzes.fundamental.title'),
+            description: t('education.quizzes.fundamental.description')
+        },
+        {
+            to: '/education/quizzes/trading-psychology',
+            icon: <Icons.brainCircuit className="h-8 w-8" />,
+            title: t('education.quizzes.psychology.title'),
+            description: t('education.quizzes.psychology.description')
+        },
+        {
+            to: '/education/quizzes/leverage-margin',
+            icon: <Icons.trendingUp className="h-8 w-8" />,
+            title: t('education.quizzes.leverage.title'),
+            description: t('education.quizzes.leverage.description')
+        },
+        {
+            to: '/education/quizzes/trading-platforms',
+            icon: <Icons.cpu className="h-8 w-8" />,
+            title: t('education.quizzes.platforms.title'),
+            description: t('education.quizzes.platforms.description')
+        },
+        {
+            to: '/education/quizzes/copy-trading',
+            icon: <Icons.users className="h-8 w-8" />,
+            title: t('education.quizzes.copy.title'),
+            description: t('education.quizzes.copy.description')
+        },
+        {
+            to: '/education/quizzes/pips-lots',
+            icon: <Icons.calculator className="h-8 w-8" />,
+            title: t('education.quizzes.pips.title'),
+            description: t('education.quizzes.pips.description')
+        },
+        {
+            to: '/education/quizzes/news-trading',
+            icon: <Icons.newspaper className="h-8 w-8" />,
+            title: t('education.quizzes.news.title'),
+            description: t('education.quizzes.news.description')
+        },
+        {
+            to: '/education/quizzes/chart-patterns',
+            icon: <Icons.layers className="h-8 w-8" />,
+            title: t('education.quizzes.patterns.title'),
+            description: t('education.quizzes.patterns.description')
         }
     ];
 

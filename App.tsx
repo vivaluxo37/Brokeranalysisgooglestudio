@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
@@ -35,6 +36,17 @@ import CalculatorsPage from './pages/CalculatorsPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import AuthorPage from './pages/AuthorPage';
+import TechnicalIndicatorsQuizPage from './pages/TechnicalIndicatorsQuizPage';
+import CandlestickPatternsQuizPage from './pages/CandlestickPatternsQuizPage';
+import FundamentalAnalysisQuizPage from './pages/FundamentalAnalysisQuizPage';
+import TradingPsychologyQuizPage from './pages/TradingPsychologyQuizPage';
+import LeverageMarginQuizPage from './pages/LeverageMarginQuizPage';
+import TradingPlatformsQuizPage from './pages/TradingPlatformsQuizPage';
+import CopyTradingQuizPage from './pages/CopyTradingQuizPage';
+import PipsAndLotsQuizPage from './pages/PipsAndLotsQuizPage';
+import NewsTradingQuizPage from './pages/NewsTradingQuizPage';
+import ChartPatternsQuizPage from './pages/ChartPatternsQuizPage';
+import BrokerFeesCalculatorPage from './pages/BrokerFeesCalculatorPage';
 
 const App: React.FC = () => {
   return (
@@ -63,6 +75,16 @@ const App: React.FC = () => {
         <Route path="/education/quizzes/charting-intro" element={<ChartingIntroQuizPage />} />
         <Route path="/education/quizzes/risk-management" element={<RiskManagementQuizPage />} />
         <Route path="/education/quizzes/order-types" element={<OrderTypesQuizPage />} />
+        <Route path="/education/quizzes/technical-indicators" element={<TechnicalIndicatorsQuizPage />} />
+        <Route path="/education/quizzes/candlestick-patterns" element={<CandlestickPatternsQuizPage />} />
+        <Route path="/education/quizzes/fundamental-analysis" element={<FundamentalAnalysisQuizPage />} />
+        <Route path="/education/quizzes/trading-psychology" element={<TradingPsychologyQuizPage />} />
+        <Route path="/education/quizzes/leverage-margin" element={<LeverageMarginQuizPage />} />
+        <Route path="/education/quizzes/trading-platforms" element={<TradingPlatformsQuizPage />} />
+        <Route path="/education/quizzes/copy-trading" element={<CopyTradingQuizPage />} />
+        <Route path="/education/quizzes/pips-lots" element={<PipsAndLotsQuizPage />} />
+        <Route path="/education/quizzes/news-trading" element={<NewsTradingQuizPage />} />
+        <Route path="/education/quizzes/chart-patterns" element={<ChartPatternsQuizPage />} />
         <Route path="/education/webinars" element={<WebinarsPage />} />
         <Route path="/education/simulators" element={<SimulatorsPage />} />
         <Route path="/education/simulators/order-execution" element={<OrderExecutionSimulatorPage />} />
@@ -71,6 +93,7 @@ const App: React.FC = () => {
         <Route path="/tools/economic-calendar" element={<EconomicCalendarPage />} />
         <Route path="/tools/market-data" element={<MarketDataPage />} />
         <Route path="/tools/calculators" element={<CalculatorsPage />} />
+        <Route path="/tools/broker-fees-calculator" element={<BrokerFeesCalculatorPage />} />
 
         {/* Dynamically create routes for all category pages */}
         {categoryPages.map(({ path, title, description, filterFn }) => (

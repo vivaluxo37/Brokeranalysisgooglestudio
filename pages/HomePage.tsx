@@ -141,36 +141,44 @@ const HomePage: React.FC = () => {
       <JsonLdSchema data={faqJsonLd} />
       {/* Hero Section */}
       <div className="text-center pt-16 md:pt-24">
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-primary-600">
-          {t('home.heroTitle')}
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-card-foreground">
+            {t('home.hero.h1')}
         </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-foreground/80">
-          {t('home.heroSubtitle')}
+        <p className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-foreground/80">
+            {t('home.hero.h2')}
         </p>
-         <p className="mt-2 text-sm text-foreground/60">
-          {t('home.heroDataDriven')}
+        <p className="mt-3 text-sm text-foreground/60">
+            {t('home.hero.supportLine')}
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <ReactRouterDOM.Link to="/broker-matcher">
-            <Button size="lg" variant="primary" className="animate-pulse w-full sm:w-auto">
-              {t('home.useAiMatcher')}
-            </Button>
-          </ReactRouterDOM.Link>
-          <ReactRouterDOM.Link to="/brokers">
-            <Button size="lg" variant="secondary" className="w-full sm:w-auto">
-              {t('home.exploreAllBrokers')}
-            </Button>
-          </ReactRouterDOM.Link>
+            <ReactRouterDOM.Link to="/broker-matcher">
+                <Button size="lg" variant="primary" className="animate-pulse w-full sm:w-auto">
+                    <span role="img" aria-label="search" className="ltr:mr-2 rtl:ml-2">🔍</span> {t('home.hero.ctaPrimary')}
+                </Button>
+            </ReactRouterDOM.Link>
+            <ReactRouterDOM.Link to="/brokers">
+                <Button size="lg" variant="secondary" className="w-full sm:w-auto">
+                    {t('home.hero.ctaSecondary')}
+                </Button>
+            </ReactRouterDOM.Link>
+        </div>
+        <div className="mt-10 flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm text-foreground/70">
+            {(t('home.hero.trustBadges') as string[]).map((badge: string, index: number) => (
+                <span key={index} className="flex items-center gap-2">
+                    <Icons.checkCircle className="h-4 w-4 text-green-500" />
+                    {badge}
+                </span>
+            ))}
         </div>
         <div className="mt-16">
-          <p className="text-sm text-foreground/60 uppercase tracking-wider">{t('home.trustedBy')}</p>
-          <div className="mt-4 flex justify-center items-center gap-6 sm:gap-8 flex-wrap">
-            {brokerLogos.map(logo => (
-              <a key={logo.name} href={logo.websiteUrl} target="_blank" rel="noopener noreferrer" title={`Visit ${logo.name}`}>
-                <img src={logo.logoUrl} alt={logo.name} className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all" />
-              </a>
-            ))}
-          </div>
+            <p className="text-sm text-foreground/60 uppercase tracking-wider">{t('home.trustedBy')}</p>
+            <div className="mt-4 flex justify-center items-center gap-6 sm:gap-8 flex-wrap">
+                {brokerLogos.map(logo => (
+                    <a key={logo.name} href={logo.websiteUrl} target="_blank" rel="noopener noreferrer" title={`Visit ${logo.name}`}>
+                        <img src={logo.logoUrl} alt={logo.name} className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all" />
+                    </a>
+                ))}
+            </div>
         </div>
       </div>
       

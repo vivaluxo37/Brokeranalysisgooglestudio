@@ -422,6 +422,89 @@ const DemoVsLiveQuiz: React.FC = () => {
     );
 };
 
+const TradingRisksQuiz: React.FC = () => {
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const question = "Choosing a broker with only an offshore license (e.g., from St. Vincent) primarily exposes you to which type of risk?";
+    const options = ["Market Risk", "Leverage Risk", "Broker Risk"];
+    const correctAnswer = "Broker Risk";
+
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswer(answer);
+        setIsCorrect(answer === correctAnswer);
+    };
+
+    return (
+        <div className="my-10 p-6 border-2 border-input rounded-lg bg-card">
+            <h3 className="text-xl font-bold text-center mb-4">Risk Knowledge Check!</h3>
+            <p className="text-center text-card-foreground/90 mb-6">{question}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {options.map(option => {
+                    const isSelected = selectedAnswer === option;
+                    let stateClass = 'bg-input hover:bg-input/70';
+                    if (isSelected) {
+                        stateClass = isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+                    }
+                    return (
+                        <button 
+                            key={option} 
+                            onClick={() => handleAnswer(option)}
+                            disabled={selectedAnswer !== null}
+                            className={`p-4 rounded-lg font-semibold transition-colors ${stateClass}`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+            {isCorrect === true && <p className="text-center mt-4 text-green-400 font-semibold animate-fade-in">Correct! Broker risk (or counterparty risk) is the danger of the broker failing or acting fraudulently. Top-tier regulation is the best defense.</p>}
+            {isCorrect === false && <p className="text-center mt-4 text-red-400 font-semibold animate-fade-in">Not quite. While all risks are present, weak regulation specifically heightens Broker Risk, as there's less oversight to protect your funds.</p>}
+        </div>
+    );
+};
+
+const TradingToolsQuiz: React.FC = () => {
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const question = "To ensure you risk exactly 1% of your account on a trade, which tool is non-negotiable?";
+    const options = ["A real-time news feed", "A pip value calculator", "A position size calculator"];
+    const correctAnswer = "A position size calculator";
+
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswer(answer);
+        setIsCorrect(answer === correctAnswer);
+    };
+
+    return (
+        <div className="my-10 p-6 border-2 border-input rounded-lg bg-card">
+            <h3 className="text-xl font-bold text-center mb-4">Toolkit Knowledge Check!</h3>
+            <p className="text-center text-card-foreground/90 mb-6">{question}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {options.map(option => {
+                    const isSelected = selectedAnswer === option;
+                    let stateClass = 'bg-input hover:bg-input/70';
+                    if (isSelected) {
+                        stateClass = isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+                    }
+                    return (
+                        <button 
+                            key={option} 
+                            onClick={() => handleAnswer(option)}
+                            disabled={selectedAnswer !== null}
+                            className={`p-4 rounded-lg font-semibold transition-colors ${stateClass}`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+            {isCorrect === true && <p className="text-center mt-4 text-green-400 font-semibold animate-fade-in">Correct! The position size calculator is the tool that translates your risk percentage into an actual trade size (in lots) based on your stop-loss.</p>}
+            {isCorrect === false && <p className="text-center mt-4 text-red-400 font-semibold animate-fade-in">Incorrect. While other tools are useful, the position size calculator is the one that directly implements your risk management rule.</p>}
+        </div>
+    );
+};
 
 // --- Enhanced Markdown Parser ---
 
@@ -560,7 +643,7 @@ const BlogPostPage: React.FC = () => {
     const faqs = extractFaqs(post.content);
     
     // Split content by shortcodes to inject React components
-    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\]|\[AUTOMATED_TRADING_QUIZ\]|\[LEVERAGE_QUIZ\]|\[PLATFORM_QUIZ\]|\[COPY_TRADING_QUIZ\]|\[DEMO_VS_LIVE_QUIZ\])/);
+    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\]|\[AUTOMATED_TRADING_QUIZ\]|\[LEVERAGE_QUIZ\]|\[PLATFORM_QUIZ\]|\[COPY_TRADING_QUIZ\]|\[DEMO_VS_LIVE_QUIZ\]|\[TRADING_RISKS_QUIZ\]|\[TRADING_TOOLS_QUIZ\])/);
 
     const blogPostJsonLd: any = {
         "@context": "https://schema.org",
@@ -684,30 +767,16 @@ const BlogPostPage: React.FC = () => {
 
                     <div className="prose dark:prose-invert max-w-none text-card-foreground/90 text-lg">
                         {contentParts.map((part, index) => {
-                            if (part === '[DOWNLOAD_RESOURCE]') {
-                                return <DownloadableResource key={index} />;
-                            }
-                            if (part === '[INTERACTIVE_QUIZ]') {
-                                 return <InteractiveQuiz key={index} />;
-                            }
-                            if (part === '[BEGINNER_QUIZ]') {
-                                return <BeginnerQuiz key={index} />;
-                            }
-                            if (part === '[AUTOMATED_TRADING_QUIZ]') {
-                                return <AutomatedTradingQuiz key={index} />;
-                            }
-                            if (part === '[LEVERAGE_QUIZ]') {
-                                return <LeverageQuiz key={index} />;
-                            }
-                            if (part === '[PLATFORM_QUIZ]') {
-                                return <PlatformQuiz key={index} />;
-                            }
-                            if (part === '[COPY_TRADING_QUIZ]') {
-                                return <CopyTradingQuiz key={index} />;
-                            }
-                            if (part === '[DEMO_VS_LIVE_QUIZ]') {
-                                return <DemoVsLiveQuiz key={index} />;
-                            }
+                            if (part === '[DOWNLOAD_RESOURCE]') return <DownloadableResource key={index} />;
+                            if (part === '[INTERACTIVE_QUIZ]') return <InteractiveQuiz key={index} />;
+                            if (part === '[BEGINNER_QUIZ]') return <BeginnerQuiz key={index} />;
+                            if (part === '[AUTOMATED_TRADING_QUIZ]') return <AutomatedTradingQuiz key={index} />;
+                            if (part === '[LEVERAGE_QUIZ]') return <LeverageQuiz key={index} />;
+                            if (part === '[PLATFORM_QUIZ]') return <PlatformQuiz key={index} />;
+                            if (part === '[COPY_TRADING_QUIZ]') return <CopyTradingQuiz key={index} />;
+                            if (part === '[DEMO_VS_LIVE_QUIZ]') return <DemoVsLiveQuiz key={index} />;
+                            if (part === '[TRADING_RISKS_QUIZ]') return <TradingRisksQuiz key={index} />;
+                            if (part === '[TRADING_TOOLS_QUIZ]') return <TradingToolsQuiz key={index} />;
                             return <div key={index} dangerouslySetInnerHTML={{ __html: parseMarkdown(part) }} />;
                         })}
                     </div>

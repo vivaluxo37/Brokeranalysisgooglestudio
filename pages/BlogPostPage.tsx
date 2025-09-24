@@ -296,6 +296,89 @@ const LeverageQuiz: React.FC = () => {
     );
 };
 
+const PlatformQuiz: React.FC = () => {
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const question = "You are a scalper who values a clean interface and seeing market depth. Which platform is likely the best fit for you?";
+    const options = ["MT4", "MT5", "cTrader"];
+    const correctAnswer = "cTrader";
+
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswer(answer);
+        setIsCorrect(answer === correctAnswer);
+    };
+
+    return (
+        <div className="my-10 p-6 border-2 border-input rounded-lg bg-card">
+            <h3 className="text-xl font-bold text-center mb-4">Platform Knowledge Check!</h3>
+            <p className="text-center text-card-foreground/90 mb-6">{question}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {options.map(option => {
+                    const isSelected = selectedAnswer === option;
+                    let stateClass = 'bg-input hover:bg-input/70';
+                    if (isSelected) {
+                        stateClass = isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+                    }
+                    return (
+                        <button 
+                            key={option} 
+                            onClick={() => handleAnswer(option)}
+                            disabled={selectedAnswer !== null}
+                            className={`p-4 rounded-lg font-semibold transition-colors ${stateClass}`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+            {isCorrect === true && <p className="text-center mt-4 text-green-400 font-semibold animate-fade-in">Correct! cTrader is renowned for its modern interface and built-in Level II Depth of Market, making it ideal for scalpers.</p>}
+            {isCorrect === false && <p className="text-center mt-4 text-red-400 font-semibold animate-fade-in">Not quite. While MT5 has market depth, cTrader is specifically designed with manual execution and a clean UI in mind.</p>}
+        </div>
+    );
+};
+
+const CopyTradingQuiz: React.FC = () => {
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const question = "When choosing a trader to copy, what is 'Maximum Drawdown' an important indicator of?";
+    const options = ["Their total profit", "The biggest loss their account has experienced", "How many followers they have"];
+    const correctAnswer = "The biggest loss their account has experienced";
+
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswer(answer);
+        setIsCorrect(answer === correctAnswer);
+    };
+
+    return (
+        <div className="my-10 p-6 border-2 border-input rounded-lg bg-card">
+            <h3 className="text-xl font-bold text-center mb-4">Copy Trading Risk Check!</h3>
+            <p className="text-center text-card-foreground/90 mb-6">{question}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {options.map(option => {
+                    const isSelected = selectedAnswer === option;
+                    let stateClass = 'bg-input hover:bg-input/70';
+                    if (isSelected) {
+                        stateClass = isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+                    }
+                    return (
+                        <button 
+                            key={option} 
+                            onClick={() => handleAnswer(option)}
+                            disabled={selectedAnswer !== null}
+                            className={`p-4 rounded-lg font-semibold transition-colors ${stateClass}`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+            {isCorrect === true && <p className="text-center mt-4 text-green-400 font-semibold animate-fade-in">Correct! Maximum Drawdown shows the greatest percentage loss from a peak, which is a key indicator of their risk management.</p>}
+            {isCorrect === false && <p className="text-center mt-4 text-red-400 font-semibold animate-fade-in">Incorrect. Total profit can be misleading without understanding the risk taken to achieve it. Drawdown is a critical risk metric.</p>}
+        </div>
+    );
+};
 
 
 // --- Enhanced Markdown Parser ---
@@ -435,7 +518,7 @@ const BlogPostPage: React.FC = () => {
     const faqs = extractFaqs(post.content);
     
     // Split content by shortcodes to inject React components
-    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\]|\[AUTOMATED_TRADING_QUIZ\]|\[LEVERAGE_QUIZ\])/);
+    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\]|\[AUTOMATED_TRADING_QUIZ\]|\[LEVERAGE_QUIZ\]|\[PLATFORM_QUIZ\]|\[COPY_TRADING_QUIZ\])/);
 
     const blogPostJsonLd: any = {
         "@context": "https://schema.org",
@@ -584,6 +667,12 @@ const BlogPostPage: React.FC = () => {
                             }
                             if (part === '[LEVERAGE_QUIZ]') {
                                 return <LeverageQuiz key={index} />;
+                            }
+                            if (part === '[PLATFORM_QUIZ]') {
+                                return <PlatformQuiz key={index} />;
+                            }
+                            if (part === '[COPY_TRADING_QUIZ]') {
+                                return <CopyTradingQuiz key={index} />;
                             }
                             return <div key={index} dangerouslySetInnerHTML={{ __html: parseMarkdown(part) }} />;
                         })}

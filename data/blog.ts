@@ -1,4 +1,12 @@
 import { BlogPost } from '../types';
+import { authors } from './authors';
+
+const darrenCole = authors.find(a => a.slug === 'darren-cole');
+const janeDoe = authors.find(a => a.slug === 'jane-doe');
+
+if (!darrenCole || !janeDoe) {
+  throw new Error("Could not find author data");
+}
 
 export const blogPosts: BlogPost[] = [
   {
@@ -9,10 +17,12 @@ export const blogPosts: BlogPost[] = [
     metaDescription: 'Our comprehensive 2025 guide to choosing a forex broker. We cover regulation, fees, platforms, and AI tools to help you find the best broker for your needs.',
     summary: 'Choosing the right forex broker is the most important decision you\'ll make as a trader. In this guide, we break down the key factors to consider in 2025, from regulatory safety to understanding the true cost of trading.',
     author: {
-      name: 'Darren Cole – Senior Trading Strategist',
-      avatarUrl: 'https://i.pravatar.cc/150?u=darrencole',
+      name: darrenCole.name,
+      slug: darrenCole.slug,
+      avatarUrl: darrenCole.avatarUrl,
     },
     date: '2025-09-20T10:00:00Z',
+    lastUpdated: '2025-09-22T11:00:00Z',
     tags: ['Beginner Guide', 'Regulation', 'Trading Costs'],
     imageUrl: 'https://images.unsplash.com/photo-1642052519154-15f333333642?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     readTimeMinutes: 8,
@@ -83,8 +93,13 @@ A: Almost all reputable brokers offer a free demo account. Use it to test their 
     metaDescription: 'A detailed 2025 comparison of ECN and Market Maker forex brokers. Learn the pros and cons of each model regarding spreads, commissions, execution speed, and conflicts of interest to find the best fit for your trading style.',
     summary: 'The terms "ECN" and "Market Maker" are thrown around a lot, but what do they actually mean for you as a trader? This article demystifies the two main broker models and helps you decide which one aligns with your trading strategy.',
     author: {
-      name: 'Darren Cole – Senior Trading Strategist',
-      avatarUrl: 'https://i.pravatar.cc/150?u=darrencole',
+      name: darrenCole.name,
+      slug: darrenCole.slug,
+      avatarUrl: darrenCole.avatarUrl,
+    },
+    reviewedBy: {
+      name: janeDoe.name,
+      slug: janeDoe.slug,
     },
     date: '2025-09-15T14:30:00Z',
     tags: ['Broker Types', 'ECN', 'Advanced'],
@@ -125,6 +140,7 @@ The most significant criticism of the Market Maker model is the inherent conflic
     *   Requotes can occur during high volatility.
     *   Spreads are generally wider than raw ECN spreads.
 
+[INTERACTIVE_QUIZ]
 
 ## What is an ECN Broker? {#ecn-brokers}
 An ECN broker sits at the opposite end of the spectrum. They do not operate a dealing desk. Instead, they provide a gateway—an Electronic Communication Network—that connects your orders directly to a network of liquidity providers. These providers include banks, hedge funds, and other financial institutions, all competing to offer the best bid and ask prices. For a deeper dive, see this article from [**Investopedia**](https://www.investopedia.com/terms/e/ecn-broker.asp).
@@ -133,6 +149,8 @@ An ECN broker sits at the opposite end of the spectrum. They do not operate a de
 When you place a trade with an ECN broker, your order is routed into this anonymous network. The ECN's engine then matches your order with the best available counterparty price. This means you are trading directly with the real market, not against your broker. This process is known as Straight Through Processing (STP).
 
 Because the broker is just a facilitator, their business model is different. They do not profit from your losses. Instead, they make money by charging a small, fixed _commission_ for every trade executed. This aligns their interests with yours—the more you trade, the more they earn, regardless of whether you win or lose.
+
+[DOWNLOAD_RESOURCE]
 
 ### The ECN Pricing Model: Spreads + Commission
 With an ECN broker, you get access to raw, interbank spreads. These are the true market prices and can be as low as 0.0 pips on major pairs. However, this doesn't mean trading is free. You pay a separate, transparent commission on top of the spread.

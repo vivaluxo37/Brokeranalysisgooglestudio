@@ -35,6 +35,7 @@ import MarketDataPage from './pages/MarketDataPage';
 import CalculatorsPage from './pages/CalculatorsPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
+import AuthorPage from './pages/AuthorPage';
 
 const App: React.FC = () => {
   return (
@@ -53,6 +54,7 @@ const App: React.FC = () => {
         <ReactRouterDOM.Route path="/market-news" element={<MarketNewsPage />} />
         <ReactRouterDOM.Route path="/blog" element={<BlogPage />} />
         <ReactRouterDOM.Route path="/blog/:slug" element={<BlogPostPage />} />
+        <ReactRouterDOM.Route path="/author/:authorSlug" element={<AuthorPage />} />
 
         {/* Education Routes */}
         <ReactRouterDOM.Route path="/education" element={<EducationHubPage />} />

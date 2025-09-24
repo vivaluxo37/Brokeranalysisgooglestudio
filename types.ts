@@ -1,5 +1,18 @@
 
 
+
+export interface Author {
+  slug: string;
+  name: string;
+  avatarUrl: string;
+  credentials?: string;
+  bio: string;
+  socials?: {
+    twitter?: string;
+    linkedin?: string;
+  };
+}
+
 export interface BlogPost {
   id: string;
   slug: string;
@@ -10,9 +23,15 @@ export interface BlogPost {
   content: string; // Markdown content
   author: {
     name: string;
+    slug: string;
     avatarUrl: string;
   };
+  reviewedBy?: {
+    name: string;
+    slug: string;
+  };
   date: string; // ISO 8601
+  lastUpdated?: string; // ISO 8601
   tags: string[];
   imageUrl: string;
   readTimeMinutes: number;
@@ -45,7 +64,7 @@ export interface DiscussionReply {
 
 export interface DiscussionPost {
   id: string;
-  brokerId: string;
+  topicId: string; // Can be a brokerId or a blogPostSlug
   userId: string;
   userName: string;
   title: string;
@@ -352,7 +371,7 @@ export interface ReviewsContextType {
 
 export interface DiscussionContextType {
   posts: DiscussionPost[];
-  getPostsByBrokerId: (brokerId: string) => DiscussionPost[];
+  getPostsByTopicId: (topicId: string) => DiscussionPost[];
   addPost: (post: Omit<DiscussionPost, 'id' | 'date' | 'upvotes' | 'replies'>) => void;
   addReply: (reply: Omit<DiscussionReply, 'id' | 'date' | 'upvotes'>) => void;
   upvotePost: (postId: string) => void;

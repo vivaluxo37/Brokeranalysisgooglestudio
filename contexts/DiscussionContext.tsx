@@ -4,7 +4,7 @@ import { DiscussionPost, DiscussionReply, DiscussionContextType } from '../types
 const initialPosts: DiscussionPost[] = [
     {
         id: 'post1',
-        brokerId: 'pepperstone',
+        topicId: 'pepperstone',
         userId: 'user123',
         userName: 'Alice',
         title: 'Does Pepperstone offer TradingView integration on all account types?',
@@ -34,7 +34,7 @@ const initialPosts: DiscussionPost[] = [
     },
     {
         id: 'post2',
-        brokerId: 'pepperstone',
+        topicId: 'pepperstone',
         userId: 'user789',
         userName: 'Charlie',
         title: 'What are the withdrawal times like for PayPal?',
@@ -62,8 +62,8 @@ export const DiscussionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         localStorage.setItem('discussionPosts', JSON.stringify(posts));
     }, [posts]);
 
-    const getPostsByBrokerId = (brokerId: string) => {
-        return posts.filter(post => post.brokerId === brokerId).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const getPostsByTopicId = (topicId: string) => {
+        return posts.filter(post => post.topicId === topicId).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     };
 
     const addPost = (postData: Omit<DiscussionPost, 'id' | 'date' | 'upvotes' | 'replies'>) => {
@@ -108,7 +108,7 @@ export const DiscussionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     };
 
     return (
-        <DiscussionContext.Provider value={{ posts, getPostsByBrokerId, addPost, addReply, upvotePost, upvoteReply }}>
+        <DiscussionContext.Provider value={{ posts, getPostsByTopicId, addPost, addReply, upvotePost, upvoteReply }}>
             {children}
         </DiscussionContext.Provider>
     );

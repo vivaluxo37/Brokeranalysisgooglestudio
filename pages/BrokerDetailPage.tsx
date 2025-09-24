@@ -239,7 +239,7 @@ const BrokerDetailPage: React.FC = () => {
 
 
   const reviews = useMemo(() => getReviewsByBrokerId(broker?.id || ''), [getReviewsByBrokerId, broker]);
-  const posts = useMemo(() => discussionContext?.getPostsByBrokerId(broker?.id || '') || [], [discussionContext, broker]);
+  const posts = useMemo(() => discussionContext?.getPostsByTopicId(broker?.id || '') || [], [discussionContext, broker]);
   
   const [newRating, setNewRating] = useState(0);
   const [newComment, setNewComment] = useState('');
@@ -385,7 +385,7 @@ const BrokerDetailPage: React.FC = () => {
     setIsSubmittingPost(true);
     setTimeout(() => {
         discussionContext.addPost({
-            brokerId: broker.id,
+            topicId: broker.id,
             userId: user.id,
             userName: user.name,
             title: postTitle,

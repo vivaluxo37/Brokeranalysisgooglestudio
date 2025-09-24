@@ -9,7 +9,7 @@ import { Icons } from '../constants';
 import Tag from '../components/ui/Tag';
 import ShareButtons from '../components/blog/ShareButtons';
 import BlogPostCard from '../components/blog/BlogPostCard';
-import Card, { CardContent } from '../components/ui/Card';
+import Card, { CardContent } from '../ui/Card';
 import Button from '../components/ui/Button';
 import { DiscussionContext } from '../contexts/DiscussionContext';
 import { useAuth } from '../hooks/useAuth';
@@ -170,6 +170,48 @@ const StrategyQuiz: React.FC = () => {
     );
 };
 
+const BeginnerQuiz: React.FC = () => {
+    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const question = "In the currency pair GBP/USD, if you 'go long' (buy), what are you hoping for?";
+    const options = ["GBP to weaken against USD", "GBP to strengthen against USD", "The price to stay the same"];
+    const correctAnswer = "GBP to strengthen against USD";
+
+    const handleAnswer = (answer: string) => {
+        setSelectedAnswer(answer);
+        setIsCorrect(answer === correctAnswer);
+    };
+
+    return (
+        <div className="my-10 p-6 border-2 border-input rounded-lg bg-card">
+            <h3 className="text-xl font-bold text-center mb-4">Beginner Knowledge Check!</h3>
+            <p className="text-center text-card-foreground/90 mb-6">{question}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {options.map(option => {
+                    const isSelected = selectedAnswer === option;
+                    let stateClass = 'bg-input hover:bg-input/70';
+                    if (isSelected) {
+                        stateClass = isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+                    }
+                    return (
+                        <button 
+                            key={option} 
+                            onClick={() => handleAnswer(option)}
+                            disabled={selectedAnswer !== null}
+                            className={`p-4 rounded-lg font-semibold transition-colors ${stateClass}`}
+                        >
+                            {option}
+                        </button>
+                    );
+                })}
+            </div>
+            {isCorrect === true && <p className="text-center mt-4 text-green-400 font-semibold animate-fade-in">Correct! Going long means you are buying the base currency (GBP), profiting if its value rises.</p>}
+            {isCorrect === false && <p className="text-center mt-4 text-red-400 font-semibold animate-fade-in">Not quite. Going long means you expect the first currency in the pair to strengthen.</p>}
+        </div>
+    );
+};
+
 
 
 // --- Enhanced Markdown Parser ---
@@ -309,7 +351,7 @@ const BlogPostPage: React.FC = () => {
     const faqs = extractFaqs(post.content);
     
     // Split content by shortcodes to inject React components
-    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\])/);
+    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\])/);
 
     const blogPostJsonLd: any = {
         "@context": "https://schema.org",
@@ -449,6 +491,9 @@ const BlogPostPage: React.FC = () => {
                             }
                             if (part === '[INTERACTIVE_QUIZ]') {
                                 return renderInteractiveComponent(post.slug, index);
+                            }
+                            if (part === '[BEGINNER_QUIZ]') {
+                                return <BeginnerQuiz key={index} />;
                             }
                             return <div key={index} dangerouslySetInnerHTML={{ __html: parseMarkdown(part) }} />;
                         })}

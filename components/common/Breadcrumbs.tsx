@@ -57,7 +57,7 @@ const Breadcrumbs: React.FC = () => {
       return { name, path: currentLink, isLast };
     }).filter(Boolean); // Remove null entries
 
-    return generatedCrumbs;
+    return generatedCrumbs as { name: string; path: string; isLast: boolean; }[];
 
   }, [location.pathname]);
   

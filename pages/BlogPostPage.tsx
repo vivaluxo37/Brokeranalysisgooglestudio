@@ -110,89 +110,71 @@ const InteractiveQuiz: React.FC = () => {
 
 // --- Enhanced Markdown Parser ---
 
-const parseMarkdown = (markdown: string) => {
-    const tableRegex = /^\|.*\|$/m;
+const processInlineFormatting = (text: string): string => {
+    return text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/_([^_]+)_/g, '<em>$1</em>')
+        .replace(/`([^`]+)`/g, '<code class="bg-input text-primary-400 font-mono py-1 px-2 rounded text-sm">$1</code>');
+};
 
-    const processInlineFormatting = (text: string) => {
-        return text
-            .replace(/\*\*(.*?)\*\*/g, '<span class="font-bold">$1</span>')
-            .replace(/_([^_]+)_/g, '<span class="italic">$1</span>')
-            .replace(/`([^`]+)`/g, '<code class="bg-input text-primary-400 font-mono py-1 px-2 rounded text-sm">$1</code>');
-    };
-    
-    const processLinksAndFormatting = (text: string) => {
-        // Temporarily replace links with placeholders to avoid nested processing
-        const links: string[] = [];
-        const textWithPlaceholders = text.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
-            const formattedText = processInlineFormatting(linkText);
-            const linkType = url.startsWith('/#/') 
-                ? `<a href="${url}" class="text-primary-400 hover:underline">${formattedText}</a>`
-                : `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${formattedText}</a>`;
-            links.push(linkType);
-            return `__LINK_${links.length - 1}__`;
-        });
+const parseMarkdown = (markdown: string): string => {
+    let links: string[] = [];
+    const LINK_PLACEHOLDER = '::LINK_PLACEHOLDER::';
 
-        // Process remaining formatting
-        let formattedText = processInlineFormatting(textWithPlaceholders);
-
-        // Restore links
-        links.forEach((link, index) => {
-            formattedText = formattedText.replace(`__LINK_${index}__`, link);
-        });
+    const processInlines = (text: string): string => {
+        let processed = processInlineFormatting(text);
         
-        return formattedText;
+        // Restore links one by one
+        while(processed.includes(LINK_PLACEHOLDER) && links.length > 0) {
+            processed = processed.replace(LINK_PLACEHOLDER, links.shift()!);
+        }
+        return processed;
     };
-
 
     const blocks = markdown.trim().split(/\n\n+/);
+    
+    return blocks.map(block => {
+        links = []; // Reset links for each block
 
-    const html = blocks.map(block => {
+        // First, extract all links from the block and replace them with placeholders
+        const blockWithPlaceholders = block.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
+            const processedLinkText = processInlineFormatting(linkText);
+            const linkHtml = url.startsWith('/#/') 
+                ? `<a href="${url}" class="text-primary-400 hover:underline">${processedLinkText}</a>`
+                : `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${processedLinkText} <span class="inline-block align-middle">&#8599;</span></a>`;
+            links.push(linkHtml);
+            return LINK_PLACEHOLDER;
+        });
+        
         // H2 with ID
-        if (block.match(/^## (.*?){#(.*?)}/)) {
-            return block.replace(/^## (.*?){#(.*?)}/, '<h2 id="$2" class="text-3xl font-bold mt-12 mb-6 pt-4 border-b border-input">$1</h2>');
+        if (blockWithPlaceholders.match(/^## (.*?){#(.*?)}/)) {
+            return blockWithPlaceholders.replace(/^## (.*?){#(.*?)}/, (match, title, id) => `<h2 id="${id}" class="text-3xl font-bold mt-12 mb-6 pt-4 border-b border-input">${processInlines(title)}</h2>`);
         }
         // H3
-        if (block.startsWith('### ')) {
-            return `<h3 class="text-2xl font-semibold mt-8 mb-4">${block.substring(4)}</h3>`;
+        if (blockWithPlaceholders.startsWith('### ')) {
+            return `<h3 class="text-2xl font-semibold mt-8 mb-4">${processInlines(blockWithPlaceholders.substring(4))}</h3>`;
         }
         // Table
-        if (tableRegex.test(block)) {
-             const rows = block.trim().split('\n');
-            const headerCells = rows[0].split('|').map(h => h.trim()).slice(1, -1);
-            const bodyRows = rows.slice(2).map(row => row.split('|').map(c => c.trim()).slice(1, -1));
+        if (/^\|.*\|/m.test(blockWithPlaceholders)) {
+            const rows = block.trim().split('\n'); // Use original block for table structure
+            const headerCells = rows[0].split('|').slice(1, -1).map(h => h.trim());
+            const bodyRows = rows.slice(2).map(row => row.split('|').slice(1, -1).map(c => c.trim()));
 
             let tableHtml = '<div class="my-6 overflow-x-auto rounded-lg border border-input"><table class="w-full text-base">';
-            tableHtml += '<thead class="bg-input/50"><tr>';
-            headerCells.forEach(h => {
-                tableHtml += `<th class="p-4 font-semibold">${h}</th>`;
-            });
-            tableHtml += '</tr></thead>';
-
-            tableHtml += '<tbody>';
-            bodyRows.forEach(row => {
-                tableHtml += '<tr class="border-t border-input">';
-                row.forEach(cell => {
-                    tableHtml += `<td class="p-4">${processLinksAndFormatting(cell)}</td>`;
-                });
-                tableHtml += '</tr>';
-            });
-            tableHtml += '</tbody></table></div>';
+            tableHtml += '<thead class="bg-input/50"><tr>' + headerCells.map(h => `<th class="p-4 font-semibold text-left">${parseMarkdown(h)}</th>`).join('') + '</tr></thead>';
+            tableHtml += '<tbody>' + bodyRows.map(row => '<tr class="border-t border-input">' + row.map(cell => `<td class="p-4 align-top">${parseMarkdown(cell)}</td>`).join('') + '</tr>').join('') + '</tbody></table></div>';
             return tableHtml;
         }
         // Unordered List
-        if (block.startsWith('* ')) {
-            const items = block.split('\n').map(item => {
-                const content = item.replace(/^\* /, '').trim();
-                return `<li class="ml-5">${processLinksAndFormatting(content)}</li>`;
-            }).join('');
+        if (blockWithPlaceholders.startsWith('* ')) {
+            const items = blockWithPlaceholders.split('\n').map(item => `<li class="ml-5">${processInlines(item.replace(/^\* /, '').trim())}</li>`).join('');
             return `<ul class="list-disc pl-5 space-y-2 my-6">${items}</ul>`;
         }
         // Paragraphs
-        return `<p class="my-6 leading-relaxed">${processLinksAndFormatting(block)}</p>`;
+        return `<p class="my-6 leading-relaxed">${processInlines(blockWithPlaceholders)}</p>`;
     }).join('');
-
-    return html;
 };
+
 
 const extractTocItems = (markdown: string): TocItem[] => {
     const tocItems: TocItem[] = [];
@@ -209,7 +191,7 @@ const extractTocItems = (markdown: string): TocItem[] => {
 
 const extractFaqs = (markdown: string) => {
     const faqs = [];
-    const faqRegex = /\*\*Q: (.*?)\*\*\s*\n\s*A: (.*?)(?=\n\n\*\*Q:|\s*$)/gs;
+    const faqRegex = /\*\*Q: (.*?)\*\*[\s\S]*?A: ([\s\S]*?)(?=\n\n\*\*Q:|\s*$)/g;
     let match;
     while ((match = faqRegex.exec(markdown)) !== null) {
         faqs.push({
@@ -319,8 +301,13 @@ const BlogPostPage: React.FC = () => {
 
                     <div className="prose dark:prose-invert max-w-none text-card-foreground/90 text-lg" dangerouslySetInnerHTML={{ __html: parsedContent }} />
 
-                    <DownloadableResource />
-                    <InteractiveQuiz />
+                    {/* Only show these on the specific enhanced blog post */}
+                    {post.slug === 'ecn-vs-market-maker-broker' && (
+                        <>
+                          <DownloadableResource />
+                          <InteractiveQuiz />
+                        </>
+                    )}
 
                     <footer className="mt-12 pt-8 border-t border-input">
                        <ShareButtons title={post.title} url={canonicalUrl} />

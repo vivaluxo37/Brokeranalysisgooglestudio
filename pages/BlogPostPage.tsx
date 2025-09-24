@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useContext } from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
 import { blogPosts } from '../data/blog';
+import { authors } from '../data/authors';
 import NotFoundPage from './NotFoundPage';
 import MetaTags from '../components/common/MetaTags';
 import JsonLdSchema from '../components/common/JsonLdSchema';
@@ -204,11 +205,16 @@ const BlogPostPage: React.FC = () => {
     const [postContent, setPostContent] = useState('');
     const [isSubmittingPost, setIsSubmittingPost] = useState(false);
 
+    const reviewer = useMemo(() => {
+        if (!post?.reviewedBy) return null;
+        return authors.find(a => a.slug === post.reviewedBy.slug);
+    }, [post]);
+
     const relatedPosts = useMemo(() => {
         if (!post) return [];
         return blogPosts
             .filter(p => p.id !== post.id && p.tags.some(tag => post.tags.includes(tag)))
-            .slice(0, 3);
+            .slice(0, 4);
     }, [post]);
     
     const posts = useMemo(() => {
@@ -261,6 +267,7 @@ const BlogPostPage: React.FC = () => {
         "author": {
             "@type": "Person",
             "name": post.author.name,
+            "url": `https://brokeranalysis.com/#/author/${post.author.slug}`
         },
         "publisher": {
             "@type": "Organization",
@@ -279,6 +286,7 @@ const BlogPostPage: React.FC = () => {
         blogPostJsonLd.reviewedBy = {
             "@type": "Person",
             "name": post.reviewedBy.name,
+            "url": `https://brokeranalysis.com/#/author/${post.reviewedBy.slug}`
         };
     }
 
@@ -317,27 +325,52 @@ const BlogPostPage: React.FC = () => {
                             {post.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
                         </div>
                         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-card-foreground">{post.title}</h1>
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-6 text-sm text-foreground/70">
+                        
+                        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4 text-sm border-t border-b border-input py-4">
+                            {/* Author Info */}
                             <div className="flex items-center gap-3">
-                                <img src={post.author.avatarUrl} alt={post.author.name} className="h-10 w-10 rounded-full" />
+                                <ReactRouterDOM.Link to={`/author/${post.author.slug}`}>
+                                    <img src={post.author.avatarUrl} alt={post.author.name} className="h-12 w-12 rounded-full ring-2 ring-primary-500/50" />
+                                </ReactRouterDOM.Link>
                                 <div>
-                                    <p>By <ReactRouterDOM.Link to={`/author/${post.author.slug}`} className="font-bold text-foreground hover:text-primary-400">{post.author.name}</ReactRouterDOM.Link></p>
-                                    {post.reviewedBy && (
-                                        <p className="text-xs">Reviewed by <ReactRouterDOM.Link to={`/author/${post.reviewedBy.slug}`} className="font-semibold text-foreground/80 hover:text-primary-400">{post.reviewedBy.name}</ReactRouterDOM.Link></p>
-                                    )}
+                                    <p className="font-bold text-foreground">
+                                        <ReactRouterDOM.Link to={`/author/${post.author.slug}`} className="hover:text-primary-400">{post.author.name}</ReactRouterDOM.Link>
+                                    </p>
+                                    <p className="text-xs text-foreground/70">
+                                        Published on {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                                    </p>
                                 </div>
                             </div>
+
+                            {/* Reviewer Info */}
+                            {reviewer && (
+                                <div className="flex items-center gap-3">
+                                     <ReactRouterDOM.Link to={`/author/${reviewer.slug}`}>
+                                        <img src={reviewer.avatarUrl} alt={reviewer.name} className="h-12 w-12 rounded-full" />
+                                    </ReactRouterDOM.Link>
+                                    <div>
+                                        <p className="font-semibold text-foreground">
+                                            Reviewed by <ReactRouterDOM.Link to={`/author/${reviewer.slug}`} className="hover:text-primary-400">{reviewer.name}</ReactRouterDOM.Link>
+                                        </p>
+                                        {post.lastUpdated && (
+                                            <p className="text-xs text-foreground/70">
+                                                Fact-checked on {new Date(post.lastUpdated).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                         <div className="mt-4 text-xs text-foreground/60 space-x-4">
-                            <span>Published on {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                            {post.lastUpdated && <span>Last Updated on {new Date(post.lastUpdated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
-                             <span className="inline-flex items-center gap-1"><Icons.clock className="h-3 w-3" /> {post.readTimeMinutes} min read</span>
+                         <div className="mt-4 text-xs text-foreground/60 flex items-center gap-1">
+                            <Icons.clock className="h-3 w-3" /> {post.readTimeMinutes} min read
                         </div>
                     </header>
 
                     <img src={post.imageUrl} alt={post.title} className="w-full h-auto aspect-video object-cover rounded-lg mb-8" loading="lazy" decoding="async" />
                     
-                    <InlineTableOfContents items={tocItems} />
+                    <div className="lg:hidden">
+                        <InlineTableOfContents items={tocItems} />
+                    </div>
 
                     <div className="prose dark:prose-invert max-w-none text-card-foreground/90 text-lg">
                         {contentParts.map((part, index) => {
@@ -358,8 +391,11 @@ const BlogPostPage: React.FC = () => {
 
                 {relatedPosts.length > 0 && (
                     <section className="mt-16">
-                        <h2 className="text-3xl font-bold mb-8 text-center">Related Articles</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <h2 className="text-3xl font-bold mb-8 text-center flex items-center justify-center gap-3">
+                            <Icons.newspaper className="h-8 w-8 text-primary-400" />
+                            Related Articles
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {relatedPosts.map(relatedPost => (
                                 <BlogPostCard key={relatedPost.id} post={relatedPost} />
                             ))}

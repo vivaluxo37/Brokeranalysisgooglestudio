@@ -1328,5 +1328,4 @@ A: Yes, like any company, a broker can face financial difficulty. However, if th
 A: A clone firm is a fraudulent company that illegally uses the name, address, and license number of a real, authorized firm to try and scam people. This is why it's crucial to verify the broker's details on the regulator's official register.
 `
   },
-// Fix: Removed malformed object that was causing a compilation error.
 ];

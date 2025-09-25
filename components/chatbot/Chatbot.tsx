@@ -140,6 +140,7 @@ const Chatbot: React.FC = () => {
     if (!isOpen) {
         return (
             <button
+                id="chatbot-toggle"
                 onClick={() => setIsOpen(true)}
                 className="fixed bottom-5 ltr:right-5 rtl:left-5 bg-primary-600 text-white p-4 rounded-full shadow-lg hover:bg-primary-700 transition-transform transform hover:scale-110 animate-pulse"
                 aria-label="Open Chatbot"

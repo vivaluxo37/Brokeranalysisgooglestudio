@@ -12,6 +12,7 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import { DiscussionProvider } from './contexts/DiscussionContext';
 import { TradingJournalProvider } from './contexts/TradingJournalContext';
 import { EducationProvider } from './contexts/EducationContext';
+import { OnboardingProvider } from './contexts/OnboardingContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -31,7 +32,9 @@ const app = (
                     <AlertsProvider>
                       <EducationProvider>
                         <TradingJournalProvider>
-                          <App />
+                          <OnboardingProvider>
+                            <App />
+                          </OnboardingProvider>
                         </TradingJournalProvider>
                       </EducationProvider>
                     </AlertsProvider>

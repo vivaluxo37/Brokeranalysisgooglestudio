@@ -407,7 +407,7 @@ const AllBrokersPage: React.FC = () => {
       </div>
 
       <div className="grid lg:grid-cols-4 gap-8 items-start">
-        <aside className="lg:col-span-1 lg:sticky lg:top-24">
+        <aside id="filters-sidebar" className="lg:col-span-1 lg:sticky lg:top-24">
             <Card className="flex flex-col lg:max-h-[calc(100vh-8rem)]">
                 <CardHeader className="flex justify-between items-center">
                     <h2 className="text-xl font-bold">{t('allBrokersPage.filtersTitle')}</h2>
@@ -546,6 +546,7 @@ const AllBrokersPage: React.FC = () => {
                   </div>
                 </div>
                 <Button 
+                    id="ai-rec-button"
                     onClick={handleGetAIRecommendation} 
                     disabled={isAiLoading || filteredBrokers.length < 2}
                 >
@@ -585,7 +586,7 @@ const AllBrokersPage: React.FC = () => {
                 </div>
             ) : filteredBrokers.length > 0 ? (
                 view === 'grid' ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  <div id="broker-grid" className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                       {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />)}
                   </div>
                 ) : (

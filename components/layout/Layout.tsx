@@ -1,11 +1,13 @@
 
 
+
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Breadcrumbs from '../common/Breadcrumbs';
 import TradingViewWidget from '../tools/tradingview/TradingViewWidget';
 import ComparisonBar from '../common/ComparisonBar';
+import OnboardingGuide from '../onboarding/OnboardingGuide';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -49,6 +51,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </main>
       <Footer />
       <ComparisonBar />
+      <OnboardingGuide />
     </div>
   );
 };

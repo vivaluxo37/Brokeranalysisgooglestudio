@@ -1,5 +1,6 @@
 
 
+
 export interface Author {
   slug: string;
   name: string;
@@ -465,4 +466,22 @@ export interface EducationContextType {
     progress: EducationProgress;
     saveQuizResult: (quizKey: string, score: number, total: number) => void;
     markWebinarAsViewed: (webinarTitle: string) => void;
+}
+
+export interface OnboardingStep {
+  targetSelector: string;
+  title: string;
+  content: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+}
+
+export interface OnboardingContextType {
+  startTour: () => void;
+  endTour: () => void;
+  goToNextStep: () => void;
+  goToPrevStep: () => void;
+  skipTour: () => void;
+  currentStep: number;
+  isActive: boolean;
+  tourSteps: OnboardingStep[];
 }

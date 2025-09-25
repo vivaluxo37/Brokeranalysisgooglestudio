@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
@@ -39,6 +40,28 @@ import AuthorPage from './pages/AuthorPage';
 import TradingJournalPage from './pages/TradingJournalPage';
 import AiTutorPage from './pages/AiTutorPage';
 
+// Import new quiz pages
+import CurrencyPairsQuizPage from './pages/CurrencyPairsQuizPage';
+import PipQuizPage from './pages/PipQuizPage';
+import LotSizesQuizPage from './pages/LotSizesQuizPage';
+import ForexQuoteQuizPage from './pages/ForexQuoteQuizPage';
+import MarketAnalysisTypesQuizPage from './pages/MarketAnalysisTypesQuizPage';
+import CandlestickPatternsQuizPage from './pages/CandlestickPatternsQuizPage';
+import SupportResistanceQuizPage from './pages/SupportResistanceQuizPage';
+import MovingAveragesQuizPage from './pages/MovingAveragesQuizPage';
+import ChartPatternsQuizPage from './pages/ChartPatternsQuizPage';
+import RsiIndicatorQuizPage from './pages/RsiIndicatorQuizPage';
+import EconomicIndicatorsQuizPage from './pages/EconomicIndicatorsQuizPage';
+import TradingPsychologyQuizPage from './pages/TradingPsychologyQuizPage';
+import CentralBanksQuizPage from './pages/CentralBanksQuizPage';
+import LeverageMarginQuizPage from './pages/LeverageMarginQuizPage';
+import FibonacciQuizPage from './pages/FibonacciQuizPage';
+import ElliottWaveQuizPage from './pages/ElliottWaveQuizPage';
+import DivergenceTradingQuizPage from './pages/DivergenceTradingQuizPage';
+import HarmonicPatternsQuizPage from './pages/HarmonicPatternsQuizPage';
+import CarryTradeQuizPage from './pages/CarryTradeQuizPage';
+import ForexCorrelationQuizPage from './pages/ForexCorrelationQuizPage';
+
 const App: React.FC = () => {
   return (
     <Layout>
@@ -67,6 +90,28 @@ const App: React.FC = () => {
         <Route path="/education/quizzes/charting-intro" element={<ChartingIntroQuizPage />} />
         <Route path="/education/quizzes/risk-management" element={<RiskManagementQuizPage />} />
         <Route path="/education/quizzes/order-types" element={<OrderTypesQuizPage />} />
+        {/* New Quiz Routes */}
+        <Route path="/education/quizzes/currency-pairs" element={<CurrencyPairsQuizPage />} />
+        <Route path="/education/quizzes/pips" element={<PipQuizPage />} />
+        <Route path="/education/quizzes/lot-sizes" element={<LotSizesQuizPage />} />
+        <Route path="/education/quizzes/forex-quote" element={<ForexQuoteQuizPage />} />
+        <Route path="/education/quizzes/analysis-types" element={<MarketAnalysisTypesQuizPage />} />
+        <Route path="/education/quizzes/candlestick-patterns" element={<CandlestickPatternsQuizPage />} />
+        <Route path="/education/quizzes/support-resistance" element={<SupportResistanceQuizPage />} />
+        <Route path="/education/quizzes/moving-averages" element={<MovingAveragesQuizPage />} />
+        <Route path="/education/quizzes/chart-patterns" element={<ChartPatternsQuizPage />} />
+        <Route path="/education/quizzes/rsi-indicator" element={<RsiIndicatorQuizPage />} />
+        <Route path="/education/quizzes/economic-indicators" element={<EconomicIndicatorsQuizPage />} />
+        <Route path="/education/quizzes/trading-psychology" element={<TradingPsychologyQuizPage />} />
+        <Route path="/education/quizzes/central-banks" element={<CentralBanksQuizPage />} />
+        <Route path="/education/quizzes/leverage-margin" element={<LeverageMarginQuizPage />} />
+        <Route path="/education/quizzes/fibonacci-retracement" element={<FibonacciQuizPage />} />
+        <Route path="/education/quizzes/elliott-wave" element={<ElliottWaveQuizPage />} />
+        <Route path="/education/quizzes/divergence-trading" element={<DivergenceTradingQuizPage />} />
+        <Route path="/education/quizzes/harmonic-patterns" element={<HarmonicPatternsQuizPage />} />
+        <Route path="/education/quizzes/carry-trade" element={<CarryTradeQuizPage />} />
+        <Route path="/education/quizzes/forex-correlation" element={<ForexCorrelationQuizPage />} />
+        
         <Route path="/education/webinars" element={<WebinarsPage />} />
         <Route path="/education/simulators" element={<SimulatorsPage />} />
         <Route path="/education/simulators/order-execution" element={<OrderExecutionSimulatorPage />} />

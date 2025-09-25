@@ -20,6 +20,26 @@ export const useQuizData = () => {
     const chartingIntroQuiz = createQuiz(t, 'charting');
     const riskManagementQuiz = createQuiz(t, 'risk');
     const orderTypesQuiz = createQuiz(t, 'orders');
+    const currencyPairsQuiz = createQuiz(t, 'currencyPairs');
+    const pipsQuiz = createQuiz(t, 'pips');
+    const lotSizesQuiz = createQuiz(t, 'lotSizes');
+    const forexQuoteQuiz = createQuiz(t, 'forexQuote');
+    const analysisTypesQuiz = createQuiz(t, 'analysisTypes');
+    const candlestickPatternsQuiz = createQuiz(t, 'candlestickPatterns');
+    const supportResistanceQuiz = createQuiz(t, 'supportResistance');
+    const movingAveragesQuiz = createQuiz(t, 'movingAverages');
+    const chartPatternsQuiz = createQuiz(t, 'chartPatterns');
+    const rsiIndicatorQuiz = createQuiz(t, 'rsiIndicator');
+    const economicIndicatorsQuiz = createQuiz(t, 'economicIndicators');
+    const tradingPsychologyQuiz = createQuiz(t, 'tradingPsychology');
+    const centralBanksQuiz = createQuiz(t, 'centralBanks');
+    const leverageMarginQuiz = createQuiz(t, 'leverageMargin');
+    const fibonacciQuiz = createQuiz(t, 'fibonacci');
+    const elliottWaveQuiz = createQuiz(t, 'elliottWave');
+    const divergenceQuiz = createQuiz(t, 'divergence');
+    const harmonicPatternsQuiz = createQuiz(t, 'harmonicPatterns');
+    const carryTradeQuiz = createQuiz(t, 'carryTrade');
+    const forexCorrelationQuiz = createQuiz(t, 'forexCorrelation');
 
     return { 
         brokerFeesQuiz,
@@ -27,6 +47,26 @@ export const useQuizData = () => {
         chartingIntroQuiz,
         riskManagementQuiz,
         orderTypesQuiz,
+        currencyPairsQuiz,
+        pipsQuiz,
+        lotSizesQuiz,
+        forexQuoteQuiz,
+        analysisTypesQuiz,
+        candlestickPatternsQuiz,
+        supportResistanceQuiz,
+        movingAveragesQuiz,
+        chartPatternsQuiz,
+        rsiIndicatorQuiz,
+        economicIndicatorsQuiz,
+        tradingPsychologyQuiz,
+        centralBanksQuiz,
+        leverageMarginQuiz,
+        fibonacciQuiz,
+        elliottWaveQuiz,
+        divergenceQuiz,
+        harmonicPatternsQuiz,
+        carryTradeQuiz,
+        forexCorrelationQuiz,
      };
 };
 

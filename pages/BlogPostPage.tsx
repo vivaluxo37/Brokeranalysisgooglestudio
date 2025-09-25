@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState, useContext } from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
 import { blogPosts } from '../data/blog';
@@ -506,6 +507,20 @@ const TradingToolsQuiz: React.FC = () => {
     );
 };
 
+const AiTutorCta: React.FC = () => (
+    <div className="my-10 p-6 bg-gradient-to-r from-primary-900/40 to-card rounded-lg border-2 border-primary-500/50 shadow-xl text-center">
+        <Icons.bot className="h-12 w-12 text-primary-300 mx-auto mb-4" />
+        <h3 className="text-2xl font-bold text-card-foreground">Want to Dive Deeper?</h3>
+        <p className="text-card-foreground/80 mt-2 max-w-lg mx-auto">
+            Our AI Tutor is available 24/7 to answer your specific questions on trading psychology, risk management, and more. Start a personalized learning session now.
+        </p>
+        <ReactRouterDOM.Link to="/education/ai-tutor">
+            <Button size="lg" className="mt-6">Chat with AI Tutor</Button>
+        </ReactRouterDOM.Link>
+    </div>
+);
+
+
 // --- Enhanced Markdown Parser ---
 
 const parseMarkdown = (markdown: string): string => {
@@ -643,7 +658,7 @@ const BlogPostPage: React.FC = () => {
     const faqs = extractFaqs(post.content);
     
     // Split content by shortcodes to inject React components
-    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\]|\[AUTOMATED_TRADING_QUIZ\]|\[LEVERAGE_QUIZ\]|\[PLATFORM_QUIZ\]|\[COPY_TRADING_QUIZ\]|\[DEMO_VS_LIVE_QUIZ\]|\[TRADING_RISKS_QUIZ\]|\[TRADING_TOOLS_QUIZ\])/);
+    const contentParts = post.content.split(/(\[DOWNLOAD_RESOURCE\]|\[INTERACTIVE_QUIZ\]|\[BEGINNER_QUIZ\]|\[AUTOMATED_TRADING_QUIZ\]|\[LEVERAGE_QUIZ\]|\[PLATFORM_QUIZ\]|\[COPY_TRADING_QUIZ\]|\[DEMO_VS_LIVE_QUIZ\]|\[TRADING_RISKS_QUIZ\]|\[TRADING_TOOLS_QUIZ\]|\[AI_TUTOR_CTA\])/);
 
     const blogPostJsonLd: any = {
         "@context": "https://schema.org",
@@ -777,6 +792,7 @@ const BlogPostPage: React.FC = () => {
                             if (part === '[DEMO_VS_LIVE_QUIZ]') return <DemoVsLiveQuiz key={index} />;
                             if (part === '[TRADING_RISKS_QUIZ]') return <TradingRisksQuiz key={index} />;
                             if (part === '[TRADING_TOOLS_QUIZ]') return <TradingToolsQuiz key={index} />;
+                            if (part === '[AI_TUTOR_CTA]') return <AiTutorCta key={index} />;
                             return <div key={index} dangerouslySetInnerHTML={{ __html: parseMarkdown(part) }} />;
                         })}
                     </div>

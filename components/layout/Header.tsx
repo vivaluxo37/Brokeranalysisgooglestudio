@@ -176,7 +176,7 @@ const Header: React.FC = () => {
                                         {t('header.tools')} <Icons.chevronDown className="h-4 w-4 ltr:ml-1 rtl:mr-1" />
                                     </button>
                                     <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-56 bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
-                                        <div className="p-2">
+                                        <div className="p-2 flex flex-col">
                                             <NavLink to="/tools/economic-calendar">{t('header.toolsMenu.economicCalendar')}</NavLink>
                                             <NavLink to="/tools/calculators">{t('header.toolsMenu.calculators')}</NavLink>
                                             <NavLink to="/tools/market-data">{t('header.toolsMenu.marketData')}</NavLink>
@@ -189,7 +189,7 @@ const Header: React.FC = () => {
                                         {t('header.education')} <Icons.chevronDown className="h-4 w-4 ltr:ml-1 rtl:mr-1" />
                                     </button>
                                     <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-56 bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
-                                        <div className="p-2">
+                                        <div className="p-2 flex flex-col">
                                             <NavLink to="/education">{t('footer.links.educationHub')}</NavLink>
                                             <NavLink to="/education/quizzes">{t('education.quizzes.title')}</NavLink>
                                             <NavLink to="/education/webinars">{t('education.webinars.title')}</NavLink>

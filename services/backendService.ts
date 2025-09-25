@@ -1,10 +1,11 @@
 
+
 // THIS FILE SIMULATES A SECURE BACKEND SERVER.
 // IN A REAL-WORLD APPLICATION, THIS LOGIC WOULD LIVE ON A SERVER-SIDE
 // ENDPOINT, AND THE API KEY WOULD BE A SERVER ENVIRONMENT VARIABLE.
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood } from '../types';
+import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood, BrokerAlternativesResponse } from '../types';
 import { brokers } from '../data/brokers';
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -561,5 +562,76 @@ export const handleMarketMood = async (articles: NewsArticle[]): Promise<MarketM
             }
         }
     });
+    return JSON.parse(response.text.trim());
+};
+
+// --- AI Broker Alternatives ---
+export const handleBrokerAlternatives = async (targetBroker: Broker, allBrokers: Broker[]): Promise<BrokerAlternativesResponse> => {
+    const otherBrokers = allBrokers
+        .filter(b => b.id !== targetBroker.id)
+        .map(b => ({
+            id: b.id,
+            name: b.name,
+            score: b.score,
+            summary: b.summary,
+            pros: b.pros,
+            executionType: b.technology.executionType,
+            minDeposit: b.accessibility.minDeposit,
+            platforms: b.technology.platforms,
+        }));
+
+    const targetBrokerData = {
+        id: targetBroker.id,
+        name: targetBroker.name,
+        score: targetBroker.score,
+        summary: targetBroker.summary,
+        pros: targetBroker.pros,
+        executionType: targetBroker.technology.executionType,
+        minDeposit: targetBroker.accessibility.minDeposit,
+        platforms: targetBroker.technology.platforms,
+    };
+
+    const prompt = `
+    You are a forex broker analyst. Your task is to find good alternatives to a given broker.
+
+    The user is currently looking at this broker:
+    **Target Broker:** ${JSON.stringify(targetBrokerData, null, 2)}
+
+    **Your Task:**
+    1.  Identify the 2-3 key strengths of the Target Broker from its data (e.g., "low ECN costs", "great for beginners", "excellent platform variety", "strong regulation").
+    2.  From the list of "Other Brokers" provided below, select the top 2-3 brokers that are the most similar to the Target Broker based on its key strengths.
+    3.  For each recommended broker, provide a concise, one-sentence reasoning explaining *why* it is a good alternative.
+
+    **List of Other Brokers:**
+    ${JSON.stringify(otherBrokers, null, 2)}
+
+    Respond ONLY in the specified JSON format.
+    `;
+
+    const response = await ai.models.generateContent({
+        model,
+        contents: prompt,
+        config: {
+            responseMimeType: 'application/json',
+            responseSchema: {
+                type: Type.OBJECT,
+                properties: {
+                    recommendations: {
+                        type: Type.ARRAY,
+                        items: {
+                            type: Type.OBJECT,
+                            properties: {
+                                brokerId: { type: Type.STRING },
+                                reasoning: { type: Type.STRING }
+                            },
+                            required: ["brokerId", "reasoning"]
+                        }
+                    }
+                },
+                required: ["recommendations"]
+            }
+        }
+    });
+    
     return JSON.parse(response.text.trim());
 };

@@ -25,6 +25,7 @@ import ReportBrokerModal from '../components/brokers/ReportBrokerModal';
 import Input from '../components/ui/Input';
 import { DiscussionContext } from '../contexts/DiscussionContext';
 import DiscussionPostCard from '../components/brokers/DiscussionPostCard';
+import AIAlternatives from '../components/brokers/AIAlternatives';
 
 // New component for responsive key-value tables
 const DetailTable: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -332,6 +333,7 @@ const BrokerDetailPage: React.FC = () => {
         { id: 'deposits', title: 'Deposit & Withdrawal', show: true },
         { id: 'support', title: 'Customer Support', show: true },
         { id: 'reviews', title: 'User Reviews', show: true },
+        { id: 'alternatives', title: `Alternatives to ${broker.name}`, show: true },
         { id: 'discussion', title: 'Community Q&A', show: true },
     ];
     return toc.filter(item => item.show);
@@ -805,6 +807,8 @@ const BrokerDetailPage: React.FC = () => {
               ) : (<p className="text-center text-foreground/70 py-8">{reviews.length > 0 ? 'No reviews match your selected filters.' : 'No reviews yet for this broker. Be the first to leave one!'}</p>)}
           </div>
         </div>
+
+        <AIAlternatives targetBroker={broker} />
 
         <Section title="Community Q&A" id="discussion">
             {user ? (

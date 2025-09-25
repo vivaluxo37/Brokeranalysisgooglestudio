@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Icons } from '../../constants';
 import { ChatMessage } from '../../types';
 import { getChatbotResponseStream } from '../../services/geminiService';
 import { useTranslation } from '../../hooks/useTranslation';
+import { brokers } from '../../data/brokers';
 
 const TypingIndicator: React.FC = () => (
     <div className="flex items-center space-x-1.5 p-2">
@@ -43,11 +45,24 @@ const ChatMessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
 
 const Chatbot: React.FC = () => {
     const { t } = useTranslation();
+    const location = useLocation();
     const suggestions = t('chatbot.suggestions');
+
+    const getInitialGreeting = () => {
+        const match = location.pathname.match(/^\/broker\/([^/]+)/);
+        if (match) {
+            const brokerId = match[1];
+            const currentBroker = brokers.find(b => b.id === brokerId);
+            if (currentBroker) {
+                return `Hello! I'm BrokerBot. You're viewing the page for **${currentBroker.name}**. Ask me a specific question about them, or anything else about forex!`;
+            }
+        }
+        return t('chatbot.greeting');
+    };
 
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<ChatMessage[]>([
-        { sender: 'ai', text: t('chatbot.greeting') }
+        { sender: 'ai', text: getInitialGreeting() }
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -60,6 +75,17 @@ const Chatbot: React.FC = () => {
     useEffect(() => {
         scrollToBottom();
     }, [messages, isLoading]);
+
+    // Update greeting on navigation if chat is pristine
+    useEffect(() => {
+        if (messages.length === 1 && messages[0].sender === 'ai') {
+            const newGreeting = getInitialGreeting();
+            if (messages[0].text !== newGreeting) {
+                setMessages([{ sender: 'ai', text: newGreeting }]);
+            }
+        }
+    }, [location.pathname, t]);
+
 
     const processStreamedResponse = async (userMessageText: string) => {
         setIsLoading(true);

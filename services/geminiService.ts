@@ -1,5 +1,6 @@
 
-import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood } from '../types';
+
+import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood, BrokerAlternativesResponse } from '../types';
 import * as backend from './backendService';
 
 // This file now acts as a secure frontend client. It calls the simulated
@@ -107,4 +108,9 @@ export const getTradingJournalAnalysis = async (entries: TradingJournalEntry[]):
 // --- AI Market Mood ---
 export const getMarketMood = async (articles: NewsArticle[]): Promise<MarketMood> => {
     return backend.handleMarketMood(articles);
+};
+
+// --- AI Broker Alternatives ---
+export const getBrokerAlternatives = async (targetBroker: Broker, allBrokers: Broker[]): Promise<BrokerAlternativesResponse> => {
+    return backend.handleBrokerAlternatives(targetBroker, allBrokers);
 };

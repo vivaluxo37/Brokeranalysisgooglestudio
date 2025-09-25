@@ -1,4 +1,5 @@
 
+
 export interface Author {
   slug: string;
   name: string;
@@ -428,4 +429,13 @@ export interface MarketMood {
     score: number;
     level: 'Extreme Risk-Off' | 'Risk-Off' | 'Neutral' | 'Risk-On' | 'Extreme Risk-On';
     summary: string;
+}
+
+export interface BrokerAlternative {
+    brokerId: string;
+    reasoning: string;
+}
+
+export interface BrokerAlternativesResponse {
+    recommendations: BrokerAlternative[];
 }

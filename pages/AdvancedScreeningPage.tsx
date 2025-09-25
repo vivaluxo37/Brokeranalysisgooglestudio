@@ -51,7 +51,6 @@ const Accordion: React.FC<{ title: string; children: React.ReactNode }> = ({ tit
 
 const AdvancedScreeningPage: React.FC = () => {
     const [filters, setFilters] = useState(initialFilters);
-    // FIX: Added state and handlers for BrokerQuickViewModal.
     const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
 
     const handleOpenQuickView = (broker: Broker) => {
@@ -135,7 +134,6 @@ const AdvancedScreeningPage: React.FC = () => {
 
     return (
         <div>
-            {/* FIX: Added BrokerQuickViewModal to handle quick view functionality */}
             <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
             <div className="text-center mb-10">
                 <h1 className="text-4xl font-bold">Advanced Broker Screening</h1>
@@ -193,7 +191,6 @@ const AdvancedScreeningPage: React.FC = () => {
                     </p>
                     {filteredBrokers.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                            {/* FIX: Added missing onQuickView prop to BrokerCard */}
                             {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />)}
                         </div>
                     ) : (

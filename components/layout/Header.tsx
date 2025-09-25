@@ -88,6 +88,7 @@ const Header: React.FC = () => {
                                                     <NavLink to="/compare">{t('header.megaMenu.compareBrokers')}</NavLink>
                                                     <NavLink to="/cost-analyzer">{t('header.megaMenu.costAnalyzer')}</NavLink>
                                                     <NavLink to="/broker-matcher">{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
+                                                    <NavLink to="/brokers/advanced-screening">Advanced Screening</NavLink>
                                                 </div>
                                             </div>
                                             <div className="col-span-1">
@@ -221,6 +222,7 @@ const Header: React.FC = () => {
                            <NavLink to="/compare" onClick={closeMobileMenu} className="block">{t('header.megaMenu.compareBrokers')}</NavLink>
                            <NavLink to="/cost-analyzer" onClick={closeMobileMenu} className="block">{t('header.megaMenu.costAnalyzer')}</NavLink>
                            <NavLink to="/broker-matcher" onClick={closeMobileMenu} className="block">{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
+                           <NavLink to="/brokers/advanced-screening" onClick={closeMobileMenu} className="block">Advanced Screening</NavLink>
                         </MobileAccordionLink>
                         <MobileAccordionLink title={t('header.tools')}>
                            <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.economicCalendar')}</NavLink>

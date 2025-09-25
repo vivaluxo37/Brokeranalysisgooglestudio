@@ -1,66 +1,63 @@
-
-
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Layout from './components/layout/Layout';
-import HomePage from './pages/HomePage';
+import AdvancedScreeningPage from './pages/AdvancedScreeningPage';
+import AiTutorPage from './pages/AiTutorPage';
 import AllBrokersPage from './pages/AllBrokersPage';
-import BrokerDetailPage from './pages/BrokerDetailPage';
-import BrokerMatcherPage from './pages/BrokerMatcherPage';
-import ComparePage from './pages/ComparePage';
-import CostAnalyzerPage from './pages/CostAnalyzerPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import DashboardPage from './pages/DashboardPage';
-import NotFoundPage from './pages/NotFoundPage';
-import ProtectedRoute from './components/auth/ProtectedRoute';
-import Chatbot from './components/chatbot/Chatbot';
-import BrokerDuelPage from './pages/BrokerDuelPage';
-import MethodologyPage from './pages/MethodologyPage';
-import SourcesPage from './pages/SourcesPage';
-import CategoryPage from './pages/CategoryPage';
-import { categoryPages } from './pages/categoryPageData';
-import MarketNewsPage from './pages/MarketNewsPage';
-import EducationHubPage from './pages/EducationHubPage';
-import QuizzesPage from './pages/QuizzesPage';
-import BrokerFeesQuizPage from './pages/BrokerFeesQuizPage';
-import WebinarsPage from './pages/WebinarsPage';
-import SimulatorsPage from './pages/SimulatorsPage';
-import OrderExecutionSimulatorPage from './pages/OrderExecutionSimulatorPage';
-import ForexBasicsQuizPage from './pages/ForexBasicsQuizPage';
-import ChartingIntroQuizPage from './pages/ChartingIntroQuizPage';
-import RiskManagementQuizPage from './pages/RiskManagementQuizPage';
-import OrderTypesQuizPage from './pages/OrderTypesQuizPage';
-import EconomicCalendarPage from './pages/EconomicCalendarPage';
-import MarketDataPage from './pages/MarketDataPage';
-import CalculatorsPage from './pages/CalculatorsPage';
+import AuthorPage from './pages/AuthorPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
-import AuthorPage from './pages/AuthorPage';
-import TradingJournalPage from './pages/TradingJournalPage';
-import AiTutorPage from './pages/AiTutorPage';
-
-// Import new quiz pages
-import CurrencyPairsQuizPage from './pages/CurrencyPairsQuizPage';
-import PipQuizPage from './pages/PipQuizPage';
-import LotSizesQuizPage from './pages/LotSizesQuizPage';
-import ForexQuoteQuizPage from './pages/ForexQuoteQuizPage';
-import MarketAnalysisTypesQuizPage from './pages/MarketAnalysisTypesQuizPage';
+import BrokerDetailPage from './pages/BrokerDetailPage';
+import BrokerDuelPage from './pages/BrokerDuelPage';
+import BrokerFeesQuizPage from './pages/BrokerFeesQuizPage';
+import BrokerMatcherPage from './pages/BrokerMatcherPage';
+import CalculatorsPage from './pages/CalculatorsPage';
 import CandlestickPatternsQuizPage from './pages/CandlestickPatternsQuizPage';
-import SupportResistanceQuizPage from './pages/SupportResistanceQuizPage';
-import MovingAveragesQuizPage from './pages/MovingAveragesQuizPage';
-import ChartPatternsQuizPage from './pages/ChartPatternsQuizPage';
-import RsiIndicatorQuizPage from './pages/RsiIndicatorQuizPage';
-import EconomicIndicatorsQuizPage from './pages/EconomicIndicatorsQuizPage';
-import TradingPsychologyQuizPage from './pages/TradingPsychologyQuizPage';
-import CentralBanksQuizPage from './pages/CentralBanksQuizPage';
-import LeverageMarginQuizPage from './pages/LeverageMarginQuizPage';
-import FibonacciQuizPage from './pages/FibonacciQuizPage';
-import ElliottWaveQuizPage from './pages/ElliottWaveQuizPage';
-import DivergenceTradingQuizPage from './pages/DivergenceTradingQuizPage';
-import HarmonicPatternsQuizPage from './pages/HarmonicPatternsQuizPage';
 import CarryTradeQuizPage from './pages/CarryTradeQuizPage';
+import CategoryPage from './pages/CategoryPage';
+import { categoryPages } from './pages/categoryPageData';
+import CentralBanksQuizPage from './pages/CentralBanksQuizPage';
+import ChartingIntroQuizPage from './pages/ChartingIntroQuizPage';
+import ChartPatternsQuizPage from './pages/ChartPatternsQuizPage';
+import Chatbot from './components/chatbot/Chatbot';
+import ComparePage from './pages/ComparePage';
+import CostAnalyzerPage from './pages/CostAnalyzerPage';
+import CurrencyPairsQuizPage from './pages/CurrencyPairsQuizPage';
+import DashboardPage from './pages/DashboardPage';
+import DivergenceTradingQuizPage from './pages/DivergenceTradingQuizPage';
+import EconomicCalendarPage from './pages/EconomicCalendarPage';
+import EconomicIndicatorsQuizPage from './pages/EconomicIndicatorsQuizPage';
+import EducationHubPage from './pages/EducationHubPage';
+import ElliottWaveQuizPage from './pages/ElliottWaveQuizPage';
+import FibonacciQuizPage from './pages/FibonacciQuizPage';
+import ForexBasicsQuizPage from './pages/ForexBasicsQuizPage';
 import ForexCorrelationQuizPage from './pages/ForexCorrelationQuizPage';
+import ForexQuoteQuizPage from './pages/ForexQuoteQuizPage';
+import HarmonicPatternsQuizPage from './pages/HarmonicPatternsQuizPage';
+import HomePage from './pages/HomePage';
+import Layout from './components/layout/Layout';
+import LeverageMarginQuizPage from './pages/LeverageMarginQuizPage';
+import LoginPage from './pages/LoginPage';
+import LotSizesQuizPage from './pages/LotSizesQuizPage';
+import MarketAnalysisTypesQuizPage from './pages/MarketAnalysisTypesQuizPage';
+import MarketDataPage from './pages/MarketDataPage';
+import MarketNewsPage from './pages/MarketNewsPage';
+import MethodologyPage from './pages/MethodologyPage';
+import MovingAveragesQuizPage from './pages/MovingAveragesQuizPage';
+import NotFoundPage from './pages/NotFoundPage';
+import OrderExecutionSimulatorPage from './pages/OrderExecutionSimulatorPage';
+import OrderTypesQuizPage from './pages/OrderTypesQuizPage';
+import PipQuizPage from './pages/PipQuizPage';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import QuizzesPage from './pages/QuizzesPage';
+import RegisterPage from './pages/RegisterPage';
+import RiskManagementQuizPage from './pages/RiskManagementQuizPage';
+import RsiIndicatorQuizPage from './pages/RsiIndicatorQuizPage';
+import SimulatorsPage from './pages/SimulatorsPage';
+import SourcesPage from './pages/SourcesPage';
+import SupportResistanceQuizPage from './pages/SupportResistanceQuizPage';
+import TradingJournalPage from './pages/TradingJournalPage';
+import TradingPsychologyQuizPage from './pages/TradingPsychologyQuizPage';
+import WebinarsPage from './pages/WebinarsPage';
 
 const App: React.FC = () => {
   return (
@@ -68,6 +65,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/brokers" element={<AllBrokersPage />} />
+        <Route path="/brokers/advanced-screening" element={<AdvancedScreeningPage />} />
         <Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/:brokerId1/vs/:brokerId2" element={<BrokerDuelPage />} />
@@ -90,7 +88,6 @@ const App: React.FC = () => {
         <Route path="/education/quizzes/charting-intro" element={<ChartingIntroQuizPage />} />
         <Route path="/education/quizzes/risk-management" element={<RiskManagementQuizPage />} />
         <Route path="/education/quizzes/order-types" element={<OrderTypesQuizPage />} />
-        {/* New Quiz Routes */}
         <Route path="/education/quizzes/currency-pairs" element={<CurrencyPairsQuizPage />} />
         <Route path="/education/quizzes/pips" element={<PipQuizPage />} />
         <Route path="/education/quizzes/lot-sizes" element={<LotSizesQuizPage />} />

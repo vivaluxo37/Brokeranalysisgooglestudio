@@ -32,7 +32,6 @@ const BrokerQuickViewModal: React.FC<BrokerQuickViewModalProps> = ({ broker, onC
             role="dialog"
             onClick={onClose}
         >
-            {/* FIX: Wrapped Card in a div to handle click events without passing invalid props to Card */}
             <div className="max-w-2xl w-full" onClick={(e) => e.stopPropagation()}>
                 <Card className="animate-fade-in">
                     <CardHeader className="flex justify-between items-center">

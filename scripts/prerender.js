@@ -1,5 +1,3 @@
-
-
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -13,16 +11,14 @@ try {
     // Read brokers data from the TS file.
     const brokersTS = fs.readFileSync(toAbsolute('../data/brokers.ts'), 'utf-8');
     const brokers = [];
-    // FIX: Updated the regex to correctly parse only the content of the description string.
-    // The previous regex was too greedy and captured unrelated data, breaking meta tags.
-    const brokerObjectsRegex = /{\s*id:\s*'([^']+)'.*?name:\s*'([^']+)'.*?description:\s*'([^']*)'/g;
+    const brokerObjectsRegex = /{\s*id:\s*'([^']+)'.*?name:\s*'([^']+)'.*?description:\s*'(.*?)'/gs;
     
     let match;
     while((match = brokerObjectsRegex.exec(brokersTS)) !== null) {
         brokers.push({
             id: match[1],
             name: match[2],
-            description: match[3] // The description is now correctly captured.
+            description: match[3].replace(/\n/g, ' ')
         });
     }
     console.log(`Found ${brokers.length} brokers to prerender.`);

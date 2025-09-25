@@ -11,6 +11,7 @@ const Footer: React.FC = () => {
     { name: t('footer.links.compareBrokers'), path: '/compare' },
     { name: t('footer.links.costAnalyzer'), path: '/cost-analyzer' },
     { name: t('footer.links.brokerMatcher'), path: '/broker-matcher' },
+    { name: 'Advanced Screening', path: '/brokers/advanced-screening' },
     { name: t('footer.links.marketNews'), path: '/market-news' },
     { name: t('footer.links.educationHub'), path: '/education' },
     { name: 'Blog', path: '/blog' },

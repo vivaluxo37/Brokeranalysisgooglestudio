@@ -44,7 +44,6 @@ const QuizCategorySection: React.FC<{ title: string; quizzes: typeof quizData }>
                         description: t(quiz.descriptionKey)
                     };
                     return (
-                        // FIX: Corrected the key to use `quiz.path` instead of the non-existent `quiz.to`.
                         <div key={quiz.path} className="opacity-0 animate-fade-in" style={{ animationDelay: `${index * 50}ms`}}>
                             <QuizCard {...quizProps} />
                         </div>

@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -174,21 +172,12 @@ const DashboardPage: React.FC = () => {
 
   const getSeverityColor = (severity: 'High' | 'Medium' | 'Low') => {
       switch (severity) {
-          case 'High': return 'border-l-red-500 bg-red-900/20';
-          case 'Medium': return 'border-l-yellow-500 bg-yellow-900/20';
-          case 'Low': return 'border-l-green-500 bg-green-900/20';
-          default: return 'border-l-gray-500 bg-gray-900/20';
-      }
-  };
-   const getSeverityColorRTL = (severity: 'High' | 'Medium' | 'Low') => {
-      switch (severity) {
           case 'High': return 'rtl:border-r-red-500 ltr:border-l-red-500 bg-red-900/20';
           case 'Medium': return 'rtl:border-r-yellow-500 ltr:border-l-yellow-500 bg-yellow-900/20';
           case 'Low': return 'rtl:border-r-green-500 ltr:border-l-green-500 bg-green-900/20';
           default: return 'rtl:border-r-gray-500 ltr:border-l-gray-500 bg-gray-900/20';
       }
   };
-
 
   return (
     <div className="space-y-12">
@@ -222,7 +211,7 @@ const DashboardPage: React.FC = () => {
               {myAlerts.map(alert => {
                 const broker = allBrokers.find(b => b.id === alert.brokerId);
                 return (
-                  <div key={alert.id} className={`p-4 ltr:rounded-r-lg rtl:rounded-l-lg ltr:border-l-4 rtl:border-r-4 ${getSeverityColorRTL(alert.severity)}`}>
+                  <div key={alert.id} className={`p-4 ltr:rounded-r-lg rtl:rounded-l-lg ltr:border-l-4 rtl:border-r-4 ${getSeverityColor(alert.severity)}`}>
                     <div className="flex justify-between items-start">
                       <div>
                         <p className="font-semibold text-card-foreground">

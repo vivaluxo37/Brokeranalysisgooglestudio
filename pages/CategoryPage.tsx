@@ -16,7 +16,6 @@ interface CategoryPageProps {
 const CategoryPage: React.FC<CategoryPageProps> = ({ title, description, filterFn }) => {
   const location = useLocation();
   const filteredBrokers = useMemo(() => allBrokers.filter(filterFn), [filterFn]);
-  // FIX: Added state and handlers for BrokerQuickViewModal.
   const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
 
   const handleOpenQuickView = (broker: Broker) => {
@@ -47,7 +46,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ title, description, filterF
 
   return (
     <div>
-      {/* FIX: Added BrokerQuickViewModal to handle quick view functionality */}
       <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
       <MetaTags 
         title={`${title} (2025) | Brokeranalysis`}
@@ -64,7 +62,6 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ title, description, filterF
       {filteredBrokers.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredBrokers.map(broker => (
-            // FIX: Added missing onQuickView prop to BrokerCard
             <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />
           ))}
         </div>

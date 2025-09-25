@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import Button from '../components/ui/Button';
 import Spinner from '../components/ui/Spinner';
@@ -21,7 +19,6 @@ const BrokerMatcherPage: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<{ recommendations: Broker[], reasoning: string } | null>(null);
     const [error, setError] = useState<string | null>(null);
-    // FIX: Added state and handlers for BrokerQuickViewModal.
     const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
 
     const handleOpenQuickView = (broker: Broker) => {
@@ -74,7 +71,6 @@ const BrokerMatcherPage: React.FC = () => {
 
     if (results) return (
         <div className="mt-4 animate-fade-in">
-            {/* FIX: Added BrokerQuickViewModal to handle quick view functionality */}
             <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
             <h2 className="text-3xl font-bold text-center mb-4">{t('brokerMatcherPage.results.title')}</h2>
             <Card className="max-w-3xl mx-auto mb-8 animate-fade-in">
@@ -84,7 +80,6 @@ const BrokerMatcherPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {results.recommendations.map((broker, index) => (
                     <div key={broker.id} className="opacity-0 animate-fade-in" style={{ animationDelay: `${index * 150}ms`}}>
-                        {/* FIX: Added missing onQuickView prop to BrokerCard */}
                         <BrokerCard broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />
                     </div>
                 ))}

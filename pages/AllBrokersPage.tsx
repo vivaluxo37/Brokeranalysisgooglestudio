@@ -121,7 +121,6 @@ const BrokerTable: React.FC<{ brokers: Broker[], t: (key: string) => string }> =
     };
 
     const SortIcon: React.FC<{ direction?: 'asc' | 'desc' }> = ({ direction }) => {
-      // Fix: Explicitly type commonProps to satisfy SVG attribute types.
       const commonProps: React.SVGProps<SVGSVGElement> = { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "inline-block ml-1" };
       if (direction === 'asc') return <svg {...commonProps}><path d="m18 15-6-6-6 6"/></svg>;
       if (direction === 'desc') return <svg {...commonProps}><path d="m6 9 6 6 6-6"/></svg>;

@@ -16,7 +16,7 @@ export const translations = {
         compareBrokers: "Compare Brokers",
         costAnalyzer: "Cost Analyzer",
         aiBrokerMatcher: "AI Broker Matcher",
-        byCountry: "By Country",
+        byRegion: "By Region",
         platformsAndTypes: "Platforms & Types"
       },
       toolsMenu: {
@@ -38,7 +38,7 @@ export const translations = {
     },
     footer: {
       subtitle: "Discover your perfect forex broker with the power of AI.",
-      byCountry: "By Country",
+      byRegion: "By Region",
       platformsAndTypes: "Platforms & Types",
       resources: "Resources",
       tools: "Tools",

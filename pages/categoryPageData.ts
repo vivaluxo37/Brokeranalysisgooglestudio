@@ -29,56 +29,49 @@ interface CategoryPageInfo {
   filterFn: (broker: Broker) => boolean;
 }
 
-const countryFilters: CategoryPageInfo[] = [
+const regionFilters: CategoryPageInfo[] = [
   {
-    name: 'Australia',
-    path: '/brokers/country/australia',
-    title: 'Australian Forex Brokers',
-    description: 'Find the best ASIC-regulated forex brokers for Australian traders, offering competitive spreads and excellent trading platforms.',
-    filterFn: (b) => b.regulation.regulators.includes('ASIC') || b.headquarters.includes('Australia'),
+    name: 'Europe (FCA, CySEC)',
+    path: '/brokers/region/europe',
+    title: 'Best Forex Brokers in Europe',
+    description: 'Find top brokers regulated by FCA, CySEC, BaFin, and FINMA, offering robust protection for European traders.',
+    filterFn: (b) => b.regulation.regulators.some(r => ['FCA', 'CySEC', 'BaFin', 'FINMA', 'KNF', 'FSA (Denmark)', 'Central Bank of Ireland', 'CSSF'].includes(r)),
   },
   {
-    name: 'Canada',
-    path: '/brokers/country/canada',
-    title: 'Canadian Forex Brokers',
-    description: 'Explore our list of CIRO (formerly IIROC)-regulated forex brokers available to Canadian traders, prioritizing safety and compliance.',
-    filterFn: (b) => b.regulation.regulators.includes('IIROC (Canada)') || b.regulation.regulators.includes('CIRO') || b.headquarters.includes('Canada'),
+    name: 'North America (NFA, CIRO)',
+    path: '/brokers/region/north-america',
+    title: 'Best Forex Brokers in North America',
+    description: 'Explore brokers regulated by the NFA (USA) and CIRO (Canada), offering the highest levels of security for North American clients.',
+    filterFn: (b) => b.regulation.regulators.some(r => ['NFA', 'CFTC', 'CIRO'].includes(r)),
   },
   {
-    name: 'UK',
-    path: '/brokers/country/uk',
-    title: 'UK Forex Brokers',
-    description: 'Discover top-tier, FCA-regulated forex brokers in the United Kingdom, known for their robust client protection and advanced trading tools.',
-    filterFn: (b) => b.regulation.regulators.includes('FCA') || b.headquarters.includes('UK'),
+    name: 'Asia-Pacific (ASIC, MAS)',
+    path: '/brokers/region/asia-pacific',
+    title: 'Best Forex Brokers in Asia-Pacific',
+    description: 'Discover leading brokers regulated by ASIC (Australia), MAS (Singapore), and FSA (Japan) for traders in the APAC region.',
+    filterFn: (b) => b.regulation.regulators.some(r => ['ASIC', 'MAS (Singapore)', 'FSA (Japan)'].includes(r)),
   },
   {
-    name: 'South Africa',
-    path: '/brokers/country/south-africa',
-    title: 'South Africa Forex Brokers',
-    description: 'Browse the best FSCA-regulated forex brokers for South African traders, with ZAR accounts and local support.',
-    filterFn: (b) => b.regulation.regulators.includes('FSCA') || b.headquarters.includes('South Africa'),
+    name: 'Middle East (DFSA)',
+    path: '/brokers/region/middle-east',
+    title: 'Best Forex Brokers in the Middle East',
+    description: 'Find trusted brokers regulated by the DFSA (Dubai) and other regional authorities, catering to traders in the MENA region.',
+    filterFn: (b) => b.regulation.regulators.includes('DFSA'),
   },
   {
-    name: 'USA',
-    path: '/brokers/country/usa',
-    title: 'US Forex Brokers',
-    description: 'Find the best NFA and CFTC-regulated forex brokers for traders in the United States, offering high levels of security and compliance.',
-    filterFn: (b) => b.regulation.regulators.includes('NFA') || b.regulation.regulators.includes('CFTC') || b.headquarters.includes('USA'),
+    name: 'Africa (FSCA)',
+    path: '/brokers/region/africa',
+    title: 'Best Forex Brokers for Africa',
+    description: 'Compare top brokers regulated by the FSCA (South Africa) and other reputable bodies, offering services across the African continent.',
+    filterFn: (b) => b.regulation.regulators.includes('FSCA'),
   },
   {
-    name: 'Dubai (UAE)',
-    path: '/brokers/country/dubai',
-    title: 'Forex Brokers in Dubai',
-    description: 'A curated list of DFSA and SCA-regulated forex brokers operating in Dubai and the UAE, offering premium services for traders in the region.',
-    filterFn: (b) => b.regulation.regulators.includes('DFSA') || b.regulation.regulators.includes('SCA (UAE)') || b.headquarters.includes('UAE'),
-  },
-  {
-    name: 'Singapore',
-    path: '/brokers/country/singapore',
-    title: 'Singapore Forex Brokers',
-    description: 'Discover the top MAS-regulated forex brokers for traders in Singapore, known for their strong regulatory environment and technological innovation.',
-    filterFn: (b) => b.regulation.regulators.includes('MAS (Singapore)') || b.headquarters.includes('Singapore'),
-  },
+    name: 'International (High Leverage)',
+    path: '/brokers/region/international',
+    title: 'International & Offshore Forex Brokers',
+    description: 'Explore international brokers offering services globally, often with higher leverage options. Ensure you understand the risks associated with offshore regulation.',
+    filterFn: (b) => b.regulation.regulators.some(r => ['IFSC', 'FSC Belize', 'SCB', 'FSA'].includes(r)) && !b.regulation.regulators.some(r => ['FCA', 'ASIC', 'NFA'].includes(r)),
+  }
 ];
 
 const platformAndTypeFilters: CategoryPageInfo[] = [
@@ -158,9 +151,9 @@ const platformAndTypeFilters: CategoryPageInfo[] = [
   },
 ];
 
-export const categoryPages: CategoryPageInfo[] = [...countryFilters, ...platformAndTypeFilters];
+export const categoryPages: CategoryPageInfo[] = [...regionFilters, ...platformAndTypeFilters];
 
 export const categoryPageGroups = {
-    country: countryFilters.map(({ name, path }) => ({ name, path })),
+    region: regionFilters.map(({ name, path }) => ({ name, path })),
     platform: platformAndTypeFilters.map(({ name, path }) => ({ name, path })),
 };

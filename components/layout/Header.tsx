@@ -156,9 +156,9 @@ const Header: React.FC = () => {
                                                 </div>
                                             </div>
                                             <div className="col-span-1">
-                                                <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.byCountry')}</h3>
+                                                <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.byRegion')}</h3>
                                                 <ul className="space-y-1 text-sm">
-                                                    {categoryPageGroups.country.slice(0, 5).map(link => <li key={link.path}><Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</Link></li>)}
+                                                    {categoryPageGroups.region.slice(0, 5).map(link => <li key={link.path}><Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</Link></li>)}
                                                 </ul>
                                             </div>
                                             <div className="col-span-1">

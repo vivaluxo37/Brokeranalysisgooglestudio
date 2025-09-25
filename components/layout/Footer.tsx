@@ -39,11 +39,11 @@ const Footer: React.FC = () => {
              <p className="text-sm">{t('footer.subtitle')}</p>
           </div>
           
-          {/* By Country */}
+          {/* By Region */}
           <div>
-            <h4 className="font-semibold text-card-foreground mb-4">{t('footer.byCountry')}</h4>
+            <h4 className="font-semibold text-card-foreground mb-4">{t('footer.byRegion')}</h4>
             <ul className="space-y-2 text-sm">
-              {categoryPageGroups.country.slice(0, 6).map(link => (
+              {categoryPageGroups.region.slice(0, 6).map(link => (
                 <li key={link.name}><Link to={link.path} className={`hover:text-primary-400 transition-colors ${focusClasses}`}>{link.name}</Link></li>
               ))}
             </ul>

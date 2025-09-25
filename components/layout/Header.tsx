@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink as RRNavLink, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Icons } from '../../constants';
@@ -48,72 +48,6 @@ const MobileAccordionLink: React.FC<{ title: string; children: React.ReactNode; 
         </div>
     );
 };
-
-const LanguageSelector: React.FC<{ onSelect?: () => void }> = ({ onSelect }) => {
-    const { language, setLanguage } = useTranslation();
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const availableLanguages: Record<string, string> = {
-        en: 'English',
-        de: 'Deutsch',
-        ja: '日本語',
-        ru: 'Русский',
-        es: 'Español',
-        fr: 'Français',
-    };
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-    const handleLanguageChange = (lang: string) => {
-        setLanguage(lang);
-        setIsOpen(false);
-        if(onSelect) onSelect();
-    };
-
-    return (
-        <div className="relative" ref={dropdownRef}>
-            <Button
-                variant="ghost"
-                size="sm"
-                className="p-2"
-                onClick={() => setIsOpen(!isOpen)}
-                aria-label="Change language"
-            >
-                <Icons.globe className="h-5 w-5" />
-            </Button>
-            {isOpen && (
-                <div className="absolute ltr:right-0 rtl:left-0 mt-2 w-48 bg-card rounded-md shadow-lg border border-input z-50 animate-fade-in">
-                    <ul className="py-1 max-h-60 overflow-y-auto">
-                        {Object.entries(availableLanguages).map(([code, name]) => (
-                            <li key={code}>
-                                <button
-                                    onClick={() => handleLanguageChange(code)}
-                                    className={`w-full text-left px-4 py-2 text-sm ${
-                                        language === code
-                                            ? 'bg-primary-500 text-white'
-                                            : 'text-card-foreground hover:bg-input'
-                                    }`}
-                                >
-                                    {name}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </div>
-    );
-};
-
 
 const Header: React.FC = () => {
     const { user, logout } = useAuth();
@@ -211,7 +145,6 @@ const Header: React.FC = () => {
                     <div className="hidden lg:flex items-center space-x-2">
                         <GlobalSearchBar />
                         <AlertsDropdown />
-                        <LanguageSelector />
                         <ThemeToggle />
                         {user ? (
                             <div className="ltr:ml-3 rtl:mr-3 relative group">
@@ -308,7 +241,6 @@ const Header: React.FC = () => {
                      <div className="px-5 py-4 border-t border-input/50 flex items-center justify-between">
                          <span className="text-sm font-medium text-card-foreground/70">Settings</span>
                          <div className="flex items-center gap-2">
-                            <LanguageSelector />
                             <ThemeToggle />
                          </div>
                     </div>

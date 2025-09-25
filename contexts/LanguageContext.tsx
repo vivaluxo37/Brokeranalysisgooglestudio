@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useEffect, useCallback } from 'react';
 import { translations } from '../data/locales';
 
 interface LanguageContextType {
@@ -9,39 +9,20 @@ interface LanguageContextType {
 
 export const LanguageContext = createContext<LanguageContextType | null>(null);
 
-const supportedLanguages = ['en', 'de', 'ja', 'ru', 'es', 'fr'];
-const rtlLanguages: string[] = [];
-
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<string>('en');
-
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('language');
-    if (savedLanguage && supportedLanguages.includes(savedLanguage)) {
-      setLanguageState(savedLanguage);
-    } else {
-      // Auto-detect browser language
-      const browserLang = navigator.language.split('-')[0];
-      if (supportedLanguages.includes(browserLang)) {
-        setLanguageState(browserLang);
-      }
-    }
-  }, []);
+  const language = 'en';
 
   const setLanguage = (lang: string) => {
-    if (supportedLanguages.includes(lang)) {
-      setLanguageState(lang);
-      localStorage.setItem('language', lang);
-    }
+    // This function is now a no-op as the language is fixed to English.
   };
 
   useEffect(() => {
     document.documentElement.lang = language;
-    document.documentElement.dir = rtlLanguages.includes(language) ? 'rtl' : 'ltr';
-  }, [language]);
+    document.documentElement.dir = 'ltr';
+  }, []);
 
   const t = useCallback((key: string, replacements?: { [key: string]: string | number }) => {
-    const langTranslations: any = translations[language as keyof typeof translations] || translations.en;
+    const langTranslations: any = translations.en;
     
     const keys = key.split('.');
     let result: any = langTranslations;
@@ -53,19 +34,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       result = result[k];
     }
     
-    // Fallback to English if translation is missing
-    if (result === undefined && language !== 'en') {
-        let englishResult: any = translations.en;
-        for (const k of keys) {
-            if (englishResult === undefined) {
-                englishResult = undefined;
-                break;
-            }
-            englishResult = englishResult[k];
-        }
-        result = englishResult;
-    }
-
     const translation = result === undefined ? key : result;
 
     if (typeof translation === 'string' && replacements) {
@@ -77,7 +45,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
 
     return translation;
-  }, [language]);
+  }, []);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>

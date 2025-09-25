@@ -1,14 +1,15 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Card, { CardContent } from '../components/ui/Card';
 import { Icons } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
 
-const EducationCard = ({ to, icon, title, description }: { to: string, icon: React.ReactNode, title: string, description: string }) => (
+const EducationCard = ({ to, icon, title, description, isFeatured = false }: { to: string, icon: React.ReactNode, title: string, description: string, isFeatured?: boolean }) => (
     <Link to={to} className="group block">
-        <Card className="h-full hover:border-primary-600 hover:-translate-y-1 transition-all">
+        <Card className={`h-full hover:-translate-y-1 transition-all ${isFeatured ? 'bg-primary-900/40 border-primary-600' : 'hover:border-primary-600'}`}>
             <CardContent className="flex flex-col items-center text-center p-8">
-                <div className="p-4 bg-input rounded-full text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-colors mb-4">
+                <div className={`p-4 rounded-full text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-colors mb-4 ${isFeatured ? 'bg-primary-600/80 text-white' : 'bg-input'}`}>
                     {icon}
                 </div>
                 <h3 className="text-xl font-bold text-card-foreground">{title}</h3>
@@ -22,6 +23,13 @@ const EducationHubPage: React.FC = () => {
     const { t } = useTranslation();
 
     const educationSections = [
+        {
+            to: '/education/ai-tutor',
+            icon: <Icons.bot className="h-10 w-10" />,
+            title: 'Interactive AI Tutor',
+            description: 'Ask questions and get personalized explanations on any trading topic in a one-on-one chat session.',
+            isFeatured: true
+        },
         {
             to: '/education/quizzes',
             icon: <Icons.helpCircle className="h-10 w-10" />,
@@ -50,9 +58,9 @@ const EducationHubPage: React.FC = () => {
                     {t('education.hub.subtitle')}
                 </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
                 {educationSections.map((section, index) => (
-                    <div key={section.to} className="opacity-0 animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
+                    <div key={section.to} className={`opacity-0 animate-fade-in ${section.isFeatured ? 'md:col-span-2' : ''}`} style={{ animationDelay: `${index * 150}ms` }}>
                         <EducationCard {...section} />
                     </div>
                 ))}

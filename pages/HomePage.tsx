@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { Icons } from '../constants';
@@ -6,6 +7,11 @@ import { brokers } from '../data/brokers';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useTranslation } from '../hooks/useTranslation';
 import TradingViewWidget from '../components/tools/tradingview/TradingViewWidget';
+import Card, { CardContent, CardHeader } from '../components/ui/Card';
+import { getMarketMood } from '../services/geminiService';
+import { MarketMood } from '../types';
+import { mockNewsData } from '../data/news';
+import Spinner from '../components/ui/Spinner';
 
 // New AccordionItem component
 const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
@@ -53,6 +59,61 @@ const AdvancedChartWidget: React.FC = () => (
     </div>
 );
 
+const MarketMoodWidget: React.FC = () => {
+    const [mood, setMood] = useState<MarketMood | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchMood = async () => {
+            try {
+                const result = await getMarketMood(mockNewsData.slice(0, 5)); // Use latest 5 news items
+                setMood(result);
+            } catch (error) {
+                console.error("Failed to fetch market mood:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchMood();
+    }, []);
+
+    const getMoodColor = (level?: MarketMood['level']) => {
+        switch (level) {
+            case 'Extreme Risk-On':
+            case 'Risk-On':
+                return 'text-green-400';
+            case 'Extreme Risk-Off':
+            case 'Risk-Off':
+                return 'text-red-400';
+            default:
+                return 'text-yellow-400';
+        }
+    };
+
+    return (
+        <Card>
+            <CardHeader>
+                <h2 className="text-xl font-bold flex items-center gap-2">
+                    <Icons.brainCircuit className="h-6 w-6 text-primary-400" />
+                    AI Market Mood
+                </h2>
+            </CardHeader>
+            <CardContent className="min-h-[150px] flex items-center justify-center">
+                {loading && <Spinner />}
+                {!loading && mood && (
+                    <div className="text-center animate-fade-in">
+                        <p className={`text-5xl font-bold ${getMoodColor(mood.level)}`}>{mood.score}<span className="text-2xl text-foreground/50">/10</span></p>
+                        <p className={`text-xl font-semibold mt-1 ${getMoodColor(mood.level)}`}>{mood.level}</p>
+                        <p className="text-sm text-card-foreground/80 mt-2 italic">"{mood.summary}"</p>
+                    </div>
+                )}
+                 {!loading && !mood && (
+                    <p className="text-sm text-card-foreground/70">Could not load market sentiment.</p>
+                )}
+            </CardContent>
+        </Card>
+    );
+};
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
@@ -181,9 +242,14 @@ const HomePage: React.FC = () => {
         </div>
       </div>
       
-      {/* Live Chart Section */}
-      <div className="max-w-6xl mx-auto">
-         <AdvancedChartWidget />
+      {/* Live Chart & Mood Section */}
+      <div className="grid lg:grid-cols-3 gap-8 items-start max-w-6xl mx-auto">
+         <div className="lg:col-span-2">
+            <AdvancedChartWidget />
+         </div>
+         <div className="lg:col-span-1">
+            <MarketMoodWidget />
+         </div>
       </div>
 
       {/* Features Section */}

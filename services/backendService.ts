@@ -1,9 +1,10 @@
+
 // THIS FILE SIMULATES A SECURE BACKEND SERVER.
 // IN A REAL-WORLD APPLICATION, THIS LOGIC WOULD LIVE ON A SERVER-SIDE
 // ENDPOINT, AND THE API KEY WOULD BE A SERVER ENVIRONMENT VARIABLE.
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { Broker, Review, AIRecommendation, NewsArticle, Signal, BrokerMatcherPreferences, TradingJournalEntry } from '../types';
+import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood } from '../types';
 import { brokers } from '../data/brokers';
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -50,6 +51,35 @@ User's question: "${message}"`;
   return response;
 };
 
+
+// --- AI Tutor Functionality ---
+export const handleAiTutorStream = async (message: string, history: { sender: 'user' | 'ai'; text: string }[]) => {
+    const chatHistory = history.map(msg => ({
+        role: msg.sender === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.text }]
+    }));
+
+    const systemInstruction = `You are an expert AI Forex Tutor. Your goal is to explain complex trading topics to users in a clear, simple, and personalized way.
+- Your primary topics are: risk management, technical analysis (candlesticks, indicators), fundamental analysis, trading psychology, and broker types (ECN, Market Maker).
+- Use analogies and simple examples to make concepts understandable.
+- After explaining a concept, ask a clarifying question to check for understanding (e.g., "Does that make sense?", "What part of that is most interesting to you?").
+- Actively encourage follow-up questions to create an interactive learning session.
+- When relevant, you can link to specific educational blog posts on the site using markdown. Available posts are:
+  - [Risk Management Guide](/#/blog/risk-management-in-forex)
+  - [Guide to Trading Psychology](/#/blog/trading-psychology-tips-for-success)
+  - [Beginner's Guide to Forex](/#/blog/forex-trading-for-beginners-guide-2025)
+  - [Guide to Candlestick Patterns](/#/blog/traders-guide-to-candlestick-patterns-2025)
+- Keep your responses focused and conversational. Avoid overly long paragraphs.`;
+    
+    const response = await ai.models.generateContentStream({
+        model: model,
+        contents: [...chatHistory, { role: 'user', parts: [{ text: message }] }],
+        config: { systemInstruction }
+    });
+    return response;
+};
+
+
 // --- Broker Matcher Functionality ---
 
 interface BrokerRecommendationResponse {
@@ -57,56 +87,50 @@ interface BrokerRecommendationResponse {
   recommendedBrokerIds: string[];
 }
 
-export const handleBrokerRecommendations = async (
-  preferences: BrokerMatcherPreferences,
+export const handleStrategyBrokerRecommendations = async (
+  strategyDescription: string,
   brokers: Broker[]
 ): Promise<BrokerRecommendationResponse> => {
     const brokerData = brokers.map(b => ({
         id: b.id,
         name: b.name,
         score: b.score,
-        regulatedBy: b.security.regulatedBy.map(r => r.regulator),
-        headquarters: b.headquarters,
-        minDeposit: b.accessibility.minDeposit,
         executionType: b.technology.executionType,
         commissionStructure: b.fees.trading.commissionStructure,
         eurusdSpread: b.tradingConditions.spreads.eurusd,
         swapFeeCategory: b.tradingConditions.swapFeeCategory,
-        depositMethods: b.depositWithdrawal.depositMethods,
-        hasIslamicAccount: b.accountManagement.islamicAccount.available,
+        platforms: b.technology.platforms,
         hasCopyTrading: !!b.copyTrading,
         hasApiAccess: !!b.technology.apiAccess,
+        scalpingAllowed: b.tradingConditionsExtended.scalpingAllowed
     }));
 
-    // FIX: Removed invalid template literal substitutions (`${...}`) from the prompt string.
-    // These were causing compilation errors as the variables were not in scope.
-    // The prompt is intended as instructions for the AI, so plain text is correct.
     const prompt = `
-    You are an expert forex broker analyst. Your task is to recommend the top 3 brokers from a provided list that best match the user's detailed preferences.
+    You are an expert forex broker analyst. Your task is to recommend the top 3 brokers from a provided list that best match the user's trading strategy, described in plain English.
 
-    **User Preferences:**
-    - Country of Residence: ${preferences.country}
-    - Trading Experience: ${preferences.experience}
-    - Preferred Fee Structure: ${preferences.feeStructure}
-    - Preferred Deposit Method: ${preferences.depositMethod}
-    - Preferred Currency Pairs: ${preferences.currencyPairs}
-    - Special Preferences: ${preferences.specialPreferences.join(', ')}
+    **User's Strategy Description:**
+    "${strategyDescription}"
 
     **Available Brokers (JSON format):**
     ${JSON.stringify(brokerData, null, 2)}
 
     **Your Analysis Process:**
-    1.  **Filter by Country:** First, check if a broker is likely available in the user's country. A broker is considered available if their \`regulatedBy\` array contains a major regulator for that region (e.g., 'FCA' for UK, 'ASIC' for Australia) OR if their \`headquarters\` is in that country. For "offshore" brokers, assume they are generally available unless specified otherwise. THIS IS A SOFT FILTER.
-    2.  **Filter by Special Preferences:** Heavily prioritize brokers that match the user's specific requests (e.g., if they ask for 'ECN account', strongly favor brokers with \`executionType: 'ECN'\`).
-    3.  **Analyze Other Preferences:**
-        - For 'Low spreads', prioritize brokers with low \`eurusdSpread\` and 'ECN' \`executionType\`.
-        - For 'Low overnight fee', prioritize brokers with \`swapFeeCategory: 'Low'\`.
-        - For 'Beginner' experience, favor brokers with high \`score\` and low \`minDeposit\`.
-        - For 'Expert' experience, favor brokers with 'ECN' \`executionType\`, 'API access', and lower costs.
-    4.  **Final Selection:** From the filtered and prioritized list, select the top 3 brokers. The overall \`score\` should be the final tie-breaker.
+    1.  **Parse the Strategy:** Read the user's description and identify the key requirements. Look for keywords like:
+        -   **Style:** "scalp", "day trade", "swing trade", "long-term".
+        -   **Costs:** "low spread", "cheap", "low cost", "no commission".
+        -   **Execution:** "ECN", "fast", "no requotes".
+        -   **Platform:** "MT4", "MT5", "TradingView", "cTrader".
+        -   **Tools:** "algo", "EA", "API", "copy trading", "social".
+    2.  **Match Requirements to Broker Data:**
+        -   If "scalp" or "fast execution" is mentioned, prioritize brokers with \`executionType: 'ECN'\`, \`scalpingAllowed: true\`, and low \`eurusdSpread\`.
+        -   If "low cost" is mentioned, prioritize brokers with low \`eurusdSpread\` and a commission-based structure (these are often cheaper overall).
+        -   If a specific platform is mentioned, filter for brokers who offer it in their \`platforms\` array.
+        -   If "swing" or "long-term" is mentioned, give weight to brokers with \`swapFeeCategory: 'Low'\`.
+        -   If "algo" or "EA" is mentioned, prioritize brokers with \`hasApiAccess: true\` and MT4/MT5 platforms.
+    3.  **Final Selection:** From the brokers that best match the criteria, select the top 3. Use the overall \`score\` as the final tie-breaker if multiple brokers are a good fit.
 
     **Your Output:**
-    Provide a brief reasoning (3-4 sentences) explaining your choices. Start by acknowledging their top priority and explain how your picks meet it. Then, provide a list of the top 3 broker IDs.
+    Provide a brief reasoning (3-4 sentences) explaining your choices. Start by summarizing your understanding of their strategy and explain how your picks meet the key requirements you identified. Then, provide a list of the top 3 broker IDs.
 
     Respond ONLY in the specified JSON format.
   `;
@@ -121,7 +145,7 @@ export const handleBrokerRecommendations = async (
         properties: {
           reasoning: {
             type: Type.STRING,
-            description: "A brief explanation of why these brokers were recommended based on the user's preferences.",
+            description: "A brief explanation of why these brokers were recommended based on the user's strategy.",
           },
           recommendedBrokerIds: {
             type: Type.ARRAY,
@@ -483,4 +507,41 @@ export const handleTradingJournalAnalysis = async (entries: TradingJournalEntry[
 
     const response = await ai.models.generateContent({ model, contents: prompt });
     return response.text;
+};
+
+
+// --- AI Market Mood ---
+export const handleMarketMood = async (articles: NewsArticle[]): Promise<MarketMood> => {
+    const prompt = `
+    You are a financial market sentiment analyst. Analyze the headlines and summaries of the following recent news articles.
+    Based *only* on this information, determine the overall market sentiment.
+
+    News Articles:
+    ${JSON.stringify(articles.map(a => ({ title: a.title, summary: a.summary, importance: a.importance })), null, 2)}
+
+    Your task is to:
+    1.  Determine the overall sentiment. Is it "Risk-On" (investors are optimistic, buying riskier assets like stocks and AUD), "Risk-Off" (investors are fearful, buying safer assets like USD, JPY, Gold), or "Neutral"?
+    2.  Provide a sentiment score from 1 (Extreme Risk-Off) to 10 (Extreme Risk-On).
+    3.  Categorize the score into one of these levels: 'Extreme Risk-Off' (1-2), 'Risk-Off' (3-4), 'Neutral' (5-6), 'Risk-On' (7-8), 'Extreme Risk-On' (9-10).
+    4.  Write a one-sentence summary explaining the current mood, referencing the key news driver (e.g., "Sentiment is risk-off due to unexpected inflation data increasing fears of aggressive rate hikes.").
+
+    Respond ONLY in the specified JSON format.
+  `;
+    const response = await ai.models.generateContent({
+        model,
+        contents: prompt,
+        config: {
+            responseMimeType: 'application/json',
+            responseSchema: {
+                type: Type.OBJECT,
+                properties: {
+                    score: { type: Type.INTEGER },
+                    level: { type: Type.STRING },
+                    summary: { type: Type.STRING },
+                },
+                required: ["score", "level", "summary"],
+            }
+        }
+    });
+    return JSON.parse(response.text.trim());
 };

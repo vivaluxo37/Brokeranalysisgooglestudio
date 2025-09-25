@@ -1,9 +1,4 @@
 
-
-
-
-
-
 export interface Author {
   slug: string;
   name: string;
@@ -347,19 +342,10 @@ export interface AIRecommendation {
   reasoning: string;
 }
 
-export interface BrokerMatcherPreferences {
-    country: string;
-    experience: string;
-    feeStructure: string;
-    depositMethod: string;
-    currencyPairs: string;
-    specialPreferences: string[];
-}
-
-export interface MatcherHistoryItem {
+export interface StrategyMatcherHistoryItem {
     id: string;
     timestamp: string;
-    preferences: BrokerMatcherPreferences;
+    strategy: string;
     reasoning: string;
     recommendedBrokerIds: string[];
 }
@@ -436,4 +422,10 @@ export interface TradingJournalContextType {
     biggestWin: number;
     biggestLoss: number;
   };
+}
+
+export interface MarketMood {
+    score: number;
+    level: 'Extreme Risk-Off' | 'Risk-Off' | 'Neutral' | 'Risk-On' | 'Extreme Risk-On';
+    summary: string;
 }

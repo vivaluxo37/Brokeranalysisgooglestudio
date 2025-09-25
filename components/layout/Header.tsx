@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink as RRNavLink, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -191,6 +192,7 @@ const Header: React.FC = () => {
                                     <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-56 bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
                                         <div className="p-2 flex flex-col">
                                             <NavLink to="/education">{t('footer.links.educationHub')}</NavLink>
+                                            <NavLink to="/education/ai-tutor">AI Tutor</NavLink>
                                             <NavLink to="/education/quizzes">{t('education.quizzes.title')}</NavLink>
                                             <NavLink to="/education/webinars">{t('education.webinars.title')}</NavLink>
                                             <NavLink to="/education/simulators">{t('education.simulators.title')}</NavLink>
@@ -290,6 +292,7 @@ const Header: React.FC = () => {
                         </MobileAccordionLink>
                         <MobileAccordionLink title={t('header.education')}>
                            <NavLink to="/education" onClick={closeMobileMenu} className="block">{t('footer.links.educationHub')}</NavLink>
+                           <NavLink to="/education/ai-tutor" onClick={closeMobileMenu} className="block">AI Tutor</NavLink>
                            <NavLink to="/education/quizzes" onClick={closeMobileMenu} className="block">{t('education.quizzes.title')}</NavLink>
                            <NavLink to="/education/webinars" onClick={closeMobileMenu} className="block">{t('education.webinars.title')}</NavLink>
                            <NavLink to="/education/simulators" onClick={closeMobileMenu} className="block">{t('education.simulators.title')}</NavLink>

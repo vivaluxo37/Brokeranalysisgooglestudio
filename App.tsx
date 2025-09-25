@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
@@ -36,6 +37,7 @@ import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import AuthorPage from './pages/AuthorPage';
 import TradingJournalPage from './pages/TradingJournalPage';
+import AiTutorPage from './pages/AiTutorPage';
 
 const App: React.FC = () => {
   return (
@@ -58,6 +60,7 @@ const App: React.FC = () => {
 
         {/* Education Routes */}
         <Route path="/education" element={<EducationHubPage />} />
+        <Route path="/education/ai-tutor" element={<AiTutorPage />} />
         <Route path="/education/quizzes" element={<QuizzesPage />} />
         <Route path="/education/quizzes/broker-fees" element={<BrokerFeesQuizPage />} />
         <Route path="/education/quizzes/forex-basics" element={<ForexBasicsQuizPage />} />

@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useFavorites } from '../hooks/useFavorites';
-import { MatcherHistoryItem } from '../types';
+import { StrategyMatcherHistoryItem } from '../types';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import Card, { CardContent, CardHeader, CardFooter } from '../components/ui/Card';
@@ -70,7 +71,7 @@ const DashboardPage: React.FC = () => {
   const { getReviewsByUserId, verifyReview } = useReviews();
   const { getAlertsForFavorites } = useAlerts();
   const { t } = useTranslation();
-  const [history, setHistory] = useState<MatcherHistoryItem[]>([]);
+  const [history, setHistory] = useState<StrategyMatcherHistoryItem[]>([]);
   const navigate = useNavigate();
 
   // State for account settings
@@ -95,7 +96,7 @@ const DashboardPage: React.FC = () => {
   useEffect(() => {
     if (user) {
       setIsLoadingFavorites(true);
-      const key = `matcherHistory_${user.id}`;
+      const key = `strategyMatcherHistory_${user.id}`;
       try {
         const storedHistory = JSON.parse(localStorage.getItem(key) || '[]');
         setHistory(storedHistory);
@@ -237,24 +238,14 @@ const DashboardPage: React.FC = () => {
             <div className="divide-y divide-input">
               {history.map(item => {
                 const matchedBrokers = allBrokers.filter(b => item.recommendedBrokerIds.includes(b.id));
-                const title = `Match for a ${item.preferences.experience} trader`;
-                const subtitle = `Based on preferences from ${new Date(item.timestamp).toLocaleDateString()}`;
+                const title = `Match from ${new Date(item.timestamp).toLocaleDateString()}`;
+                const subtitle = `Based on your strategy: "${item.strategy.substring(0, 50)}..."`;
                 return (
                     <AccordionItem key={item.id} title={title} subtitle={subtitle}>
                         <div className="space-y-6">
-                            <div>
-                                <h4 className="font-semibold text-primary-400 mb-2">Your Preferences:</h4>
-                                <div className="text-sm text-foreground/80 grid grid-cols-[auto,1fr] gap-x-4 gap-y-1">
-                                    <span>Country:</span> <span className="font-semibold">{item.preferences.country}</span>
-                                    <span>Experience:</span> <span className="font-semibold">{item.preferences.experience}</span>
-                                    <span>Fee Structure:</span> <span className="font-semibold">{item.preferences.feeStructure}</span>
-                                    <span>Deposit Method:</span> <span className="font-semibold">{item.preferences.depositMethod}</span>
-                                    <span>Currency Pairs:</span> <span className="font-semibold">{item.preferences.currencyPairs}</span>
-                                    <span>Special:</span> 
-                                    <span className="font-semibold">
-                                        {item.preferences.specialPreferences.length > 0 ? item.preferences.specialPreferences.join(', ') : 'None'}
-                                    </span>
-                                </div>
+                             <div>
+                                <h4 className="font-semibold text-primary-400 mb-2">Your Strategy Description:</h4>
+                                <p className="text-sm text-foreground/80 italic">"{item.strategy}"</p>
                             </div>
                             <div>
                                 <h4 className="font-semibold text-primary-400 mb-2">{t('dashboardPage.history.aiAnalysis')}</h4>

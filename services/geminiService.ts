@@ -1,4 +1,5 @@
-import { Broker, Review, AIRecommendation, NewsArticle, Signal, BrokerMatcherPreferences, TradingJournalEntry } from '../types';
+
+import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood } from '../types';
 import * as backend from './backendService';
 
 // This file now acts as a secure frontend client. It calls the simulated
@@ -9,16 +10,21 @@ export const getChatbotResponseStream = async (message: string) => {
   return backend.handleChatbotStream(message);
 };
 
+// --- AI Tutor Functionality ---
+export const getAiTutorResponseStream = async (message: string, history: { sender: 'user' | 'ai'; text: string }[]) => {
+    return backend.handleAiTutorStream(message, history);
+};
+
 // --- Broker Matcher Functionality ---
 interface BrokerRecommendationResponse {
   reasoning: string;
   recommendedBrokerIds: string[];
 }
-export const getBrokerRecommendations = async (
-  preferences: BrokerMatcherPreferences,
+export const getStrategyBrokerRecommendations = async (
+  strategyDescription: string,
   brokers: Broker[]
 ): Promise<BrokerRecommendationResponse> => {
-    return backend.handleBrokerRecommendations(preferences, brokers);
+    return backend.handleStrategyBrokerRecommendations(strategyDescription, brokers);
 };
 
 // --- Cost Analysis Functionality ---
@@ -96,4 +102,9 @@ export const getNewsAnalysis = async (article: NewsArticle, brokers: Broker[]): 
 // --- AI Trading Journal Analysis ---
 export const getTradingJournalAnalysis = async (entries: TradingJournalEntry[]): Promise<string> => {
     return backend.handleTradingJournalAnalysis(entries);
+};
+
+// --- AI Market Mood ---
+export const getMarketMood = async (articles: NewsArticle[]): Promise<MarketMood> => {
+    return backend.handleMarketMood(articles);
 };

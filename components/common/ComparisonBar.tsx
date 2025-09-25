@@ -9,9 +9,7 @@ const ComparisonBar: React.FC = () => {
     const { comparisonList, clearComparison, removeBrokerFromComparison } = useComparison();
     const location = ReactRouterDOM.useLocation();
 
-    // Do not show the bar on the comparison pages themselves or if the list is empty
-    const hiddenPaths = ['/compare', '/cost-analyzer', '/tools/broker-fees-calculator'];
-    if (comparisonList.length === 0 || hiddenPaths.some(path => location.pathname.startsWith(path))) {
+    if (comparisonList.length === 0 || location.pathname === '/compare' || location.pathname.startsWith('/compare/')) {
         return null;
     }
 
@@ -29,7 +27,7 @@ const ComparisonBar: React.FC = () => {
             </style>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="bg-card/80 backdrop-blur-lg border-t border-x border-input rounded-t-lg shadow-2xl p-3 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-3 overflow-x-auto py-1">
+                    <div className="flex items-center gap-3 overflow-x-auto">
                         <span className="font-semibold text-card-foreground hidden md:block">Comparing:</span>
                         {brokersToCompare.map(broker => (
                             <div key={broker.id} className="relative flex-shrink-0 group">
@@ -48,19 +46,9 @@ const ComparisonBar: React.FC = () => {
                         <Button variant="ghost" size="sm" onClick={clearComparison}>
                             Clear All
                         </Button>
-                        <ReactRouterDOM.Link to="/tools/broker-fees-calculator">
-                            <Button variant="secondary" size="sm">
-                                Fee Calculator
-                            </Button>
-                        </ReactRouterDOM.Link>
-                        <ReactRouterDOM.Link to="/cost-analyzer">
-                            <Button variant="secondary" size="sm">
-                                Cost Analyzer
-                            </Button>
-                        </ReactRouterDOM.Link>
                         <ReactRouterDOM.Link to="/compare">
                             <Button variant="primary" size="sm">
-                                Compare ({comparisonList.length})
+                                Compare Now ({comparisonList.length})
                             </Button>
                         </ReactRouterDOM.Link>
                     </div>

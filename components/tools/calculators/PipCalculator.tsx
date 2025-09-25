@@ -3,19 +3,7 @@ import { useTranslation } from '../../../hooks/useTranslation';
 import Input from '../../ui/Input';
 import Button from '../../ui/Button';
 
-const CURRENCY_PAIRS = [
-    // Majors
-    "EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CAD", "USD/CHF", "NZD/USD",
-    // Minors (Crosses)
-    "EUR/GBP", "EUR/AUD", "EUR/NZD", "EUR/CAD", "EUR/CHF", "EUR/JPY",
-    "GBP/JPY", "GBP/AUD", "GBP/CAD", "GBP/CHF",
-    "AUD/JPY", "AUD/CAD", "AUD/CHF", "AUD/NZD",
-    "CAD/JPY", "CAD/CHF",
-    "NZD/JPY", "CHF/JPY",
-    // Exotics
-    "USD/TRY", "USD/MXN", "USD/ZAR", "USD/SGD", "USD/HKD",
-    "EUR/TRY", "GBP/TRY"
-];
+const CURRENCY_PAIRS = ["EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CAD", "USD/CHF", "NZD/USD"];
 const ACCOUNT_CURRENCIES = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF"];
 
 const PipCalculator: React.FC = () => {
@@ -31,38 +19,33 @@ const PipCalculator: React.FC = () => {
         if (isNaN(lots) || lots <= 0) return;
 
         const tradeSize = lots * 100000;
-        const [base, quote] = currencyPair.split('/');
-        
-        // For JPY pairs, pip is at 2nd decimal place.
-        let pipSize = currencyPair.includes('JPY') ? 0.01 : 0.0001;
+        let pipValueInQuote;
 
-        const pipValueInQuote = tradeSize * pipSize;
-
-        // This is a simplification for a demo. A real app would use live rates.
-        // We'll calculate everything relative to USD and then convert to the account currency.
-        let resultInUSD = 0;
-        
-        const mockUSDRates: Record<string, number> = {
-            'EUR': 1.08, 'GBP': 1.25, 'AUD': 0.66, 'NZD': 0.61, 'CAD': 1 / 1.37, 'CHF': 1 / 0.90, 'JPY': 1 / 157,
-            'TRY': 1 / 32, 'MXN': 1 / 18, 'ZAR': 1 / 18.5, 'SGD': 1 / 1.35, 'HKD': 1 / 7.8, 'USD': 1
-        };
-
-        if (mockUSDRates[quote]) {
-            resultInUSD = pipValueInQuote * mockUSDRates[quote];
+        // JPY pairs have pip at 2nd decimal place
+        if (currencyPair.includes('JPY')) {
+            pipValueInQuote = (0.01 / 1) * tradeSize;
         } else {
-            // Fallback for pairs where quote is not in our list
-            resultInUSD = pipValueInQuote;
+            pipValueInQuote = (0.0001 / 1) * tradeSize;
         }
         
-        // Convert from USD to account currency
-        let finalResult = resultInUSD;
-        if (accountCurrency !== 'USD' && mockUSDRates[accountCurrency]) {
-            const usdToAccountCurrencyRate = 1 / mockUSDRates[accountCurrency];
-            finalResult = resultInUSD * usdToAccountCurrencyRate;
+        const quoteCurrency = currencyPair.split('/')[1];
+
+        if (quoteCurrency === accountCurrency) {
+            setResult(pipValueInQuote);
+        } else {
+            // This is a simplification. A real app would fetch the live exchange rate.
+            // For this demo, we'll use approximate conversion rates.
+            let conversionRate = 1;
+            if (accountCurrency === 'USD') {
+                 if (quoteCurrency === 'JPY') conversionRate = 1 / 150;
+                 if (quoteCurrency === 'CAD') conversionRate = 1 / 1.35;
+                 if (quoteCurrency === 'CHF') conversionRate = 1 / 0.90;
+            } else {
+                // For non-USD accounts, the logic would be more complex.
+                // We'll just assume a 1:1 conversion for simplicity in this demo.
+            }
+            setResult(pipValueInQuote * conversionRate);
         }
-
-
-        setResult(finalResult);
     };
     
     return (

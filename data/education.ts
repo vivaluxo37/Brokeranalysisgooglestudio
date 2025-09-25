@@ -20,16 +20,6 @@ export const useQuizData = () => {
     const chartingIntroQuiz = createQuiz(t, 'charting');
     const riskManagementQuiz = createQuiz(t, 'risk');
     const orderTypesQuiz = createQuiz(t, 'orders');
-    const technicalIndicatorsQuiz = createQuiz(t, 'indicators');
-    const candlestickPatternsQuiz = createQuiz(t, 'candlesticks');
-    const fundamentalAnalysisQuiz = createQuiz(t, 'fundamental');
-    const tradingPsychologyQuiz = createQuiz(t, 'psychology');
-    const leverageMarginQuiz = createQuiz(t, 'leverage');
-    const tradingPlatformsQuiz = createQuiz(t, 'platforms');
-    const copyTradingQuiz = createQuiz(t, 'copy');
-    const pipsAndLotsQuiz = createQuiz(t, 'pips');
-    const newsTradingQuiz = createQuiz(t, 'news');
-    const chartPatternsQuiz = createQuiz(t, 'patterns');
 
     return { 
         brokerFeesQuiz,
@@ -37,16 +27,6 @@ export const useQuizData = () => {
         chartingIntroQuiz,
         riskManagementQuiz,
         orderTypesQuiz,
-        technicalIndicatorsQuiz,
-        candlestickPatternsQuiz,
-        fundamentalAnalysisQuiz,
-        tradingPsychologyQuiz,
-        leverageMarginQuiz,
-        tradingPlatformsQuiz,
-        copyTradingQuiz,
-        pipsAndLotsQuiz,
-        newsTradingQuiz,
-        chartPatternsQuiz,
      };
 };
 

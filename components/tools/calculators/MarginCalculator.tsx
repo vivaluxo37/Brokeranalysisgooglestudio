@@ -3,19 +3,7 @@ import { useTranslation } from '../../../hooks/useTranslation';
 import Input from '../../ui/Input';
 import Button from '../../ui/Button';
 
-const CURRENCY_PAIRS = [
-    // Majors
-    "EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CAD", "USD/CHF", "NZD/USD",
-    // Minors (Crosses)
-    "EUR/GBP", "EUR/AUD", "EUR/NZD", "EUR/CAD", "EUR/CHF", "EUR/JPY",
-    "GBP/JPY", "GBP/AUD", "GBP/CAD", "GBP/CHF",
-    "AUD/JPY", "AUD/CAD", "AUD/CHF", "AUD/NZD",
-    "CAD/JPY", "CAD/CHF",
-    "NZD/JPY", "CHF/JPY",
-    // Exotics
-    "USD/TRY", "USD/MXN", "USD/ZAR", "USD/SGD", "USD/HKD",
-    "EUR/TRY", "GBP/TRY"
-];
+const CURRENCY_PAIRS = ["EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CAD", "USD/CHF", "NZD/USD"];
 const ACCOUNT_CURRENCIES = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF"];
 const LEVERAGE_OPTIONS = ["1:1", "1:10", "1:30", "1:50", "1:100", "1:200", "1:500"];
 
@@ -34,27 +22,16 @@ const MarginCalculator: React.FC = () => {
         if (isNaN(lots) || lots <= 0 || isNaN(leverageRatio)) return;
 
         const contractSize = 100000;
-        const totalTradeValueInBase = lots * contractSize;
-        const [base, quote] = currencyPair.split('/');
+        const totalTradeValue = lots * contractSize;
 
-        // This is a simplification. A real app would use live rates.
-        let conversionRateFromBaseToAccount = 1.0;
-
-        if (base !== accountCurrency) {
-             const mockUSDRates: Record<string, number> = {
-                'EUR': 1.08, 'GBP': 1.25, 'AUD': 0.66, 'NZD': 0.61, 'CAD': 1 / 1.37, 'CHF': 1 / 0.90, 'JPY': 1 / 157,
-                'TRY': 1 / 32, 'MXN': 1 / 18, 'ZAR': 1 / 18.5, 'SGD': 1 / 1.35, 'HKD': 1 / 7.8, 'USD': 1
-            };
-            
-            if (mockUSDRates[base] && mockUSDRates[accountCurrency]) {
-                const baseToUsdRate = mockUSDRates[base];
-                const usdToAccountRate = 1 / mockUSDRates[accountCurrency];
-                conversionRateFromBaseToAccount = baseToUsdRate * usdToAccountRate;
-            }
+        // Simplification: Assume current rate of EUR/USD is ~1.08
+        // A real app would fetch the live rate of the base currency vs account currency.
+        let conversionRateToBase = 1;
+        if (currencyPair.startsWith('EUR') && accountCurrency === 'USD') {
+            conversionRateToBase = 1.08;
         }
-        
-        const totalTradeValueInAccountCurrency = totalTradeValueInBase * conversionRateFromBaseToAccount;
-        const marginRequired = totalTradeValueInAccountCurrency / leverageRatio;
+
+        const marginRequired = (totalTradeValue / leverageRatio) * conversionRateToBase;
         setResult(marginRequired);
     };
 

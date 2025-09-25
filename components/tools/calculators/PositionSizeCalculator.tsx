@@ -3,19 +3,7 @@ import { useTranslation } from '../../../hooks/useTranslation';
 import Input from '../../ui/Input';
 import Button from '../../ui/Button';
 
-const CURRENCY_PAIRS = [
-    // Majors
-    "EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CAD", "USD/CHF", "NZD/USD",
-    // Minors (Crosses)
-    "EUR/GBP", "EUR/AUD", "EUR/NZD", "EUR/CAD", "EUR/CHF", "EUR/JPY",
-    "GBP/JPY", "GBP/AUD", "GBP/CAD", "GBP/CHF",
-    "AUD/JPY", "AUD/CAD", "AUD/CHF", "AUD/NZD",
-    "CAD/JPY", "CAD/CHF",
-    "NZD/JPY", "CHF/JPY",
-    // Exotics
-    "USD/TRY", "USD/MXN", "USD/ZAR", "USD/SGD", "USD/HKD",
-    "EUR/TRY", "GBP/TRY"
-];
+const CURRENCY_PAIRS = ["EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CAD", "USD/CHF", "NZD/USD"];
 const ACCOUNT_CURRENCIES = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF"];
 
 const PositionSizeCalculator: React.FC = () => {
@@ -23,7 +11,6 @@ const PositionSizeCalculator: React.FC = () => {
     const [accountBalance, setAccountBalance] = useState('10000');
     const [riskPercentage, setRiskPercentage] = useState('1');
     const [stopLossPips, setStopLossPips] = useState('20');
-    const [accountCurrency, setAccountCurrency] = useState('USD');
     const [currencyPair, setCurrencyPair] = useState('EUR/USD');
     const [result, setResult] = useState<{ lots: number; units: number } | null>(null);
 
@@ -35,28 +22,16 @@ const PositionSizeCalculator: React.FC = () => {
 
         if (isNaN(balance) || isNaN(risk) || isNaN(slPips) || slPips <= 0) return;
 
-        const riskAmountInAccountCurrency = balance * (risk / 100);
+        const riskAmount = balance * (risk / 100);
         
-        // This is a simplification for a demo. A real app would use live rates.
-        const mockUSDRates: Record<string, number> = {
-            'EUR': 1.08, 'GBP': 1.25, 'AUD': 0.66, 'NZD': 0.61, 'CAD': 1 / 1.37, 'CHF': 1 / 0.90, 'JPY': 1 / 157,
-            'TRY': 1 / 32, 'MXN': 1 / 18, 'ZAR': 1 / 18.5, 'SGD': 1 / 1.35, 'HKD': 1 / 7.8, 'USD': 1
-        };
-
-        const [base, quote] = currencyPair.split('/');
-        let pipSize = currencyPair.includes('JPY') ? 0.01 : 0.0001;
-
-        const pipValuePerLotInQuote = 100000 * pipSize;
-        
-        let pipValuePerLotInAccountCurrency = pipValuePerLotInQuote;
-        if (mockUSDRates[quote] && mockUSDRates[accountCurrency]) {
-            const quoteToUsdRate = mockUSDRates[quote];
-            const usdToAccountRate = 1 / mockUSDRates[accountCurrency];
-            pipValuePerLotInAccountCurrency = (pipValuePerLotInQuote * quoteToUsdRate) * usdToAccountRate;
+        // This is a simplification. A real app would fetch live pip values.
+        let pipValuePerLot = 10; // Assuming USD account and standard pairs
+        if (currencyPair.includes("JPY")) {
+             pipValuePerLot = 1000 / 150; // Approximation for USD/JPY
         }
 
-        const lossPerLot = slPips * pipValuePerLotInAccountCurrency;
-        const positionSizeInLots = riskAmountInAccountCurrency / lossPerLot;
+        const lossPerLot = slPips * pipValuePerLot;
+        const positionSizeInLots = riskAmount / lossPerLot;
 
         setResult({
             lots: parseFloat(positionSizeInLots.toFixed(2)),
@@ -75,12 +50,6 @@ const PositionSizeCalculator: React.FC = () => {
                     onChange={e => setAccountBalance(e.target.value)}
                     min="0"
                 />
-                 <div>
-                    <label htmlFor="accountCurrencyPos" className="block text-sm font-medium text-foreground/80 mb-1">{t('tools.calculators.pipValue.accountCurrency')}</label>
-                    <select id="accountCurrencyPos" value={accountCurrency} onChange={e => setAccountCurrency(e.target.value)} className="w-full bg-input border-input rounded-md shadow-sm p-2">
-                        {ACCOUNT_CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                </div>
                  <Input
                     label={t('tools.calculators.positionSize.riskPercentage')}
                     id="riskPercentage"

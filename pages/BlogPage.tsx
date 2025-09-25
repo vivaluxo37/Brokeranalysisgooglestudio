@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { blogPosts } from '../data/blog';
 import BlogPostCard from '../components/blog/BlogPostCard';
 import MetaTags from '../components/common/MetaTags';
@@ -8,9 +8,24 @@ import { Icons } from '../constants';
 import Tag from '../components/ui/Tag';
 
 const BlogPage: React.FC = () => {
-    const sortedPosts = [...blogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    const featuredPost = sortedPosts[0];
-    const otherPosts = sortedPosts.slice(1);
+    const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+    const allTags = useMemo(() => {
+        const tags = new Set<string>();
+        blogPosts.forEach(post => post.tags.forEach(tag => tags.add(tag)));
+        return Array.from(tags).sort();
+    }, []);
+
+    const filteredPosts = useMemo(() => {
+        const sorted = [...blogPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        if (!selectedTag) {
+            return sorted;
+        }
+        return sorted.filter(post => post.tags.includes(selectedTag));
+    }, [selectedTag]);
+
+    const featuredPost = !selectedTag ? filteredPosts[0] : null;
+    const postsToDisplay = !selectedTag ? filteredPosts.slice(1) : filteredPosts;
 
     const pageJsonLd = {
         "@context": "https://schema.org",
@@ -39,9 +54,35 @@ const BlogPage: React.FC = () => {
                 </p>
             </div>
 
+            {/* Tag Filter */}
+            <div className="flex flex-wrap justify-center items-center gap-2 mb-12">
+                <button
+                    onClick={() => setSelectedTag(null)}
+                    className={`text-sm font-semibold px-3 py-1.5 rounded-full transition-colors ${!selectedTag ? 'bg-primary-600 text-white' : 'bg-input text-foreground/80 hover:bg-input/70'}`}
+                >
+                    All Posts
+                </button>
+                {allTags.map(tag => (
+                    <button
+                        key={tag}
+                        onClick={() => setSelectedTag(tag)}
+                        className={`text-sm font-semibold px-3 py-1.5 rounded-full transition-colors ${selectedTag === tag ? 'bg-primary-600 text-white' : 'bg-input text-foreground/80 hover:bg-input/70'}`}
+                    >
+                        {tag}
+                    </button>
+                ))}
+            </div>
+
+            {/* Content */}
+            {selectedTag && (
+                 <h2 className="text-2xl font-bold mb-8 text-center animate-fade-in">
+                    Posts tagged with: <span className="text-primary-400">{selectedTag}</span>
+                </h2>
+            )}
+
             {/* Featured Post */}
             {featuredPost && (
-                <div className="mb-16">
+                <div className="mb-16 animate-fade-in">
                     <ReactRouterDOM.Link to={`/blog/${featuredPost.slug}`} className="group block">
                         <div className="grid lg:grid-cols-2 gap-8 items-center bg-card p-6 rounded-lg border border-input hover:border-primary-600 transition-colors">
                             <img src={featuredPost.imageUrl} alt={featuredPost.title} className="rounded-lg aspect-video object-cover" />
@@ -65,12 +106,18 @@ const BlogPage: React.FC = () => {
                 </div>
             )}
 
-            {/* Other Posts */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {otherPosts.map(post => (
+            {/* Posts Grid */}
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${!featuredPost ? 'animate-fade-in' : ''}`}>
+                {postsToDisplay.map(post => (
                     <BlogPostCard key={post.id} post={post} />
                 ))}
             </div>
+
+             {filteredPosts.length === 0 && (
+                <div className="text-center py-16 text-foreground/70 bg-card rounded-lg border border-input animate-fade-in">
+                    <p className="text-xl">No posts found for this tag.</p>
+                </div>
+            )}
         </div>
     );
 };

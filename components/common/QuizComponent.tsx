@@ -72,7 +72,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ quizTitle, quizData }) =>
         );
     }
 
-    const progressPercentage = (currentQuestionIndex / quizData.length) * 100;
+    const progressPercentage = ((currentQuestionIndex + 1) / quizData.length) * 100;
 
     return (
         <div>
@@ -83,9 +83,8 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ quizTitle, quizData }) =>
             <Card className="max-w-2xl mx-auto">
                 <CardContent className="p-8">
                     <div className="mb-6">
-                        <div className="flex justify-between items-center mb-2 text-sm text-foreground/80">
-                            <p className="font-semibold">Question {currentQuestionIndex + 1} of {quizData.length}</p>
-                            <p>{currentQuestionIndex} / {quizData.length} Completed</p>
+                        <div className="flex justify-between items-center mb-2">
+                            <p className="text-sm font-semibold text-foreground/80">Question {currentQuestionIndex + 1} of {quizData.length}</p>
                         </div>
                         <div className="w-full bg-input rounded-full h-2.5">
                             <div className="bg-primary-600 h-2.5 rounded-full transition-all duration-500" style={{ width: `${progressPercentage}%` }}></div>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { categoryPageGroups } from '../../pages/categoryPageData';
@@ -21,7 +20,6 @@ const Footer: React.FC = () => {
       { name: t('footer.links.economicCalendar'), path: '/tools/economic-calendar'},
       { name: t('footer.links.calculators'), path: '/tools/calculators'},
       { name: t('footer.links.marketData'), path: '/tools/market-data'},
-      { name: t('footer.links.brokerFeesCalculator'), path: '/tools/broker-fees-calculator' },
   ];
 
   const aboutLinks = [

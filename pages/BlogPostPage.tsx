@@ -516,7 +516,7 @@ const parseMarkdown = (markdown: string): string => {
             .replace(/`([^`]+)`/g, '<code class="bg-input text-primary-400 font-mono py-1 px-2 rounded text-sm">$1</code>')
             .replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
                  return url.startsWith('/#/') 
-                    ? `<a href="${url}" class="text-primary-400 hover:underline">${linkText}</a>`
+                    ? `<a href="${url.replace('/#/', '#/')}" class="text-primary-400 hover:underline">${linkText}</a>`
                     : `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${linkText} <span class="inline-block align-middle">&#8599;</span></a>`;
             });
     };

@@ -2587,151 +2587,128 @@ export const brokers: Broker[] = [
     cons: ["Offshore regulation (VFSC)", "Limited range of non-forex instruments"],
     coreInfo: { brokerType: 'Hybrid', mobileTrading: true, demoAccount: true },
     accountTypes: [
-        { name: 'Fix', type: 'Standard', minDeposit: 10, spreads: 'Fixed from 2.0 pips', commission: 'Zero', bestFor: 'Beginners' },
-        { name: 'Pro', type: 'STP', minDeposit: 250, spreads: 'From 0.9 pips', commission: 'Zero', bestFor: 'Standard traders' },
-        { name: 'Zero', type: 'ECN', minDeposit: 500, spreads: 'From 0.0 pips', commission: '$3.50 per lot side', bestFor: 'Active traders' },
+        { name: 'Fix', type: 'Standard', minDeposit: 10, spreads: 'Fixed from 2.0 pips', commission: 'Zero', bestFor: 'Beginners or traders who prefer fixed costs' },
+        { name: 'Pro', type: 'Standard', minDeposit: 10, spreads: 'From 0.9 pips', commission: 'Zero', bestFor: 'Regular traders' },
+        { name: 'Zero', type: 'ECN', minDeposit: 10, spreads: 'From 0.0 pips', commission: 'From $3.5 per lot side', bestFor: 'Scalpers and EAs' }
     ],
     fees: {
-        trading: { spreadType: 'Raw', averageSpreads: [{ pair: 'EUR/USD', spread: '0.0 pips + commission' }], commissionStructure: '$3.50 per lot side on Zero account', overnightSwapFees: 'Standard' },
-        nonTrading: { inactivityFee: 'None', withdrawalFee: 'Varies by method', depositFee: 'None' }
+      trading: { spreadType: 'Fixed', averageSpreads: [{ pair: 'EUR/USD', spread: '2.0 pips' }], commissionStructure: "Zero commission on Fix/Pro accounts", overnightSwapFees: "Standard" },
+      nonTrading: { inactivityFee: "None", withdrawalFee: "None", depositFee: "None" }
     },
     tradableInstruments: {
-        forexPairs: { total: 33, details: "Majors, Minors" },
-        commodities: { total: 4, details: "Metals, Oil" },
-        indices: { total: 11, details: "Global indices" },
-        stocks: { total: 68, details: "US stock CFDs" },
-        cryptocurrencies: { total: 11, details: "Major crypto CFDs" }
+      forexPairs: { total: 33, details: "Majors, Minors" },
+      commodities: { total: 6, details: "Metals, Oil" },
+      indices: { total: 11, details: "Global indices" },
+      stocks: { total: 68, details: "US stock CFDs" },
+      cryptocurrencies: { total: 11, details: "Major crypto CFDs" }
     },
-    tradingConditionsExtended: { minTradeSize: 0.01, scalpingAllowed: true, hedgingAllowed: true, eaAllowed: true, negativeBalanceProtection: true, marginCallLevel: "50%", stopOutLevel: "20%" },
+    tradingConditionsExtended: { minTradeSize: 0.01, scalpingAllowed: true, hedgingAllowed: true, eaAllowed: true, negativeBalanceProtection: true, marginCallLevel: "100%", stopOutLevel: "50%" },
     depositWithdrawal: {
-        depositMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'],
-        withdrawalMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'],
-        depositFees: 'None', withdrawalFees: 'Varies', processingTime: { deposits: 'Instant', withdrawals: '1-3 days' }, minWithdrawal: 10
+      depositMethods: ['Bank Transfer', 'Credit/Debit Card', 'Skrill', 'Neteller', 'Crypto'],
+      withdrawalMethods: ['Bank Transfer', 'Credit/Debit Card', 'Skrill', 'Neteller', 'Crypto'],
+      depositFees: 'None',
+      withdrawalFees: 'None',
+      processingTime: { deposits: 'Instant', withdrawals: '1-3 days' },
+      minWithdrawal: 10
     },
-    customerSupport: { languages: ['English', 'Russian', 'Chinese', 'Hindi'], channels: ['Live Chat', 'Phone', 'Email'], hours: '24/5' },
-    security: { regulatedBy: [{ regulator: 'VFSC' }], segregatedAccounts: true, investorCompensationScheme: { available: false }, twoFactorAuth: true },
-    tradingEnvironment: { executionSpeedMs: 120, slippage: 'Standard', requotes: false, marketDepth: false, orderTypes: ['Market', 'Limit', 'Stop'], guaranteedStopLoss: { available: false } },
+    customerSupport: { languages: ['English', 'Chinese', 'Russian', 'Hindi'], channels: ['Live Chat', 'Phone', 'Email'], hours: '24/5' },
+    security: {
+      regulatedBy: [{ regulator: 'VFSC (Vanuatu)' }],
+      segregatedAccounts: true,
+      investorCompensationScheme: { available: false },
+      twoFactorAuth: false
+    },
+    tradingEnvironment: { executionSpeedMs: 120, slippage: "Standard", requotes: false, marketDepth: false, orderTypes: ['Market', 'Limit', 'Stop'], guaranteedStopLoss: { available: false } },
     platformFeatures: {
-        charting: { indicators: 50, drawingTools: 30 },
-        automatedTrading: ['EAs (MT4)'],
-        copyTrading: { available: true, platforms: ['PAMM', 'Copy Trading'] },
-        backtesting: true,
-        newsIntegration: true
+      charting: { indicators: 50, drawingTools: 30 },
+      automatedTrading: ['EAs (MT4)'],
+      copyTrading: { available: true, platforms: ['PAMM'] },
+      backtesting: true,
+      newsIntegration: true
     },
-    accountManagement: { islamicAccount: { available: true }, baseCurrencies: ['USD', 'EUR'], mamPammSupport: true, corporateAccounts: true },
-    transparency: { audited: false, yearsInBusiness: new Date().getFullYear() - 2008, tradingVolumeDisclosed: false },
-    regulation: { regulators: ['VFSC'] },
-    ratings: { regulation: 6.0, costs: 8.5, platforms: 8.0, support: 8.2 },
-    tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.3, usdjpy: 0.2 }, commission: '$3.50 per side', swapFeeCategory: 'Standard', maxLeverage: '1:1000', minLotSize: 0.01 },
-    accessibility: { minDeposit: 10, depositMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], withdrawalMethods: ['Credit Card', 'Bank Transfer', 'Crypto'], customerSupport: ['24/5 Live Chat', 'Phone'] },
+    accountManagement: { islamicAccount: { available: true }, baseCurrencies: ['USD'], mamPammSupport: true, corporateAccounts: true },
+    transparency: { audited: false, yearsInBusiness: new Date().getFullYear() - 2008, tradingVolumeDisclosed: false, clientBase: "1.5M+ accounts" },
+    regulation: { regulators: ['VFSC (Vanuatu)'] },
+    ratings: { regulation: 6.8, costs: 8.5, platforms: 8.2, support: 8.0 },
+    tradingConditions: { spreads: { eurusd: 2.0, gbpusd: 2.2, usdjpy: 2.1 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:1000', minLotSize: 0.01 },
+    accessibility: { minDeposit: 10, depositMethods: ['Credit Card', 'Skrill', 'Crypto'], withdrawalMethods: ['Credit Card', 'Skrill', 'Crypto'], customerSupport: ['24/5 Live Chat', 'Phone'] },
     technology: { platforms: ['MT4'], executionType: 'Hybrid', apiAccess: false, eaSupport: true },
-    reviews: [], isIslamic: true, copyTrading: true, providesSignals: true
+    reviews: [], isIslamic: true, copyTrading: true, providesSignals: false
   },
   {
     id: 'fxopen',
     name: 'FXOpen',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/FXOpen_logo_logotype_2022_l9rbvq.svg',
+    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/FXOpen_logo_logotype_2022_z2wvyz.svg',
     websiteUrl: 'https://www.fxopen.com/',
     score: 8.4,
     foundingYear: 2005,
     headquarters: 'London, UK',
-    description: 'A pioneer in ECN trading for retail clients, FXOpen offers true ECN liquidity, crypto trading, and PAMM services.',
-    summary: 'FXOpen is a veteran in the ECN space, providing a transparent trading environment with competitive costs. It is particularly strong for crypto CFD traders and those looking for PAMM investment options.',
-    pros: ["One of the first retail ECN brokers", "Regulated by the FCA", "Extensive cryptocurrency CFD offering", "PAMM accounts for investors"],
-    cons: ["Spreads can be wider on the STP account", "Website can be complex to navigate"],
+    description: 'FXOpen is a well-established ECN broker offering access to deep liquidity and competitive pricing on the MetaTrader and TickTrader platforms.',
+    summary: 'FXOpen is a solid choice for experienced traders looking for a true ECN environment. Its low commissions and choice of platforms are appealing, although its educational resources are less extensive than some competitors.',
+    pros: ["True ECN model with deep liquidity", "Regulated by the FCA", "Advanced TickTrader platform available", "Crypto trading and deposits supported"],
+    cons: ["Limited range of stock CFDs", "Educational materials are basic"],
     coreInfo: { brokerType: 'ECN', mobileTrading: true, demoAccount: true },
     accountTypes: [
-        { name: 'STP', type: 'STP', minDeposit: 10, spreads: 'From 1.2 pips', commission: 'Zero', bestFor: 'Beginners' },
-        { name: 'ECN', type: 'ECN', minDeposit: 100, spreads: 'From 0.0 pips', commission: '$1.50 per lot side', bestFor: 'Active traders' }
+      { name: 'ECN', type: 'ECN', minDeposit: 100, spreads: 'From 0.0 pips', commission: '$1.5 per lot side', bestFor: 'Active and algorithmic traders' }
     ],
     fees: {
-        trading: { spreadType: 'Raw', averageSpreads: [{ pair: 'EUR/USD', spread: '0.0 pips + commission' }], commissionStructure: '$1.50 per lot side on ECN accounts', overnightSwapFees: 'Standard' },
-        nonTrading: { inactivityFee: '$10 after 90 days', withdrawalFee: 'Varies', depositFee: 'Varies' }
+      trading: { spreadType: 'Raw', averageSpreads: [{ pair: 'EUR/USD', spread: '0.2 pips + commission' }], commissionStructure: '$1.50 per lot per side', overnightSwapFees: 'Standard' },
+      nonTrading: { inactivityFee: '$10 per month after 90 days', withdrawalFee: 'Varies by method', depositFee: 'None' }
     },
     tradableInstruments: {
-        forexPairs: { total: 50, details: "Majors, Minors" },
-        commodities: { total: 8, details: "Metals, Energies" },
-        indices: { total: 10, details: "Global indices" },
-        stocks: { total: 600, details: "US stock CFDs" },
-        cryptocurrencies: { total: 43, details: "Wide range of crypto pairs" }
+      forexPairs: { total: 50, details: "Majors, Minors, Exotics" },
+      commodities: { total: 8, details: "Metals, Energies" },
+      indices: { total: 11, details: "Global indices" },
+      stocks: { total: 100, details: "US stock CFDs" },
+      cryptocurrencies: { total: 43, details: "Wide range of crypto CFDs" }
     },
     tradingConditionsExtended: { minTradeSize: 0.01, scalpingAllowed: true, hedgingAllowed: true, eaAllowed: true, negativeBalanceProtection: true, marginCallLevel: "100%", stopOutLevel: "50%" },
     depositWithdrawal: {
-        depositMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'],
-        withdrawalMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'],
-        depositFees: 'Varies', withdrawalFees: 'Varies', processingTime: { deposits: 'Instant', withdrawals: '1 day' }, minWithdrawal: 10
+      depositMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'],
+      withdrawalMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'],
+      depositFees: 'None', withdrawalFees: 'Varies', processingTime: { deposits: 'Instant', withdrawals: '1-3 days' }, minWithdrawal: 10
     },
-    customerSupport: { languages: ['English', 'Russian', 'Spanish', 'Chinese'], channels: ['Live Chat', 'Email', 'Tickets'], hours: '24/5' },
-    security: { regulatedBy: [{ regulator: 'FCA', licenseNumber: '579202' }, { regulator: 'ASIC' }], segregatedAccounts: true, investorCompensationScheme: { available: true, amount: '£85,000 (FCA)' }, twoFactorAuth: true },
-    tradingEnvironment: { executionSpeedMs: 70, slippage: 'Low', requotes: false, marketDepth: true, orderTypes: ['Market', 'Limit', 'Stop'], guaranteedStopLoss: { available: false } },
+    customerSupport: { languages: ['English', 'Russian', 'Spanish', 'Chinese'], channels: ['Live Chat', 'Phone', 'Email'], hours: '24/5' },
+    security: {
+      regulatedBy: [{ regulator: 'FCA', licenseNumber: '579202' }, { regulator: 'ASIC' }],
+      segregatedAccounts: true,
+      investorCompensationScheme: { available: true, amount: 'Up to £85,000 (FCA)' },
+      twoFactorAuth: true
+    },
+    tradingEnvironment: { executionSpeedMs: 60, slippage: "Low", requotes: false, marketDepth: true, orderTypes: ['Market', 'Limit', 'Stop', 'Trailing Stop'], guaranteedStopLoss: { available: false } },
     platformFeatures: {
-        charting: { indicators: 50, drawingTools: 30 },
-        automatedTrading: ['EAs (MT4/5)'],
-        copyTrading: { available: true, platforms: ['PAMM', 'ZuluTrade', 'Myfxbook'] },
-        backtesting: true,
-        newsIntegration: true
+      charting: { indicators: 50, drawingTools: 30 },
+      automatedTrading: ['EAs (MT4/5)'],
+      copyTrading: { available: true, platforms: ['Myfxbook', 'ZuluTrade'] },
+      backtesting: true,
+      newsIntegration: false
     },
-    accountManagement: { islamicAccount: { available: true }, baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD'], mamPammSupport: true, corporateAccounts: true },
+    accountManagement: { islamicAccount: { available: true }, baseCurrencies: ['USD', 'EUR', 'GBP', 'JPY'], mamPammSupport: true, corporateAccounts: true },
     transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 2005, tradingVolumeDisclosed: false },
     regulation: { regulators: ['FCA', 'ASIC'] },
-    ratings: { regulation: 9.0, costs: 8.6, platforms: 8.2, support: 8.3 },
-    tradingConditions: { spreads: { eurusd: 0.0, gbpusd: 0.2, usdjpy: 0.1 }, commission: '$1.50 per side', swapFeeCategory: 'Standard', maxLeverage: '1:500', minLotSize: 0.01 },
-    accessibility: { minDeposit: 10, depositMethods: ['Credit Card', 'Skrill', 'Crypto'], withdrawalMethods: ['Credit Card', 'Skrill', 'Crypto'], customerSupport: ['24/5 Live Chat'] },
-    technology: { platforms: ['MT4', 'MT5', 'TickTrader'], executionType: 'ECN', apiAccess: false, eaSupport: true },
-    reviews: [], isIslamic: true, copyTrading: true, providesSignals: true
+    ratings: { regulation: 9.0, costs: 8.5, platforms: 8.2, support: 8.0 },
+    tradingConditions: { 
+      spreads: { eurusd: 0.2, gbpusd: 0.5, usdjpy: 0.3 }, 
+      commission: '$3.00 round trip', 
+      swapFeeCategory: 'Standard', 
+      maxLeverage: '1:500', 
+      minLotSize: 0.01 
+    },
+    accessibility: { 
+      minDeposit: 100, 
+      depositMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'], 
+      withdrawalMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller', 'Crypto'], 
+      customerSupport: ['Live Chat', 'Phone', 'Email'] 
+    },
+    technology: { 
+      platforms: ['MT4', 'MT5', 'TickTrader'], 
+      executionType: 'ECN', 
+      apiAccess: false, 
+      eaSupport: true 
+    },
+    reviews: [], 
+    isIslamic: true, 
+    copyTrading: true, 
+    providesSignals: false
   },
-  {
-    id: 'easymarkets',
-    name: 'EasyMarkets',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/easyMarkets_logo_logotype_2022_b0kfsx.svg',
-    websiteUrl: 'https://www.easymarkets.com/',
-    score: 8.3,
-    foundingYear: 2001,
-    headquarters: 'Limassol, Cyprus',
-    description: 'EasyMarkets is a well-regulated market maker known for its unique risk management tools like dealCancellation and Freeze Rate, and its commitment to fixed spreads.',
-    summary: 'EasyMarkets carves a niche with its innovative risk management tools and guaranteed fixed spreads, making it an excellent choice for beginners who want predictable costs and the ability to undo losing trades.',
-    pros: ["Regulated by ASIC and CySEC", "Guaranteed fixed spreads", "Unique risk tools: dealCancellation & Freeze Rate", "Guaranteed stop loss on all platforms"],
-    cons: ["Fixed spreads are wider than variable ECN spreads", "Limited number of instruments", "Not ideal for scalpers"],
-    coreInfo: { brokerType: 'Market Maker', mobileTrading: true, demoAccount: true },
-    accountTypes: [
-      { name: 'Standard', type: 'Standard', minDeposit: 25, spreads: 'Fixed from 0.8 pips', commission: 'Zero', bestFor: 'Beginners' },
-      { name: 'Premium', type: 'Standard', minDeposit: 2000, spreads: 'Fixed from 0.8 pips', commission: 'Zero', bestFor: 'Standard traders' },
-      { name: 'VIP', type: 'Standard', minDeposit: 10000, spreads: 'Fixed from 0.8 pips', commission: 'Zero', bestFor: 'High volume traders' },
-    ],
-    fees: {
-      trading: { spreadType: 'Fixed', averageSpreads: [{ pair: 'EUR/USD', spread: '0.8 pips' }], commissionStructure: 'Zero commission', overnightSwapFees: 'Standard' },
-      nonTrading: { inactivityFee: 'None', withdrawalFee: 'None', depositFee: 'None' }
-    },
-    tradableInstruments: {
-      forexPairs: { total: 103, details: "Majors, Minors, Exotics" },
-      commodities: { total: 15, details: "Metals, Energies, Softs" },
-      indices: { total: 23, details: "Global indices" },
-      stocks: { total: 50, details: "US stock CFDs" },
-      cryptocurrencies: { total: 11, details: "Major crypto CFDs" }
-    },
-    tradingConditionsExtended: { minTradeSize: 0.01, scalpingAllowed: false, hedgingAllowed: true, eaAllowed: true, negativeBalanceProtection: true, marginCallLevel: "50%", stopOutLevel: "30%" },
-    depositWithdrawal: {
-      depositMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller'],
-      withdrawalMethods: ['Credit/Debit Card', 'Bank Transfer', 'Skrill', 'Neteller'],
-      depositFees: 'None', withdrawalFees: 'None', processingTime: { deposits: 'Instant', withdrawals: '1-2 days' }, minWithdrawal: 50
-    },
-    customerSupport: { languages: ['English', 'Arabic', 'Chinese', 'Spanish'], channels: ['Live Chat', 'Phone', 'Email', 'WhatsApp'], hours: '24/5' },
-    security: { regulatedBy: [{ regulator: 'ASIC' }, { regulator: 'CySEC' }], segregatedAccounts: true, investorCompensationScheme: { available: true, amount: '€20,000 (ICF)' }, twoFactorAuth: false },
-    tradingEnvironment: { executionSpeedMs: 130, slippage: 'None (due to fixed spreads)', requotes: false, marketDepth: false, orderTypes: ['Market', 'Limit', 'Stop'], guaranteedStopLoss: { available: true } },
-    platformFeatures: {
-      charting: { indicators: 80, drawingTools: 50 },
-      automatedTrading: ['EAs (MT4)'],
-      copyTrading: { available: false, platforms: [] },
-      backtesting: true,
-      newsIntegration: true
-    },
-    accountManagement: { islamicAccount: { available: true }, baseCurrencies: ['USD', 'EUR', 'GBP', 'AUD'], mamPammSupport: false, corporateAccounts: true },
-    transparency: { audited: true, yearsInBusiness: new Date().getFullYear() - 2001, tradingVolumeDisclosed: false },
-    regulation: { regulators: ['ASIC', 'CySEC'] },
-    ratings: { regulation: 9.0, costs: 7.8, platforms: 8.5, support: 8.8 },
-    tradingConditions: { spreads: { eurusd: 0.8, gbpusd: 1.2, usdjpy: 1.0 }, commission: 'Zero', swapFeeCategory: 'Standard', maxLeverage: '1:400', minLotSize: 0.01 },
-    accessibility: { minDeposit: 25, depositMethods: ['Credit Card', 'Skrill', 'Neteller'], withdrawalMethods: ['Credit Card', 'Skrill', 'Neteller'], customerSupport: ['24/5 Live Chat', 'WhatsApp'] },
-    technology: { platforms: ['easyMarkets Platform', 'MT4'], executionType: 'Market Maker', apiAccess: false, eaSupport: true },
-    reviews: [], isIslamic: true, copyTrading: false, providesSignals: true
-  }
 ];

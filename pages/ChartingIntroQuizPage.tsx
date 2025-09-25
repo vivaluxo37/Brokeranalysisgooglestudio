@@ -11,6 +11,7 @@ const ChartingIntroQuizPage: React.FC = () => {
         <QuizComponent 
             quizTitle={t('education.quizzes.charting.title')}
             quizData={chartingIntroQuiz}
+            quizKey="charting-intro"
         />
     );
 };

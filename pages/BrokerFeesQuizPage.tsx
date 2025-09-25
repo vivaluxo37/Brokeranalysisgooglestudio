@@ -11,6 +11,7 @@ const BrokerFeesQuizPage: React.FC = () => {
         <QuizComponent 
             quizTitle={t('education.quizzes.fees.title')}
             quizData={brokerFeesQuiz}
+            quizKey="broker-fees"
         />
     );
 };

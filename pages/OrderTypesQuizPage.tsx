@@ -11,6 +11,7 @@ const OrderTypesQuizPage: React.FC = () => {
         <QuizComponent 
             quizTitle={t('education.quizzes.orders.title')}
             quizData={orderTypesQuiz}
+            quizKey="order-types"
         />
     );
 };

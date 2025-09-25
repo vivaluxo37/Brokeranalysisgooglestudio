@@ -11,6 +11,7 @@ const ForexBasicsQuizPage: React.FC = () => {
         <QuizComponent 
             quizTitle={t('education.quizzes.basics.title')}
             quizData={forexBasicsQuiz}
+            quizKey="forex-basics"
         />
     );
 };

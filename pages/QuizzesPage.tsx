@@ -4,6 +4,7 @@ import Card, { CardContent } from '../components/ui/Card';
 import { Icons } from '../constants';
 import Button from '../components/ui/Button';
 import { useTranslation } from '../hooks/useTranslation';
+import { quizzes as quizData } from '../data/quizzes';
 
 const QuizCard = ({ to, icon, title, description }: { to: string, icon: React.ReactNode, title: string, description: string }) => (
     <Card className="hover:border-primary-500/50 transition-colors">
@@ -29,38 +30,12 @@ const QuizCard = ({ to, icon, title, description }: { to: string, icon: React.Re
 const QuizzesPage: React.FC = () => {
     const { t } = useTranslation();
 
-    const quizzes = [
-        {
-            to: '/education/quizzes/forex-basics',
-            icon: <Icons.bookOpen className="h-8 w-8" />,
-            title: t('education.quizzes.basics.title'),
-            description: t('education.quizzes.basics.description')
-        },
-        {
-            to: '/education/quizzes/broker-fees',
-            icon: <Icons.data className="h-8 w-8" />,
-            title: t('education.quizzes.fees.title'),
-            description: t('education.quizzes.fees.description')
-        },
-        {
-            to: '/education/quizzes/charting-intro',
-            icon: <Icons.layers className="h-8 w-8" />,
-            title: t('education.quizzes.charting.title'),
-            description: t('education.quizzes.charting.description')
-        },
-        {
-            to: '/education/quizzes/risk-management',
-            icon: <Icons.shieldCheck className="h-8 w-8" />,
-            title: t('education.quizzes.risk.title'),
-            description: t('education.quizzes.risk.description')
-        },
-        {
-            to: '/education/quizzes/order-types',
-            icon: <Icons.cpu className="h-8 w-8" />,
-            title: t('education.quizzes.orders.title'),
-            description: t('education.quizzes.orders.description')
-        }
-    ];
+    const quizzes = quizData.map(q => ({
+        to: q.path,
+        icon: <q.icon className="h-8 w-8" />,
+        title: t(q.titleKey),
+        description: t(q.descriptionKey)
+    }));
 
     return (
         <div>

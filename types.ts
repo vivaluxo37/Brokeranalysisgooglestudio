@@ -439,3 +439,30 @@ export interface BrokerAlternative {
 export interface BrokerAlternativesResponse {
     recommendations: BrokerAlternative[];
 }
+
+
+export interface QuizProgress {
+    [quizKey: string]: {
+        score: number;
+        total: number;
+        date: string; // ISO string of last attempt
+    };
+}
+
+export interface WebinarProgress {
+    [webinarTitle: string]: {
+        viewed: boolean;
+        date: string;
+    };
+}
+
+export interface EducationProgress {
+    quizzes: QuizProgress;
+    webinars: WebinarProgress;
+}
+
+export interface EducationContextType {
+    progress: EducationProgress;
+    saveQuizResult: (quizKey: string, score: number, total: number) => void;
+    markWebinarAsViewed: (webinarTitle: string) => void;
+}

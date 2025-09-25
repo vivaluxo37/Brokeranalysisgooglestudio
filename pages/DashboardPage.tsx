@@ -20,6 +20,8 @@ import { useAlerts } from '../hooks/useAlerts';
 import { useTranslation } from '../hooks/useTranslation';
 import BrokerCardSkeleton from '../components/brokers/BrokerCardSkeleton';
 import BrokerQuickViewModal from '../components/brokers/BrokerQuickViewModal';
+import EducationProgress from '../components/dashboard/EducationProgress';
+import RecommendedContent from '../components/dashboard/RecommendedContent';
 
 // A reusable accordion component for the dashboard
 const AccordionItem: React.FC<{ title: string; subtitle: string; children: React.ReactNode }> = ({ title, subtitle, children }) => {
@@ -49,7 +51,6 @@ const AccordionItem: React.FC<{ title: string; subtitle: string; children: React
 };
 
 // Component for the "Quick Actions" section
-// FIX: Changed icon prop from React.ReactElement to React.ElementType and updated component to render it directly to fix a TypeScript error with React.cloneElement.
 const QuickActionCard: React.FC<{ to: string, icon: React.ElementType<{ className?: string }>, title: string, description: string }> = ({ to, icon: Icon, title, description }) => (
     <Link to={to} className="group block">
         <Card className="h-full hover:border-primary-600 hover:-translate-y-1 transition-all">
@@ -85,7 +86,6 @@ const DashboardPage: React.FC = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isLoadingFavorites, setIsLoadingFavorites] = useState(true);
 
-  // FIX: Added state and handlers for BrokerQuickViewModal.
   const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
 
   const handleOpenQuickView = (broker: Broker) => {
@@ -192,7 +192,6 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-12">
-      {/* FIX: Added BrokerQuickViewModal to handle quick view functionality */}
       <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
       <div>
         <h1 className="text-4xl font-bold">{t('dashboardPage.welcome', { name: user?.name || '' })}</h1>
@@ -205,6 +204,11 @@ const DashboardPage: React.FC = () => {
           <QuickActionCard to="/trading-journal" icon={Icons.bookOpen} title="Trading Journal" description="Log trades and get AI performance analysis." />
           <QuickActionCard to="/cost-analyzer" icon={Icons.data} title={t('dashboardPage.quickActions.analyzer.title')} description={t('dashboardPage.quickActions.analyzer.description')} />
           <QuickActionCard to="/brokers" icon={Icons.shieldCheck} title={t('dashboardPage.quickActions.explore.title')} description={t('dashboardPage.quickActions.explore.description')} />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <RecommendedContent />
+        <EducationProgress />
       </div>
 
        {/* My Alerts */}
@@ -269,7 +273,6 @@ const DashboardPage: React.FC = () => {
                             <div>
                                <h4 className="font-semibold text-primary-400 mb-4">{t('dashboardPage.history.recommendations')}</h4>
                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {/* FIX: Added missing onQuickView prop to BrokerCard */}
                                     {matchedBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />)}
                                </div>
                             </div>
@@ -349,7 +352,6 @@ const DashboardPage: React.FC = () => {
                 </div>
             ) : favoriteBrokers.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {/* FIX: Added missing onQuickView prop to BrokerCard */}
                     {favoriteBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />)}
                 </div>
             ) : (

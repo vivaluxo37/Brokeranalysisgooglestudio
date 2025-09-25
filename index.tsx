@@ -11,6 +11,7 @@ import { AlertsProvider } from './contexts/AlertsContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { DiscussionProvider } from './contexts/DiscussionContext';
 import { TradingJournalProvider } from './contexts/TradingJournalContext';
+import { EducationProvider } from './contexts/EducationContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -28,9 +29,11 @@ const app = (
                 <ReviewsProvider>
                   <DiscussionProvider>
                     <AlertsProvider>
-                      <TradingJournalProvider>
-                        <App />
-                      </TradingJournalProvider>
+                      <EducationProvider>
+                        <TradingJournalProvider>
+                          <App />
+                        </TradingJournalProvider>
+                      </EducationProvider>
                     </AlertsProvider>
                   </DiscussionProvider>
                 </ReviewsProvider>

@@ -11,6 +11,7 @@ const RiskManagementQuizPage: React.FC = () => {
         <QuizComponent 
             quizTitle={t('education.quizzes.risk.title')}
             quizData={riskManagementQuiz}
+            quizKey="risk-management"
         />
     );
 };

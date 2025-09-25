@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card, { CardContent, CardFooter } from '../ui/Card';
 import Button from '../ui/Button';
 import { Icons } from '../../constants';
+import { useEducation } from '../../hooks/useEducation';
 
 interface QuizQuestion {
     question: string;
@@ -13,14 +14,16 @@ interface QuizQuestion {
 interface QuizComponentProps {
     quizTitle: string;
     quizData: QuizQuestion[];
+    quizKey: string;
 }
 
-const QuizComponent: React.FC<QuizComponentProps> = ({ quizTitle, quizData }) => {
+const QuizComponent: React.FC<QuizComponentProps> = ({ quizTitle, quizData, quizKey }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [showResult, setShowResult] = useState(false);
     const [isFinished, setIsFinished] = useState(false);
+    const { saveQuizResult } = useEducation();
 
     const currentQuestion = quizData[currentQuestionIndex];
     const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
@@ -46,6 +49,12 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ quizTitle, quizData }) =>
             setIsFinished(true);
         }
     };
+
+    useEffect(() => {
+        if (isFinished) {
+            saveQuizResult(quizKey, score, quizData.length);
+        }
+    }, [isFinished, quizKey, score, quizData.length, saveQuizResult]);
     
     const handleReset = () => {
         setCurrentQuestionIndex(0);

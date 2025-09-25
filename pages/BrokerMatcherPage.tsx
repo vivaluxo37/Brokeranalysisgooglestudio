@@ -11,6 +11,15 @@ import { useAuth } from '../hooks/useAuth';
 import { useTranslation } from '../hooks/useTranslation';
 import BrokerQuickViewModal from '../components/brokers/BrokerQuickViewModal';
 
+const exampleStrategies = [
+    "I scalp EUR/USD on the 5-minute chart during the London open using MACD crossovers. I need an ECN broker with very low spreads and fast execution on MT5.",
+    "I am a swing trader holding positions for several days on major pairs like GBP/USD. Low overnight swap fees are my top priority.",
+    "I'm a beginner looking for a broker with a low minimum deposit, a user-friendly platform, and good educational resources to start with.",
+    "I run an automated trading strategy (EA) on MT4. I need a broker with reliable EA support, fast execution, and a free VPS option.",
+    "I want to copy trade successful investors. I'm looking for a broker with a large, reputable social trading network and transparent performance stats.",
+    "I trade based on fundamental analysis and news events. I need a broker with low slippage, fast execution, and an integrated news feed."
+];
+
 const BrokerMatcherPage: React.FC = () => {
     const { t } = useTranslation();
     const { user } = useAuth();
@@ -103,10 +112,24 @@ const BrokerMatcherPage: React.FC = () => {
                         id="strategy-input"
                         rows={5}
                         className="w-full bg-input border-input rounded-md shadow-sm p-3 placeholder:text-foreground/60 focus:ring-2 focus:ring-primary-500"
-                        placeholder="e.g., I scalp EUR/USD on the 5-minute chart during the London open using MACD crossovers. I need an ECN broker with very low spreads and fast execution on MT5."
+                        placeholder="e.g., I'm a beginner looking for a user-friendly platform with a low minimum deposit..."
                         value={strategy}
                         onChange={(e) => setStrategy(e.target.value)}
                     />
+                    <div className="mt-4">
+                        <p className="text-xs text-center text-foreground/60 mb-2">Need inspiration? Click an example:</p>
+                        <div className="flex flex-wrap justify-center gap-2">
+                            {exampleStrategies.map((example, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setStrategy(example)}
+                                    className="px-2 py-1 text-xs rounded-full bg-input hover:bg-primary-900/50 text-foreground/80 transition-colors"
+                                >
+                                    {example.substring(0, 30)}...
+                                </button>
+                            ))}
+                        </div>
+                    </div>
                     <div className="mt-6 text-center">
                         <Button 
                             onClick={handleSubmit} 

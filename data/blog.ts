@@ -1300,7 +1300,7 @@ This category includes regulators in offshore jurisdictions that are known for h
 ## How to Verify a Broker's Regulation {#how-to-verify}
 Never take a broker's word for it. Always verify their license yourself.
 1.  **Find the License Number:** A legitimate broker will prominently display their regulator and license number in the footer of their website.
-2.  **Go to the Regulator's Website:** Navigate to the official website of the regulator (e.g., `fca.org.uk` for the FCA).
+2.  **Go to the Regulator's Website:** Navigate to the official website of the regulator (e.g., \`fca.org.uk\` for the FCA).
 3.  **Search the Public Register:** All major regulators have a public register or search function. Enter the broker's name or license number to confirm their status is "Authorized" or "Regulated."
 4.  **Check the Details:** Ensure the details on the regulator's website (company name, website address) match the broker you are researching. This helps you avoid clone firms.
 

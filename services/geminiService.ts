@@ -1,4 +1,4 @@
-import { Broker, Review, AIRecommendation, NewsArticle, Signal, BrokerMatcherPreferences } from '../types';
+import { Broker, Review, AIRecommendation, NewsArticle, Signal, BrokerMatcherPreferences, TradingJournalEntry } from '../types';
 import * as backend from './backendService';
 
 // This file now acts as a secure frontend client. It calls the simulated
@@ -91,4 +91,9 @@ interface NewsAnalysisResponse {
 }
 export const getNewsAnalysis = async (article: NewsArticle, brokers: Broker[]): Promise<NewsAnalysisResponse> => {
     return backend.handleNewsAnalysis(article, brokers);
+};
+
+// --- AI Trading Journal Analysis ---
+export const getTradingJournalAnalysis = async (entries: TradingJournalEntry[]): Promise<string> => {
+    return backend.handleTradingJournalAnalysis(entries);
 };

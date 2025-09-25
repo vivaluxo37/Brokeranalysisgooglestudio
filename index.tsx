@@ -10,6 +10,7 @@ import { ReviewsProvider } from './contexts/ReviewsContext';
 import { AlertsProvider } from './contexts/AlertsContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { DiscussionProvider } from './contexts/DiscussionContext';
+import { TradingJournalProvider } from './contexts/TradingJournalContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -27,7 +28,9 @@ const app = (
                 <ReviewsProvider>
                   <DiscussionProvider>
                     <AlertsProvider>
-                      <App />
+                      <TradingJournalProvider>
+                        <App />
+                      </TradingJournalProvider>
                     </AlertsProvider>
                   </DiscussionProvider>
                 </ReviewsProvider>

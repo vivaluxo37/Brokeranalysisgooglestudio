@@ -3,6 +3,7 @@
 
 
 
+
 export interface Author {
   slug: string;
   name: string;
@@ -406,4 +407,33 @@ export interface NewsArticle {
   date: string; // ISO 8601
   category: 'Forex' | 'Economy' | 'Central Banks' | 'Geopolitics' | 'Commodities';
   importance: 'High' | 'Medium' | 'Low';
+}
+
+export interface TradingJournalEntry {
+  id: string;
+  userId: string;
+  date: string; // ISO 8601
+  instrument: string; // e.g., 'EUR/USD'
+  direction: 'Buy' | 'Sell';
+  entryPrice: number;
+  exitPrice: number;
+  lotSize: number;
+  strategyUsed?: string;
+  notes?: string;
+  profitOrLoss: number;
+}
+
+export interface TradingJournalContextType {
+  journalEntries: TradingJournalEntry[];
+  getEntriesByUserId: (userId: string) => TradingJournalEntry[];
+  addEntry: (entry: Omit<TradingJournalEntry, 'id' | 'userId' | 'date' | 'profitOrLoss'>) => Promise<void>;
+  updateEntry: (entryId: string, updates: Partial<Omit<TradingJournalEntry, 'id' | 'userId'>>) => Promise<void>;
+  deleteEntry: (entryId: string) => Promise<void>;
+  getJournalStats: (userId: string) => {
+    totalPL: number;
+    winRate: number;
+    totalTrades: number;
+    biggestWin: number;
+    biggestLoss: number;
+  };
 }

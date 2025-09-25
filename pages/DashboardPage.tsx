@@ -186,7 +186,7 @@ const DashboardPage: React.FC = () => {
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <QuickActionCard to="/broker-matcher" icon={Icons.bot} title={t('dashboardPage.quickActions.newMatch.title')} description={t('dashboardPage.quickActions.newMatch.description')} />
-          <QuickActionCard to="/compare" icon={Icons.layers} title={t('dashboardPage.quickActions.compare.title')} description={t('dashboardPage.quickActions.compare.description')} />
+          <QuickActionCard to="/trading-journal" icon={Icons.bookOpen} title="Trading Journal" description="Log trades and get AI performance analysis." />
           <QuickActionCard to="/cost-analyzer" icon={Icons.data} title={t('dashboardPage.quickActions.analyzer.title')} description={t('dashboardPage.quickActions.analyzer.description')} />
           <QuickActionCard to="/brokers" icon={Icons.shieldCheck} title={t('dashboardPage.quickActions.explore.title')} description={t('dashboardPage.quickActions.explore.description')} />
       </div>

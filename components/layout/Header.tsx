@@ -218,6 +218,7 @@ const Header: React.FC = () => {
                                 <div className="absolute ltr:right-0 rtl:left-0 mt-2 w-48 bg-card rounded-md shadow-lg border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
                                     <div className="py-1">
                                         <Link to="/dashboard" className="block px-4 py-2 text-sm text-card-foreground hover:bg-input">{t('header.dashboard')}</Link>
+                                        <Link to="/trading-journal" className="block px-4 py-2 text-sm text-card-foreground hover:bg-input">Trading Journal</Link>
                                         <button onClick={logout} className="w-full text-left block px-4 py-2 text-sm text-card-foreground hover:bg-input">{t('header.logout')}</button>
                                     </div>
                                 </div>
@@ -265,6 +266,7 @@ const Header: React.FC = () => {
                             </div>
                             <div className="mt-3 px-2 space-y-1">
                                 <NavLink to="/dashboard" onClick={closeMobileMenu} className="block">{t('header.dashboard')}</NavLink>
+                                <NavLink to="/trading-journal" onClick={closeMobileMenu} className="block">Trading Journal</NavLink>
                                 <button onClick={() => { logout(); closeMobileMenu(); }} className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-foreground/70 hover:bg-input hover:text-foreground">{t('header.logout')}</button>
                             </div>
                         </div>

@@ -3,7 +3,7 @@
 // ENDPOINT, AND THE API KEY WOULD BE A SERVER ENVIRONMENT VARIABLE.
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { Broker, Review, AIRecommendation, NewsArticle, Signal, BrokerMatcherPreferences } from '../types';
+import { Broker, Review, AIRecommendation, NewsArticle, Signal, BrokerMatcherPreferences, TradingJournalEntry } from '../types';
 import { brokers } from '../data/brokers';
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -461,4 +461,26 @@ export const handleNewsAnalysis = async (article: NewsArticle, brokers: Broker[]
     });
 
     return JSON.parse(response.text.trim());
+};
+
+// --- AI Trading Journal Analysis ---
+export const handleTradingJournalAnalysis = async (entries: TradingJournalEntry[]): Promise<string> => {
+    const prompt = `
+    You are a professional trading coach named "AI Coach". Your task is to analyze a trader's journal and provide actionable, constructive feedback. The goal is to help them improve, not to criticize.
+
+    Here is the trader's journal data (last 50 entries):
+    ${JSON.stringify(entries.slice(0, 50), null, 2)}
+
+    Analyze the data to identify patterns, strengths, and weaknesses. Your analysis should be structured in markdown format and include:
+    1.  **Overall Performance Snapshot:** A brief summary including total P/L, win rate, and total number of trades.
+    2.  **Key Strengths:** Identify positive patterns. For example: "You show great discipline in your EUR/USD trades, which have a 75% win rate," or "Your notes indicate you follow your 'Trendline Bounce' strategy consistently, which is a major strength."
+    3.  **Areas for Improvement:** Identify negative patterns in a constructive way. For example: "I noticed your biggest losses often occur on GBP/USD. It might be helpful to review your strategy for this pair or reduce your position size," or "Your notes sometimes mention 'FOMO'. This is common, and focusing on your pre-trade checklist can help mitigate impulsive entries."
+    4.  **Actionable Suggestion:** Provide one clear, actionable tip for the trader to focus on next. For example: "For the next week, try to write one sentence in your notes before each trade explaining how it fits your trading plan. This can enhance mindfulness and reduce impulsive trades."
+    5.  **An Encouraging Closing:** End with a positive and motivational sentence.
+
+    Keep the tone professional, encouraging, and helpful. Use markdown formatting like bolding and lists to make the report easy to read. Do not output JSON.
+    `;
+
+    const response = await ai.models.generateContent({ model, contents: prompt });
+    return response.text;
 };

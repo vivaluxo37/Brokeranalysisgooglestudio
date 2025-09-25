@@ -35,6 +35,7 @@ import CalculatorsPage from './pages/CalculatorsPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import AuthorPage from './pages/AuthorPage';
+import TradingJournalPage from './pages/TradingJournalPage';
 
 const App: React.FC = () => {
   return (
@@ -89,6 +90,11 @@ const App: React.FC = () => {
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/trading-journal" element={
+          <ProtectedRoute>
+            <TradingJournalPage />
           </ProtectedRoute>
         } />
 

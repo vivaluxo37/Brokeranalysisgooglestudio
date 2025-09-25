@@ -16,6 +16,7 @@ import Tag from '../components/ui/Tag';
 import Tooltip from '../components/ui/Tooltip';
 import { useComparison } from '../hooks/useComparison';
 import { countries } from '../data/countries';
+import { useAuth } from '../hooks/useAuth';
 
 // Utility to parse leverage string like "1:500" into a number 500
 const parseLeverage = (leverageStr: string): number => {
@@ -44,6 +45,13 @@ const initialFilters = {
     socialTradingFeatures: [] as string[],
     country: 'any',
 };
+
+// New type for saved filters
+interface SavedFilterSet {
+    name: string;
+    filters: typeof initialFilters;
+}
+
 
 type TradingStyle = 'Scalping' | 'Algorithmic' | 'Copy Trading' | 'Swing Trading' | 'News Trading' | 'Low Cost';
 type FilterKeys = keyof typeof initialFilters;
@@ -194,12 +202,61 @@ const AllBrokersPage: React.FC = () => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [view, setView] = useState<'grid' | 'table'>('grid');
+  const { user } = useAuth();
+  const [savedFilters, setSavedFilters] = useState<SavedFilterSet[]>([]);
 
   useEffect(() => {
     // Simulate initial data fetching/processing delay
     const timer = setTimeout(() => setIsLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (user) {
+        try {
+            const storedFilters = localStorage.getItem(`savedFilters_${user.id}`);
+            if (storedFilters) {
+                setSavedFilters(JSON.parse(storedFilters));
+            } else {
+                setSavedFilters([]);
+            }
+        } catch (e) {
+            console.error("Failed to load saved filters:", e);
+            setSavedFilters([]);
+        }
+    } else {
+        setSavedFilters([]); // Clear for logged out users
+    }
+  }, [user]);
+
+  const persistSavedFilters = (newFilters: SavedFilterSet[]) => {
+      if (user) {
+          setSavedFilters(newFilters);
+          localStorage.setItem(`savedFilters_${user.id}`, JSON.stringify(newFilters));
+      }
+  };
+
+  const handleSaveFilters = () => {
+      const name = prompt("Enter a name for this filter set:");
+      if (name && name.trim()) {
+          const newFilterSet: SavedFilterSet = { name: name.trim(), filters };
+          const existing = savedFilters.filter(f => f.name.toLowerCase() !== name.trim().toLowerCase());
+          persistSavedFilters([...existing, newFilterSet]);
+      }
+  };
+
+  const handleApplyFilterSet = (filterSet: SavedFilterSet) => {
+      setFilters(filterSet.filters);
+  };
+
+  const handleDeleteFilterSet = (e: React.MouseEvent, name: string) => {
+      e.stopPropagation();
+      if (window.confirm(`Are you sure you want to delete the filter set "${name}"?`)) {
+          const updatedFilters = savedFilters.filter(f => f.name !== name);
+          persistSavedFilters(updatedFilters);
+      }
+  };
+
 
   const handleCheckboxChange = (group: FilterKeys, value: string) => {
     setFilters(prev => {
@@ -326,6 +383,11 @@ const AllBrokersPage: React.FC = () => {
         .filter((b): b is Broker => !!b);
   }, [aiRecommendation]);
 
+  const filtersAreDirty = useMemo(() => {
+      return JSON.stringify(filters) !== JSON.stringify(initialFilters);
+  }, [filters]);
+
+
   return (
     <div>
       <div className="text-center mb-10">
@@ -338,7 +400,12 @@ const AllBrokersPage: React.FC = () => {
             <Card className="flex flex-col lg:max-h-[calc(100vh-8rem)]">
                 <CardHeader className="flex justify-between items-center">
                     <h2 className="text-xl font-bold">{t('allBrokersPage.filtersTitle')}</h2>
-                    <Button variant="ghost" size="sm" onClick={handleReset}>{t('allBrokersPage.reset')}</Button>
+                    <div className="flex items-center gap-1">
+                        {user && filtersAreDirty && (
+                            <Button variant="ghost" size="sm" onClick={handleSaveFilters}>Save</Button>
+                        )}
+                        <Button variant="ghost" size="sm" onClick={handleReset}>{t('allBrokersPage.reset')}</Button>
+                    </div>
                 </CardHeader>
                 <CardContent className="overflow-y-auto">
                     <Input 
@@ -348,6 +415,26 @@ const AllBrokersPage: React.FC = () => {
                         onChange={(e) => setFilters(p => ({...p, searchTerm: e.target.value}))}
                         className="mb-4"
                     />
+                     {user && (
+                        <Accordion title="My Saved Filters">
+                            {savedFilters.length > 0 ? (
+                                <div className="space-y-1">
+                                    {savedFilters.map(set => (
+                                        <div key={set.name} className="flex items-center justify-between group p-1 rounded hover:bg-input/50">
+                                            <button onClick={() => handleApplyFilterSet(set)} className="text-left text-sm text-foreground/80 group-hover:text-primary-400 flex-grow truncate pr-2">
+                                                {set.name}
+                                            </button>
+                                            <button onClick={(e) => handleDeleteFilterSet(e, set.name)} className="p-1 opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-400 transition-opacity flex-shrink-0">
+                                                <Icons.trash className="h-4 w-4" />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="text-xs text-center text-foreground/60 p-2">Save your filter combinations for quick access later.</p>
+                            )}
+                        </Accordion>
+                    )}
                     <Accordion title="Country Availability">
                         <label className="text-sm font-semibold">I am trading from</label>
                         <select value={filters.country} onChange={(e) => setFilters(p => ({...p, country: e.target.value}))} className="w-full mt-1 bg-input border-input rounded-md shadow-sm p-2">

@@ -789,7 +789,7 @@ Automated trading offers powerful advantages, but it's crucial to understand the
 The platform you choose is critical, as it determines the programming language and the community you can tap into.
 
 - **MetaTrader 4 (MT4):** The undisputed king of retail automated trading. It has the largest library of pre-built EAs and a massive community of developers using the MQL4 language. See our list of top **[MT4 brokers](/#/brokers/platform/mt4)**.
-- **MetaTrader 5 (MT5):** The successor to MT4, offering more advanced backtesting features and using the more modern MQL5 language.
+- **MetaTrader 5 (MT5):** The successor to MT4, built from the ground up as a 64-bit, multi-threaded application. This makes it significantly faster and more powerful, especially for strategy testing.
 - **cTrader:** A strong competitor with a C#-based API (cAlgo), favored by many for its clean interface and advanced order types. Brokers like **[Pepperstone](/#/broker/pepperstone)** offer this platform.
 - **Proprietary APIs:** Advanced traders and institutions may use a broker's FIX or REST API to connect their custom-built software directly to the broker's servers. **[Interactive Brokers](/#/broker/interactive-brokers)** is renowned for its powerful API.
 
@@ -1377,4 +1377,7 @@ A: For beginners, the misuse of leverage is undoubtedly the biggest and fastest 
 A: The number one way is to only deal with brokers regulated in top-tier jurisdictions. Be highly skeptical of anyone promising guaranteed profits or "can't lose" trading robots. If it sounds too good to be true, it always is.
 
 **Q: Does diversifying currency pairs reduce risk?**
-A: Yes, to an extent. Trading multiple, uncorrelated currency pairs can help smooth out your equity curve. However, it does not replace the need for core risk management principles like using a stop
+A: Yes, to an extent. Trading multiple, uncorrelated currency pairs can help smooth out your equity curve. However, it does not replace the need for core risk management principles like using a stop-loss.
+`
+  },
+];

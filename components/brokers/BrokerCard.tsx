@@ -11,6 +11,7 @@ import Tooltip from '../ui/Tooltip';
 interface BrokerCardProps {
   broker: Broker;
   isRecommended?: boolean;
+  onQuickView: (broker: Broker) => void;
 }
 
 const RiskBadge: React.FC<{ broker: Broker }> = ({ broker }) => {
@@ -26,14 +27,14 @@ const RiskBadge: React.FC<{ broker: Broker }> = ({ broker }) => {
 
   return (
     <Tooltip content={`Risk Score: ${score}/100. Level: ${level}`}>
-      <span className="absolute top-3 right-3">
+      <span className="flex items-center justify-center">
         <Icons.shield className={`h-5 w-5 ${colorClasses[level]}`} />
       </span>
     </Tooltip>
   );
 };
 
-const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }) => {
+const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false, onQuickView }) => {
   const { addBrokerToComparison, removeBrokerFromComparison, isBrokerInComparison } = useComparison();
 
   const inCompare = isBrokerInComparison(broker.id);
@@ -55,8 +56,19 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false }
   return (
     <Card className={`flex flex-col h-full ${recommendationClasses}`}>
       <div className="relative flex-grow">
+         <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+            <Tooltip content="Quick View">
+                <button 
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(broker); }} 
+                    className="p-1.5 rounded-full bg-card/50 backdrop-blur-sm hover:bg-input text-foreground transition-colors"
+                    aria-label="Quick View"
+                >
+                    <Icons.eye className="h-4 w-4" />
+                </button>
+            </Tooltip>
+            <RiskBadge broker={broker} />
+        </div>
         <Link to={`/broker/${broker.id}`} className="block h-full">
-          <RiskBadge broker={broker} />
           <CardContent>
             <div className="flex justify-between items-start">
               <img src={broker.logoUrl} alt={`${broker.name} logo`} className="h-12 w-auto object-contain bg-white p-2 rounded-md" />

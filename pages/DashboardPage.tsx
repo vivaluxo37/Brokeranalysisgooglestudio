@@ -1,9 +1,10 @@
 
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useFavorites } from '../hooks/useFavorites';
-import { StrategyMatcherHistoryItem } from '../types';
+import { Broker, StrategyMatcherHistoryItem } from '../types';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import Card, { CardContent, CardHeader, CardFooter } from '../components/ui/Card';
@@ -18,6 +19,7 @@ import Badge from '../components/ui/Badge';
 import { useAlerts } from '../hooks/useAlerts';
 import { useTranslation } from '../hooks/useTranslation';
 import BrokerCardSkeleton from '../components/brokers/BrokerCardSkeleton';
+import BrokerQuickViewModal from '../components/brokers/BrokerQuickViewModal';
 
 // A reusable accordion component for the dashboard
 const AccordionItem: React.FC<{ title: string; subtitle: string; children: React.ReactNode }> = ({ title, subtitle, children }) => {
@@ -82,6 +84,17 @@ const DashboardPage: React.FC = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isLoadingFavorites, setIsLoadingFavorites] = useState(true);
+
+  // FIX: Added state and handlers for BrokerQuickViewModal.
+  const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
+
+  const handleOpenQuickView = (broker: Broker) => {
+    setSelectedBroker(broker);
+  };
+
+  const handleCloseQuickView = () => {
+    setSelectedBroker(null);
+  };
 
 
   // State for verification modal
@@ -179,6 +192,8 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-12">
+      {/* FIX: Added BrokerQuickViewModal to handle quick view functionality */}
+      <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
       <div>
         <h1 className="text-4xl font-bold">{t('dashboardPage.welcome', { name: user?.name || '' })}</h1>
         <p className="text-lg text-foreground/80 mt-2">{t('dashboardPage.subtitle')}</p>
@@ -254,7 +269,8 @@ const DashboardPage: React.FC = () => {
                             <div>
                                <h4 className="font-semibold text-primary-400 mb-4">{t('dashboardPage.history.recommendations')}</h4>
                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {matchedBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} isRecommended={true} />)}
+                                    {/* FIX: Added missing onQuickView prop to BrokerCard */}
+                                    {matchedBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />)}
                                </div>
                             </div>
                         </div>
@@ -333,7 +349,8 @@ const DashboardPage: React.FC = () => {
                 </div>
             ) : favoriteBrokers.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {favoriteBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} />)}
+                    {/* FIX: Added missing onQuickView prop to BrokerCard */}
+                    {favoriteBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />)}
                 </div>
             ) : (
                 <div className="text-center py-12 px-6">

@@ -17,6 +17,7 @@ import Tooltip from '../components/ui/Tooltip';
 import { useComparison } from '../hooks/useComparison';
 import { countries } from '../data/countries';
 import { useAuth } from '../hooks/useAuth';
+import BrokerQuickViewModal from '../components/brokers/BrokerQuickViewModal';
 
 // Utility to parse leverage string like "1:500" into a number 500
 const parseLeverage = (leverageStr: string): number => {
@@ -204,6 +205,16 @@ const AllBrokersPage: React.FC = () => {
   const [view, setView] = useState<'grid' | 'table'>('grid');
   const { user } = useAuth();
   const [savedFilters, setSavedFilters] = useState<SavedFilterSet[]>([]);
+  const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
+
+  const handleOpenQuickView = (broker: Broker) => {
+    setSelectedBroker(broker);
+  };
+
+  const handleCloseQuickView = () => {
+    setSelectedBroker(null);
+  };
+
 
   useEffect(() => {
     // Simulate initial data fetching/processing delay
@@ -390,6 +401,7 @@ const AllBrokersPage: React.FC = () => {
 
   return (
     <div>
+      <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold">{t('allBrokersPage.title')}</h1>
         <p className="text-lg text-foreground/80 mt-2 max-w-3xl mx-auto">{t('allBrokersPage.subtitle')}</p>
@@ -559,7 +571,7 @@ const AllBrokersPage: React.FC = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {recommendedBrokers.map(broker => (
-                            <BrokerCard key={broker.id} broker={broker} isRecommended={true} />
+                            <BrokerCard key={broker.id} broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />
                         ))}
                     </div>
                     <hr className="my-8 border-input"/>
@@ -575,7 +587,7 @@ const AllBrokersPage: React.FC = () => {
             ) : filteredBrokers.length > 0 ? (
                 view === 'grid' ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                      {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} />)}
+                      {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />)}
                   </div>
                 ) : (
                   <BrokerTable brokers={filteredBrokers} t={t} />

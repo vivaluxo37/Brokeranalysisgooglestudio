@@ -4,6 +4,8 @@ import BrokerCard from '../components/brokers/BrokerCard';
 import Card, { CardContent, CardHeader } from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { Icons } from '../constants';
+import { Broker } from '../types';
+import BrokerQuickViewModal from '../components/brokers/BrokerQuickViewModal';
 
 const parseLeverage = (leverageStr: string): number => {
   if (!leverageStr || typeof leverageStr !== 'string') return 0;
@@ -49,6 +51,16 @@ const Accordion: React.FC<{ title: string; children: React.ReactNode }> = ({ tit
 
 const AdvancedScreeningPage: React.FC = () => {
     const [filters, setFilters] = useState(initialFilters);
+    // FIX: Added state and handlers for BrokerQuickViewModal.
+    const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
+
+    const handleOpenQuickView = (broker: Broker) => {
+        setSelectedBroker(broker);
+    };
+
+    const handleCloseQuickView = () => {
+        setSelectedBroker(null);
+    };
 
     const handleCheckboxChange = (group: FilterKeys, value: string) => {
         setFilters(prev => {
@@ -123,6 +135,8 @@ const AdvancedScreeningPage: React.FC = () => {
 
     return (
         <div>
+            {/* FIX: Added BrokerQuickViewModal to handle quick view functionality */}
+            <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
             <div className="text-center mb-10">
                 <h1 className="text-4xl font-bold">Advanced Broker Screening</h1>
                 <p className="text-lg text-foreground/80 mt-2 max-w-3xl mx-auto">Filter by trading style, technology, and execution to find your perfect match.</p>
@@ -179,7 +193,8 @@ const AdvancedScreeningPage: React.FC = () => {
                     </p>
                     {filteredBrokers.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                            {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} />)}
+                            {/* FIX: Added missing onQuickView prop to BrokerCard */}
+                            {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />)}
                         </div>
                     ) : (
                         <div className="text-center py-20 bg-card rounded-lg border border-input">

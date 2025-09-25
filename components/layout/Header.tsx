@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink as RRNavLink, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -8,6 +7,7 @@ import Button from '../ui/Button';
 import AlertsDropdown from '../common/AlertsDropdown';
 import { categoryPageGroups } from '../../pages/categoryPageData';
 import { useTranslation } from '../../hooks/useTranslation';
+import GlobalSearchBar from '../common/GlobalSearchBar';
 
 const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () => void, className?: string }> = ({ to, children, onClick, className = '' }) => (
     <RRNavLink
@@ -208,7 +208,8 @@ const Header: React.FC = () => {
                     </div>
 
                     {/* Right side items */}
-                    <div className="hidden lg:flex items-center">
+                    <div className="hidden lg:flex items-center space-x-2">
+                        <GlobalSearchBar />
                         <AlertsDropdown />
                         <LanguageSelector />
                         <ThemeToggle />
@@ -255,6 +256,9 @@ const Header: React.FC = () => {
             {/* Mobile Menu */}
             <div className={`lg:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`} id="mobile-menu">
                 <div className="bg-card border-b border-input shadow-lg">
+                     <div className="px-4 py-3 border-b border-input/50">
+                        <GlobalSearchBar />
+                    </div>
                     {user ? (
                         <div className="pt-4 pb-3 border-t border-input">
                             <div className="flex items-center px-5">

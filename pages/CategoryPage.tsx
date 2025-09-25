@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Broker } from '../types';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import MetaTags from '../components/common/MetaTags';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useLocation } from 'react-router-dom';
+import BrokerQuickViewModal from '../components/brokers/BrokerQuickViewModal';
 
 interface CategoryPageProps {
   title: string;
@@ -15,6 +16,16 @@ interface CategoryPageProps {
 const CategoryPage: React.FC<CategoryPageProps> = ({ title, description, filterFn }) => {
   const location = useLocation();
   const filteredBrokers = useMemo(() => allBrokers.filter(filterFn), [filterFn]);
+  // FIX: Added state and handlers for BrokerQuickViewModal.
+  const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
+
+  const handleOpenQuickView = (broker: Broker) => {
+    setSelectedBroker(broker);
+  };
+
+  const handleCloseQuickView = () => {
+    setSelectedBroker(null);
+  };
   
   const canonicalUrl = `https://brokeranalysis.com/#${location.pathname}`;
 
@@ -36,6 +47,8 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ title, description, filterF
 
   return (
     <div>
+      {/* FIX: Added BrokerQuickViewModal to handle quick view functionality */}
+      <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
       <MetaTags 
         title={`${title} (2025) | Brokeranalysis`}
         description={description}
@@ -51,7 +64,8 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ title, description, filterF
       {filteredBrokers.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredBrokers.map(broker => (
-            <BrokerCard key={broker.id} broker={broker} />
+            // FIX: Added missing onQuickView prop to BrokerCard
+            <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />
           ))}
         </div>
       ) : (

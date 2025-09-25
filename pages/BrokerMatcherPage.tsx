@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import Button from '../components/ui/Button';
 import Spinner from '../components/ui/Spinner';
@@ -10,6 +11,7 @@ import { getStrategyBrokerRecommendations } from '../services/geminiService';
 import { Icons } from '../constants';
 import { useAuth } from '../hooks/useAuth';
 import { useTranslation } from '../hooks/useTranslation';
+import BrokerQuickViewModal from '../components/brokers/BrokerQuickViewModal';
 
 const BrokerMatcherPage: React.FC = () => {
     const { t } = useTranslation();
@@ -19,6 +21,16 @@ const BrokerMatcherPage: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<{ recommendations: Broker[], reasoning: string } | null>(null);
     const [error, setError] = useState<string | null>(null);
+    // FIX: Added state and handlers for BrokerQuickViewModal.
+    const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
+
+    const handleOpenQuickView = (broker: Broker) => {
+      setSelectedBroker(broker);
+    };
+
+    const handleCloseQuickView = () => {
+      setSelectedBroker(null);
+    };
 
     const saveResultsToHistory = (reasoning: string, recommendedBrokerIds: string[]) => {
       if (!user) return;
@@ -62,6 +74,8 @@ const BrokerMatcherPage: React.FC = () => {
 
     if (results) return (
         <div className="mt-4 animate-fade-in">
+            {/* FIX: Added BrokerQuickViewModal to handle quick view functionality */}
+            <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
             <h2 className="text-3xl font-bold text-center mb-4">{t('brokerMatcherPage.results.title')}</h2>
             <Card className="max-w-3xl mx-auto mb-8 animate-fade-in">
                 <CardHeader><h3 className="text-xl font-bold flex items-center gap-2"><Icons.bot className="h-6 w-6 text-primary-400" /> {t('brokerMatcherPage.results.aiAnalysis')}</h3></CardHeader>
@@ -70,7 +84,8 @@ const BrokerMatcherPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {results.recommendations.map((broker, index) => (
                     <div key={broker.id} className="opacity-0 animate-fade-in" style={{ animationDelay: `${index * 150}ms`}}>
-                        <BrokerCard broker={broker} isRecommended={true} />
+                        {/* FIX: Added missing onQuickView prop to BrokerCard */}
+                        <BrokerCard broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />
                     </div>
                 ))}
             </div>

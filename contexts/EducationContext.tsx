@@ -16,7 +16,7 @@ export const EducationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     useEffect(() => {
         if (user) {
             try {
-                const savedProgress = localStorage.getItem(`educationProgress_${user.id}`);
+                const savedProgress = typeof window !== 'undefined' && localStorage ? localStorage.getItem(`educationProgress_${user.id}`) : null;
                 setProgress(savedProgress ? JSON.parse(savedProgress) : initialProgress);
             } catch (e) {
                 console.error("Failed to load education progress", e);
@@ -28,7 +28,7 @@ export const EducationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }, [user]);
 
     useEffect(() => {
-        if (user) {
+        if (user && typeof window !== 'undefined' && localStorage) {
             localStorage.setItem(`educationProgress_${user.id}`, JSON.stringify(progress));
         }
     }, [progress, user]);

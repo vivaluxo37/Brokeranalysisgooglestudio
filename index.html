@@ -1,70 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Brokeranalysis - AI Forex Broker Comparison</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      :root { /* Light Theme */
-        --background-rgb: 248 250 252; /* slate-50 */
-        --foreground-rgb: 51 65 85;   /* slate-700 */
-        --card-rgb: 255 255 255;       /* white */
-        --card-foreground-rgb: 15 23 42; /* slate-900 */
-        --input-rgb: 226 232 240;     /* slate-200 */
-      }
-      .dark { /* Dark Theme */
-        --background-rgb: 15 23 42;     /* slate-900 */
-        --foreground-rgb: 203 213 225;  /* slate-300 */
-        --card-rgb: 30 41 59;         /* slate-800 */
-        --card-foreground-rgb: 248 250 252; /* slate-50 */
-        --input-rgb: 51 65 85;        /* slate-700 */
-      }
-    </style>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              'primary': {
-                '50': '#eff6ff',
-                '100': '#dbeafe',
-                '200': '#bfdbfe',
-                '300': '#93c5fd',
-                '400': '#60a5fa',
-                '500': '#3b82f6',
-                '600': '#2563eb',
-                '700': '#1d4ed8',
-                '800': '#1e40af',
-                '900': '#1e3a8a',
-                '950': '#172554'
-              },
-              'background': 'rgb(var(--background-rgb) / <alpha-value>)',
-              'foreground': 'rgb(var(--foreground-rgb) / <alpha-value>)',
-              'card': 'rgb(var(--card-rgb) / <alpha-value>)',
-              'card-foreground': 'rgb(var(--card-foreground-rgb) / <alpha-value>)',
-              'input': 'rgb(var(--input-rgb) / <alpha-value>)',
-            },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0', transform: 'translateY(10px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              },
-              pulse: {
-                '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(59, 130, 246, 0.7)' },
-                '50%': { transform: 'scale(1.05)', boxShadow: '0 0 0 10px rgba(59, 130, 246, 0)' },
-              }
-            },
-            animation: {
-              'fade-in': 'fadeIn 0.5s ease-out forwards',
-              'pulse': 'pulse 2s infinite',
-            },
-          }
-        }
-      }
-    </script>
+    <link rel="stylesheet" href="./src/index.css">
   <script type="importmap">
 {
   "imports": {

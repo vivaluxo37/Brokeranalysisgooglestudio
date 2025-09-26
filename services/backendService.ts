@@ -8,7 +8,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood, BrokerAlternativesResponse } from '../types';
 import { brokers } from '../data/brokers';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
 const model = "gemini-2.5-flash";
 
 // --- Chatbot Functionality ---

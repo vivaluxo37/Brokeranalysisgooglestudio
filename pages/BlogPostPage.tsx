@@ -10,12 +10,12 @@ import { Icons } from '../constants';
 import Tag from '../components/ui/Tag';
 import ShareButtons from '../components/blog/ShareButtons';
 import BlogPostCard from '../components/blog/BlogPostCard';
-import Card, { CardContent } from '../components/ui/Card';
-import Button from '../components/ui/Button';
+import { Card, CardContent } from '../components/ui/card';
+import { Button } from '../components/ui/button';
 import { DiscussionContext } from '../contexts/DiscussionContext';
 import { useAuth } from '../hooks/useAuth';
 import DiscussionPostCard from '../components/brokers/DiscussionPostCard';
-import Input from '../components/ui/Input';
+import { Input } from '../components/ui/input';
 import Spinner from '../components/ui/Spinner';
 
 

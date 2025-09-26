@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MetaTags from '../components/common/MetaTags';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useTranslation } from '../hooks/useTranslation';
-import Card, { CardContent } from '../components/ui/Card';
+import { Card, CardContent } from '../components/ui/card';
 import PipCalculator from '../components/tools/calculators/PipCalculator';
 import PositionSizeCalculator from '../components/tools/calculators/PositionSizeCalculator';
 import MarginCalculator from '../components/tools/calculators/MarginCalculator';

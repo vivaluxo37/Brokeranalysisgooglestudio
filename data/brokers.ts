@@ -4,7 +4,7 @@ export const brokers: Broker[] = [
   {
     id: 'pepperstone',
     name: 'Pepperstone',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/Pepperstone_logo_logotype_2022_bkgw0d.svg',
+    logoUrl: '/broker-logos/pepperstone.png',
     websiteUrl: 'https://pepperstone.com/',
     score: 9.2,
     foundingYear: 2010,
@@ -159,7 +159,7 @@ export const brokers: Broker[] = [
   {
     id: 'ic-markets',
     name: 'IC Markets',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/IC_Markets_logo_logotype_2022_h1csy2.svg',
+    logoUrl: '/broker-logos/ic-markets.jpg',
     websiteUrl: 'https://www.icmarkets.com/',
     score: 9.0,
     foundingYear: 2007,
@@ -298,7 +298,7 @@ export const brokers: Broker[] = [
   {
     id: 'xtb',
     name: 'XTB',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/XTB_logo_logotype_2022_q4m2ac.svg',
+    logoUrl: '/broker-logos/xtb.png',
     websiteUrl: 'https://www.xtb.com/',
     score: 8.8,
     foundingYear: 2002,
@@ -394,7 +394,7 @@ export const brokers: Broker[] = [
   {
     id: 'forex-com',
     name: 'Forex.com',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/Forex.com_logo_logotype_2022_m2fyia.svg',
+    logoUrl: '/broker-logos/forex-com.png',
     websiteUrl: 'https://www.forex.com/',
     score: 8.5,
     foundingYear: 2001,
@@ -488,7 +488,7 @@ export const brokers: Broker[] = [
   {
     id: 'ig',
     name: 'IG',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/IG_logo_logotype_2022_v4w8vx.svg',
+    logoUrl: '/broker-logos/ig.png',
     websiteUrl: 'https://www.ig.com/',
     score: 9.5,
     foundingYear: 1974,
@@ -532,7 +532,7 @@ export const brokers: Broker[] = [
    {
     id: 'saxo-bank',
     name: 'Saxo Bank',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/Saxo_Bank_logo_logotype_2022_b3mluj.svg',
+    logoUrl: '/broker-logos/saxo-bank.png',
     websiteUrl: 'https://www.home.saxo/',
     score: 9.4,
     foundingYear: 1992,
@@ -576,7 +576,7 @@ export const brokers: Broker[] = [
   {
     id: 'interactive-brokers',
     name: 'Interactive Brokers',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/Interactive_Brokers_logo_logotype_2022_vjdlmw.svg',
+    logoUrl: '/broker-logos/interactive-brokers.png',
     websiteUrl: 'https://www.interactivebrokers.com/',
     score: 9.3,
     foundingYear: 1978,
@@ -620,7 +620,7 @@ export const brokers: Broker[] = [
   {
     id: 'etoro',
     name: 'eToro',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/eToro_logo_logotype_2022_z30x3d.svg',
+    logoUrl: '/broker-logos/etoro.png',
     websiteUrl: 'https://www.etoro.com/',
     score: 8.9,
     foundingYear: 2007,
@@ -665,7 +665,7 @@ export const brokers: Broker[] = [
   {
     id: 'plus500',
     name: 'Plus500',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/Plus500_logo_logotype_2022_y9xfrk.svg',
+    logoUrl: '/broker-logos/plus500.png',
     websiteUrl: 'https://www.plus500.com/',
     score: 8.4,
     foundingYear: 2008,
@@ -710,7 +710,7 @@ export const brokers: Broker[] = [
   {
     id: 'avatrade',
     name: 'AvaTrade',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/AvaTrade_logo_logotype_2022_o3mh1w.svg',
+    logoUrl: '/broker-logos/avatrade.webp',
     websiteUrl: 'https://www.avatrade.com/',
     score: 8.7,
     foundingYear: 2006,
@@ -755,7 +755,7 @@ export const brokers: Broker[] = [
   {
     id: 'oanda',
     name: 'OANDA',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/OANDA_logo_logotype_2022_u1qjny.svg',
+    logoUrl: '/broker-logos/oanda.png',
     websiteUrl: 'https://www.oanda.com/',
     score: 8.6,
     foundingYear: 1996,
@@ -803,7 +803,7 @@ export const brokers: Broker[] = [
   {
     id: 'fxpro',
     name: 'FxPro',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/FxPro_logo_logotype_2022_l9rbvq.svg',
+    logoUrl: '/broker-logos/fxpro.png',
     websiteUrl: 'https://www.fxpro.com/',
     score: 8.8,
     foundingYear: 2006,
@@ -879,7 +879,7 @@ export const brokers: Broker[] = [
   {
     id: 'axi',
     name: 'Axi',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/Axi_logo_logotype_2022_h1luna.svg',
+    logoUrl: '/broker-logos/axi.png',
     websiteUrl: 'https://www.axi.com/',
     score: 8.7,
     foundingYear: 2007,
@@ -954,7 +954,7 @@ export const brokers: Broker[] = [
   {
     id: 'fp-markets',
     name: 'FP Markets',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/FP_Markets_logo_logotype_2022_bbt7yl.svg',
+    logoUrl: '/broker-logos/fp-markets.webp',
     websiteUrl: 'https://www.fpmarkets.com/',
     score: 8.9,
     foundingYear: 2005,
@@ -1029,7 +1029,7 @@ export const brokers: Broker[] = [
   {
     id: 'cmc-markets',
     name: 'CMC Markets',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/CMC_Markets_logo_logotype_2022_bhmhsn.svg',
+    logoUrl: 'https://www.cmcmarkets.com/logo-cmc-markets.svg',
     websiteUrl: 'https://www.cmcmarkets.com/',
     score: 9.1,
     foundingYear: 1989,
@@ -1102,7 +1102,7 @@ export const brokers: Broker[] = [
   {
     id: 'admirals',
     name: 'Admirals',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/Admirals_logo_logotype_2022_b0kfsx.svg',
+    logoUrl: '/broker-logos/admirals.png',
     websiteUrl: 'https://admiralmarkets.com/',
     score: 8.5,
     foundingYear: 2001,
@@ -1178,7 +1178,7 @@ export const brokers: Broker[] = [
   {
     id: 'tickmill',
     name: 'Tickmill',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/Tickmill_logo_logotype_2022_yzr6k9.svg',
+    logoUrl: '/broker-logos/tickmill.png',
     websiteUrl: 'https://www.tickmill.com/',
     score: 8.8,
     foundingYear: 2014,
@@ -1254,7 +1254,7 @@ export const brokers: Broker[] = [
   {
     id: 'swissquote',
     name: 'Swissquote',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/Swissquote_logo_logotype_2022_bbtlkh.svg',
+    logoUrl: '/broker-logos/swissquote.png',
     websiteUrl: 'https://www.swissquote.com/',
     score: 9.0,
     foundingYear: 1996,
@@ -1398,7 +1398,7 @@ export const brokers: Broker[] = [
    {
     id: 'thinkmarkets',
     name: 'ThinkMarkets',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/ThinkMarkets_logo_logotype_2022_z2wvys.svg',
+    logoUrl: '/broker-logos/thinkmarkets.png',
     websiteUrl: 'https://www.thinkmarkets.com/',
     score: 8.6,
     foundingYear: 2010,
@@ -1473,7 +1473,7 @@ export const brokers: Broker[] = [
   {
     id: 'fxcm',
     name: 'FXCM',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/FXCM_logo_logotype_2022_b8x9zc.svg',
+    logoUrl: '/broker-logos/fxcm.png',
     websiteUrl: 'https://www.fxcm.com/',
     score: 8.4,
     foundingYear: 1999,
@@ -1545,7 +1545,7 @@ export const brokers: Broker[] = [
   {
     id: 'xm',
     name: 'XM',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233076/Broker_Logos/XM_logo_logotype_2022_b3mluj.svg',
+    logoUrl: '/broker-logos/xm.png',
     websiteUrl: 'https://www.xm.com/',
     score: 8.5,
     foundingYear: 2009,
@@ -1607,7 +1607,7 @@ export const brokers: Broker[] = [
   {
     id: 'exness',
     name: 'Exness',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/Exness_logo_logotype_2022_z2wvyz.svg',
+    logoUrl: '/broker-logos/exness.webp',
     websiteUrl: 'https://www.exness.com/',
     score: 8.9,
     foundingYear: 2008,
@@ -1732,7 +1732,7 @@ export const brokers: Broker[] = [
   {
     id: 'fbs',
     name: 'FBS',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233074/Broker_Logos/FBS_logo_logotype_2022_bbt7yl.svg',
+    logoUrl: '/broker-logos/fbs.png',
     websiteUrl: 'https://fbs.com/',
     score: 8.2,
     foundingYear: 2009,
@@ -1794,7 +1794,7 @@ export const brokers: Broker[] = [
   {
     id: 'octafx',
     name: 'OctaFX',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/OctaFX_logo_logotype_2022_u1qjny.svg',
+    logoUrl: '/broker-logos/octafx.webp',
     websiteUrl: 'https://www.octafx.com/',
     score: 8.3,
     foundingYear: 2011,
@@ -1855,7 +1855,7 @@ export const brokers: Broker[] = [
   {
     id: 'roboforex',
     name: 'RoboForex',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/RoboForex_logo_logotype_2022_b3mluj.svg',
+    logoUrl: '/broker-logos/roboforex.webp',
     websiteUrl: 'https://roboforex.com/',
     score: 8.7,
     foundingYear: 2009,
@@ -1917,7 +1917,7 @@ export const brokers: Broker[] = [
   {
     id: 'hycm',
     name: 'HYCM',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/HYCM_logo_logotype_2022_z2wvyz.svg',
+    logoUrl: '/broker-logos/hycm.png',
     websiteUrl: 'https://www.hycm.com/',
     score: 8.4,
     foundingYear: 1977,
@@ -1979,7 +1979,7 @@ export const brokers: Broker[] = [
   {
     id: 'city-index',
     name: 'City Index',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/City_Index_logo_logotype_2022_bbt7yl.svg',
+    logoUrl: '/broker-logos/city-index.png',
     websiteUrl: 'https://www.cityindex.com/',
     score: 8.8,
     foundingYear: 1983,
@@ -2039,7 +2039,7 @@ export const brokers: Broker[] = [
   {
     id: 'activtrades',
     name: 'ActivTrades',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233073/Broker_Logos/ActivTrades_logo_logotype_2022_z2wvyz.svg',
+    logoUrl: '/broker-logos/activtrades.png',
     websiteUrl: 'https://www.activtrades.com/',
     score: 8.5,
     foundingYear: 2001,
@@ -2281,7 +2281,7 @@ export const brokers: Broker[] = [
   {
     id: 'ironfx',
     name: 'IronFX',
-    logoUrl: 'https://res.cloudinary.com/tradiiing/image/upload/v1689233075/Broker_Logos/IronFX_logo_logotype_2022_b3mluj.svg',
+    logoUrl: 'https://www.ironfx.com/themes/custom/ironfx_theme/logo.svg',
     websiteUrl: 'https://www.ironfx.com/',
     score: 7.8,
     foundingYear: 2010,

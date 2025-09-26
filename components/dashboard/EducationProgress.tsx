@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Card, { CardHeader, CardContent } from '../ui/Card';
+import { Card, CardHeader, CardContent } from '../ui/card';
 import { Icons } from '../../constants';
 import { useEducation } from '../../hooks/useEducation';
 import { useTranslation } from '../../hooks/useTranslation';
 import { quizzes as allQuizzes } from '../../data/quizzes';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 
 const EducationProgress: React.FC = () => {
     const { progress } = useEducation();

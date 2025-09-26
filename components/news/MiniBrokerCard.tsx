@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Broker } from '../../types';
-import Card from '../ui/Card';
+import { Card } from '../ui/card';
 import StarRating from '../ui/StarRating';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 
 interface MiniBrokerCardProps {
   broker: Broker;

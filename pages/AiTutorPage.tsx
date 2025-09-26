@@ -4,7 +4,8 @@ import { Icons } from '../constants';
 import { ChatMessage } from '../types';
 import { getAiTutorResponseStream } from '../services/geminiService';
 import { useTranslation } from '../hooks/useTranslation';
-import Card from '../components/ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import Markdown from '../components/ui/markdown';
 
 const TypingIndicator: React.FC = () => (
     <div className="flex items-center space-x-1.5 p-2">
@@ -14,19 +15,7 @@ const TypingIndicator: React.FC = () => (
     </div>
 );
 
-const parseMarkdown = (text: string): string => {
-  let html = text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n/g, '<br />');
-
-  html = html.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
-    if (url.startsWith('http')) {
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${linkText}</a>`;
-    }
-    return `<a href="${url.replace('/#/', '#/')}" class="text-primary-400 hover:underline">${linkText}</a>`;
-  });
-  return html;
-};
+// Removed custom parseMarkdown function - now using Markdown component
 
 
 const ChatMessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
@@ -35,7 +24,9 @@ const ChatMessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
         <div className={`flex items-start gap-3 my-4 animate-fade-in ${isUser ? 'justify-end' : ''}`}>
             {!isUser && <span className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-input text-primary-400"><Icons.bot className="h-6 w-6"/></span>}
             <div className={`p-4 rounded-xl max-w-lg shadow-md ${isUser ? 'bg-primary-600 text-white ltr:rounded-br-none rtl:rounded-bl-none' : 'bg-card text-card-foreground ltr:rounded-bl-none rtl:rounded-br-none'}`}>
-                <p className="text-sm break-words" dangerouslySetInnerHTML={{ __html: parseMarkdown(message.text) }} />
+                <div className="text-sm break-words">
+                    <Markdown content={message.text} />
+                </div>
             </div>
              {isUser && <span className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-input text-foreground"><Icons.user className="h-6 w-6"/></span>}
         </div>

@@ -2,10 +2,10 @@ import React, { useState, useContext } from 'react';
 import { DiscussionPost } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
 import { DiscussionContext } from '../../contexts/DiscussionContext';
-import Card, { CardContent } from '../ui/Card';
-import Button from '../ui/Button';
+import { Card, CardContent } from '../ui/card';
+import { Button } from '../ui/button';
 import { Icons } from '../../constants';
-import Input from '../ui/Input';
+import { Input } from '../ui/input';
 
 const DiscussionPostCard: React.FC<{ post: DiscussionPost }> = ({ post }) => {
     const { user } = useAuth();

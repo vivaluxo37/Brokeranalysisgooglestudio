@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icons } from '../../constants';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 
 interface ShareButtonsProps {
   title: string;

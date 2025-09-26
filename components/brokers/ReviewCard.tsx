@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { Review } from '../../types';
-import Card, { CardContent } from '../ui/Card';
+import { Card, CardContent } from '../ui/card';
 import StarRating from '../ui/StarRating';
 import { Icons } from '../../constants';
-import Badge from '../ui/Badge';
+import { Badge } from '../ui/badge';
 
 interface ReviewCardProps {
   review: Review;

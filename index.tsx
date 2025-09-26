@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { ClerkProvider } from '@clerk/clerk-react';
 import App from './App';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
@@ -13,6 +14,12 @@ import { DiscussionProvider } from './contexts/DiscussionContext';
 import { TradingJournalProvider } from './contexts/TradingJournalContext';
 import { EducationProvider } from './contexts/EducationContext';
 import { OnboardingProvider } from './contexts/OnboardingContext';
+import './src/index.css';
+
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Clerk Publishable Key");
+}
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -21,31 +28,33 @@ if (!rootElement) {
 
 const app = (
   <React.StrictMode>
-    <HashRouter>
-      <LanguageProvider>
-        <ThemeProvider>
-          <AuthProvider>
-            <ComparisonProvider>
-              <FavoritesProvider>
-                <ReviewsProvider>
-                  <DiscussionProvider>
-                    <AlertsProvider>
-                      <EducationProvider>
-                        <TradingJournalProvider>
-                          <OnboardingProvider>
-                            <App />
-                          </OnboardingProvider>
-                        </TradingJournalProvider>
-                      </EducationProvider>
-                    </AlertsProvider>
-                  </DiscussionProvider>
-                </ReviewsProvider>
-              </FavoritesProvider>
-            </ComparisonProvider>
-          </AuthProvider>
-        </ThemeProvider>
-      </LanguageProvider>
-    </HashRouter>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+      <BrowserRouter>
+        <LanguageProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <ComparisonProvider>
+                <FavoritesProvider>
+                  <ReviewsProvider>
+                    <DiscussionProvider>
+                      <AlertsProvider>
+                        <EducationProvider>
+                          <TradingJournalProvider>
+                            <OnboardingProvider>
+                              <App />
+                            </OnboardingProvider>
+                          </TradingJournalProvider>
+                        </EducationProvider>
+                      </AlertsProvider>
+                    </DiscussionProvider>
+                  </ReviewsProvider>
+                </FavoritesProvider>
+              </ComparisonProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </LanguageProvider>
+      </BrowserRouter>
+    </ClerkProvider>
   </React.StrictMode>
 );
 

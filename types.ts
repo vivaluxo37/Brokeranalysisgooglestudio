@@ -303,6 +303,9 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  imageUrl?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ThemeContextType {
@@ -312,6 +315,8 @@ export interface ThemeContextType {
 
 export interface AuthContextType {
   user: User | null;
+  isAuthenticated: boolean;
+  isLoaded: boolean;
   login: (email: string, pass: string) => Promise<void>;
   logout: () => void;
   register: (name: string, email: string, pass: string) => Promise<void>;

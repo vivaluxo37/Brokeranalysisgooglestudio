@@ -1,81 +1,76 @@
 
 
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useAuth as useClerkAuth, useUser } from '@clerk/clerk-react';
 import { AuthContextType, User } from '../types';
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
+  const { isLoaded, isSignedIn, signOut } = useClerkAuth();
+  const { user: clerkUser, isLoaded: isUserLoaded } = useUser();
 
+  const [user, setUser] = useState<User | null>(null);
+
+  // Convert Clerk user to our User interface
   useEffect(() => {
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user');
+    if (isLoaded && isSignedIn && clerkUser && isUserLoaded) {
+      const appUser: User = {
+        id: clerkUser.id,
+        email: clerkUser.emailAddresses[0]?.emailAddress || '',
+        name: clerkUser.fullName || clerkUser.firstName || clerkUser.username || 'User',
+        imageUrl: clerkUser.imageUrl,
+        createdAt: clerkUser.createdAt?.toISOString(),
+        updatedAt: clerkUser.updatedAt?.toISOString(),
+      };
+      setUser(appUser);
+    } else if (isLoaded && !isSignedIn) {
+      setUser(null);
     }
-  }, [user]);
+  }, [isLoaded, isSignedIn, clerkUser, isUserLoaded]);
 
-  // Mock authentication functions
+  // Legacy mock functions for backward compatibility
   const login = async (email: string, pass: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (email === 'test@test.com' && pass === 'password') {
-          const mockUser: User = { id: '1', email: 'test@test.com', name: 'Test User' };
-          setUser(mockUser);
-          resolve();
-        } else {
-          reject(new Error('Invalid email or password'));
-        }
-      }, 1000);
-    });
+    // Clerk handles authentication through their components
+    // This function is kept for backward compatibility
+    throw new Error('Please use Clerk authentication components');
   };
 
   const register = async (name: string, email: string, pass: string): Promise<void> => {
-     return new Promise((resolve) => {
-      setTimeout(() => {
-        const newUser: User = { id: Date.now().toString(), email, name };
-        setUser(newUser);
-        resolve();
-      }, 1000);
-    });
+    // Clerk handles registration through their components
+    // This function is kept for backward compatibility
+    throw new Error('Please use Clerk authentication components');
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async (): Promise<void> => {
+    await signOut();
   };
 
   const updateUser = async (name: string): Promise<void> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (user) {
-          const updatedUser = { ...user, name };
-          setUser(updatedUser);
-        }
-        resolve();
-      }, 500);
-    });
+    // Clerk handles user updates through their API
+    // This function is kept for backward compatibility
+    throw new Error('Please use Clerk user management');
   };
 
   const deleteAccount = async (): Promise<void> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (user) {
-          // In a real app, you'd also remove other user-specific data
-          localStorage.removeItem(`favorites_${user.id}`);
-          localStorage.removeItem(`matcherHistory_${user.id}`);
-        }
-        setUser(null); // This triggers the useEffect to remove 'user' from localStorage
-        resolve();
-      }, 500);
-    });
+    // Clerk handles account deletion through their API
+    // This function is kept for backward compatibility
+    throw new Error('Please use Clerk account management');
+  };
+
+  const value: AuthContextType = {
+    user,
+    isAuthenticated: isSignedIn || false,
+    isLoaded,
+    login,
+    logout,
+    register,
+    updateUser,
+    deleteAccount,
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, updateUser, deleteAccount }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

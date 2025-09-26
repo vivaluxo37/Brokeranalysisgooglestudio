@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Broker } from '../../types';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 import { useComparison } from '../../hooks/useComparison';
 import Tag from '../ui/Tag';
 import Tooltip from '../ui/Tooltip';

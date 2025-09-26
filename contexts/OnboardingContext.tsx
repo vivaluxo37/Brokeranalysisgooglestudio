@@ -42,10 +42,10 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const [currentStep, setCurrentStep] = useState(0);
 
     useEffect(() => {
-        const hasCompletedTour = localStorage.getItem('onboardingComplete');
+        const hasCompletedTour = typeof window !== 'undefined' && localStorage ? localStorage.getItem('onboardingComplete') : null;
         // We will trigger the tour on the AllBrokersPage for now.
         // A more complex implementation could use the route.
-        const onBrokersPage = window.location.hash.includes('/brokers');
+        const onBrokersPage = typeof window !== 'undefined' && window.location.hash.includes('/brokers');
 
         if (!hasCompletedTour && onBrokersPage) {
             // Delay start slightly to allow page to render
@@ -60,7 +60,9 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
     const endTour = useCallback(() => {
         setIsActive(false);
-        localStorage.setItem('onboardingComplete', 'true');
+        if (typeof window !== 'undefined' && localStorage) {
+            localStorage.setItem('onboardingComplete', 'true');
+        }
     }, []);
     
     const skipTour = useCallback(() => {

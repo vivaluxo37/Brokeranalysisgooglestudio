@@ -41,7 +41,7 @@ export const TradingJournalProvider: React.FC<{ children: React.ReactNode }> = (
     useEffect(() => {
         if (user) {
             try {
-                const savedEntries = localStorage.getItem(`tradingJournal_${user.id}`);
+                const savedEntries = typeof window !== 'undefined' && localStorage ? localStorage.getItem(`tradingJournal_${user.id}`) : null;
                 setJournalEntries(savedEntries ? JSON.parse(savedEntries) : mockJournalEntries);
             } catch (e) {
                 console.error("Failed to parse journal entries from localStorage", e);
@@ -53,7 +53,7 @@ export const TradingJournalProvider: React.FC<{ children: React.ReactNode }> = (
     }, [user]);
 
     useEffect(() => {
-        if (user) {
+        if (user && typeof window !== 'undefined' && localStorage) {
             localStorage.setItem(`tradingJournal_${user.id}`, JSON.stringify(journalEntries));
         }
     }, [journalEntries, user]);

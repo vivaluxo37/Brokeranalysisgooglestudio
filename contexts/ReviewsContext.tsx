@@ -16,21 +16,28 @@ export const ReviewsContext = createContext<ReviewsContextType | null>(null);
 
 export const ReviewsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [reviews, setReviews] = useState<Review[]>(() => {
-    try {
-      const savedReviews = localStorage.getItem('allReviews');
-      // If we have saved reviews, use them. Otherwise, seed with initial data.
-      if (savedReviews) {
-        return JSON.parse(savedReviews);
+    // Check if we're on the client side
+    if (typeof window !== 'undefined' && localStorage) {
+      try {
+        const savedReviews = localStorage.getItem('allReviews');
+        // If we have saved reviews, use them. Otherwise, seed with initial data.
+        if (savedReviews) {
+          return JSON.parse(savedReviews);
+        }
+      } catch (e) {
+        console.error("Failed to parse reviews from localStorage", e);
       }
-    } catch (e) {
-      console.error("Failed to parse reviews from localStorage", e);
     }
+    // Return initial static reviews for server-side rendering
     return initialStaticReviews;
   });
 
   useEffect(() => {
-    // Persist reviews to localStorage whenever they change.
-    localStorage.setItem('allReviews', JSON.stringify(reviews));
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      // Persist reviews to localStorage whenever they change.
+      localStorage.setItem('allReviews', JSON.stringify(reviews));
+    }
   }, [reviews]);
 
   const getReviewsByBrokerId = (brokerId: string): Review[] => {

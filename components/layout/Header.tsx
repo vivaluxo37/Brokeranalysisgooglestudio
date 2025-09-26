@@ -3,7 +3,7 @@ import { NavLink as RRNavLink, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Icons } from '../../constants';
 import ThemeToggle from '../ui/ThemeToggle';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 import AlertsDropdown from '../common/AlertsDropdown';
 import { categoryPageGroups } from '../../pages/categoryPageData';
 import { useTranslation } from '../../hooks/useTranslation';

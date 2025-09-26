@@ -1,8 +1,8 @@
 import React from 'react';
 import { Broker } from '../../types';
-import Card, { CardContent, CardHeader } from '../ui/Card';
+import { Card, CardContent, CardHeader } from '../ui/card';
 import { Icons } from '../../constants';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 import Tag from '../ui/Tag';
 import { Link } from 'react-router-dom';
 

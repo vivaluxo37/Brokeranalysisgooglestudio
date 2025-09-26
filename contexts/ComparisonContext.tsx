@@ -6,12 +6,20 @@ export const ComparisonContext = createContext<ComparisonContextType | null>(nul
 
 export const ComparisonProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [comparisonList, setComparisonList] = useState<string[]>(() => {
-    const savedList = localStorage.getItem('comparisonList');
-    return savedList ? JSON.parse(savedList) : [];
+    // Check if we're on the client side
+    if (typeof window !== 'undefined' && localStorage) {
+      const savedList = localStorage.getItem('comparisonList');
+      return savedList ? JSON.parse(savedList) : [];
+    }
+    // Default to empty array for server-side rendering
+    return [];
   });
 
   useEffect(() => {
-    localStorage.setItem('comparisonList', JSON.stringify(comparisonList));
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('comparisonList', JSON.stringify(comparisonList));
+    }
   }, [comparisonList]);
 
   const addBrokerToComparison = (brokerId: string) => {

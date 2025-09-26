@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Broker, Signal } from '../../types';
-import Card, { CardContent, CardHeader } from '../ui/Card';
+import { Card, CardContent, CardHeader } from '../ui/card';
 import Spinner from '../ui/Spinner';
 import { Icons } from '../../constants';
 import { getRiskAnalysis } from '../../services/geminiService';

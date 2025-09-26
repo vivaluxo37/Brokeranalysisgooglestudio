@@ -5,6 +5,7 @@ import { ChatMessage } from '../../types';
 import { getChatbotResponseStream } from '../../services/geminiService';
 import { useTranslation } from '../../hooks/useTranslation';
 import { brokers } from '../../data/brokers';
+import Markdown from '../ui/markdown';
 
 const TypingIndicator: React.FC = () => (
     <div className="flex items-center space-x-1.5 p-2">
@@ -14,20 +15,7 @@ const TypingIndicator: React.FC = () => (
     </div>
 );
 
-const parseMarkdown = (text: string): string => {
-  let html = text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold
-
-  html = html.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
-    // Check if it's an external link
-    if (url.startsWith('http')) {
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${linkText}</a>`;
-    }
-    // Internal link
-    return `<a href="${url}" class="text-primary-400 hover:underline">${linkText}</a>`;
-  });
-  return html;
-};
+// Removed custom parseMarkdown function - now using Markdown component
 
 
 const ChatMessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
@@ -36,7 +24,9 @@ const ChatMessageBubble: React.FC<{ message: ChatMessage }> = ({ message }) => {
         <div className={`flex items-start gap-3 my-2 animate-fade-in ${isUser ? 'justify-end' : ''}`}>
             {!isUser && <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-input text-primary-400"><Icons.bot className="h-5 w-5"/></span>}
             <div className={`p-3 rounded-xl max-w-sm md:max-w-md shadow-md ${isUser ? 'bg-primary-600 text-white ltr:rounded-br-none rtl:rounded-bl-none' : 'bg-input text-card-foreground ltr:rounded-bl-none rtl:rounded-br-none'}`}>
-                <p className="text-sm break-words" dangerouslySetInnerHTML={{ __html: parseMarkdown(message.text) }} />
+                <div className="text-sm break-words">
+                    <Markdown content={message.text} />
+                </div>
             </div>
             {isUser && <span className="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-input text-foreground"><Icons.user className="h-5 w-5"/></span>}
         </div>

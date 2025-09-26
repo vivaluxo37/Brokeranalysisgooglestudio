@@ -20,7 +20,7 @@ export const AlertsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         return;
     }
     try {
-      const savedAlerts = localStorage.getItem(storageKey);
+      const savedAlerts = typeof window !== 'undefined' && localStorage ? localStorage.getItem(storageKey) : null;
       if (savedAlerts) {
         setAlerts(JSON.parse(savedAlerts));
       } else {
@@ -30,7 +30,9 @@ export const AlertsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             read: index > 2 // Mark older ones as read
         }));
         setAlerts(seededAlerts);
-        localStorage.setItem(storageKey, JSON.stringify(seededAlerts));
+        if (typeof window !== 'undefined' && localStorage) {
+          localStorage.setItem(storageKey, JSON.stringify(seededAlerts));
+        }
       }
     } catch (e) {
       console.error("Failed to load alerts from localStorage", e);
@@ -40,7 +42,7 @@ export const AlertsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   // Persist to localStorage
   useEffect(() => {
-    if (storageKey) {
+    if (storageKey && typeof window !== 'undefined' && localStorage) {
       localStorage.setItem(storageKey, JSON.stringify(alerts));
     }
   }, [alerts, storageKey]);

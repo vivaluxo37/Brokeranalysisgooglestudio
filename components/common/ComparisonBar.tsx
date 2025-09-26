@@ -1,7 +1,7 @@
 import React from 'react';
 import { useComparison } from '../../hooks/useComparison';
 import { brokers as allBrokers } from '../../data/brokers';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 import { Icons } from '../../constants';
 import * as ReactRouterDOM from 'react-router-dom';
 

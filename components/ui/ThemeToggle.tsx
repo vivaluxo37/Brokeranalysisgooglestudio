@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useTheme } from '../../hooks/useTheme';
-import Button from './Button';
+import { Button } from './button';
 import { Icons } from '../../constants';
 
 const ThemeToggle: React.FC = () => {

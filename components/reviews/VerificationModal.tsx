@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../ui/Button';
-import Card, { CardContent, CardHeader, CardFooter } from '../ui/Card';
+import { Button } from '../ui/button';
+import { Card, CardContent, CardHeader, CardFooter } from '../ui/card';
 import Spinner from '../ui/Spinner';
 
 interface VerificationModalProps {

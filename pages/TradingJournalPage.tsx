@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useTradingJournal } from '../hooks/useTradingJournal';
-import Card, { CardContent, CardHeader } from '../components/ui/Card';
-import Button from '../components/ui/Button';
-import Input from '../components/ui/Input';
+import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
 import { Icons } from '../constants';
 import Spinner from '../components/ui/Spinner';
 import { getTradingJournalAnalysis } from '../services/geminiService';

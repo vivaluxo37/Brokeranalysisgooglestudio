@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useOnboarding } from '../../hooks/useOnboarding';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 import { Icons } from '../../constants';
 import { useLocation } from 'react-router-dom';
 

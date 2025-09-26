@@ -4,7 +4,7 @@ import { useFavorites } from '../../hooks/useFavorites';
 import { useAlerts } from '../../hooks/useAlerts';
 import { brokers } from '../../data/brokers';
 import { Icons } from '../../constants';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 // Fix: Use namespace import for react-router-dom to handle potential module resolution issues.
 import * as ReactRouterDOM from 'react-router-dom';
 

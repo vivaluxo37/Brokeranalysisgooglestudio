@@ -50,7 +50,7 @@ export const DiscussionContext = createContext<DiscussionContextType | null>(nul
 export const DiscussionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [posts, setPosts] = useState<DiscussionPost[]>(() => {
         try {
-            const savedPosts = localStorage.getItem('discussionPosts');
+            const savedPosts = typeof window !== 'undefined' && localStorage ? localStorage.getItem('discussionPosts') : null;
             return savedPosts ? JSON.parse(savedPosts) : initialPosts;
         } catch (e) {
             console.error("Failed to parse posts from localStorage", e);
@@ -59,7 +59,9 @@ export const DiscussionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     });
 
     useEffect(() => {
-        localStorage.setItem('discussionPosts', JSON.stringify(posts));
+        if (typeof window !== 'undefined' && localStorage) {
+            localStorage.setItem('discussionPosts', JSON.stringify(posts));
+        }
     }, [posts]);
 
     const getPostsByTopicId = (topicId: string) => {

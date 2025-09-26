@@ -1,10 +1,19 @@
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from '../../../hooks/useTranslation';
-import Input from '../../ui/Input';
-import Button from '../../ui/Button';
+import { Input } from '../../ui/input';
+import { Button } from '../../ui/button';
 
-const CURRENCY_PAIRS = ["EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CAD", "USD/CHF", "NZD/USD"];
-const ACCOUNT_CURRENCIES = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF"];
+// Major pairs
+const MAJOR_PAIRS = ["EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CAD", "USD/CHF", "NZD/USD"];
+
+// Minor pairs (crosses)
+const MINOR_PAIRS = ["EUR/GBP", "EUR/JPY", "EUR/CHF", "GBP/JPY", "GBP/CHF", "AUD/JPY", "CAD/JPY", "CHF/JPY", "NZD/JPY", "AUD/NZD", "AUD/CHF", "CAD/CHF"];
+
+// Exotic pairs
+const EXOTIC_PAIRS = ["USD/TRY", "USD/MXN", "USD/PLN", "USD/HUF", "USD/CZK", "USD/SEK", "USD/NOK", "USD/DKK", "USD/ZAR", "EUR/TRY", "GBP/SEK", "GBP/NOK", "AUD/SGD", "USD/SGD", "USD/HKD", "USD/CNH"];
+
+const CURRENCY_PAIRS = [...MAJOR_PAIRS, ...MINOR_PAIRS, ...EXOTIC_PAIRS];
+const ACCOUNT_CURRENCIES = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF", "NZD", "SEK", "NOK", "DKK", "PLN", "CZK", "HUF", "ZAR", "TRY", "MXN", "SGD", "HKD", "CNH"];
 
 const PipCalculator: React.FC = () => {
     const { t } = useTranslation();
@@ -33,17 +42,62 @@ const PipCalculator: React.FC = () => {
         if (quoteCurrency === accountCurrency) {
             setResult(pipValueInQuote);
         } else {
-            // This is a simplification. A real app would fetch the live exchange rate.
-            // For this demo, we'll use approximate conversion rates.
-            let conversionRate = 1;
-            if (accountCurrency === 'USD') {
-                 if (quoteCurrency === 'JPY') conversionRate = 1 / 150;
-                 if (quoteCurrency === 'CAD') conversionRate = 1 / 1.35;
-                 if (quoteCurrency === 'CHF') conversionRate = 1 / 0.90;
-            } else {
-                // For non-USD accounts, the logic would be more complex.
-                // We'll just assume a 1:1 conversion for simplicity in this demo.
+            // Enhanced conversion rates for all supported currencies
+            const conversionRates: Record<string, number> = {
+                // USD conversions
+                'USD/EUR': 0.92,
+                'USD/GBP': 0.79,
+                'USD/JPY': 149.50,
+                'USD/AUD': 1.53,
+                'USD/CAD': 1.36,
+                'USD/CHF': 0.88,
+                'USD/NZD': 1.68,
+                'USD/SEK': 10.75,
+                'USD/NOK': 10.65,
+                'USD/DKK': 6.85,
+                'USD/PLN': 3.95,
+                'USD/CZK': 23.15,
+                'USD/HUF': 360.50,
+                'USD/ZAR': 18.95,
+                'USD/TRY': 31.25,
+                'USD/MXN': 17.15,
+                'USD/SGD': 1.35,
+                'USD/HKD': 7.83,
+                'USD/CNH': 7.25,
+
+                // EUR conversions
+                'EUR/USD': 1.09,
+                'EUR/GBP': 0.86,
+                'EUR/JPY': 162.50,
+                'EUR/CHF': 0.96,
+
+                // GBP conversions
+                'GBP/USD': 1.27,
+                'GBP/JPY': 189.25,
+                'GBP/CHF': 1.12,
+
+                // JPY conversions
+                'JPY/USD': 0.0067,
+                'JPY/EUR': 0.0062,
+                'JPY/GBP': 0.0053,
+
+                // Other major currencies
+                'AUD/USD': 0.65,
+                'CAD/USD': 0.74,
+                'CHF/USD': 1.14,
+                'NZD/USD': 0.60,
+            };
+
+            const conversionKey = `${quoteCurrency}/${accountCurrency}`;
+            let conversionRate = conversionRates[conversionKey] || 1;
+
+            // If direct conversion not found, try converting via USD
+            if (conversionRate === 1 && quoteCurrency !== accountCurrency) {
+                const toUsd = conversionRates[`${quoteCurrency}/USD`] || (1 / conversionRates[`USD/${quoteCurrency}`] || 1);
+                const fromUsd = conversionRates[`USD/${accountCurrency}`] || (1 / conversionRates[`${accountCurrency}/USD`] || 1);
+                conversionRate = toUsd * fromUsd;
             }
+
             setResult(pipValueInQuote * conversionRate);
         }
     };

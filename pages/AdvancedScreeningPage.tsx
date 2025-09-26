@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { brokers as allBrokers } from '../data/brokers';
 import BrokerCard from '../components/brokers/BrokerCard';
-import Card, { CardContent, CardHeader } from '../components/ui/Card';
-import Button from '../components/ui/Button';
+import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Button } from '../components/ui/button';
 import { Icons } from '../constants';
 import { Broker } from '../types';
 import BrokerQuickViewModal from '../components/brokers/BrokerQuickViewModal';

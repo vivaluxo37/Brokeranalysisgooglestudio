@@ -4,11 +4,11 @@ import { useFavorites } from '../../hooks/useFavorites';
 import { brokers as allBrokers } from '../../data/brokers';
 import { blogPosts } from '../../data/blog';
 import { StrategyMatcherHistoryItem } from '../../types';
-import Card, { CardContent, CardHeader } from '../ui/Card';
+import { Card, CardContent, CardHeader } from '../ui/card';
 import { Icons } from '../../constants';
 import BlogPostCard from '../blog/BlogPostCard';
 import { Link } from 'react-router-dom';
-import Button from '../ui/Button';
+import { Button } from '../ui/button';
 
 const RecommendedContent: React.FC = () => {
     const { user } = useAuth();

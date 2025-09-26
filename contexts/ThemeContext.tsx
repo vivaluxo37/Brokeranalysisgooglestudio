@@ -7,15 +7,24 @@ export const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    const savedTheme = localStorage.getItem('theme');
-    return (savedTheme === 'light' || savedTheme === 'dark') ? savedTheme : 'light';
+    // Check if we're on the client side
+    if (typeof window !== 'undefined' && localStorage) {
+      const savedTheme = localStorage.getItem('theme');
+      // Default to light theme if no saved preference or invalid value
+      return savedTheme === 'dark' ? 'dark' : 'light';
+    }
+    // Default to light theme for server-side rendering
+    return 'light';
   });
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    localStorage.setItem('theme', theme);
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      const root = window.document.documentElement;
+      root.classList.remove('light', 'dark');
+      root.classList.add(theme);
+      localStorage.setItem('theme', theme);
+    }
   }, [theme]);
 
   const toggleTheme = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Card, { CardContent, CardHeader, CardFooter } from '../ui/Card';
-import Button from '../ui/Button';
+import { Card, CardContent, CardHeader, CardFooter } from '../ui/card';
+import { Button } from '../ui/button';
 import Spinner from '../ui/Spinner';
 
 interface ReportBrokerModalProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
 import { BlogPost } from '../../types';
-import Card, { CardContent } from '../ui/Card';
+import { Card, CardContent } from '../ui/card';
 import Tag from '../ui/Tag';
 import { Icons } from '../../constants';
 

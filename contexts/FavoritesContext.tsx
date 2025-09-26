@@ -11,7 +11,7 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   useEffect(() => {
     if (user) {
-      const savedList = localStorage.getItem(`favorites_${user.id}`);
+      const savedList = typeof window !== 'undefined' && localStorage ? localStorage.getItem(`favorites_${user.id}`) : null;
       setFavoritesList(savedList ? JSON.parse(savedList) : []);
     } else {
       setFavoritesList([]);
@@ -19,7 +19,7 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   }, [user]);
 
   useEffect(() => {
-    if (user) {
+    if (user && typeof window !== 'undefined' && localStorage) {
       localStorage.setItem(`favorites_${user.id}`, JSON.stringify(favoritesList));
     }
   }, [favoritesList, user]);

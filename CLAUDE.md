@@ -169,6 +169,23 @@ This project has the following MCP servers configured for enhanced development c
 - **Capabilities**: PDF generation, screenshots, headless browsing
 - **Usage**: Generate PDFs, take screenshots, run headless browser tasks
 
+#### Z AI Server (`zai-mcp-server`)
+- **Package**: `@z_ai/mcp-server`
+- **Purpose**: General Z AI capabilities and services
+- **Capabilities**: AI-powered development assistance, code analysis, and intelligent suggestions
+- **Environment Variables**:
+  - `Z_AI_API_KEY`: `a07915db87b34f96aa53f89fab692b20.2bW7A4gPqZMAnfgb`
+  - `Z_AI_MODE`: `ZAI`
+- **Usage**: AI-powered development tasks, code optimization, and intelligent assistance
+
+#### Web Search Prime (`web-search-prime`)
+- **Package**: HTTP-based MCP server
+- **Purpose**: Enhanced web search functionality
+- **Capabilities**: Real-time web search, current information retrieval, web data integration
+- **Authentication**: Bearer token authentication
+- **URL**: `https://api.z.ai/api/mcp/web_search_prime/mcp`
+- **Usage**: Web searches, fetching current data, researching latest trends and information
+
 ### MCP Configuration File
 - **Location**: `mcp-config.json`
 - **Environment**: Windows (using `cmd`)
@@ -185,3 +202,9 @@ This project has the following MCP servers configured for enhanced development c
 - **Documentation**: Use Context7 MCP for codebase analysis and documentation
 - **Testing**: Use Playwright MCP for E2E testing and browser automation
 - **Automation**: Use Puppeteer MCP for headless browser tasks and PDF generation
+- **AI Assistance**: Use Z AI MCP Server for intelligent development assistance and code analysis
+- **Web Search**: **IMPORTANT RULE** - When performing web searches, ALWAYS use both MCP servers:
+  1. **Z AI Server** (`zai-mcp-server`) for AI-powered search and analysis
+  2. **Web Search Prime** (`web-search-prime`) for comprehensive web search functionality
+  - Both servers should be utilized simultaneously for comprehensive web search results
+  - This ensures maximum coverage and accuracy for web-based research tasks

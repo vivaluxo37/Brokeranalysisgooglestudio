@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Broker } from '../../types';
-import Card, { CardContent } from '../ui/Card';
-import Button from '../ui/Button';
+import { Card, CardContent } from '../ui/card';
+import { Button } from '../ui/button';
 import { useComparison } from '../../hooks/useComparison';
 import { Icons } from '../../constants';
 import StarRating from '../ui/StarRating';
@@ -56,17 +56,19 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false, 
   return (
     <Card className={`flex flex-col h-full ${recommendationClasses}`}>
       <div className="relative flex-grow">
-         <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+         <div className="absolute top-3 right-3 z-10">
+            <RiskBadge broker={broker} />
+        </div>
+        <div className="absolute top-16 right-3 z-10">
             <Tooltip content="Quick View">
-                <button 
-                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(broker); }} 
+                <button
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(broker); }}
                     className="p-1.5 rounded-full bg-card/50 backdrop-blur-sm hover:bg-input text-foreground transition-colors"
                     aria-label="Quick View"
                 >
                     <Icons.eye className="h-4 w-4" />
                 </button>
             </Tooltip>
-            <RiskBadge broker={broker} />
         </div>
         <Link to={`/broker/${broker.id}`} className="block h-full">
           <CardContent>

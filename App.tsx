@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { initializePerformanceOptimizations } from './utils/performance';
+import PerformanceMonitor from './components/ui/PerformanceMonitor';
 import AdvancedScreeningPage from './pages/AdvancedScreeningPage';
 import AiTutorPage from './pages/AiTutorPage';
 import AllBrokersPage from './pages/AllBrokersPage';
@@ -23,6 +25,7 @@ import ComparePage from './pages/ComparePage';
 import CostAnalyzerPage from './pages/CostAnalyzerPage';
 import CurrencyPairsQuizPage from './pages/CurrencyPairsQuizPage';
 import DashboardPage from './pages/DashboardPage';
+import SEOPage from './pages/SEOPage';
 import DivergenceTradingQuizPage from './pages/DivergenceTradingQuizPage';
 import EconomicCalendarPage from './pages/EconomicCalendarPage';
 import EconomicIndicatorsQuizPage from './pages/EconomicIndicatorsQuizPage';
@@ -60,6 +63,11 @@ import TradingPsychologyQuizPage from './pages/TradingPsychologyQuizPage';
 import WebinarsPage from './pages/WebinarsPage';
 
 const App: React.FC = () => {
+  useEffect(() => {
+    // Initialize performance optimizations on app start
+    initializePerformanceOptimizations();
+  }, []);
+
   return (
     <Layout>
       <Routes>
@@ -112,11 +120,15 @@ const App: React.FC = () => {
         <Route path="/education/webinars" element={<WebinarsPage />} />
         <Route path="/education/simulators" element={<SimulatorsPage />} />
         <Route path="/education/simulators/order-execution" element={<OrderExecutionSimulatorPage />} />
-        
+
         {/* Tools Routes */}
         <Route path="/tools/economic-calendar" element={<EconomicCalendarPage />} />
         <Route path="/tools/market-data" element={<MarketDataPage />} />
         <Route path="/tools/calculators" element={<CalculatorsPage />} />
+
+        {/* Programmatic SEO Routes */}
+        <Route path="/:seoSlug" element={<SEOPage />} />
+        <Route path="/brokers/:seoSlug" element={<SEOPage />} />
 
         {/* Dynamically create routes for all category pages */}
         {categoryPages.map(({ path, title, description, filterFn }) => (
@@ -146,6 +158,7 @@ const App: React.FC = () => {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Chatbot />
+      <PerformanceMonitor />
     </Layout>
   );
 };

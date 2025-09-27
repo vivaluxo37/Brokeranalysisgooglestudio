@@ -26,10 +26,15 @@ const OnboardingGuide: React.FC = () => {
         }
 
         const findTarget = () => {
+            if (!currentStepConfig?.targetSelector) {
+                setTargetRect(null);
+                return;
+            }
+
             const targetElement = document.querySelector(currentStepConfig.targetSelector);
             if (targetElement) {
                 targetElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-                
+
                 setTimeout(() => {
                     const rect = targetElement.getBoundingClientRect();
                     setTargetRect({

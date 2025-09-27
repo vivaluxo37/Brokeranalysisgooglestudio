@@ -7,6 +7,7 @@ import { useComparison } from '../../hooks/useComparison';
 import { Icons } from '../../constants';
 import StarRating from '../ui/StarRating';
 import Tooltip from '../ui/Tooltip';
+import ErrorBoundary from '../ui/ErrorBoundary';
 
 interface BrokerCardProps {
   broker: Broker;
@@ -54,7 +55,8 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false, 
     : 'hover:border-primary-700';
 
   return (
-    <Card className={`flex flex-col h-full ${recommendationClasses}`}>
+    <ErrorBoundary>
+      <Card className={`flex flex-col h-full ${recommendationClasses}`}>
       <div className="relative flex-grow">
          <div className="absolute top-3 right-3 z-10">
             <RiskBadge broker={broker} />
@@ -91,7 +93,7 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false, 
               </div>
               <div className="flex justify-between items-center text-card-foreground/70">
                 <span>Max Leverage</span>
-                <span className="font-semibold text-card-foreground">{broker.tradingConditions.maxLeverage}</span>
+                <span className="font-semibold text-card-foreground">{broker.tradingConditions?.maxLeverage || 'N/A'}</span>
               </div>
                {broker.socialTrading && (
                 <div className="flex justify-between items-center text-card-foreground/70">
@@ -119,6 +121,7 @@ const BrokerCard: React.FC<BrokerCardProps> = ({ broker, isRecommended = false, 
         </Tooltip>
       </div>
     </Card>
+    </ErrorBoundary>
   );
 };
 

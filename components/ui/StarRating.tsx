@@ -19,16 +19,13 @@ const StarRating: React.FC<StarRatingProps> = ({ score, className = '', size = '
   };
 
   for (let i = 1; i <= 5; i++) {
-    const starProps = {
-        key: i,
-        className: `${sizeClasses[size]} text-yellow-400`
-    };
+    const className = `${sizeClasses[size]} text-yellow-400`;
     if (i <= rating) {
-      stars.push(<Icons.starFull {...starProps} />);
+      stars.push(<Icons.starFull key={i} className={className} />);
     } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
-      stars.push(<Icons.starHalf {...starProps} />);
+      stars.push(<Icons.starHalf key={i} className={className} />);
     } else {
-      stars.push(<Icons.starEmpty {...starProps} />);
+      stars.push(<Icons.starEmpty key={i} className={className} />);
     }
   }
 

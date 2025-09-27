@@ -38,11 +38,9 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
-        
+
         // Clear any previous widget
-        while(container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
+        container.innerHTML = '';
 
         const finalOptions = {
             ...options,
@@ -52,24 +50,77 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
 
         if (widgetType === 'advanced_chart') {
              // The advanced chart has a different initialization method
-             if (window.TradingView) {
-                new window.TradingView.widget({
-                    ...finalOptions,
-                    container_id: container.id,
-                });
+             if (window.TradingView && container.id) {
+                try {
+                    new window.TradingView.widget({
+                        ...finalOptions,
+                        container_id: container.id,
+                    });
+                } catch (error) {
+                    console.error('Error initializing TradingView widget:', error);
+                    container.innerHTML = '<div class="p-3 text-center text-sm text-muted-foreground">Chart temporarily unavailable</div>';
+                }
             }
         } else {
+             // For ticker tape and other widgets, use a simpler approach
+             const widgetDiv = document.createElement('div');
+             widgetDiv.className = 'tradingview-widget-container';
+             widgetDiv.innerHTML = `
+                 <div class="tradingview-widget-container__widget"></div>
+                 <div class="tradingview-widget-copyright">
+                     <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+                         <span class="blue-text">Track all markets on TradingView</span>
+                     </a>
+                 </div>
+             `;
+             container.appendChild(widgetDiv);
+
              const script = document.createElement('script');
-             script.src = WIDGET_SCRIPT_URLS[widgetType];
              script.type = 'text/javascript';
              script.async = true;
-             script.innerHTML = JSON.stringify(finalOptions);
+             script.src = WIDGET_SCRIPT_URLS[widgetType];
+
+             // Create configuration object
+             const config = {
+                 symbols: finalOptions.symbols || [],
+                 showSymbolLogo: finalOptions.showSymbolLogo !== false,
+                 isTransparent: finalOptions.isTransparent !== false,
+                 displayMode: finalOptions.displayMode || 'adaptive',
+                 colorTheme: finalOptions.colorTheme || theme,
+                 locale: finalOptions.locale || language
+             };
+
+             // Set the configuration as innerHTML (TradingView's expected format)
+             script.innerHTML = JSON.stringify(config, null, 2);
+
+             script.onload = () => {
+                 console.log(`${widgetType} widget loaded`);
+             };
+
+             script.onerror = () => {
+                 console.error(`Failed to load ${widgetType} widget`);
+                 widgetDiv.innerHTML = `
+                     <div class="p-3 text-center text-sm text-muted-foreground">
+                         Market ticker • EUR/USD • GBP/USD • Gold • S&P 500 • BTC
+                     </div>
+                 `;
+             };
+
              container.appendChild(script);
         }
         
     }, [widgetType, options, theme, language]);
 
     const containerId = `tradingview_widget_${widgetType}_${Math.random().toString(36).substr(2, 9)}`;
+
+    // Clean up function to remove scripts when component unmounts
+    useEffect(() => {
+        return () => {
+            if (containerRef.current) {
+                containerRef.current.innerHTML = '';
+            }
+        };
+    }, []);
 
     return (
         <div id={containerId} ref={containerRef} className={`tradingview-widget-container ${className}`} style={{ height: '100%', width: '100%' }}>

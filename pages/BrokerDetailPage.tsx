@@ -705,69 +705,36 @@ const BrokerDetailPage: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div 
-                    className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md"
-                    style={{ 
-                      backgroundColor: designSystem.colors.neutral[50],
-                      border: `1px solid ${designSystem.colors.neutral[200]}`
-                    }}
-                  >
-                    <div 
-                      className="text-2xl md:text-3xl font-bold mb-1"
-                      style={{ color: designSystem.colors.primary[600] }}
-                    >
+                  <div className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md bg-muted/50 border">
+                    <div className="text-2xl md:text-3xl font-bold mb-1 text-primary">
                       {formatNumber(brokerStats.marketsAvailable)}+
                     </div>
-                    <div className="text-sm font-medium" style={{ color: designSystem.colors.neutral[600] }}>
+                    <div className="text-sm font-medium text-muted-foreground">
                       Markets
                     </div>
                   </div>
                   
-                  <div 
-                    className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md"
-                    style={{ 
-                      backgroundColor: designSystem.colors.neutral[50],
-                      border: `1px solid ${designSystem.colors.neutral[200]}`
-                    }}
-                  >
-                    <div 
-                      className="text-2xl md:text-3xl font-bold mb-1"
-                      style={{ color: designSystem.colors.primary[600] }}
-                    >
+                  <div className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md bg-muted/50 border">
+                    <div className="text-2xl md:text-3xl font-bold mb-1 text-primary">
                       {formatCurrency(brokerStats.minDeposit)}
                     </div>
-                    <div className="text-sm font-medium" style={{ color: designSystem.colors.neutral[600] }}>
+                    <div className="text-sm font-medium text-muted-foreground">
                       Min Deposit
                     </div>
                   </div>
                   
-                  <div 
-                    className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md"
-                    style={{ 
-                      backgroundColor: designSystem.colors.neutral[50],
-                      border: `1px solid ${designSystem.colors.neutral[200]}`
-                    }}
-                  >
-                    <div 
-                      className="text-2xl md:text-3xl font-bold mb-1"
-                      style={{ color: designSystem.colors.primary[600] }}
-                    >
+                  <div className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md bg-muted/50 border">
+                    <div className="text-2xl md:text-3xl font-bold mb-1 text-primary">
                       {brokerStats.supportHours}
                     </div>
-                    <div className="text-sm font-medium" style={{ color: designSystem.colors.neutral[600] }}>
+                    <div className="text-sm font-medium text-muted-foreground">
                       Support
                     </div>
                   </div>
                 </div>
                 
                 {/* Broker Summary */}
-                <div 
-                  className="p-4 rounded-lg"
-                  style={{ 
-                    backgroundColor: designSystem.colors.primary[50],
-                    border: `1px solid ${designSystem.colors.primary[200]}`
-                  }}
-                >
+                <div className="p-4 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/20 dark:border-primary/30">
                   <p className="text-base leading-relaxed text-muted-foreground">
                     {broker.summary || broker.description}
                   </p>
@@ -1011,26 +978,26 @@ const BrokerDetailPage: React.FC = () => {
                         <h3 className="font-semibold mb-4">Safety Features</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {broker.security?.segregatedAccounts && (
-                            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-                              <CheckCircle className="w-5 h-5 text-green-600" />
+                            <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                              <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                               <span className="font-medium">Segregated Accounts</span>
                             </div>
                           )}
                           {broker.tradingConditionsExtended?.negativeBalanceProtection && (
-                            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-                              <CheckCircle className="w-5 h-5 text-green-600" />
+                            <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                              <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                               <span className="font-medium">Negative Balance Protection</span>
                             </div>
                           )}
                           {broker.security?.investorCompensationScheme?.available && (
-                            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-                              <CheckCircle className="w-5 h-5 text-green-600" />
+                            <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                              <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                               <span className="font-medium">Investor Compensation: {broker.security.investorCompensationScheme.amount}</span>
                             </div>
                           )}
                           {broker.security?.twoFactorAuth && (
-                            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-                              <CheckCircle className="w-5 h-5 text-green-600" />
+                            <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                              <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                               <span className="font-medium">Two-Factor Authentication</span>
                             </div>
                           )}
@@ -1453,7 +1420,7 @@ const BrokerDetailPage: React.FC = () => {
                 {user ? (
                   <div className="mb-4">
                     <textarea
-                      className="w-full p-3 border rounded-md"
+                      className="w-full p-3 border rounded-md bg-background text-foreground border-border placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary"
                       rows={3}
                       placeholder="Ask a question or share your thoughts about this broker..."
                       value={newDiscussionPost}

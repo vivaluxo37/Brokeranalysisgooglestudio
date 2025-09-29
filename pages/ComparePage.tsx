@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useComparison } from '../hooks/useComparison';
-import { brokers as allBrokers } from '../data/brokers';
+import { useBrokers } from '../hooks/useBrokers';
 import ComparisonTable from '../components/brokers/ComparisonTable';
 import { Button } from '../components/ui/button';
 import { getComparisonSummary } from '../services/geminiService';
@@ -12,8 +12,12 @@ import { useTranslation } from '../hooks/useTranslation';
 
 const ComparePage: React.FC = () => {
   const { comparisonList, clearComparison } = useComparison();
-  const brokersToCompare = allBrokers.filter(broker => comparisonList.includes(broker.id));
+  const { brokers: allBrokers, loading: brokersLoading } = useBrokers();
   const { t } = useTranslation();
+  
+  const brokersToCompare = useMemo(() => {
+    return allBrokers.filter(broker => comparisonList.includes(broker.id));
+  }, [allBrokers, comparisonList]);
   
   const [loadingSummary, setLoadingSummary] = useState(false);
   const [summary, setSummary] = useState<string | null>(null);

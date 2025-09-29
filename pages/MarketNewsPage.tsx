@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Broker, NewsArticle } from '../types';
 import { mockNewsData } from '../data/news';
 import { getNewsAnalysis } from '../services/geminiService';
-import { brokers as allBrokers } from '../data/brokers';
+import { useBrokers } from '../hooks/useBrokers';
 import { Card, CardContent, CardHeader } from '../components/ui/card';
 import Spinner from '../components/ui/Spinner';
 import { Icons } from '../constants';
@@ -10,6 +10,7 @@ import MiniBrokerCard from '../components/news/MiniBrokerCard';
 import { Badge } from '../components/ui/badge';
 
 const MarketNewsPage: React.FC = () => {
+  const { brokers: allBrokers } = useBrokers();
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
   const [analysis, setAnalysis] = useState<{ analysis: string; brokers: Broker[] } | null>(null);
@@ -121,7 +122,7 @@ const MarketNewsPage: React.FC = () => {
                                         <h4 className="font-semibold text-primary-400 mb-2">Recommended Brokers</h4>
                                         <div className="space-y-2">
                                             {analysis.brokers.length > 0 ? (
-                                                analysis.brokers.map(broker => <MiniBrokerCard key={broker.id} broker={broker} />)
+                                                analysis.brokers.map(broker => <MiniBrokerCard key={`news-${broker.id}`} broker={broker} />)
                                             ) : (
                                                 <p className="text-sm text-card-foreground/70">Could not determine specific broker recommendations for this event.</p>
                                             )}

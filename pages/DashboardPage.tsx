@@ -262,7 +262,7 @@ const DashboardPage: React.FC = () => {
                             <div>
                                <h4 className="font-semibold text-primary-400 mb-4">{t('dashboardPage.history.recommendations')}</h4>
                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {matchedBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />)}
+                                    {matchedBrokers.map(broker => <BrokerCard key={`dashboard-matched-${broker.id}`} broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />)}
                                </div>
                             </div>
                         </div>
@@ -341,7 +341,7 @@ const DashboardPage: React.FC = () => {
                 </div>
             ) : favoriteBrokers.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {favoriteBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />)}
+                    {favoriteBrokers.map(broker => <BrokerCard key={`dashboard-favorite-${broker.id}`} broker={broker} onQuickView={handleOpenQuickView} />)}
                 </div>
             ) : (
                 <div className="text-center py-12 px-6">

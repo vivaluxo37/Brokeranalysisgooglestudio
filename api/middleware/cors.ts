@@ -1,10 +1,12 @@
+import type { VercelRequest } from '@vercel/node';
+
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
   'http://localhost:5184',
   'http://localhost:3000'
 ];
 
-export function cors(request: Request) {
-  const origin = request.headers.get('origin');
+export function cors(request: VercelRequest) {
+  const origin = request.headers.origin as string;
 
   if (origin && allowedOrigins.includes(origin)) {
     return {

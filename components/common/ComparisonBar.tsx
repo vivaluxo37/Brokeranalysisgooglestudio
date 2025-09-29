@@ -30,7 +30,7 @@ const ComparisonBar: React.FC = () => {
                     <div className="flex items-center gap-3 overflow-x-auto">
                         <span className="font-semibold text-card-foreground hidden md:block">Comparing:</span>
                         {brokersToCompare.map(broker => (
-                            <div key={broker.id} className="relative flex-shrink-0 group">
+                            <div key={`comparison-${broker.id}`} className="relative flex-shrink-0 group">
                                 <img src={broker.logoUrl} alt={broker.name} className="h-10 bg-white p-1 rounded-md" />
                                 <button
                                     onClick={() => removeBrokerFromComparison(broker.id)}
@@ -47,7 +47,7 @@ const ComparisonBar: React.FC = () => {
                             Clear All
                         </Button>
                         <ReactRouterDOM.Link to="/compare">
-                            <Button variant="primary" size="sm">
+                            <Button variant="default" size="sm">
                                 Compare Now ({comparisonList.length})
                             </Button>
                         </ReactRouterDOM.Link>

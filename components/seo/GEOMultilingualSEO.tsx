@@ -34,41 +34,48 @@ const GEOMultilingualSEO: React.FC<GEOMultilingualSEOProps> = ({
   const { currentLocale, supportedLocales, changeLanguage } = useLanguage();
 
   useEffect(() => {
-    // Generate hreflang tags
-    const hreflangTags = generateHreflangTags(location.pathname);
+    try {
+      // Generate hreflang tags
+      const hreflangTags = generateHreflangTags(location.pathname);
 
-    // Remove existing hreflang tags
-    const existingTags = document.querySelectorAll('link[rel="alternate"]');
-    existingTags.forEach(tag => tag.remove());
+      // Remove existing hreflang tags
+      const existingTags = document.querySelectorAll('link[rel="alternate"]');
+      existingTags.forEach(tag => tag.remove());
 
-    // Add new hreflang tags
-    hreflangTags.forEach(({ hreflang, href }) => {
-      const link = document.createElement('link');
-      link.rel = 'alternate';
-      link.hreflang = hreflang;
-      link.href = href;
-      document.head.appendChild(link);
-    });
-
-    // Add geo meta tags if geo targeting is enabled
-    if (geoTargeting) {
-      const geoMetaTags = [
-        { name: 'geo.country', content: geoTargeting.country },
-        { name: 'geo.region', content: geoTargeting.region || geoTargeting.country },
-        ...(geoTargeting.city ? [{ name: 'geo.placename', content: geoTargeting.city }] : [])
-      ];
-
-      geoMetaTags.forEach(({ name, content }) => {
-        let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
-        if (!meta) {
-          meta = document.createElement('meta');
-          meta.name = name;
-          document.head.appendChild(meta);
-        }
-        meta.content = content;
+      // Add new hreflang tags
+      hreflangTags.forEach(({ hreflang, href }) => {
+        const link = document.createElement('link');
+        link.rel = 'alternate';
+        link.hreflang = hreflang;
+        link.href = href;
+        document.head.appendChild(link);
       });
-    }
 
+      // Add geo meta tags if geo targeting is enabled
+      if (geoTargeting) {
+        const geoMetaTags = [
+          { name: 'geo.country', content: geoTargeting.country },
+          { name: 'geo.region', content: geoTargeting.region || geoTargeting.country },
+          ...(geoTargeting.city ? [{ name: 'geo.placename', content: geoTargeting.city }] : [])
+        ];
+
+        geoMetaTags.forEach(({ name, content }) => {
+          try {
+            let meta = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
+            if (!meta) {
+              meta = document.createElement('meta');
+              meta.name = name;
+              document.head.appendChild(meta);
+            }
+            meta.content = content;
+          } catch (error) {
+            console.error(`Error setting geo meta tag for ${name}:`, error);
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error in GEOMultilingualSEO useEffect:', error);
+    }
   }, [location.pathname, geoTargeting, generateHreflangTags]);
 
   // Get current translation or fallback to default

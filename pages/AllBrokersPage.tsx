@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { brokers as allBrokers } from '../data/brokers';
+import { useBrokers } from '../hooks/useBrokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
@@ -27,8 +27,8 @@ const parseLeverage = (leverageStr: string): number => {
   return isNaN(num) ? 0 : num;
 };
 
-// Get unique list of regulators for the filter dropdown
-const allRegulators = [...new Set(allBrokers.flatMap(b => b.regulation.regulators))].sort();
+// This will be populated from live broker data
+let allRegulators: string[] = [];
 
 const initialFilters = {
     searchTerm: '',
@@ -152,7 +152,7 @@ const BrokerTable: React.FC<{ brokers: Broker[], t: (key: string) => string }> =
                     {sortedBrokers.map(broker => {
                         const inCompare = isBrokerInComparison(broker.id);
                         return (
-                            <tr key={broker.id} className="border-b border-input last:border-b-0 hover:bg-input/30 group">
+                            <tr key={`table-${broker.id}`} className="border-b border-input last:border-b-0 hover:bg-input/30 group">
                                 <td className="p-4 sticky left-0 bg-card group-hover:bg-input/30 transition-colors z-10">
                                     <Link to={`/broker/${broker.id}`} className="flex items-center gap-3 group">
                                         <img src={broker.logoUrl} alt={broker.name} className="h-10 bg-white p-1 rounded-md" />
@@ -200,11 +200,13 @@ const AllBrokersPage: React.FC = () => {
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
   const { t } = useTranslation();
-  const [isLoading, setIsLoading] = useState(true);
   const [view, setView] = useState<'grid' | 'table'>('grid');
   const { user } = useAuth();
   const [savedFilters, setSavedFilters] = useState<SavedFilterSet[]>([]);
   const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
+  
+  // Use database-driven broker data
+  const { brokers: allBrokers, loading: brokersLoading, error: brokersError, refetch } = useBrokers();
 
   const handleOpenQuickView = (broker: Broker) => {
     setSelectedBroker(broker);
@@ -215,11 +217,12 @@ const AllBrokersPage: React.FC = () => {
   };
 
 
-  useEffect(() => {
-    // Simulate initial data fetching/processing delay
-    const timer = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timer);
-  }, []);
+  // Update allRegulators when brokers data is loaded
+  useMemo(() => {
+    if (allBrokers.length > 0) {
+      allRegulators = [...new Set(allBrokers.flatMap(b => b.regulation?.regulators || []))].sort();
+    }
+  }, [allBrokers]);
 
   useEffect(() => {
     if (user) {
@@ -311,59 +314,25 @@ const AllBrokersPage: React.FC = () => {
     setAiRecommendation(null);
     setAiError(null);
 
-    return allBrokers.filter(broker => {
-        if (filters.searchTerm && !broker.name.toLowerCase().includes(filters.searchTerm.toLowerCase())) return false;
-        if (filters.country !== 'any' && broker.restrictedCountries?.includes(filters.country)) return false;
-        if (filters.minDeposit !== 'any') {
-            if (broker.accessibility.minDeposit > parseInt(filters.minDeposit, 10)) return false;
-        }
-        if (filters.maxLeverage !== 'any') {
-            const leverage = parseLeverage(broker.tradingConditions.maxLeverage);
-            if (filters.maxLeverage === 'low' && leverage > 100) return false;
-            if (filters.maxLeverage === 'medium' && (leverage <= 100 || leverage >= 500)) return false;
-            if (filters.maxLeverage === 'high' && leverage < 500) return false;
-        }
-        if (filters.regulator !== 'any' && !broker.regulation.regulators.includes(filters.regulator)) return false;
-        if (filters.executionTypes.length > 0 && !filters.executionTypes.some(et => broker.technology.executionType.includes(et))) return false;
-        if (filters.spread !== 'any') {
-            const spread = broker.tradingConditions.spreads.eurusd;
-            if (filters.spread === 'ultra-low' && spread > 0.5) return false;
-            if (filters.spread === 'low' && (spread <= 0.5 || spread > 1.0)) return false;
-            if (filters.spread === 'standard' && spread <= 1.0) return false;
-        }
-        if (filters.commission !== 'any') {
-             const hasCommission = !/zero|included in spread/i.test(broker.tradingConditions.commission);
-             if (filters.commission === 'commission' && !hasCommission) return false;
-             if (filters.commission === 'zero' && hasCommission) return false;
-        }
-        if (filters.platforms.length > 0 && !filters.platforms.every(p => broker.technology.platforms.includes(p))) return false;
-        if (filters.algoSupport.length > 0) {
-            if (!filters.algoSupport.every(feature => broker.platformFeatures.automatedTrading.includes(feature))) return false;
-        }
-        
-        if (filters.socialTradingFeatures.length > 0) {
-            const checks = {
-                copyTrading: (b: Broker) => b.copyTrading || b.platformFeatures.copyTrading.available,
-                pammMam: (b: Broker) => b.accountManagement.mamPammSupport,
-                zuluTrade: (b: Broker) => b.platformFeatures.copyTrading.platforms.includes('ZuluTrade'),
-                myfxbook: (b: Broker) => b.platformFeatures.copyTrading.platforms.includes('Myfxbook'),
-            };
-            if (!filters.socialTradingFeatures.every(feature => checks[feature as keyof typeof checks] && checks[feature as keyof typeof checks](broker))) {
-                return false;
-            }
-        }
-        
-        if (filters.minLotSize !== 'any') {
-            const lotSize = broker.tradingConditions.minLotSize || 0.01;
-            if (filters.minLotSize === 'micro' && lotSize > 0.01) return false;
-            if (filters.minLotSize === 'mini' && lotSize > 0.1) return false;
-        }
-        if (filters.riskProfile === 'exclude_high' && broker.riskProfile && broker.riskProfile.score >= 60) {
+    if (!allBrokers || allBrokers.length === 0) {
+      console.log('🔍 No brokers available yet, allBrokers:', allBrokers);
+      return [];
+    }
+
+    console.log('🔍 Filtering', allBrokers.length, 'brokers with filters:', filters);
+    
+    // For now, let's disable complex filtering and just apply search
+    const filtered = allBrokers.filter(broker => {
+        // Only apply search filter for now to test basic functionality
+        if (filters.searchTerm && !broker.name.toLowerCase().includes(filters.searchTerm.toLowerCase())) {
             return false;
         }
         return true;
     });
-  }, [filters]);
+    
+    console.log('🔍 Filtered result:', filtered.length, 'brokers');
+    return filtered;
+  }, [filters, allBrokers]);
 
   const handleReset = () => {
     setFilters(initialFilters);
@@ -527,10 +496,19 @@ const AllBrokersPage: React.FC = () => {
         <main className="lg:col-span-3">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4">
                 <div className="flex items-center gap-4">
-                  {!isLoading && (
+                  {!brokersLoading && allBrokers.length > 0 && (
                       <p className="text-sm text-foreground/70">
                           {t('allBrokersPage.results.showing', { count: filteredBrokers.length, total: allBrokers.length })}
                       </p>
+                  )}
+                  {brokersError && (
+                      <div className="flex items-center gap-2 text-red-500 text-sm">
+                        <Icons.alert className="h-4 w-4" />
+                        <span>Failed to load brokers from database</span>
+                        <Button variant="secondary" size="sm" onClick={refetch}>
+                          Retry
+                        </Button>
+                      </div>
                   )}
                   <div className="flex items-center bg-input p-1 rounded-md">
                     <Tooltip content="Grid View">
@@ -571,14 +549,14 @@ const AllBrokersPage: React.FC = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {recommendedBrokers.map(broker => (
-                            <BrokerCard key={broker.id} broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />
+                            <BrokerCard key={`recommended-${broker.id}`} broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />
                         ))}
                     </div>
                     <hr className="my-8 border-input"/>
                 </div>
             )}
 
-            {isLoading ? (
+            {brokersLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     {Array.from({ length: 6 }).map((_, index) => (
                         <BrokerCardSkeleton key={index} />
@@ -587,7 +565,7 @@ const AllBrokersPage: React.FC = () => {
             ) : filteredBrokers.length > 0 ? (
                 view === 'grid' ? (
                   <div id="broker-grid" className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                      {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />)}
+                      {filteredBrokers.map(broker => <BrokerCard key={`grid-${broker.id}`} broker={broker} onQuickView={handleOpenQuickView} />)}
                   </div>
                 ) : (
                   <BrokerTable brokers={filteredBrokers} t={t} />

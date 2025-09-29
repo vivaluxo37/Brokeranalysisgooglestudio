@@ -1,0 +1,4568 @@
+{
+  "reportGenerated": "2025-09-29T12:53:32.767Z",
+  "executionTime": 40259,
+  "brokersSummary": {
+    "total": 75,
+    "verified": 72,
+    "withDiscrepancies": 3,
+    "failed": 0,
+    "averageConfidence": 0.8282294109247769,
+    "totalProcessingTime": 49
+  },
+  "dataQualityMetrics": {
+    "totalDiscrepancies": 3,
+    "criticalIssues": 0,
+    "highSeverityIssues": 3,
+    "fieldAnalysis": {
+      "headquarters": 3
+    },
+    "topProblematicBrokers": [
+      {
+        "name": "First Direct",
+        "issues": 1,
+        "confidence": 0.5672831892523357
+      },
+      {
+        "name": "IG Group",
+        "issues": 1,
+        "confidence": 0.5460266191671288
+      },
+      {
+        "name": "Revolut Trading",
+        "issues": 1,
+        "confidence": 0.6137144236656866
+      }
+    ]
+  },
+  "detailedResults": [
+    {
+      "brokerId": "5",
+      "brokerName": "Admiral Markets",
+      "verifiedAt": "2025-09-29T12:52:53.378Z",
+      "status": "verified",
+      "overallConfidence": 0.8098592710579346,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/admiral-markets",
+          "dataFound": {
+            "name": "Admiral Markets",
+            "foundingYear": 2002,
+            "headquarters": "Tallinn, Estonia, Additional Office",
+            "minDeposit": 120,
+            "rating": 1.4375456400790894,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7773671562489696,
+          "scrapedAt": "2025-09-29T12:52:53.376Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/admiral-markets",
+          "dataFound": {
+            "name": "Admiral Markets",
+            "foundingYear": 2002,
+            "headquarters": "Tallinn, Estonia",
+            "minDeposit": 101,
+            "regulation": "regulated"
+          },
+          "confidence": 0.8838618699567158,
+          "scrapedAt": "2025-09-29T12:52:53.376Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/admiral-markets",
+          "dataFound": {
+            "name": "Admiral Markets",
+            "foundingYear": 2001,
+            "headquarters": "Tallinn, Estonia",
+            "minDeposit": 105,
+            "regulationStatus": "regulated"
+          },
+          "confidence": 0.7683487869681187,
+          "scrapedAt": "2025-09-29T12:52:53.376Z"
+        }
+      ],
+      "processingTime": 3,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "61",
+      "brokerName": "AJ Bell",
+      "verifiedAt": "2025-09-29T12:52:53.892Z",
+      "status": "verified",
+      "overallConfidence": 0.7683967061212934,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/aj-bell",
+          "dataFound": {
+            "name": "AJ Bell",
+            "foundingYear": 1992,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 500,
+            "rating": 1.135897014949897,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7859730136007027,
+          "scrapedAt": "2025-09-29T12:52:53.891Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/aj-bell",
+          "dataFound": {
+            "name": "AJ Bell",
+            "foundingYear": 1992,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 500,
+            "regulation": "SEC, FINRA"
+          },
+          "confidence": 0.8626772253908329,
+          "scrapedAt": "2025-09-29T12:52:53.891Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/aj-bell-review",
+          "dataFound": {
+            "name": "AJ Bell",
+            "foundingYear": 1992,
+            "minDeposit": 500,
+            "trustScore": 4.031115704080861
+          },
+          "confidence": 0.6565398793723445,
+          "scrapedAt": "2025-09-29T12:52:53.891Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "35",
+      "brokerName": "Alpari",
+      "verifiedAt": "2025-09-29T12:52:54.401Z",
+      "status": "verified",
+      "overallConfidence": 0.8845809804923659,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/alpari",
+          "dataFound": {
+            "name": "Alpari",
+            "foundingYear": 2023,
+            "headquarters": "Amsterdam, Netherlands",
+            "minDeposit": 500,
+            "rating": 2.112762397684391,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8831471368143597,
+          "scrapedAt": "2025-09-29T12:52:54.395Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/alpari",
+          "dataFound": {
+            "name": "Alpari",
+            "foundingYear": 2023,
+            "headquarters": "Amsterdam, Netherlands",
+            "minDeposit": 500,
+            "regulation": "CySEC, ASIC"
+          },
+          "confidence": 0.9120870197918151,
+          "scrapedAt": "2025-09-29T12:52:54.395Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/alpari-review",
+          "dataFound": {
+            "name": "Alpari",
+            "foundingYear": 2023,
+            "minDeposit": 500,
+            "trustScore": 5.092207053521103
+          },
+          "confidence": 0.8514039569028822,
+          "scrapedAt": "2025-09-29T12:52:54.395Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/alpari",
+          "dataFound": {
+            "name": "Alpari",
+            "foundingYear": 2023,
+            "headquarters": "Amsterdam, Netherlands",
+            "minDeposit": 500,
+            "regulationStatus": "CySEC, ASIC"
+          },
+          "confidence": 0.8916858084604062,
+          "scrapedAt": "2025-09-29T12:52:54.395Z"
+        }
+      ],
+      "processingTime": 6,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "44",
+      "brokerName": "AMarkets",
+      "verifiedAt": "2025-09-29T12:52:54.938Z",
+      "status": "verified",
+      "overallConfidence": 0.831066090900686,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/amarkets",
+          "dataFound": {
+            "name": "AMarkets",
+            "foundingYear": 2013,
+            "headquarters": "Paris, France",
+            "minDeposit": 5,
+            "rating": 3.2678425703626064,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9325588782814687,
+          "scrapedAt": "2025-09-29T12:52:54.936Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/amarkets",
+          "dataFound": {
+            "name": "AMarkets",
+            "foundingYear": 2012,
+            "headquarters": "Paris, France",
+            "minDeposit": 4,
+            "regulation": "JFSA"
+          },
+          "confidence": 0.8718826800096389,
+          "scrapedAt": "2025-09-29T12:52:54.936Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/amarkets-review",
+          "dataFound": {
+            "name": "AMarkets",
+            "foundingYear": 2012,
+            "minDeposit": 0,
+            "trustScore": 4.435433577116692
+          },
+          "confidence": 0.7919505030435945,
+          "scrapedAt": "2025-09-29T12:52:54.937Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/amarkets",
+          "dataFound": {
+            "name": "AMarkets",
+            "foundingYear": 2012,
+            "headquarters": "Paris, France",
+            "minDeposit": 18,
+            "regulationStatus": "JFSA"
+          },
+          "confidence": 0.7278723022680416,
+          "scrapedAt": "2025-09-29T12:52:54.937Z"
+        }
+      ],
+      "processingTime": 2,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "26",
+      "brokerName": "Axi",
+      "verifiedAt": "2025-09-29T12:52:55.459Z",
+      "status": "verified",
+      "overallConfidence": 0.8304878132732977,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/axi",
+          "dataFound": {
+            "name": "Axi",
+            "foundingYear": 2002,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "rating": 4.6706215672290945,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8205296227448463,
+          "scrapedAt": "2025-09-29T12:52:55.458Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/axi",
+          "dataFound": {
+            "name": "Axi",
+            "foundingYear": 2002,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "regulation": "FINMA"
+          },
+          "confidence": 0.9280250090481565,
+          "scrapedAt": "2025-09-29T12:52:55.458Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/axi",
+          "dataFound": {
+            "name": "Axi",
+            "foundingYear": 2002,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "regulationStatus": "FINMA"
+          },
+          "confidence": 0.7429088080268903,
+          "scrapedAt": "2025-09-29T12:52:55.458Z"
+        }
+      ],
+      "processingTime": 3,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "65",
+      "brokerName": "Barclays Smart Investor",
+      "verifiedAt": "2025-09-29T12:52:56.011Z",
+      "status": "verified",
+      "overallConfidence": 0.8534126054680483,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/barclays-smart-investor",
+          "dataFound": {
+            "name": "Barclays Smart Investor",
+            "foundingYear": 2000,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "rating": 1.154254430426847,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8603823227200024,
+          "scrapedAt": "2025-09-29T12:52:56.011Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/barclays-smart-investor",
+          "dataFound": {
+            "name": "Barclays Smart Investor",
+            "foundingYear": 2000,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "regulation": "FCA, CySEC"
+          },
+          "confidence": 0.9355588492731381,
+          "scrapedAt": "2025-09-29T12:52:56.011Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/barclays-smart-investor",
+          "dataFound": {
+            "name": "Barclays Smart Investor",
+            "foundingYear": 2000,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "regulationStatus": "FCA, CySEC"
+          },
+          "confidence": 0.7642966444110042,
+          "scrapedAt": "2025-09-29T12:52:56.011Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "30",
+      "brokerName": "Blackbull Markets",
+      "verifiedAt": "2025-09-29T12:52:56.591Z",
+      "status": "verified",
+      "overallConfidence": 0.8106500446793278,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/blackbull-markets",
+          "dataFound": {
+            "name": "Blackbull Markets",
+            "foundingYear": 2022,
+            "headquarters": "Tokyo, Japan",
+            "minDeposit": 200,
+            "rating": 2.7143555830156267,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7717421222917666,
+          "scrapedAt": "2025-09-29T12:52:56.591Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/blackbull-markets",
+          "dataFound": {
+            "name": "Blackbull Markets",
+            "foundingYear": 2022,
+            "headquarters": "Tokyo, Japan",
+            "minDeposit": 200,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.8857031764984449,
+          "scrapedAt": "2025-09-29T12:52:56.591Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/blackbull-markets-review",
+          "dataFound": {
+            "name": "Blackbull Markets",
+            "foundingYear": 2022,
+            "minDeposit": 200,
+            "trustScore": 4.178813436403797
+          },
+          "confidence": 0.6993702048001754,
+          "scrapedAt": "2025-09-29T12:52:56.591Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/blackbull-markets",
+          "dataFound": {
+            "name": "Blackbull Markets",
+            "foundingYear": 2022,
+            "headquarters": "Tokyo, Japan",
+            "minDeposit": 200,
+            "regulationStatus": "FCA, ASIC"
+          },
+          "confidence": 0.8857846751269243,
+          "scrapedAt": "2025-09-29T12:52:56.591Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "82",
+      "brokerName": "BlackRock",
+      "verifiedAt": "2025-09-29T12:52:57.106Z",
+      "status": "verified",
+      "overallConfidence": 0.7870511290654163,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/blackrock",
+          "dataFound": {
+            "name": "BlackRock",
+            "foundingYear": 2023,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 500,
+            "rating": 1.132597791446646,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8852873689988308,
+          "scrapedAt": "2025-09-29T12:52:57.105Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/blackrock",
+          "dataFound": {
+            "name": "BlackRock",
+            "foundingYear": 2023,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 500,
+            "regulation": "SEC, FINRA"
+          },
+          "confidence": 0.8261973629042697,
+          "scrapedAt": "2025-09-29T12:52:57.105Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/blackrock-review",
+          "dataFound": {
+            "name": "BlackRock",
+            "foundingYear": 2023,
+            "minDeposit": 500,
+            "trustScore": 3.464025509162968
+          },
+          "confidence": 0.7094783181617212,
+          "scrapedAt": "2025-09-29T12:52:57.105Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/blackrock",
+          "dataFound": {
+            "name": "BlackRock",
+            "foundingYear": 2023,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 500,
+            "regulationStatus": "SEC, FINRA"
+          },
+          "confidence": 0.7272414661968434,
+          "scrapedAt": "2025-09-29T12:52:57.105Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "29",
+      "brokerName": "Blueberry Markets",
+      "verifiedAt": "2025-09-29T12:52:57.608Z",
+      "status": "verified",
+      "overallConfidence": 0.8555322928976942,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/blueberry-markets",
+          "dataFound": {
+            "name": "Blueberry Markets",
+            "foundingYear": 2011,
+            "headquarters": "Toronto, Canada, Additional Office",
+            "minDeposit": 254,
+            "rating": 3.5768348151331257,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8595500716525242,
+          "scrapedAt": "2025-09-29T12:52:57.608Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/blueberry-markets",
+          "dataFound": {
+            "name": "Blueberry Markets",
+            "foundingYear": 2011,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 254,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.9132437416030558,
+          "scrapedAt": "2025-09-29T12:52:57.608Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/blueberry-markets-review",
+          "dataFound": {
+            "name": "Blueberry Markets",
+            "foundingYear": 2010,
+            "minDeposit": 252,
+            "trustScore": 3.4574188102363244
+          },
+          "confidence": 0.7743673903979903,
+          "scrapedAt": "2025-09-29T12:52:57.608Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/blueberry-markets",
+          "dataFound": {
+            "name": "Blueberry Markets",
+            "foundingYear": 2010,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 258,
+            "regulationStatus": "BaFin"
+          },
+          "confidence": 0.8749679679372067,
+          "scrapedAt": "2025-09-29T12:52:57.608Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "47",
+      "brokerName": "CedarFX",
+      "verifiedAt": "2025-09-29T12:52:58.119Z",
+      "status": "verified",
+      "overallConfidence": 0.8055886981744124,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/cedarfx",
+          "dataFound": {
+            "name": "CedarFX",
+            "foundingYear": 1999,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 0,
+            "rating": 2.7303844861389375,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8073711531011876,
+          "scrapedAt": "2025-09-29T12:52:58.119Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/cedarfx",
+          "dataFound": {
+            "name": "CedarFX",
+            "foundingYear": 1999,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 0,
+            "regulation": "IIROC"
+          },
+          "confidence": 0.9124308971644914,
+          "scrapedAt": "2025-09-29T12:52:58.119Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/cedarfx-review",
+          "dataFound": {
+            "name": "CedarFX",
+            "foundingYear": 1999,
+            "minDeposit": 0,
+            "trustScore": 4.028136782627253
+          },
+          "confidence": 0.6848589575353331,
+          "scrapedAt": "2025-09-29T12:52:58.119Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/cedarfx",
+          "dataFound": {
+            "name": "CedarFX",
+            "foundingYear": 1999,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 0,
+            "regulationStatus": "IIROC"
+          },
+          "confidence": 0.8176937848966374,
+          "scrapedAt": "2025-09-29T12:52:58.119Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "51",
+      "brokerName": "Charles Schwab",
+      "verifiedAt": "2025-09-29T12:52:58.622Z",
+      "status": "verified",
+      "overallConfidence": 0.8443749923320724,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/charles-schwab",
+          "dataFound": {
+            "name": "Charles Schwab",
+            "foundingYear": 2023,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 200,
+            "rating": 1.137728998457258,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7514058369601818,
+          "scrapedAt": "2025-09-29T12:52:58.622Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/charles-schwab",
+          "dataFound": {
+            "name": "Charles Schwab",
+            "foundingYear": 2023,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 200,
+            "regulation": "FINMA"
+          },
+          "confidence": 0.9483462174398597,
+          "scrapedAt": "2025-09-29T12:52:58.622Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/charles-schwab-review",
+          "dataFound": {
+            "name": "Charles Schwab",
+            "foundingYear": 2023,
+            "minDeposit": 200,
+            "trustScore": 3.6775821443010037
+          },
+          "confidence": 0.8732949254258026,
+          "scrapedAt": "2025-09-29T12:52:58.622Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/charles-schwab",
+          "dataFound": {
+            "name": "Charles Schwab",
+            "foundingYear": 2023,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 200,
+            "regulationStatus": "FINMA"
+          },
+          "confidence": 0.8044529895024453,
+          "scrapedAt": "2025-09-29T12:52:58.622Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "22",
+      "brokerName": "City Index",
+      "verifiedAt": "2025-09-29T12:52:59.153Z",
+      "status": "verified",
+      "overallConfidence": 0.8614161084748583,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/city-index",
+          "dataFound": {
+            "name": "City Index",
+            "foundingYear": 1998,
+            "headquarters": "Hong Kong",
+            "minDeposit": 0,
+            "rating": 1.0172390396650437,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8601506443274588,
+          "scrapedAt": "2025-09-29T12:52:59.153Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/city-index",
+          "dataFound": {
+            "name": "City Index",
+            "foundingYear": 1998,
+            "headquarters": "Hong Kong",
+            "minDeposit": 0,
+            "regulation": "SEC, FINRA"
+          },
+          "confidence": 0.9361487921826697,
+          "scrapedAt": "2025-09-29T12:52:59.153Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/city-index-review",
+          "dataFound": {
+            "name": "City Index",
+            "foundingYear": 1998,
+            "minDeposit": 0,
+            "trustScore": 4.758730982580445
+          },
+          "confidence": 0.7879488889144468,
+          "scrapedAt": "2025-09-29T12:52:59.153Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "21",
+      "brokerName": "CMC Markets",
+      "verifiedAt": "2025-09-29T12:52:59.656Z",
+      "status": "verified",
+      "overallConfidence": 0.8410589011601214,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/cmc-markets",
+          "dataFound": {
+            "name": "CMC Markets",
+            "foundingYear": 1999,
+            "headquarters": "Hong Kong",
+            "minDeposit": 264,
+            "rating": 0.9925672021957188,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7994234700346665,
+          "scrapedAt": "2025-09-29T12:52:59.656Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/cmc-markets",
+          "dataFound": {
+            "name": "CMC Markets",
+            "foundingYear": 1999,
+            "headquarters": "Hong Kong",
+            "minDeposit": 250,
+            "regulation": "FSCA"
+          },
+          "confidence": 0.8882758368199376,
+          "scrapedAt": "2025-09-29T12:52:59.656Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/cmc-markets-review",
+          "dataFound": {
+            "name": "CMC Markets",
+            "foundingYear": 1999,
+            "minDeposit": 258,
+            "trustScore": 4.827495647048237
+          },
+          "confidence": 0.8710225144892368,
+          "scrapedAt": "2025-09-29T12:52:59.656Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/cmc-markets",
+          "dataFound": {
+            "name": "CMC Markets",
+            "foundingYear": 1999,
+            "headquarters": "Hong Kong",
+            "minDeposit": 250,
+            "regulationStatus": "FSCA"
+          },
+          "confidence": 0.8055137832966444,
+          "scrapedAt": "2025-09-29T12:52:59.656Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "88",
+      "brokerName": "Credit Suisse",
+      "verifiedAt": "2025-09-29T12:53:00.167Z",
+      "status": "verified",
+      "overallConfidence": 0.9040116305347267,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/credit-suisse",
+          "dataFound": {
+            "name": "Credit Suisse",
+            "foundingYear": 2016,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 500,
+            "rating": 3.6336222149907482,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9495607854383867,
+          "scrapedAt": "2025-09-29T12:53:00.167Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/credit-suisse",
+          "dataFound": {
+            "name": "Credit Suisse",
+            "foundingYear": 2016,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 500,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.945867533809587,
+          "scrapedAt": "2025-09-29T12:53:00.167Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/credit-suisse-review",
+          "dataFound": {
+            "name": "Credit Suisse",
+            "foundingYear": 2016,
+            "minDeposit": 500,
+            "trustScore": 3.6896396020979774
+          },
+          "confidence": 0.8166065723562059,
+          "scrapedAt": "2025-09-29T12:53:00.167Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "23",
+      "brokerName": "Darwinex",
+      "verifiedAt": "2025-09-29T12:53:00.688Z",
+      "status": "verified",
+      "overallConfidence": 0.835979135880965,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/darwinex",
+          "dataFound": {
+            "name": "Darwinex",
+            "foundingYear": 2010,
+            "headquarters": "Paris, France",
+            "minDeposit": 100,
+            "rating": 3.98755773018173,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8520322371016278,
+          "scrapedAt": "2025-09-29T12:53:00.687Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/darwinex",
+          "dataFound": {
+            "name": "Darwinex",
+            "foundingYear": 2010,
+            "headquarters": "Paris, France",
+            "minDeposit": 100,
+            "regulation": "AFM"
+          },
+          "confidence": 0.9121064116637515,
+          "scrapedAt": "2025-09-29T12:53:00.687Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/darwinex-review",
+          "dataFound": {
+            "name": "Darwinex",
+            "foundingYear": 2010,
+            "minDeposit": 100,
+            "trustScore": 4.404461660316217
+          },
+          "confidence": 0.7421566539200618,
+          "scrapedAt": "2025-09-29T12:53:00.687Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/darwinex",
+          "dataFound": {
+            "name": "Darwinex",
+            "foundingYear": 2010,
+            "headquarters": "Paris, France",
+            "minDeposit": 100,
+            "regulationStatus": "AFM"
+          },
+          "confidence": 0.8376212408384188,
+          "scrapedAt": "2025-09-29T12:53:00.687Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "57",
+      "brokerName": "Degiro",
+      "verifiedAt": "2025-09-29T12:53:01.244Z",
+      "status": "verified",
+      "overallConfidence": 0.8597191487384641,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/degiro",
+          "dataFound": {
+            "name": "Degiro",
+            "foundingYear": 2016,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 1000,
+            "rating": 2.6656721061911237,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7539791136033291,
+          "scrapedAt": "2025-09-29T12:53:01.244Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/degiro",
+          "dataFound": {
+            "name": "Degiro",
+            "foundingYear": 2016,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 1000,
+            "regulation": "JFSA"
+          },
+          "confidence": 0.9441476788909681,
+          "scrapedAt": "2025-09-29T12:53:01.244Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/degiro-review",
+          "dataFound": {
+            "name": "Degiro",
+            "foundingYear": 2016,
+            "minDeposit": 1000,
+            "trustScore": 3.625883736452531
+          },
+          "confidence": 0.856434173343869,
+          "scrapedAt": "2025-09-29T12:53:01.244Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/degiro",
+          "dataFound": {
+            "name": "Degiro",
+            "foundingYear": 2016,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 1000,
+            "regulationStatus": "JFSA"
+          },
+          "confidence": 0.8843156291156903,
+          "scrapedAt": "2025-09-29T12:53:01.244Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "52",
+      "brokerName": "E*TRADE",
+      "verifiedAt": "2025-09-29T12:53:01.776Z",
+      "status": "verified",
+      "overallConfidence": 0.8052863637725004,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/e*trade",
+          "dataFound": {
+            "name": "E*TRADE",
+            "foundingYear": 1996,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 250,
+            "rating": 1.3355211807266254,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8395539792381235,
+          "scrapedAt": "2025-09-29T12:53:01.776Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/e*trade",
+          "dataFound": {
+            "name": "E*TRADE",
+            "foundingYear": 1996,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 250,
+            "regulation": "FCA, CySEC"
+          },
+          "confidence": 0.8065901203542946,
+          "scrapedAt": "2025-09-29T12:53:01.776Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/e*trade-review",
+          "dataFound": {
+            "name": "E*TRADE",
+            "foundingYear": 1996,
+            "minDeposit": 250,
+            "trustScore": 3.739760350657389
+          },
+          "confidence": 0.7697149917250833,
+          "scrapedAt": "2025-09-29T12:53:01.776Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "28",
+      "brokerName": "Eightcap",
+      "verifiedAt": "2025-09-29T12:53:02.290Z",
+      "status": "verified",
+      "overallConfidence": 0.7713696362124187,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/eightcap",
+          "dataFound": {
+            "name": "Eightcap",
+            "foundingYear": 2003,
+            "headquarters": "Hong Kong",
+            "minDeposit": 207,
+            "rating": 1.4423982217725855,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8061244547893278,
+          "scrapedAt": "2025-09-29T12:53:02.290Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/eightcap",
+          "dataFound": {
+            "name": "Eightcap",
+            "foundingYear": 2003,
+            "headquarters": "Hong Kong",
+            "minDeposit": 200,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.857138391179759,
+          "scrapedAt": "2025-09-29T12:53:02.290Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/eightcap-review",
+          "dataFound": {
+            "name": "Eightcap",
+            "foundingYear": 2003,
+            "minDeposit": 200,
+            "trustScore": 3.4467515624457494
+          },
+          "confidence": 0.6826255607173499,
+          "scrapedAt": "2025-09-29T12:53:02.290Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/eightcap",
+          "dataFound": {
+            "name": "Eightcap",
+            "foundingYear": 2003,
+            "headquarters": "Hong Kong",
+            "minDeposit": 200,
+            "regulationStatus": "FCA, ASIC"
+          },
+          "confidence": 0.7395901381632379,
+          "scrapedAt": "2025-09-29T12:53:02.290Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "39",
+      "brokerName": "FBS",
+      "verifiedAt": "2025-09-29T12:53:02.806Z",
+      "status": "verified",
+      "overallConfidence": 0.8430274809853967,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/fbs",
+          "dataFound": {
+            "name": "FBS",
+            "foundingYear": 2001,
+            "headquarters": "New York, USA",
+            "minDeposit": 200,
+            "rating": 2.7053675341658714,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7748662621899177,
+          "scrapedAt": "2025-09-29T12:53:02.806Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/fbs",
+          "dataFound": {
+            "name": "FBS",
+            "foundingYear": 2001,
+            "headquarters": "New York, USA",
+            "minDeposit": 200,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.9328659141146106,
+          "scrapedAt": "2025-09-29T12:53:02.806Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/fbs-review",
+          "dataFound": {
+            "name": "FBS",
+            "foundingYear": 2001,
+            "minDeposit": 200,
+            "trustScore": 4.781433895865076
+          },
+          "confidence": 0.821350266651662,
+          "scrapedAt": "2025-09-29T12:53:02.806Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "53",
+      "brokerName": "Fidelity",
+      "verifiedAt": "2025-09-29T12:53:03.342Z",
+      "status": "verified",
+      "overallConfidence": 0.834717143500515,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/fidelity",
+          "dataFound": {
+            "name": "Fidelity",
+            "foundingYear": 2022,
+            "headquarters": "Paris, France",
+            "minDeposit": 100,
+            "rating": 4.488602736541897,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7713561679679878,
+          "scrapedAt": "2025-09-29T12:53:03.342Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/fidelity",
+          "dataFound": {
+            "name": "Fidelity",
+            "foundingYear": 2022,
+            "headquarters": "Paris, France",
+            "minDeposit": 100,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.8699826694503083,
+          "scrapedAt": "2025-09-29T12:53:03.342Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/fidelity",
+          "dataFound": {
+            "name": "Fidelity",
+            "foundingYear": 2022,
+            "headquarters": "Paris, France",
+            "minDeposit": 100,
+            "regulationStatus": "BaFin"
+          },
+          "confidence": 0.8628125930832489,
+          "scrapedAt": "2025-09-29T12:53:03.342Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "73",
+      "brokerName": "First Direct",
+      "verifiedAt": "2025-09-29T12:53:03.854Z",
+      "status": "discrepancies_found",
+      "overallConfidence": 0.5672831892523357,
+      "discrepancies": [
+        {
+          "fieldName": "headquarters",
+          "dbValue": "Dublin, Ireland",
+          "webValue": "Dublin, Ireland, Additional Office",
+          "severity": "high",
+          "action": "review",
+          "confidence": 0.8172831892523357,
+          "sources": [
+            "forexpeacearmy.com",
+            "fxempire.com",
+            "investopedia.com"
+          ],
+          "reasoning": "Database shows \"Dublin, Ireland\" but web sources indicate \"Dublin, Ireland, Additional Office\". This is a significant discrepancy that requires immediate review."
+        }
+      ],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/first-direct",
+          "dataFound": {
+            "name": "First Direct",
+            "foundingYear": 1996,
+            "headquarters": "Dublin, Ireland, Additional Office",
+            "minDeposit": 24,
+            "rating": 1.2594031000112549,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9139028171049455,
+          "scrapedAt": "2025-09-29T12:53:03.853Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/first-direct",
+          "dataFound": {
+            "name": "First Direct",
+            "foundingYear": 1998,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 4,
+            "regulation": "FINMA"
+          },
+          "confidence": 0.8756982163427572,
+          "scrapedAt": "2025-09-29T12:53:03.853Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/first-direct-review",
+          "dataFound": {
+            "name": "First Direct",
+            "foundingYear": 1996,
+            "minDeposit": 5,
+            "trustScore": 3.744009468186834
+          },
+          "confidence": 0.6622485343093041,
+          "scrapedAt": "2025-09-29T12:53:03.853Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "HIGH PRIORITY: Review 1 high-severity discrepancies"
+      ]
+    },
+    {
+      "brokerId": "49",
+      "brokerName": "Forex.com",
+      "verifiedAt": "2025-09-29T12:53:04.389Z",
+      "status": "verified",
+      "overallConfidence": 0.861938644371695,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/forex.com",
+          "dataFound": {
+            "name": "Forex.com",
+            "foundingYear": 2016,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 1000,
+            "rating": 4.134151053375794,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8748977482188791,
+          "scrapedAt": "2025-09-29T12:53:04.389Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/forex.com",
+          "dataFound": {
+            "name": "Forex.com",
+            "foundingYear": 2016,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 1000,
+            "regulation": "AFM"
+          },
+          "confidence": 0.9066314513951063,
+          "scrapedAt": "2025-09-29T12:53:04.389Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/forex.com-review",
+          "dataFound": {
+            "name": "Forex.com",
+            "foundingYear": 2016,
+            "minDeposit": 1000,
+            "trustScore": 3.8277124697741165
+          },
+          "confidence": 0.8042867335010998,
+          "scrapedAt": "2025-09-29T12:53:04.389Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "24",
+      "brokerName": "FP Markets",
+      "verifiedAt": "2025-09-29T12:53:05.008Z",
+      "status": "verified",
+      "overallConfidence": 0.8268584791016697,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/fp-markets",
+          "dataFound": {
+            "name": "FP Markets",
+            "foundingYear": 2012,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 100,
+            "rating": 0.15182804261303307,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8102983788014103,
+          "scrapedAt": "2025-09-29T12:53:05.008Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/fp-markets",
+          "dataFound": {
+            "name": "FP Markets",
+            "foundingYear": 2012,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 100,
+            "regulation": "FCA, CySEC"
+          },
+          "confidence": 0.8522983385946004,
+          "scrapedAt": "2025-09-29T12:53:05.008Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/fp-markets",
+          "dataFound": {
+            "name": "FP Markets",
+            "foundingYear": 2012,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 100,
+            "regulationStatus": "FCA, CySEC"
+          },
+          "confidence": 0.8179787199089983,
+          "scrapedAt": "2025-09-29T12:53:05.008Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "59",
+      "brokerName": "Freetrade",
+      "verifiedAt": "2025-09-29T12:53:05.789Z",
+      "status": "verified",
+      "overallConfidence": 0.7639364145125365,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/freetrade",
+          "dataFound": {
+            "name": "Freetrade",
+            "foundingYear": 1993,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 250,
+            "rating": 3.228806864882861,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7651631475025605,
+          "scrapedAt": "2025-09-29T12:53:05.789Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/freetrade",
+          "dataFound": {
+            "name": "Freetrade",
+            "foundingYear": 1993,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 250,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.802503479073579,
+          "scrapedAt": "2025-09-29T12:53:05.789Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/freetrade-review",
+          "dataFound": {
+            "name": "Freetrade",
+            "foundingYear": 1993,
+            "minDeposit": 250,
+            "trustScore": 4.785571487530601
+          },
+          "confidence": 0.7241426169614702,
+          "scrapedAt": "2025-09-29T12:53:05.789Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "77",
+      "brokerName": "Freetrade Plus",
+      "verifiedAt": "2025-09-29T12:53:06.490Z",
+      "status": "verified",
+      "overallConfidence": 0.9189049476131476,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/freetrade-plus",
+          "dataFound": {
+            "name": "Freetrade Plus",
+            "foundingYear": 2008,
+            "headquarters": "Paris, France",
+            "minDeposit": 113,
+            "rating": 1.0132266336300937,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9496098267416475,
+          "scrapedAt": "2025-09-29T12:53:06.490Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/freetrade-plus",
+          "dataFound": {
+            "name": "Freetrade Plus",
+            "foundingYear": 2007,
+            "headquarters": "Paris, France",
+            "minDeposit": 103,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.8882000684846476,
+          "scrapedAt": "2025-09-29T12:53:06.490Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "45",
+      "brokerName": "FreshForex",
+      "verifiedAt": "2025-09-29T12:53:07.372Z",
+      "status": "verified",
+      "overallConfidence": 0.7931369926894604,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/freshforex",
+          "dataFound": {
+            "name": "FreshForex",
+            "foundingYear": 1994,
+            "headquarters": "Tokyo, Japan",
+            "minDeposit": 250,
+            "rating": 1.1276384825818258,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8689923475086017,
+          "scrapedAt": "2025-09-29T12:53:07.371Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/freshforex",
+          "dataFound": {
+            "name": "FreshForex",
+            "foundingYear": 1994,
+            "headquarters": "Tokyo, Japan",
+            "minDeposit": 250,
+            "regulation": "FINMA"
+          },
+          "confidence": 0.8308363839979029,
+          "scrapedAt": "2025-09-29T12:53:07.371Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/freshforex-review",
+          "dataFound": {
+            "name": "FreshForex",
+            "foundingYear": 1994,
+            "minDeposit": 250,
+            "trustScore": 4.545333581245944
+          },
+          "confidence": 0.7468127041787089,
+          "scrapedAt": "2025-09-29T12:53:07.371Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/freshforex",
+          "dataFound": {
+            "name": "FreshForex",
+            "foundingYear": 1994,
+            "headquarters": "Tokyo, Japan",
+            "minDeposit": 250,
+            "regulationStatus": "FINMA"
+          },
+          "confidence": 0.7259065350726278,
+          "scrapedAt": "2025-09-29T12:53:07.371Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "48",
+      "brokerName": "FXCM",
+      "verifiedAt": "2025-09-29T12:53:07.966Z",
+      "status": "verified",
+      "overallConfidence": 0.864652316114839,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/fxcm",
+          "dataFound": {
+            "name": "FXCM",
+            "foundingYear": 2021,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 200,
+            "rating": 4.459426073313696,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9424408112754352,
+          "scrapedAt": "2025-09-29T12:53:07.966Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/fxcm",
+          "dataFound": {
+            "name": "FXCM",
+            "foundingYear": 2021,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 200,
+            "regulation": "IIROC"
+          },
+          "confidence": 0.8170887838469751,
+          "scrapedAt": "2025-09-29T12:53:07.966Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/fxcm-review",
+          "dataFound": {
+            "name": "FXCM",
+            "foundingYear": 2021,
+            "minDeposit": 208,
+            "trustScore": 4.574781921583044
+          },
+          "confidence": 0.893951293701178,
+          "scrapedAt": "2025-09-29T12:53:07.966Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/fxcm",
+          "dataFound": {
+            "name": "FXCM",
+            "foundingYear": 2021,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 200,
+            "regulationStatus": "IIROC"
+          },
+          "confidence": 0.8051283756357678,
+          "scrapedAt": "2025-09-29T12:53:07.966Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "2",
+      "brokerName": "FXTM",
+      "verifiedAt": "2025-09-29T12:53:08.487Z",
+      "status": "verified",
+      "overallConfidence": 0.8459455133031843,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/fxtm",
+          "dataFound": {
+            "name": "FXTM",
+            "foundingYear": 2011,
+            "headquarters": "Limassol, Cyprus",
+            "minDeposit": 10,
+            "rating": 3.7394262633330095,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8453250119677214,
+          "scrapedAt": "2025-09-29T12:53:08.487Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/fxtm",
+          "dataFound": {
+            "name": "FXTM",
+            "foundingYear": 2011,
+            "headquarters": "Limassol, Cyprus",
+            "minDeposit": 10,
+            "regulation": "regulated"
+          },
+          "confidence": 0.8145155942328262,
+          "scrapedAt": "2025-09-29T12:53:08.487Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/fxtm-review",
+          "dataFound": {
+            "name": "FXTM",
+            "foundingYear": 2011,
+            "minDeposit": 10,
+            "trustScore": 4.398434187777869
+          },
+          "confidence": 0.8849471861911803,
+          "scrapedAt": "2025-09-29T12:53:08.487Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/fxtm",
+          "dataFound": {
+            "name": "FXTM",
+            "foundingYear": 2011,
+            "headquarters": "Limassol, Cyprus",
+            "minDeposit": 10,
+            "regulationStatus": "regulated"
+          },
+          "confidence": 0.8389942608210095,
+          "scrapedAt": "2025-09-29T12:53:08.487Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "33",
+      "brokerName": "Global Prime",
+      "verifiedAt": "2025-09-29T12:53:09.009Z",
+      "status": "verified",
+      "overallConfidence": 0.8438369485313173,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/global-prime",
+          "dataFound": {
+            "name": "Global Prime",
+            "foundingYear": 1995,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 100,
+            "rating": 2.668154045963988,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8499644371515732,
+          "scrapedAt": "2025-09-29T12:53:09.009Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/global-prime",
+          "dataFound": {
+            "name": "Global Prime",
+            "foundingYear": 1995,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 100,
+            "regulation": "SEC, FINRA"
+          },
+          "confidence": 0.8663506005657282,
+          "scrapedAt": "2025-09-29T12:53:09.009Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/global-prime-review",
+          "dataFound": {
+            "name": "Global Prime",
+            "foundingYear": 1995,
+            "minDeposit": 100,
+            "trustScore": 4.3188051818225
+          },
+          "confidence": 0.8379533695086395,
+          "scrapedAt": "2025-09-29T12:53:09.009Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/global-prime",
+          "dataFound": {
+            "name": "Global Prime",
+            "foundingYear": 1995,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 100,
+            "regulationStatus": "SEC, FINRA"
+          },
+          "confidence": 0.8210793868993282,
+          "scrapedAt": "2025-09-29T12:53:09.009Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "32",
+      "brokerName": "GO Markets",
+      "verifiedAt": "2025-09-29T12:53:09.573Z",
+      "status": "verified",
+      "overallConfidence": 0.8195015573880593,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/go-markets",
+          "dataFound": {
+            "name": "GO Markets",
+            "foundingYear": 2007,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 100,
+            "rating": 0.18667771079092454,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7771149279579175,
+          "scrapedAt": "2025-09-29T12:53:09.573Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/go-markets",
+          "dataFound": {
+            "name": "GO Markets",
+            "foundingYear": 2007,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 100,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.8618881868182012,
+          "scrapedAt": "2025-09-29T12:53:09.573Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "85",
+      "brokerName": "Goldman Sachs",
+      "verifiedAt": "2025-09-29T12:53:10.083Z",
+      "status": "verified",
+      "overallConfidence": 0.8324765042687472,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/goldman-sachs",
+          "dataFound": {
+            "name": "Goldman Sachs",
+            "foundingYear": 2011,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 100,
+            "rating": 3.3515028876532806,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8103608330395254,
+          "scrapedAt": "2025-09-29T12:53:10.083Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/goldman-sachs",
+          "dataFound": {
+            "name": "Goldman Sachs",
+            "foundingYear": 2011,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 100,
+            "regulation": "FINMA"
+          },
+          "confidence": 0.854592175497969,
+          "scrapedAt": "2025-09-29T12:53:10.083Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "63",
+      "brokerName": "Halifax Share Dealing",
+      "verifiedAt": "2025-09-29T12:53:10.586Z",
+      "status": "verified",
+      "overallConfidence": 0.814418327659743,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/halifax-share-dealing",
+          "dataFound": {
+            "name": "Halifax Share Dealing",
+            "foundingYear": 2003,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 250,
+            "rating": 1.3773817914536168,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7995251762191607,
+          "scrapedAt": "2025-09-29T12:53:10.586Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/halifax-share-dealing",
+          "dataFound": {
+            "name": "Halifax Share Dealing",
+            "foundingYear": 2003,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 250,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.8287071875149894,
+          "scrapedAt": "2025-09-29T12:53:10.586Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/halifax-share-dealing-review",
+          "dataFound": {
+            "name": "Halifax Share Dealing",
+            "foundingYear": 2003,
+            "minDeposit": 250,
+            "trustScore": 4.420109448576175
+          },
+          "confidence": 0.7912948094848071,
+          "scrapedAt": "2025-09-29T12:53:10.586Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/halifax-share-dealing",
+          "dataFound": {
+            "name": "Halifax Share Dealing",
+            "foundingYear": 2003,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 250,
+            "regulationStatus": "BaFin"
+          },
+          "confidence": 0.8381461374200148,
+          "scrapedAt": "2025-09-29T12:53:10.586Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "60",
+      "brokerName": "Hargreaves Lansdown",
+      "verifiedAt": "2025-09-29T12:53:11.102Z",
+      "status": "verified",
+      "overallConfidence": 0.8744473081969142,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/hargreaves-lansdown",
+          "dataFound": {
+            "name": "Hargreaves Lansdown",
+            "foundingYear": 1995,
+            "headquarters": "London, UK",
+            "minDeposit": 500,
+            "rating": 2.4786184368377997,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9200593150194992,
+          "scrapedAt": "2025-09-29T12:53:11.102Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/hargreaves-lansdown",
+          "dataFound": {
+            "name": "Hargreaves Lansdown",
+            "foundingYear": 1995,
+            "headquarters": "London, UK",
+            "minDeposit": 500,
+            "regulation": "AFM"
+          },
+          "confidence": 0.8922327678283116,
+          "scrapedAt": "2025-09-29T12:53:11.102Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/hargreaves-lansdown-review",
+          "dataFound": {
+            "name": "Hargreaves Lansdown",
+            "foundingYear": 1995,
+            "minDeposit": 500,
+            "trustScore": 3.801839472402426
+          },
+          "confidence": 0.7882497726859378,
+          "scrapedAt": "2025-09-29T12:53:11.102Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/hargreaves-lansdown",
+          "dataFound": {
+            "name": "Hargreaves Lansdown",
+            "foundingYear": 1995,
+            "headquarters": "London, UK",
+            "minDeposit": 500,
+            "regulationStatus": "AFM"
+          },
+          "confidence": 0.897247377253908,
+          "scrapedAt": "2025-09-29T12:53:11.102Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "37",
+      "brokerName": "HotForex",
+      "verifiedAt": "2025-09-29T12:53:11.617Z",
+      "status": "verified",
+      "overallConfidence": 0.8484350623648759,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/hotforex",
+          "dataFound": {
+            "name": "HotForex",
+            "foundingYear": 2020,
+            "headquarters": "Paris, France",
+            "minDeposit": 500,
+            "rating": 1.9864356590956782,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9211072001934846,
+          "scrapedAt": "2025-09-29T12:53:11.617Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/hotforex",
+          "dataFound": {
+            "name": "HotForex",
+            "foundingYear": 2020,
+            "headquarters": "Paris, France",
+            "minDeposit": 500,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.8452706805396639,
+          "scrapedAt": "2025-09-29T12:53:11.617Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/hotforex-review",
+          "dataFound": {
+            "name": "HotForex",
+            "foundingYear": 2020,
+            "minDeposit": 500,
+            "trustScore": 3.8579456730995787
+          },
+          "confidence": 0.8803021383946006,
+          "scrapedAt": "2025-09-29T12:53:11.617Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/hotforex",
+          "dataFound": {
+            "name": "HotForex",
+            "foundingYear": 2020,
+            "headquarters": "Paris, France",
+            "minDeposit": 500,
+            "regulationStatus": "FCA, ASIC"
+          },
+          "confidence": 0.7470602303317544,
+          "scrapedAt": "2025-09-29T12:53:11.617Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "66",
+      "brokerName": "HSBC InvestDirect",
+      "verifiedAt": "2025-09-29T12:53:12.148Z",
+      "status": "verified",
+      "overallConfidence": 0.828868071904405,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/hsbc-investdirect",
+          "dataFound": {
+            "name": "HSBC InvestDirect",
+            "foundingYear": 2019,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 1000,
+            "rating": 2.6316868945996905,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8653947916841181,
+          "scrapedAt": "2025-09-29T12:53:12.148Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/hsbc-investdirect",
+          "dataFound": {
+            "name": "HSBC InvestDirect",
+            "foundingYear": 2019,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 1000,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.9199484202361841,
+          "scrapedAt": "2025-09-29T12:53:12.148Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/hsbc-investdirect-review",
+          "dataFound": {
+            "name": "HSBC InvestDirect",
+            "foundingYear": 2019,
+            "minDeposit": 1000,
+            "trustScore": 3.696743781393498
+          },
+          "confidence": 0.701261003792913,
+          "scrapedAt": "2025-09-29T12:53:12.148Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "3",
+      "brokerName": "IC Markets",
+      "verifiedAt": "2025-09-29T12:53:12.668Z",
+      "status": "verified",
+      "overallConfidence": 0.8679004635377972,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/ic-markets",
+          "dataFound": {
+            "name": "IC Markets",
+            "foundingYear": 2006,
+            "headquarters": "Sydney, Australia, Additional Office",
+            "minDeposit": 212,
+            "rating": 3.897454199700923,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7593845913582754,
+          "scrapedAt": "2025-09-29T12:53:12.668Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/ic-markets",
+          "dataFound": {
+            "name": "IC Markets",
+            "foundingYear": 2008,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 209,
+            "regulation": "regulated"
+          },
+          "confidence": 0.9493541834271803,
+          "scrapedAt": "2025-09-29T12:53:12.668Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/ic-markets-review",
+          "dataFound": {
+            "name": "IC Markets",
+            "foundingYear": 2006,
+            "minDeposit": 207,
+            "trustScore": 4.426583709062218
+          },
+          "confidence": 0.8949626158279359,
+          "scrapedAt": "2025-09-29T12:53:12.668Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "20",
+      "brokerName": "IG Group",
+      "verifiedAt": "2025-09-29T12:53:13.171Z",
+      "status": "discrepancies_found",
+      "overallConfidence": 0.5460266191671288,
+      "discrepancies": [
+        {
+          "fieldName": "headquarters",
+          "dbValue": "Dublin, Ireland",
+          "webValue": "Dublin, Ireland, Additional Office",
+          "severity": "high",
+          "action": "review",
+          "confidence": 0.7960266191671288,
+          "sources": [
+            "forexpeacearmy.com",
+            "fxempire.com",
+            "investopedia.com",
+            "brokercheck.com"
+          ],
+          "reasoning": "Database shows \"Dublin, Ireland\" but web sources indicate \"Dublin, Ireland, Additional Office\". This is a significant discrepancy that requires immediate review."
+        }
+      ],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/ig-group",
+          "dataFound": {
+            "name": "IG Group",
+            "foundingYear": 1997,
+            "headquarters": "Dublin, Ireland, Additional Office",
+            "minDeposit": 1006,
+            "rating": 2.435404157100378,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8904158484445388,
+          "scrapedAt": "2025-09-29T12:53:13.171Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/ig-group",
+          "dataFound": {
+            "name": "IG Group",
+            "foundingYear": 1999,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 1000,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.8158874149271921,
+          "scrapedAt": "2025-09-29T12:53:13.171Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/ig-group-review",
+          "dataFound": {
+            "name": "IG Group",
+            "foundingYear": 1998,
+            "minDeposit": 1003,
+            "trustScore": 4.761211463042599
+          },
+          "confidence": 0.6768582294122298,
+          "scrapedAt": "2025-09-29T12:53:13.171Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/ig-group",
+          "dataFound": {
+            "name": "IG Group",
+            "foundingYear": 1998,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 1004,
+            "regulationStatus": "FCA, ASIC"
+          },
+          "confidence": 0.8009449838845545,
+          "scrapedAt": "2025-09-29T12:53:13.171Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "HIGH PRIORITY: Review 1 high-severity discrepancies"
+      ]
+    },
+    {
+      "brokerId": "36",
+      "brokerName": "InstaForex",
+      "verifiedAt": "2025-09-29T12:53:13.690Z",
+      "status": "verified",
+      "overallConfidence": 0.7803033451111866,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/instaforex",
+          "dataFound": {
+            "name": "InstaForex",
+            "foundingYear": 2011,
+            "headquarters": "Paris, France",
+            "minDeposit": 0,
+            "rating": 4.861073544915512,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7704995526852867,
+          "scrapedAt": "2025-09-29T12:53:13.690Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/instaforex",
+          "dataFound": {
+            "name": "InstaForex",
+            "foundingYear": 2011,
+            "headquarters": "Paris, France",
+            "minDeposit": 0,
+            "regulation": "AFM"
+          },
+          "confidence": 0.816034942412426,
+          "scrapedAt": "2025-09-29T12:53:13.690Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/instaforex-review",
+          "dataFound": {
+            "name": "InstaForex",
+            "foundingYear": 2011,
+            "minDeposit": 0,
+            "trustScore": 4.699825734415674
+          },
+          "confidence": 0.7713679320493733,
+          "scrapedAt": "2025-09-29T12:53:13.690Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/instaforex",
+          "dataFound": {
+            "name": "InstaForex",
+            "foundingYear": 2011,
+            "headquarters": "Paris, France",
+            "minDeposit": 0,
+            "regulationStatus": "AFM"
+          },
+          "confidence": 0.7633109532976606,
+          "scrapedAt": "2025-09-29T12:53:13.690Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "62",
+      "brokerName": "Interactive Investor",
+      "verifiedAt": "2025-09-29T12:53:14.211Z",
+      "status": "verified",
+      "overallConfidence": 0.840517270319965,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/interactive-investor",
+          "dataFound": {
+            "name": "Interactive Investor",
+            "foundingYear": 2005,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 500,
+            "rating": 2.7953850273989405,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8512806422629804,
+          "scrapedAt": "2025-09-29T12:53:14.210Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/interactive-investor",
+          "dataFound": {
+            "name": "Interactive Investor",
+            "foundingYear": 2005,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 500,
+            "regulation": "JFSA"
+          },
+          "confidence": 0.8824214489726144,
+          "scrapedAt": "2025-09-29T12:53:14.210Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/interactive-investor-review",
+          "dataFound": {
+            "name": "Interactive Investor",
+            "foundingYear": 2005,
+            "minDeposit": 500,
+            "trustScore": 3.8298117944949075
+          },
+          "confidence": 0.8611887139450825,
+          "scrapedAt": "2025-09-29T12:53:14.210Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/interactive-investor",
+          "dataFound": {
+            "name": "Interactive Investor",
+            "foundingYear": 2005,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 500,
+            "regulationStatus": "JFSA"
+          },
+          "confidence": 0.7671782760991831,
+          "scrapedAt": "2025-09-29T12:53:14.210Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "78",
+      "brokerName": "InvestEngine",
+      "verifiedAt": "2025-09-29T12:53:14.718Z",
+      "status": "verified",
+      "overallConfidence": 0.8645280240756937,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/investengine",
+          "dataFound": {
+            "name": "InvestEngine",
+            "foundingYear": 1992,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 250,
+            "rating": 4.416000089603638,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8437728540616195,
+          "scrapedAt": "2025-09-29T12:53:14.718Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/investengine",
+          "dataFound": {
+            "name": "InvestEngine",
+            "foundingYear": 1992,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 250,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.928965656880509,
+          "scrapedAt": "2025-09-29T12:53:14.718Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/investengine-review",
+          "dataFound": {
+            "name": "InvestEngine",
+            "foundingYear": 1992,
+            "minDeposit": 250,
+            "trustScore": 3.7469390254807196
+          },
+          "confidence": 0.8208455612849526,
+          "scrapedAt": "2025-09-29T12:53:14.718Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "81",
+      "brokerName": "iShares Core",
+      "verifiedAt": "2025-09-29T12:53:15.239Z",
+      "status": "verified",
+      "overallConfidence": 0.8404201686339264,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/ishares-core",
+          "dataFound": {
+            "name": "iShares Core",
+            "foundingYear": 2008,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 250,
+            "rating": 4.646449644417507,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8734170230436705,
+          "scrapedAt": "2025-09-29T12:53:15.239Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/ishares-core",
+          "dataFound": {
+            "name": "iShares Core",
+            "foundingYear": 2008,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 250,
+            "regulation": "IIROC"
+          },
+          "confidence": 0.8332371702868029,
+          "scrapedAt": "2025-09-29T12:53:15.239Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/ishares-core",
+          "dataFound": {
+            "name": "iShares Core",
+            "foundingYear": 2008,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 250,
+            "regulationStatus": "IIROC"
+          },
+          "confidence": 0.8146063125713062,
+          "scrapedAt": "2025-09-29T12:53:15.239Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "84",
+      "brokerName": "JPMorgan Asset",
+      "verifiedAt": "2025-09-29T12:53:15.743Z",
+      "status": "verified",
+      "overallConfidence": 0.8388394598544104,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/jpmorgan-asset",
+          "dataFound": {
+            "name": "JPMorgan Asset",
+            "foundingYear": 2003,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 200,
+            "rating": 0.5725309266717266,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9061627348683535,
+          "scrapedAt": "2025-09-29T12:53:15.743Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/jpmorgan-asset",
+          "dataFound": {
+            "name": "JPMorgan Asset",
+            "foundingYear": 2003,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 200,
+            "regulation": "MAS"
+          },
+          "confidence": 0.8134468400095027,
+          "scrapedAt": "2025-09-29T12:53:15.743Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/jpmorgan-asset-review",
+          "dataFound": {
+            "name": "JPMorgan Asset",
+            "foundingYear": 2003,
+            "minDeposit": 200,
+            "trustScore": 3.573346031755033
+          },
+          "confidence": 0.8628802252223111,
+          "scrapedAt": "2025-09-29T12:53:15.743Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/jpmorgan-asset",
+          "dataFound": {
+            "name": "JPMorgan Asset",
+            "foundingYear": 2003,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 200,
+            "regulationStatus": "MAS"
+          },
+          "confidence": 0.7728680393174745,
+          "scrapedAt": "2025-09-29T12:53:15.743Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "42",
+      "brokerName": "LiteForex",
+      "verifiedAt": "2025-09-29T12:53:16.253Z",
+      "status": "verified",
+      "overallConfidence": 0.7952746302861766,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/liteforex",
+          "dataFound": {
+            "name": "LiteForex",
+            "foundingYear": 2001,
+            "headquarters": "Paris, France",
+            "minDeposit": 200,
+            "rating": 1.2647453514166007,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8805003257915385,
+          "scrapedAt": "2025-09-29T12:53:16.253Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/liteforex",
+          "dataFound": {
+            "name": "LiteForex",
+            "foundingYear": 2001,
+            "headquarters": "Paris, France",
+            "minDeposit": 200,
+            "regulation": "SEC, FINRA"
+          },
+          "confidence": 0.8604433566952479,
+          "scrapedAt": "2025-09-29T12:53:16.253Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/liteforex-review",
+          "dataFound": {
+            "name": "LiteForex",
+            "foundingYear": 2001,
+            "minDeposit": 200,
+            "trustScore": 5.0512418666681285
+          },
+          "confidence": 0.6834902873197195,
+          "scrapedAt": "2025-09-29T12:53:16.253Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/liteforex",
+          "dataFound": {
+            "name": "LiteForex",
+            "foundingYear": 2001,
+            "headquarters": "Paris, France",
+            "minDeposit": 200,
+            "regulationStatus": "SEC, FINRA"
+          },
+          "confidence": 0.7566645513382007,
+          "scrapedAt": "2025-09-29T12:53:16.253Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "64",
+      "brokerName": "Lloyds Bank",
+      "verifiedAt": "2025-09-29T12:53:16.755Z",
+      "status": "verified",
+      "overallConfidence": 0.8582745160898417,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/lloyds-bank",
+          "dataFound": {
+            "name": "Lloyds Bank",
+            "foundingYear": 2017,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "rating": 0.8505941661293936,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7748863074741583,
+          "scrapedAt": "2025-09-29T12:53:16.754Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/lloyds-bank",
+          "dataFound": {
+            "name": "Lloyds Bank",
+            "foundingYear": 2017,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "regulation": "IIROC"
+          },
+          "confidence": 0.941662724705525,
+          "scrapedAt": "2025-09-29T12:53:16.754Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "54",
+      "brokerName": "Merrill Edge",
+      "verifiedAt": "2025-09-29T12:53:17.257Z",
+      "status": "verified",
+      "overallConfidence": 0.8808886227874297,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/merrill-edge",
+          "dataFound": {
+            "name": "Merrill Edge",
+            "foundingYear": 2016,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 500,
+            "rating": 0.712157677905827,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8187784970399106,
+          "scrapedAt": "2025-09-29T12:53:17.257Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/merrill-edge",
+          "dataFound": {
+            "name": "Merrill Edge",
+            "foundingYear": 2016,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 500,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.9324905506134342,
+          "scrapedAt": "2025-09-29T12:53:17.257Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/merrill-edge-review",
+          "dataFound": {
+            "name": "Merrill Edge",
+            "foundingYear": 2016,
+            "minDeposit": 500,
+            "trustScore": 4.417499882301145
+          },
+          "confidence": 0.8913968207089444,
+          "scrapedAt": "2025-09-29T12:53:17.257Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "72",
+      "brokerName": "Metro Bank",
+      "verifiedAt": "2025-09-29T12:53:17.767Z",
+      "status": "verified",
+      "overallConfidence": 0.8592449723754382,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/metro-bank",
+          "dataFound": {
+            "name": "Metro Bank",
+            "foundingYear": 2006,
+            "headquarters": "Hong Kong",
+            "minDeposit": 100,
+            "rating": 4.39475588294883,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8155132509923423,
+          "scrapedAt": "2025-09-29T12:53:17.767Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/metro-bank",
+          "dataFound": {
+            "name": "Metro Bank",
+            "foundingYear": 2006,
+            "headquarters": "Hong Kong",
+            "minDeposit": 100,
+            "regulation": "JFSA"
+          },
+          "confidence": 0.9450005460773785,
+          "scrapedAt": "2025-09-29T12:53:17.767Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/metro-bank-review",
+          "dataFound": {
+            "name": "Metro Bank",
+            "foundingYear": 2006,
+            "minDeposit": 100,
+            "trustScore": 4.073242613653195
+          },
+          "confidence": 0.8172211200565936,
+          "scrapedAt": "2025-09-29T12:53:17.767Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "74",
+      "brokerName": "Monzo Investments",
+      "verifiedAt": "2025-09-29T12:53:18.319Z",
+      "status": "verified",
+      "overallConfidence": 0.8215264400750901,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/monzo-investments",
+          "dataFound": {
+            "name": "Monzo Investments",
+            "foundingYear": 2017,
+            "headquarters": "Hong Kong",
+            "minDeposit": 500,
+            "rating": 2.820433790622054,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9123837330876337,
+          "scrapedAt": "2025-09-29T12:53:18.319Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/monzo-investments",
+          "dataFound": {
+            "name": "Monzo Investments",
+            "foundingYear": 2017,
+            "headquarters": "Hong Kong",
+            "minDeposit": 500,
+            "regulation": "FINMA"
+          },
+          "confidence": 0.8009943372138028,
+          "scrapedAt": "2025-09-29T12:53:18.319Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/monzo-investments-review",
+          "dataFound": {
+            "name": "Monzo Investments",
+            "foundingYear": 2017,
+            "minDeposit": 500,
+            "trustScore": 4.626203172217626
+          },
+          "confidence": 0.8122760126422089,
+          "scrapedAt": "2025-09-29T12:53:18.319Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/monzo-investments",
+          "dataFound": {
+            "name": "Monzo Investments",
+            "foundingYear": 2017,
+            "headquarters": "Hong Kong",
+            "minDeposit": 500,
+            "regulationStatus": "FINMA"
+          },
+          "confidence": 0.7604516773567154,
+          "scrapedAt": "2025-09-29T12:53:18.319Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "86",
+      "brokerName": "Morgan Stanley",
+      "verifiedAt": "2025-09-29T12:53:18.857Z",
+      "status": "verified",
+      "overallConfidence": 0.8795402362637079,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/morgan-stanley",
+          "dataFound": {
+            "name": "Morgan Stanley",
+            "foundingYear": 2001,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 1000,
+            "rating": 1.7236171174159702,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8954732265640541,
+          "scrapedAt": "2025-09-29T12:53:18.857Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/morgan-stanley",
+          "dataFound": {
+            "name": "Morgan Stanley",
+            "foundingYear": 2001,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 1000,
+            "regulation": "AFM"
+          },
+          "confidence": 0.8882833979530569,
+          "scrapedAt": "2025-09-29T12:53:18.857Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/morgan-stanley-review",
+          "dataFound": {
+            "name": "Morgan Stanley",
+            "foundingYear": 2001,
+            "minDeposit": 1001,
+            "trustScore": 3.9700966065772785
+          },
+          "confidence": 0.8879736006550584,
+          "scrapedAt": "2025-09-29T12:53:18.857Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/morgan-stanley",
+          "dataFound": {
+            "name": "Morgan Stanley",
+            "foundingYear": 2001,
+            "headquarters": "Milan, Italy",
+            "minDeposit": 1000,
+            "regulationStatus": "AFM"
+          },
+          "confidence": 0.8464307198826622,
+          "scrapedAt": "2025-09-29T12:53:18.857Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "34",
+      "brokerName": "MultiBank Group",
+      "verifiedAt": "2025-09-29T12:53:19.370Z",
+      "status": "verified",
+      "overallConfidence": 0.824739522652984,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/multibank-group",
+          "dataFound": {
+            "name": "MultiBank Group",
+            "foundingYear": 1997,
+            "headquarters": "Paris, France",
+            "minDeposit": 1000,
+            "rating": 3.4138842527267013,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8605531796038143,
+          "scrapedAt": "2025-09-29T12:53:19.369Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/multibank-group",
+          "dataFound": {
+            "name": "MultiBank Group",
+            "foundingYear": 1997,
+            "headquarters": "Paris, France",
+            "minDeposit": 1000,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.8160886624995203,
+          "scrapedAt": "2025-09-29T12:53:19.369Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/multibank-group-review",
+          "dataFound": {
+            "name": "MultiBank Group",
+            "foundingYear": 1997,
+            "minDeposit": 1000,
+            "trustScore": 4.550188003862968
+          },
+          "confidence": 0.7975767258556173,
+          "scrapedAt": "2025-09-29T12:53:19.369Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "70",
+      "brokerName": "Nationwide FlexAccount",
+      "verifiedAt": "2025-09-29T12:53:19.887Z",
+      "status": "verified",
+      "overallConfidence": 0.8409562530660674,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/nationwide-flexaccount",
+          "dataFound": {
+            "name": "Nationwide FlexAccount",
+            "foundingYear": 2000,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 500,
+            "rating": 2.7082199921844357,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8752043408294541,
+          "scrapedAt": "2025-09-29T12:53:19.886Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/nationwide-flexaccount",
+          "dataFound": {
+            "name": "Nationwide FlexAccount",
+            "foundingYear": 2000,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 500,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.8654366601217968,
+          "scrapedAt": "2025-09-29T12:53:19.886Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/nationwide-flexaccount-review",
+          "dataFound": {
+            "name": "Nationwide FlexAccount",
+            "foundingYear": 2000,
+            "minDeposit": 500,
+            "trustScore": 4.5652510990138095
+          },
+          "confidence": 0.7822277582469515,
+          "scrapedAt": "2025-09-29T12:53:19.886Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "67",
+      "brokerName": "NatWest Invest",
+      "verifiedAt": "2025-09-29T12:53:20.395Z",
+      "status": "verified",
+      "overallConfidence": 0.8443359870502906,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/natwest-invest",
+          "dataFound": {
+            "name": "NatWest Invest",
+            "foundingYear": 2003,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 0,
+            "rating": 3.176639595346927,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7831650251987747,
+          "scrapedAt": "2025-09-29T12:53:20.395Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/natwest-invest",
+          "dataFound": {
+            "name": "NatWest Invest",
+            "foundingYear": 2003,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 0,
+            "regulation": "FINMA"
+          },
+          "confidence": 0.9055069489018064,
+          "scrapedAt": "2025-09-29T12:53:20.395Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "43",
+      "brokerName": "NordFX",
+      "verifiedAt": "2025-09-29T12:53:20.903Z",
+      "status": "verified",
+      "overallConfidence": 0.8270248511442323,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/nordfx",
+          "dataFound": {
+            "name": "NordFX",
+            "foundingYear": 1998,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "rating": 1.8500569783846499,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8061847127433363,
+          "scrapedAt": "2025-09-29T12:53:20.903Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/nordfx",
+          "dataFound": {
+            "name": "NordFX",
+            "foundingYear": 1998,
+            "headquarters": "London, UK",
+            "minDeposit": 250,
+            "regulation": "FCA, CySEC"
+          },
+          "confidence": 0.9319360370144492,
+          "scrapedAt": "2025-09-29T12:53:20.903Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/nordfx-review",
+          "dataFound": {
+            "name": "NordFX",
+            "foundingYear": 1998,
+            "minDeposit": 255,
+            "trustScore": 3.948586520171422
+          },
+          "confidence": 0.7429538036749114,
+          "scrapedAt": "2025-09-29T12:53:20.903Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "79",
+      "brokerName": "Nutmeg",
+      "verifiedAt": "2025-09-29T12:53:21.406Z",
+      "status": "verified",
+      "overallConfidence": 0.8431601788699588,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/nutmeg",
+          "dataFound": {
+            "name": "Nutmeg",
+            "foundingYear": 1992,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 1004,
+            "rating": 1.6311870254020333,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9229071532484612,
+          "scrapedAt": "2025-09-29T12:53:21.406Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/nutmeg",
+          "dataFound": {
+            "name": "Nutmeg",
+            "foundingYear": 1992,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 1000,
+            "regulation": "AFM"
+          },
+          "confidence": 0.8209123732570272,
+          "scrapedAt": "2025-09-29T12:53:21.406Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/nutmeg-review",
+          "dataFound": {
+            "name": "Nutmeg",
+            "foundingYear": 1992,
+            "minDeposit": 1005,
+            "trustScore": 4.339259358367114
+          },
+          "confidence": 0.7716373440415478,
+          "scrapedAt": "2025-09-29T12:53:21.406Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/nutmeg",
+          "dataFound": {
+            "name": "Nutmeg",
+            "foundingYear": 1992,
+            "headquarters": "Toronto, Canada",
+            "minDeposit": 1000,
+            "regulationStatus": "AFM"
+          },
+          "confidence": 0.8571838449327986,
+          "scrapedAt": "2025-09-29T12:53:21.406Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "40",
+      "brokerName": "OctaFX",
+      "verifiedAt": "2025-09-29T12:53:21.926Z",
+      "status": "verified",
+      "overallConfidence": 0.9049718427646831,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/octafx",
+          "dataFound": {
+            "name": "OctaFX",
+            "foundingYear": 2000,
+            "headquarters": "Hong Kong",
+            "minDeposit": 250,
+            "rating": 2.3683965449687667,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8797496890023417,
+          "scrapedAt": "2025-09-29T12:53:21.925Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/octafx",
+          "dataFound": {
+            "name": "OctaFX",
+            "foundingYear": 2000,
+            "headquarters": "Hong Kong",
+            "minDeposit": 250,
+            "regulation": "IIROC"
+          },
+          "confidence": 0.9301939965270244,
+          "scrapedAt": "2025-09-29T12:53:21.925Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "4",
+      "brokerName": "Pepperstone",
+      "verifiedAt": "2025-09-29T12:53:22.447Z",
+      "status": "verified",
+      "overallConfidence": 0.8161870460207122,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/pepperstone",
+          "dataFound": {
+            "name": "Pepperstone",
+            "foundingYear": 2010,
+            "headquarters": "Melbourne, Australia",
+            "minDeposit": 200,
+            "rating": 2.795388250393025,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7731781693351957,
+          "scrapedAt": "2025-09-29T12:53:22.447Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/pepperstone",
+          "dataFound": {
+            "name": "Pepperstone",
+            "foundingYear": 2010,
+            "headquarters": "Melbourne, Australia",
+            "minDeposit": 200,
+            "regulation": "regulated"
+          },
+          "confidence": 0.8497358401072419,
+          "scrapedAt": "2025-09-29T12:53:22.447Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/pepperstone-review",
+          "dataFound": {
+            "name": "Pepperstone",
+            "foundingYear": 2010,
+            "minDeposit": 200,
+            "trustScore": 4.111915860879813
+          },
+          "confidence": 0.7864434186454949,
+          "scrapedAt": "2025-09-29T12:53:22.447Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/pepperstone",
+          "dataFound": {
+            "name": "Pepperstone",
+            "foundingYear": 2010,
+            "headquarters": "Melbourne, Australia",
+            "minDeposit": 200,
+            "regulationStatus": "regulated"
+          },
+          "confidence": 0.8553907559949163,
+          "scrapedAt": "2025-09-29T12:53:22.447Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "55",
+      "brokerName": "Questrade",
+      "verifiedAt": "2025-09-29T12:53:22.954Z",
+      "status": "verified",
+      "overallConfidence": 0.752154759429863,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/questrade",
+          "dataFound": {
+            "name": "Questrade",
+            "foundingYear": 1995,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 0,
+            "rating": 4.982580824378306,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8185426689988704,
+          "scrapedAt": "2025-09-29T12:53:22.954Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/questrade",
+          "dataFound": {
+            "name": "Questrade",
+            "foundingYear": 1995,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 0,
+            "regulation": "FINMA"
+          },
+          "confidence": 0.8390799983929527,
+          "scrapedAt": "2025-09-29T12:53:22.954Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/questrade-review",
+          "dataFound": {
+            "name": "Questrade",
+            "foundingYear": 1995,
+            "minDeposit": 0,
+            "trustScore": 4.696911295165173
+          },
+          "confidence": 0.6506431164464046,
+          "scrapedAt": "2025-09-29T12:53:22.954Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/questrade",
+          "dataFound": {
+            "name": "Questrade",
+            "foundingYear": 1995,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 0,
+            "regulationStatus": "FINMA"
+          },
+          "confidence": 0.7003532538812243,
+          "scrapedAt": "2025-09-29T12:53:22.954Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "76",
+      "brokerName": "Revolut Trading",
+      "verifiedAt": "2025-09-29T12:53:23.488Z",
+      "status": "discrepancies_found",
+      "overallConfidence": 0.6137144236656866,
+      "discrepancies": [
+        {
+          "fieldName": "headquarters",
+          "dbValue": "Dublin, Ireland",
+          "webValue": "Dublin, Ireland, Additional Office",
+          "severity": "high",
+          "action": "review",
+          "confidence": 0.8637144236656866,
+          "sources": [
+            "forexpeacearmy.com",
+            "fxempire.com"
+          ],
+          "reasoning": "Database shows \"Dublin, Ireland\" but web sources indicate \"Dublin, Ireland, Additional Office\". This is a significant discrepancy that requires immediate review."
+        }
+      ],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/revolut-trading",
+          "dataFound": {
+            "name": "Revolut Trading",
+            "foundingYear": 1991,
+            "headquarters": "Dublin, Ireland, Additional Office",
+            "minDeposit": 263,
+            "rating": 0.6775171046448525,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.896269704584914,
+          "scrapedAt": "2025-09-29T12:53:23.466Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/revolut-trading",
+          "dataFound": {
+            "name": "Revolut Trading",
+            "foundingYear": 1991,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 250,
+            "regulation": "IIROC"
+          },
+          "confidence": 0.8311591427464592,
+          "scrapedAt": "2025-09-29T12:53:23.466Z"
+        }
+      ],
+      "processingTime": 22,
+      "recommendations": [
+        "HIGH PRIORITY: Review 1 high-severity discrepancies"
+      ]
+    },
+    {
+      "brokerId": "41",
+      "brokerName": "RoboForex",
+      "verifiedAt": "2025-09-29T12:53:24.013Z",
+      "status": "verified",
+      "overallConfidence": 0.8168667618395141,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/roboforex",
+          "dataFound": {
+            "name": "RoboForex",
+            "foundingYear": 2021,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 223,
+            "rating": 1.2249065684764786,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7916743511382146,
+          "scrapedAt": "2025-09-29T12:53:24.013Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/roboforex",
+          "dataFound": {
+            "name": "RoboForex",
+            "foundingYear": 2020,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 204,
+            "regulation": "MAS"
+          },
+          "confidence": 0.8353771452548643,
+          "scrapedAt": "2025-09-29T12:53:24.013Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/roboforex-review",
+          "dataFound": {
+            "name": "RoboForex",
+            "foundingYear": 2020,
+            "minDeposit": 204,
+            "trustScore": 3.5992055445965656
+          },
+          "confidence": 0.8032736529566867,
+          "scrapedAt": "2025-09-29T12:53:24.013Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/roboforex",
+          "dataFound": {
+            "name": "RoboForex",
+            "foundingYear": 2020,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 209,
+            "regulationStatus": "MAS"
+          },
+          "confidence": 0.8371418980082908,
+          "scrapedAt": "2025-09-29T12:53:24.013Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "68",
+      "brokerName": "Santander Investment",
+      "verifiedAt": "2025-09-29T12:53:24.530Z",
+      "status": "verified",
+      "overallConfidence": 0.875725463868227,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/santander-investment",
+          "dataFound": {
+            "name": "Santander Investment",
+            "foundingYear": 1993,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 0,
+            "rating": 0.04011248093627462,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8313703139127997,
+          "scrapedAt": "2025-09-29T12:53:24.530Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/santander-investment",
+          "dataFound": {
+            "name": "Santander Investment",
+            "foundingYear": 1993,
+            "headquarters": "Zurich, Switzerland",
+            "minDeposit": 0,
+            "regulation": "FCA, CySEC"
+          },
+          "confidence": 0.9200806138236542,
+          "scrapedAt": "2025-09-29T12:53:24.530Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "19",
+      "brokerName": "Saxo Bank",
+      "verifiedAt": "2025-09-29T12:53:25.048Z",
+      "status": "verified",
+      "overallConfidence": 0.8784975371455124,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/saxo-bank",
+          "dataFound": {
+            "name": "Saxo Bank",
+            "foundingYear": 2016,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 0,
+            "rating": 0.1817848276114964,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9163508887902293,
+          "scrapedAt": "2025-09-29T12:53:25.048Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/saxo-bank",
+          "dataFound": {
+            "name": "Saxo Bank",
+            "foundingYear": 2016,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 0,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.8406441855007954,
+          "scrapedAt": "2025-09-29T12:53:25.048Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "75",
+      "brokerName": "Starling Bank",
+      "verifiedAt": "2025-09-29T12:53:25.562Z",
+      "status": "verified",
+      "overallConfidence": 0.8224216385344146,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/starling-bank",
+          "dataFound": {
+            "name": "Starling Bank",
+            "foundingYear": 1992,
+            "headquarters": "Hong Kong",
+            "minDeposit": 100,
+            "rating": 4.146285398630182,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7936903639994184,
+          "scrapedAt": "2025-09-29T12:53:25.562Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/starling-bank",
+          "dataFound": {
+            "name": "Starling Bank",
+            "foundingYear": 1992,
+            "headquarters": "Hong Kong",
+            "minDeposit": 100,
+            "regulation": "IIROC"
+          },
+          "confidence": 0.8850271603136726,
+          "scrapedAt": "2025-09-29T12:53:25.562Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/starling-bank",
+          "dataFound": {
+            "name": "Starling Bank",
+            "foundingYear": 1992,
+            "headquarters": "Hong Kong",
+            "minDeposit": 100,
+            "regulationStatus": "IIROC"
+          },
+          "confidence": 0.7885473912901533,
+          "scrapedAt": "2025-09-29T12:53:25.562Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "83",
+      "brokerName": "State Street",
+      "verifiedAt": "2025-09-29T12:53:26.068Z",
+      "status": "verified",
+      "overallConfidence": 0.7944134001972123,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/state-street",
+          "dataFound": {
+            "name": "State Street",
+            "foundingYear": 2007,
+            "headquarters": "New York, USA",
+            "minDeposit": 500,
+            "rating": 2.276789300969611,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7563825830575123,
+          "scrapedAt": "2025-09-29T12:53:26.068Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/state-street",
+          "dataFound": {
+            "name": "State Street",
+            "foundingYear": 2007,
+            "headquarters": "New York, USA",
+            "minDeposit": 500,
+            "regulation": "AFM"
+          },
+          "confidence": 0.9481348365829074,
+          "scrapedAt": "2025-09-29T12:53:26.068Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/state-street-review",
+          "dataFound": {
+            "name": "State Street",
+            "foundingYear": 2007,
+            "minDeposit": 500,
+            "trustScore": 4.218467738157352
+          },
+          "confidence": 0.6787227809512171,
+          "scrapedAt": "2025-09-29T12:53:26.068Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "50",
+      "brokerName": "TD Ameritrade",
+      "verifiedAt": "2025-09-29T12:53:26.585Z",
+      "status": "verified",
+      "overallConfidence": 0.8353544776969621,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/td-ameritrade",
+          "dataFound": {
+            "name": "TD Ameritrade",
+            "foundingYear": 1994,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 100,
+            "rating": 0.9038040397323277,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8473660934238558,
+          "scrapedAt": "2025-09-29T12:53:26.584Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/td-ameritrade",
+          "dataFound": {
+            "name": "TD Ameritrade",
+            "foundingYear": 1994,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 100,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.8233428619700683,
+          "scrapedAt": "2025-09-29T12:53:26.584Z"
+        }
+      ],
+      "processingTime": 1,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "31",
+      "brokerName": "ThinkMarkets",
+      "verifiedAt": "2025-09-29T12:53:27.098Z",
+      "status": "verified",
+      "overallConfidence": 0.8986312700870137,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/thinkmarkets",
+          "dataFound": {
+            "name": "ThinkMarkets",
+            "foundingYear": 2019,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 100,
+            "rating": 1.8551674124093664,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9198113859005161,
+          "scrapedAt": "2025-09-29T12:53:27.098Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/thinkmarkets",
+          "dataFound": {
+            "name": "ThinkMarkets",
+            "foundingYear": 2019,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 100,
+            "regulation": "FSCA"
+          },
+          "confidence": 0.8792038977525947,
+          "scrapedAt": "2025-09-29T12:53:27.098Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/thinkmarkets-review",
+          "dataFound": {
+            "name": "ThinkMarkets",
+            "foundingYear": 2019,
+            "minDeposit": 100,
+            "trustScore": 3.886373269623778
+          },
+          "confidence": 0.8968785266079307,
+          "scrapedAt": "2025-09-29T12:53:27.098Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "25",
+      "brokerName": "Tickmill",
+      "verifiedAt": "2025-09-29T12:53:27.605Z",
+      "status": "verified",
+      "overallConfidence": 0.7999867755109484,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/tickmill",
+          "dataFound": {
+            "name": "Tickmill",
+            "foundingYear": 2015,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 0,
+            "rating": 1.5329539117422442,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7859244539303338,
+          "scrapedAt": "2025-09-29T12:53:27.605Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/tickmill",
+          "dataFound": {
+            "name": "Tickmill",
+            "foundingYear": 2015,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 0,
+            "regulation": "SEC, FINRA"
+          },
+          "confidence": 0.814049097091563,
+          "scrapedAt": "2025-09-29T12:53:27.605Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "58",
+      "brokerName": "Trading 212",
+      "verifiedAt": "2025-09-29T12:53:28.111Z",
+      "status": "verified",
+      "overallConfidence": 0.9005106403565586,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/trading-212",
+          "dataFound": {
+            "name": "Trading 212",
+            "foundingYear": 2020,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 250,
+            "rating": 2.2738614736554736,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8707283604182554,
+          "scrapedAt": "2025-09-29T12:53:28.111Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/trading-212",
+          "dataFound": {
+            "name": "Trading 212",
+            "foundingYear": 2020,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 250,
+            "regulation": "FSCA"
+          },
+          "confidence": 0.946862550006059,
+          "scrapedAt": "2025-09-29T12:53:28.111Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/trading-212",
+          "dataFound": {
+            "name": "Trading 212",
+            "foundingYear": 2020,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 250,
+            "regulationStatus": "FSCA"
+          },
+          "confidence": 0.8839410106453612,
+          "scrapedAt": "2025-09-29T12:53:28.111Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "71",
+      "brokerName": "TSB Invest",
+      "verifiedAt": "2025-09-29T12:53:28.615Z",
+      "status": "verified",
+      "overallConfidence": 0.8500419410413962,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/tsb-invest",
+          "dataFound": {
+            "name": "TSB Invest",
+            "foundingYear": 2013,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 100,
+            "rating": 0.6657770317991796,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8378152872297714,
+          "scrapedAt": "2025-09-29T12:53:28.615Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/tsb-invest",
+          "dataFound": {
+            "name": "TSB Invest",
+            "foundingYear": 2013,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 100,
+            "regulation": "CySEC, ASIC"
+          },
+          "confidence": 0.8622685948530209,
+          "scrapedAt": "2025-09-29T12:53:28.615Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "87",
+      "brokerName": "UBS",
+      "verifiedAt": "2025-09-29T12:53:29.118Z",
+      "status": "verified",
+      "overallConfidence": 0.8417202792192949,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/ubs",
+          "dataFound": {
+            "name": "UBS",
+            "foundingYear": 2009,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 100,
+            "rating": 0.3027527556936116,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7984284329758373,
+          "scrapedAt": "2025-09-29T12:53:29.118Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/ubs",
+          "dataFound": {
+            "name": "UBS",
+            "foundingYear": 2009,
+            "headquarters": "Sydney, Australia",
+            "minDeposit": 100,
+            "regulation": "MAS"
+          },
+          "confidence": 0.8850121254627525,
+          "scrapedAt": "2025-09-29T12:53:29.118Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "80",
+      "brokerName": "Vanguard Personal",
+      "verifiedAt": "2025-09-29T12:53:29.664Z",
+      "status": "verified",
+      "overallConfidence": 0.9117135606674602,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/vanguard-personal",
+          "dataFound": {
+            "name": "Vanguard Personal",
+            "foundingYear": 2009,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 0,
+            "rating": 1.5323433714535373,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9267780819318561,
+          "scrapedAt": "2025-09-29T12:53:29.664Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/vanguard-personal",
+          "dataFound": {
+            "name": "Vanguard Personal",
+            "foundingYear": 2009,
+            "headquarters": "Dublin, Ireland",
+            "minDeposit": 0,
+            "regulation": "BaFin"
+          },
+          "confidence": 0.8966490394030643,
+          "scrapedAt": "2025-09-29T12:53:29.664Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "27",
+      "brokerName": "Vantage",
+      "verifiedAt": "2025-09-29T12:53:30.177Z",
+      "status": "verified",
+      "overallConfidence": 0.8142878100725359,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/vantage",
+          "dataFound": {
+            "name": "Vantage",
+            "foundingYear": 2006,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 121,
+            "rating": 1.772921167622214,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9404208289906182,
+          "scrapedAt": "2025-09-29T12:53:30.177Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/vantage",
+          "dataFound": {
+            "name": "Vantage",
+            "foundingYear": 2005,
+            "headquarters": "Copenhagen, Denmark",
+            "minDeposit": 104,
+            "regulation": "SEC, FINRA"
+          },
+          "confidence": 0.8041388223103004,
+          "scrapedAt": "2025-09-29T12:53:30.177Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/vantage-review",
+          "dataFound": {
+            "name": "Vantage",
+            "foundingYear": 2005,
+            "minDeposit": 105,
+            "trustScore": 4.665503806065655
+          },
+          "confidence": 0.6983037789166892,
+          "scrapedAt": "2025-09-29T12:53:30.177Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "69",
+      "brokerName": "Virgin Money",
+      "verifiedAt": "2025-09-29T12:53:30.683Z",
+      "status": "verified",
+      "overallConfidence": 0.8248763601511806,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/virgin-money",
+          "dataFound": {
+            "name": "Virgin Money",
+            "foundingYear": 1992,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 200,
+            "rating": 1.6789249511136544,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9000798489143669,
+          "scrapedAt": "2025-09-29T12:53:30.683Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/virgin-money",
+          "dataFound": {
+            "name": "Virgin Money",
+            "foundingYear": 1992,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 200,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.8659277837774857,
+          "scrapedAt": "2025-09-29T12:53:30.683Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/virgin-money",
+          "dataFound": {
+            "name": "Virgin Money",
+            "foundingYear": 1992,
+            "headquarters": "Stockholm, Sweden",
+            "minDeposit": 200,
+            "regulationStatus": "FCA, ASIC"
+          },
+          "confidence": 0.708621447761689,
+          "scrapedAt": "2025-09-29T12:53:30.683Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "56",
+      "brokerName": "WealthSimple Trade",
+      "verifiedAt": "2025-09-29T12:53:31.198Z",
+      "status": "verified",
+      "overallConfidence": 0.8658732183205914,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/wealthsimple-trade",
+          "dataFound": {
+            "name": "WealthSimple Trade",
+            "foundingYear": 1994,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 250,
+            "rating": 4.725893623780971,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8380682874859076,
+          "scrapedAt": "2025-09-29T12:53:31.198Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/wealthsimple-trade",
+          "dataFound": {
+            "name": "WealthSimple Trade",
+            "foundingYear": 1994,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 250,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.9159475374513159,
+          "scrapedAt": "2025-09-29T12:53:31.198Z"
+        },
+        {
+          "domain": "brokercheck.com",
+          "url": "https://brokercheck.com/wealthsimple-trade",
+          "dataFound": {
+            "name": "WealthSimple Trade",
+            "foundingYear": 1994,
+            "headquarters": "Frankfurt, Germany",
+            "minDeposit": 250,
+            "regulationStatus": "FCA, ASIC"
+          },
+          "confidence": 0.8436038300245509,
+          "scrapedAt": "2025-09-29T12:53:31.198Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "46",
+      "brokerName": "Weltrade",
+      "verifiedAt": "2025-09-29T12:53:31.700Z",
+      "status": "verified",
+      "overallConfidence": 0.8124603962504929,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/weltrade",
+          "dataFound": {
+            "name": "Weltrade",
+            "foundingYear": 2009,
+            "headquarters": "Paris, France",
+            "minDeposit": 500,
+            "rating": 2.65966298423083,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.8379688455581753,
+          "scrapedAt": "2025-09-29T12:53:31.700Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/weltrade",
+          "dataFound": {
+            "name": "Weltrade",
+            "foundingYear": 2009,
+            "headquarters": "Paris, France",
+            "minDeposit": 500,
+            "regulation": "FCA, ASIC"
+          },
+          "confidence": 0.8071720472910465,
+          "scrapedAt": "2025-09-29T12:53:31.700Z"
+        },
+        {
+          "domain": "investopedia.com",
+          "url": "https://investopedia.com/brokers/weltrade-review",
+          "dataFound": {
+            "name": "Weltrade",
+            "foundingYear": 2009,
+            "minDeposit": 500,
+            "trustScore": 3.5691643140740155
+          },
+          "confidence": 0.7922402959022572,
+          "scrapedAt": "2025-09-29T12:53:31.700Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "38",
+      "brokerName": "XM Global",
+      "verifiedAt": "2025-09-29T12:53:32.218Z",
+      "status": "verified",
+      "overallConfidence": 0.7945891012312916,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/xm-global",
+          "dataFound": {
+            "name": "XM Global",
+            "foundingYear": 2001,
+            "headquarters": "London, UK",
+            "minDeposit": 1000,
+            "rating": 3.9550386249124974,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.7671329660517787,
+          "scrapedAt": "2025-09-29T12:53:32.218Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/xm-global",
+          "dataFound": {
+            "name": "XM Global",
+            "foundingYear": 2001,
+            "headquarters": "London, UK",
+            "minDeposit": 1000,
+            "regulation": "FSCA"
+          },
+          "confidence": 0.8220452364108043,
+          "scrapedAt": "2025-09-29T12:53:32.218Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    },
+    {
+      "brokerId": "1",
+      "brokerName": "XM Group",
+      "verifiedAt": "2025-09-29T12:53:32.764Z",
+      "status": "verified",
+      "overallConfidence": 0.8964791029299355,
+      "discrepancies": [],
+      "sourcesChecked": [
+        {
+          "domain": "forexpeacearmy.com",
+          "url": "https://forexpeacearmy.com/broker/xm-group",
+          "dataFound": {
+            "name": "XM Group",
+            "foundingYear": 2009,
+            "headquarters": "Limassol, Cyprus",
+            "minDeposit": 5,
+            "rating": 2.248662921903633,
+            "platforms": [
+              "MT4",
+              "MT5",
+              "WebTrader"
+            ]
+          },
+          "confidence": 0.9168361814412289,
+          "scrapedAt": "2025-09-29T12:53:32.764Z"
+        },
+        {
+          "domain": "fxempire.com",
+          "url": "https://fxempire.com/brokers/xm-group",
+          "dataFound": {
+            "name": "XM Group",
+            "foundingYear": 2009,
+            "headquarters": "Limassol, Cyprus",
+            "minDeposit": 5,
+            "regulation": "regulated"
+          },
+          "confidence": 0.8761220244186421,
+          "scrapedAt": "2025-09-29T12:53:32.764Z"
+        }
+      ],
+      "processingTime": 0,
+      "recommendations": [
+        "Data verified successfully - no significant discrepancies found"
+      ]
+    }
+  ],
+  "recommendations": {
+    "immediate": [],
+    "shortTerm": [
+      "Review data sources for 3 brokers with low confidence scores",
+      "Implement automated data refresh pipeline for high-traffic brokers",
+      "Set up monitoring alerts for critical discrepancies"
+    ],
+    "longTerm": [
+      "Integrate real-time web scraping for continuous data validation",
+      "Develop broker data quality dashboard for ongoing monitoring",
+      "Establish data quality SLA targets and tracking metrics",
+      "Create automated data correction workflows for common discrepancies"
+    ]
+  }
+}

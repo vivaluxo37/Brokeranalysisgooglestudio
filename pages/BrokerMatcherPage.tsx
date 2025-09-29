@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
 import Spinner from '../components/ui/Spinner';
 import { Broker, StrategyMatcherHistoryItem } from '../types';
-import { brokers as allBrokers } from '../data/brokers';
+import { useBrokers } from '../hooks/useBrokers';
 import BrokerCard from '../components/brokers/BrokerCard';
 import { Card, CardContent, CardHeader } from '../components/ui/card';
 import { getStrategyBrokerRecommendations } from '../services/geminiService';
@@ -23,6 +23,7 @@ const exampleStrategies = [
 const BrokerMatcherPage: React.FC = () => {
     const { t } = useTranslation();
     const { user } = useAuth();
+    const { brokers: allBrokers, loading: brokersLoading } = useBrokers();
     
     const [strategy, setStrategy] = useState('');
     const [loading, setLoading] = useState(false);
@@ -88,7 +89,7 @@ const BrokerMatcherPage: React.FC = () => {
             </Card>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {results.recommendations.map((broker, index) => (
-                    <div key={broker.id} className="opacity-0 animate-fade-in" style={{ animationDelay: `${index * 150}ms`}}>
+                    <div key={`matcher-${broker.id}`} className="opacity-0 animate-fade-in" style={{ animationDelay: `${index * 150}ms`}}>
                         <BrokerCard broker={broker} isRecommended={true} onQuickView={handleOpenQuickView} />
                     </div>
                 ))}

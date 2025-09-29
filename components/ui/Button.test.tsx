@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '../../tests/utils/test-utils';
 import { describe, it, expect, vi } from 'vitest';
-import Button from './Button';
+import { Button } from './Button';
 
 describe('Button component', () => {
     it('renders children correctly', () => {
@@ -12,8 +12,8 @@ describe('Button component', () => {
     it('applies the correct classes for variant and size', () => {
         render(<Button variant="secondary" size="lg">Secondary Large</Button>);
         const button = screen.getByText('Secondary Large');
-        expect(button).toHaveClass('bg-card text-foreground hover:bg-input'); // secondary variant
-        expect(button).toHaveClass('px-6 py-3 text-lg'); // lg size
+        expect(button).toHaveClass('bg-secondary text-secondary-foreground hover:bg-secondary/80'); // secondary variant
+        expect(button).toHaveClass('h-11 rounded-md px-8'); // lg size
     });
 
     it('handles click events', () => {

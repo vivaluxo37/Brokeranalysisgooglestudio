@@ -37,7 +37,7 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
 
     useEffect(() => {
         const container = containerRef.current;
-        if (!container) return;
+        if (!container || typeof document === 'undefined') return;
 
         // Clear any previous widget
         container.innerHTML = '';
@@ -77,7 +77,7 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
 
              const script = document.createElement('script');
              script.type = 'text/javascript';
-             script.async = true;
+             script.async = false;
              script.src = WIDGET_SCRIPT_URLS[widgetType];
 
              // Create configuration object
@@ -106,7 +106,7 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
                  `;
              };
 
-             container.appendChild(script);
+             widgetDiv.appendChild(script);
         }
         
     }, [widgetType, options, theme, language]);
@@ -124,8 +124,6 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
 
     return (
         <div id={containerId} ref={containerRef} className={`tradingview-widget-container ${className}`} style={{ height: '100%', width: '100%' }}>
-            {/* For non-script widgets, we add a div that the library looks for */}
-            {widgetType !== 'advanced_chart' && <div className={`tradingview-widget-container__widget`}></div>}
         </div>
     );
 };

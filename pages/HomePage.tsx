@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Icons } from '../constants';
-import { brokers } from '../data/brokers';
+import { useBrokers } from '../hooks/useBrokers';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useTranslation } from '../hooks/useTranslation';
 import TradingViewWidget from '../components/tools/tradingview/TradingViewWidget';
 import { Card, CardContent, CardHeader } from '../components/ui/card';
+import Spinner from '../components/ui/Spinner';
 
 // New AccordionItem component
 const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
@@ -58,6 +59,7 @@ const AdvancedChartWidget: React.FC = () => (
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
+  const { brokers, loading, error } = useBrokers();
   const brokerLogos = brokers.slice(0, 6).map(b => ({ name: b.name, logoUrl: b.logoUrl, websiteUrl: b.websiteUrl }));
   const features = [
     { 
@@ -174,11 +176,20 @@ const HomePage: React.FC = () => {
         <div className="mt-16">
             <p className="text-sm text-foreground/60 uppercase tracking-wider">{t('home.trustedBy')}</p>
             <div className="mt-4 flex justify-center items-center gap-6 sm:gap-8 flex-wrap">
-                {brokerLogos.map(logo => (
-                    <a key={logo.name} href={logo.websiteUrl} target="_blank" rel="noopener noreferrer" title={`Visit ${logo.name}`}>
-                        <img src={logo.logoUrl} alt={logo.name} className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all" />
-                    </a>
-                ))}
+                {loading ? (
+                    <div className="flex items-center gap-4">
+                        <Spinner size="sm" />
+                        <span className="text-sm text-muted-foreground">Loading brokers...</span>
+                    </div>
+                ) : error ? (
+                    <div className="text-sm text-red-500">Failed to load brokers</div>
+                ) : (
+                    brokerLogos.map(logo => (
+                        <a key={logo.name} href={logo.websiteUrl} target="_blank" rel="noopener noreferrer" title={`Visit ${logo.name}`}>
+                            <img src={logo.logoUrl} alt={logo.name} className="h-8 object-contain grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all" />
+                        </a>
+                    ))
+                )}
             </div>
         </div>
       </div>

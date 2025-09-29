@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSupabaseClient } from '@/lib/supabase';
-import { BrokerQuerySchema, type BrokerQuery } from '@/lib/validation';
-import { cors, handleOptions } from '@/middleware/cors';
-import { checkRateLimit, createRateLimitResponse } from '@/middleware/rateLimit';
+import { getSupabaseClient } from '../lib/supabase.js';
+import { BrokerQuerySchema, type BrokerQuery } from '../lib/validation.js';
+import { cors, handleOptions } from '../middleware/cors.js';
+import { checkRateLimit, createRateLimitResponse } from '../middleware/rateLimit.js';
 
 export async function GET(request: NextRequest) {
   // Handle CORS preflight

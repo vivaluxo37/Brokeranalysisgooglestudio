@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { brokers } from '../data/brokers';
 import NotFoundPage from './NotFoundPage';
@@ -11,7 +11,7 @@ import StarRating from '../components/ui/StarRating';
 import StarRatingInput from '../components/ui/StarRatingInput';
 import { Review, DiscussionPost } from '../types';
 import ReviewCard from '../components/brokers/ReviewCard';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { getReviewSummary, ReviewSummary, getRegulatoryTrustScore, TrustScore } from '../services/geminiService';
 import Spinner from '../components/ui/Spinner';
 import BrokerCharts from '../components/brokers/BrokerCharts';
@@ -50,12 +50,23 @@ import {
   Monitor,
   Zap,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Heart,
+  BarChart3,
+  ExternalLink,
+  Clock,
+  DollarSign,
+  Code
 } from 'lucide-react';
 
 // SEO Components Integration
 import { SEOProvider, useSEO } from '../contexts/SEOContext';
 import GEOMultilingualSEO from '../components/seo/GEOMultilingualSEO';
+
+// Professional Design System
+import { designSystem, getRatingColor, formatCurrency, formatNumber } from '../constants/designSystem';
+import { brokerValidator } from '../utils/brokerDataValidator';
+import { brokerUpdateService as updateService } from '../services/brokerDataUpdateService';
 
 // Enhanced responsive key-value tables with mobile-first approach
 const DetailTable: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -92,33 +103,195 @@ const BrokerDetailPage: React.FC = () => {
   const { currentLanguage } = useLanguage();
   const { generateHreflangTags, generateCanonicalUrl, optimizeImagesForSEO } = useSEO();
 
-  const [broker, setBroker] = useState(brokers.find(b => b.id === brokerId));
+  const [rawBroker] = useState(brokers.find(b => b.id === brokerId));
+  const [broker, setBroker] = useState<typeof rawBroker | null>(null);
   const [reviewSummary, setReviewSummary] = useState<ReviewSummary | null>(null);
   const [trustScore, setTrustScore] = useState<TrustScore | null>(null);
   const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
   const [isLoadingReviewSummary, setIsLoadingReviewSummary] = useState(false);
   const [isLoadingTrustScore, setIsLoadingTrustScore] = useState(false);
+  const [isLoadingBrokerData, setIsLoadingBrokerData] = useState(true);
   const [discussionPosts, setDiscussionPosts] = useState<DiscussionPost[]>([]);
   const [newDiscussionPost, setNewDiscussionPost] = useState('');
   const [showReportModal, setShowReportModal] = useState(false);
+  const validationPerformed = useRef(false);
 
-  const isFavorite = useMemo(() => favoritesList && favoritesList.includes(brokerId), [favoritesList, brokerId]);
-  const isInComparison = useMemo(() => comparisonList && comparisonList.includes(brokerId), [comparisonList, brokerId]);
+  // All hooks must be called at the top level - no conditional hook calls!
+  const isFavorite = useMemo(() => favoritesList && favoritesList.includes(brokerId || ''), [favoritesList, brokerId]);
+  const isInComparison = useMemo(() => comparisonList && comparisonList.includes(brokerId || ''), [comparisonList, brokerId]);
   
   // Calculate overall rating from individual ratings
   const overallRating = useMemo(() => {
-    if (!broker.ratings) return 4.5; // Default rating
+    if (!broker?.ratings) return 4.5; // Default rating
     const { regulation, costs, platforms, support } = broker.ratings;
     return parseFloat(((regulation + costs + platforms + support) / 4).toFixed(1));
-  }, [broker.ratings]);
+  }, [broker?.ratings]);
+
+  // Get enhanced broker statistics (memoized)
+  const brokerStats = useMemo(() => {
+    return broker ? brokerValidator.getEnhancedStats(broker) : {
+      founded: new Date().getFullYear() - 10,
+      yearsInBusiness: 10,
+      marketsAvailable: 100,
+      minDeposit: 100,
+      supportHours: '24/5',
+      regulatoryScore: 7.5,
+      platformsCount: 1,
+      spreadFrom: 1.0
+    };
+  }, [broker?.id, broker?.foundingYear, broker?.accessibility?.minDeposit, broker?.regulation?.regulators]);
+
+  // SEO Data Generation (memoized)
+  const brokerSEODescription = useMemo(
+    () => broker ? `Read our comprehensive ${broker.name} review for ${new Date().getFullYear()}. Learn about spreads, commissions, regulation, platforms, and user experiences. Is ${broker.name} the right forex broker for you?` : '',
+    [broker?.name]
+  );
+
+  const brokerSEOKeywords = useMemo(() => {
+    if (!broker) return [];
+    return [
+      broker.name,
+      `${broker.name} review`,
+      `${broker.name} forex broker`,
+      `${broker.name} trading`,
+      `${broker.name} spreads`,
+      `${broker.name} commission`,
+      `forex broker review`,
+      `online trading`,
+      `currency trading`,
+      `CFD trading`,
+      ...(broker.regulation?.regulators || []).map(reg => `${reg} regulated broker`)
+    ];
+  }, [broker?.name, broker?.regulation?.regulators]);
+
+  const brokerFAQs = useMemo(() => {
+    if (!broker) return [];
+    return [
+      {
+        question: `Is ${broker.name} a regulated forex broker?`,
+        answer: `Yes, ${broker.name} is regulated by ${(broker.regulation?.regulators || []).join(', ')}, ensuring trader protection and fund safety.`
+      },
+      {
+        question: `What trading platforms does ${broker.name} offer?`,
+        answer: `${broker.name} offers ${(broker.technology?.platforms || ['Web Platform']).join(', ')} for trading forex, CFDs, and other instruments.`
+      },
+      {
+        question: `What are the spreads at ${broker.name}?`,
+        answer: `${broker.name} offers spreads starting from ${broker.tradingConditions?.spreads?.eurusd || '1.0'} pips on EUR/USD, with ${broker.fees?.trading?.spreadType === 'Fixed' ? 'fixed' : 'variable'} spreads.`
+      },
+      {
+        question: `What is the minimum deposit at ${broker.name}?`,
+        answer: `The minimum deposit at ${broker.name} is $${broker.accessibility?.minDeposit || 100}, making it accessible for most traders.`
+      }
+    ];
+  }, [broker?.name, broker?.regulation?.regulators, broker?.technology?.platforms, broker?.tradingConditions?.spreads?.eurusd, broker?.fees?.trading?.spreadType, broker?.accessibility?.minDeposit]);
+
+  const brokerKeyTakeaways = useMemo(() => {
+    if (!broker) return [];
+    return [
+      `${broker.name} is a ${broker.fees?.trading?.spreadType === 'Fixed' ? 'fixed' : 'variable'} spread broker with spreads from ${broker.tradingConditions?.spreads?.eurusd || '1.0'} pips`,
+      `Regulated by ${(broker.regulation?.regulators || []).join(', ')} for maximum trader protection`,
+      `Minimum deposit of $${broker.accessibility?.minDeposit || 100} with leverage up to ${broker.tradingConditions?.maxLeverage || '1:100'}`,
+      `Offers ${(broker.technology?.platforms || ['Web Platform']).join(', ')} trading platforms`,
+      `${broker.coreInfo?.demoAccount ? 'Free demo account available for practice trading' : 'No demo account available'}`
+    ];
+  }, [broker?.name, broker?.fees?.trading?.spreadType, broker?.tradingConditions?.spreads?.eurusd, broker?.regulation?.regulators, broker?.accessibility?.minDeposit, broker?.tradingConditions?.maxLeverage, broker?.technology?.platforms, broker?.coreInfo?.demoAccount]);
+
+  const brokerHowToSteps = useMemo(() => {
+    if (!broker) return [];
+    return [
+      {
+        name: 'Open Account',
+        text: `Visit ${broker.name} website and complete the registration form with your personal details.`
+      },
+      {
+        name: 'Verify Identity',
+        text: 'Submit required documents (passport, utility bill) for account verification and regulatory compliance.'
+      },
+      {
+        name: 'Fund Account',
+        text: `Deposit minimum $${broker.accessibility?.minDeposit || 100} using available payment methods (bank wire, credit card, e-wallets).`
+      },
+      {
+        name: 'Download Platform',
+        text: `Download and install ${(broker.technology?.platforms || ['Web Platform'])[0]} or use web trader for instant access.`
+      },
+      {
+        name: 'Start Trading',
+        text: 'Begin trading with your preferred instruments using the available leverage and risk management tools.'
+      }
+    ];
+  }, [broker?.name, broker?.accessibility?.minDeposit, broker?.technology?.platforms]);
+
+  const translations = useMemo(() => {
+    if (!broker) return {};
+    return {
+      es: {
+        title: `Revisión de ${broker.name} - Broker de Forex`,
+        description: `Lee nuestra revisión completa de ${broker.name}. Aprende sobre spreads, comisiones, regulación y plataformas.`,
+        keywords: brokerSEOKeywords.filter(k => k.includes(broker.name))
+      },
+      fr: {
+        title: `Avis ${broker.name} - Courtier Forex`,
+        description: `Lisez notre avis complet sur ${broker.name}. Découvrez les spreads, commissions, réglementation et plateformes.`,
+        keywords: brokerSEOKeywords.filter(k => k.includes(broker.name))
+      },
+      de: {
+        title: `${broker.name} Bewertung - Forex Broker`,
+        description: `Lesen Sie unsere umfassende ${broker.name} Bewertung. Erfahren Sie mehr über Spreads, Kommissionen und Regulierung.`,
+        keywords: brokerSEOKeywords.filter(k => k.includes(broker.name))
+      }
+    };
+  }, [broker?.name, brokerSEOKeywords]);
+
+  const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const imageUrl = broker?.logoUrl || 'https://brokeranalysis.com/images/broker-default.jpg';
+
+  // Enhanced broker data loading with validation and updates
+  useEffect(() => {
+    const loadAndValidateBrokerData = async () => {
+      if (!rawBroker || validationPerformed.current) {
+        setIsLoadingBrokerData(false);
+        return;
+      }
+
+      setIsLoadingBrokerData(true);
+      validationPerformed.current = true;
+      
+      try {
+        // Validate and enhance broker data
+        const validationResult = brokerValidator.validateBroker(rawBroker);
+        const enhancedBroker = validationResult.updatedBroker;
+        
+        // Log validation warnings for development (only once)
+        if (validationResult.warnings.length > 0) {
+          console.warn(`Broker validation warnings for ${rawBroker.name}:`, validationResult.warnings);
+        }
+        
+        // Background update disabled to prevent infinite reloading
+        // TODO: Implement background updates with proper state management
+        // updateService.updateBrokerData(enhancedBroker)
+        
+        setBroker(enhancedBroker);
+      } catch (error) {
+        console.error('Error processing broker data:', error);
+        setBroker(rawBroker); // Fallback to original data
+      } finally {
+        setIsLoadingBrokerData(false);
+      }
+    };
+
+    loadAndValidateBrokerData();
+  }, [rawBroker]);
 
   useEffect(() => {
-    if (broker) {
-      // Generate review summary and trust score
+    if (broker && !reviewSummary && !isLoadingReviewSummary) {
+      // Generate review summary only once
       const fetchReviewSummary = async () => {
         setIsLoadingReviewSummary(true);
         try {
-          const summary = await getReviewSummary(broker.name, reviews.filter(r => r.brokerId === broker.id));
+          const brokerReviews = reviews.filter(r => r.brokerId === broker.id);
+          const summary = await getReviewSummary(broker.name, brokerReviews);
           setReviewSummary(summary);
         } catch (error) {
           console.error('Error fetching review summary:', error);
@@ -127,10 +300,18 @@ const BrokerDetailPage: React.FC = () => {
         }
       };
 
+      fetchReviewSummary();
+    }
+  }, [broker?.id, reviewSummary, isLoadingReviewSummary, reviews.length]);
+
+  useEffect(() => {
+    if (broker && !trustScore && !isLoadingTrustScore) {
+      // Generate trust score only once
       const fetchTrustScore = async () => {
         setIsLoadingTrustScore(true);
         try {
-          const score = await getRegulatoryTrustScore(broker.name, broker.regulation.regulators);
+          const regulators = broker.regulation?.regulators || [];
+          const score = await getRegulatoryTrustScore(broker.name, regulators);
           setTrustScore(score);
         } catch (error) {
           console.error('Error fetching trust score:', error);
@@ -139,108 +320,35 @@ const BrokerDetailPage: React.FC = () => {
         }
       };
 
-      fetchReviewSummary();
       fetchTrustScore();
     }
-  }, [broker]);
+  }, [broker?.id, trustScore, isLoadingTrustScore]);
+
+  // Enhanced loading and error states
+  if (isLoadingBrokerData) {
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center">
+            <Spinner size="lg" />
+            <p className="mt-4 text-lg font-medium" style={{ color: designSystem.colors.neutral[600] }}>
+              Loading broker information...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!broker) {
     return <NotFoundPage />;
   }
-
-  // SEO Data Generation
-  const brokerSEODescription = `Read our comprehensive ${broker.name} review for ${new Date().getFullYear()}. Learn about spreads, commissions, regulation, platforms, and user experiences. Is ${broker.name} the right forex broker for you?`;
-
-  const brokerSEOKeywords = [
-    broker.name,
-    `${broker.name} review`,
-    `${broker.name} forex broker`,
-    `${broker.name} trading`,
-    `${broker.name} spreads`,
-    `${broker.name} commission`,
-    `forex broker review`,
-    `online trading`,
-    `currency trading`,
-    `CFD trading`,
-    ...broker.regulation.regulators.map(reg => `${reg} regulated broker`)
-  ];
-
-  const brokerFAQs = [
-    {
-      question: `Is ${broker.name} a regulated forex broker?`,
-      answer: `Yes, ${broker.name} is regulated by ${broker.regulation.regulators.join(', ')}, ensuring trader protection and fund safety.`
-    },
-    {
-      question: `What trading platforms does ${broker.name} offer?`,
-      answer: `${broker.name} offers ${broker.technology.platforms.join(', ')} for trading forex, CFDs, and other instruments.`
-    },
-    {
-      question: `What are the spreads at ${broker.name}?`,
-      answer: `${broker.name} offers spreads starting from ${broker.tradingConditions.spreads.eurusd} pips on EUR/USD, with ${broker.fees.trading.spreadType === 'Fixed' ? 'fixed' : 'variable'} spreads.`
-    },
-    {
-      question: `What is the minimum deposit at ${broker.name}?`,
-      answer: `The minimum deposit at ${broker.name} is $${broker.accessibility.minDeposit}, making it accessible for most traders.`
-    }
-  ];
-
-  const brokerKeyTakeaways = [
-    `${broker.name} is a ${broker.fees.trading.spreadType === 'Fixed' ? 'fixed' : 'variable'} spread broker with spreads from ${broker.tradingConditions.spreads.eurusd} pips`,
-    `Regulated by ${broker.regulation.regulators.join(', ')} for maximum trader protection`,
-    `Minimum deposit of $${broker.accessibility.minDeposit} with leverage up to 1:${broker.tradingConditions.maxLeverage}`,
-    `Offers ${broker.technology.platforms.join(', ')} trading platforms`,
-    `${broker.coreInfo.demoAccount ? 'Free demo account available for practice trading' : 'No demo account available'}`
-  ];
-
-  const brokerHowToSteps = [
-    {
-      name: 'Open Account',
-      text: `Visit ${broker.name} website and complete the registration form with your personal details.`
-    },
-    {
-      name: 'Verify Identity',
-      text: 'Submit required documents (passport, utility bill) for account verification and regulatory compliance.'
-    },
-    {
-      name: 'Fund Account',
-      text: `Deposit minimum $${broker.accessibility.minDeposit} using available payment methods (bank wire, credit card, e-wallets).`
-    },
-    {
-      name: 'Download Platform',
-      text: `Download and install ${broker.technology.platforms[0]} or use web trader for instant access.`
-    },
-    {
-      name: 'Start Trading',
-      text: 'Begin trading with your preferred instruments using the available leverage and risk management tools.'
-    }
-  ];
 
   const geoTargeting = {
     country: 'US',
     region: 'North America',
     city: 'New York'
   };
-
-  const translations = {
-    es: {
-      title: `Revisión de ${broker.name} - Broker de Forex`,
-      description: `Lee nuestra revisión completa de ${broker.name}. Aprende sobre spreads, comisiones, regulación y plataformas.`,
-      keywords: brokerSEOKeywords.filter(k => k.includes(broker.name))
-    },
-    fr: {
-      title: `Avis ${broker.name} - Courtier Forex`,
-      description: `Lisez notre avis complet sur ${broker.name}. Découvrez les spreads, commissions, réglementation et plateformes.`,
-      keywords: brokerSEOKeywords.filter(k => k.includes(broker.name))
-    },
-    de: {
-      title: `${broker.name} Bewertung - Forex Broker`,
-      description: `Lesen Sie unsere umfassende ${broker.name} Bewertung. Erfahren Sie mehr über Spreads, Kommissionen und Regulierung.`,
-      keywords: brokerSEOKeywords.filter(k => k.includes(broker.name))
-    }
-  };
-
-  const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
-  const imageUrl = broker.logoUrl || 'https://brokeranalysis.com/images/broker-default.jpg';
 
   return (
     <>
@@ -345,8 +453,8 @@ const BrokerDetailPage: React.FC = () => {
           image: imageUrl,
           address: {
             '@type': 'PostalAddress',
-            streetAddress: broker.headquarters?.split(',')[0] || '',
-            addressLocality: broker.headquarters?.split(',')[1] || '',
+            streetAddress: (broker.headquarters || '').split(',')[0] || '',
+            addressLocality: (broker.headquarters || '').split(',')[1] || '',
             addressCountry: 'United States'
           },
           foundingDate: broker.foundingYear?.toString(),
@@ -358,7 +466,7 @@ const BrokerDetailPage: React.FC = () => {
           },
           offers: {
             '@type': 'Offer',
-            price: broker.accessibility.minDeposit?.toString(),
+            price: (broker.accessibility?.minDeposit || 100).toString(),
             priceCurrency: 'USD',
             availability: 'https://schema.org/InStock'
           },
@@ -441,7 +549,7 @@ const BrokerDetailPage: React.FC = () => {
           estimatedCost: {
             '@type': 'MonetaryAmount',
             currency: 'USD',
-            value: broker.accessibility.minDeposit?.toString()
+            value: (broker.accessibility?.minDeposit || 100).toString()
           },
           step: brokerHowToSteps.map((step, index) => ({
             '@type': 'HowToStep',
@@ -456,115 +564,244 @@ const BrokerDetailPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6 lg:space-y-8">
-            {/* Enhanced Broker Header */}
-            <Card>
-              <CardHeader>
-                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                  <div className="flex items-start gap-3 md:gap-4">
-                    <img
-                      src={broker.logoUrl}
-                      alt={`${broker.name} logo`}
-                      className="w-12 h-12 md:w-16 md:h-16 object-contain"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = 'https://brokeranalysis.com/images/broker-default.jpg';
-                      }}
-                    />
+            {/* Professional Broker Header */}
+            <Card className="overflow-hidden" style={{ 
+              background: `linear-gradient(135deg, ${designSystem.colors.primary[50]} 0%, ${designSystem.colors.neutral[50]} 100%)`,
+              border: `1px solid ${designSystem.colors.neutral[200]}`
+            }}>
+              <CardHeader className="bg-white/70 backdrop-blur-sm">
+                <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-20 h-20 bg-white rounded-xl shadow-md flex items-center justify-center p-3">
+                        <img
+                          src={broker.logoUrl}
+                          alt={`${broker.name} logo`}
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = '/broker-logos/default-broker.svg';
+                          }}
+                        />
+                      </div>
+                    </div>
                     <div className="flex-1 min-w-0">
-                      <h1 className="text-xl md:text-3xl font-bold leading-tight">{broker.name} Review {new Date().getFullYear()}</h1>
-                      <div className="flex flex-wrap items-center gap-2 md:gap-4 mt-2">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h1 className="text-2xl lg:text-4xl font-bold tracking-tight" style={{ color: designSystem.colors.neutral[900] }}>
+                          {broker.name}
+                        </h1>
+                        {broker.regulation?.regulators && broker.regulation.regulators.length > 0 && (
+                          <Badge 
+                            className="flex items-center gap-1" 
+                            style={{ 
+                              backgroundColor: designSystem.colors.success[100],
+                              color: designSystem.colors.success[800],
+                              border: `1px solid ${designSystem.colors.success[200]}`
+                            }}
+                          >
+                            <Shield className="w-3 h-3" />
+                            Regulated
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      <p className="text-lg mb-4" style={{ color: designSystem.colors.neutral[600] }}>
+                        Professional Review & Analysis {new Date().getFullYear()}
+                      </p>
+                      
+                      {/* Rating and Trust Indicators */}
+                      <div className="flex flex-wrap items-center gap-4 mb-4">
                         <div className="flex items-center gap-2">
                           <div className="flex items-center">
                             {[1, 2, 3, 4, 5].map((star) => (
-                              <svg
+                              <Star
                                 key={star}
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill={star <= Math.round(overallRating) ? "currentColor" : "none"}
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className={star <= Math.round(overallRating) ? "text-yellow-400 fill-current" : "text-gray-300"}
-                              >
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                              </svg>
+                                className={`w-5 h-5 ${
+                                  star <= Math.round(overallRating) 
+                                    ? 'text-yellow-400 fill-yellow-400' 
+                                    : 'text-gray-300'
+                                }`}
+                              />
                             ))}
                           </div>
-                          <span className="text-sm font-medium">
-                            {overallRating.toFixed(1)} out of 5
+                          <span className="font-semibold" style={{ color: designSystem.colors.neutral[700] }}>
+                            {overallRating.toFixed(1)}/5.0
                           </span>
                         </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <BarChart3 className="w-4 h-4" style={{ color: designSystem.colors.primary[600] }} />
+                          <span className="font-semibold" style={{ color: designSystem.colors.primary[700] }}>
+                            {broker.score?.toFixed(1) || '8.5'}/10
+                          </span>
+                          <span className="text-sm" style={{ color: designSystem.colors.neutral[500] }}>Overall Score</span>
+                        </div>
+                        
                         {trustScore && (
-                          <Badge className="bg-green-600 text-white text-xs">
-                            Trust Score: {trustScore.score}/10
-                          </Badge>
+                          <div className="flex items-center gap-2">
+                            <Shield className="w-4 h-4" style={{ color: designSystem.colors.success[600] }} />
+                            <span className="font-semibold" style={{ color: designSystem.colors.success[700] }}>
+                              {trustScore.score}/10
+                            </span>
+                            <span className="text-sm" style={{ color: designSystem.colors.neutral[500] }}>Trust Score</span>
+                          </div>
                         )}
-                        <Badge variant="outline" className="flex items-center gap-1 text-xs">
-                          <TrendingUp className="w-3 h-3" />
-                          {broker.score || '9.3'}/10
-                        </Badge>
+                      </div>
+                      
+                      {/* Key Highlights */}
+                      <div className="flex flex-wrap gap-2">
+                        {broker.pros?.slice(0, 3).map((pro, index) => (
+                          <Badge 
+                            key={`highlight-${index}`} 
+                            variant="outline"
+                            className="text-sm font-medium"
+                            style={{
+                              borderColor: designSystem.colors.primary[300],
+                              color: designSystem.colors.primary[700],
+                              backgroundColor: `${designSystem.colors.primary[50]}80`
+                            }}
+                          >
+                            <CheckCircle className="w-3 h-3 mr-1" />
+                            {pro}
+                          </Badge>
+                        ))}
                       </div>
                     </div>
                   </div>
-                  <div className="flex gap-2 flex-wrap">
+                  
+                  {/* Action Buttons */}
+                  <div className="flex gap-3 lg:flex-col lg:w-48">
                     <Button
-                      variant={isFavorite ? 'default' : 'outline'}
-                      size="sm"
-                      className="text-xs"
-                      onClick={() => isFavorite ? removeBrokerFromFavorites(broker.id) : addBrokerToFavorites(broker.id)}
+                      className="flex-1 lg:w-full transition-all duration-200"
+                      style={{
+                        backgroundColor: designSystem.colors.primary[600],
+                        color: 'white',
+                        fontWeight: '600'
+                      }}
+                      onClick={() => window.open(broker.websiteUrl, '_blank')}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill={isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-3 h-3 mr-1 ${isFavorite ? 'text-red-500 fill-current' : ''}`}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                      <span className="hidden sm:inline">{isFavorite ? 'Remove' : 'Add to Favorites'}</span>
-                      <span className="sm:hidden">{isFavorite ? 'Remove' : 'Favorite'}</span>
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Visit Broker
                     </Button>
-                    <Button
-                      variant={isInComparison ? 'default' : 'outline'}
-                      size="sm"
-                      className="text-xs"
-                      onClick={() => isInComparison ? removeBrokerFromComparison(broker.id) : addBrokerToComparison(broker.id)}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3 mr-1"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                      <span className="hidden sm:inline">{isInComparison ? 'Remove' : 'Compare'}</span>
-                      <span className="sm:hidden">{isInComparison ? 'Remove' : 'Compare'}</span>
-                    </Button>
+                    
+                    <div className="flex gap-2 lg:w-full">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => isFavorite ? removeBrokerFromFavorites(broker.id) : addBrokerToFavorites(broker.id)}
+                        style={{
+                          borderColor: isFavorite ? designSystem.colors.danger[300] : designSystem.colors.neutral[300],
+                          color: isFavorite ? designSystem.colors.danger[600] : designSystem.colors.neutral[600]
+                        }}
+                      >
+                        <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
+                      </Button>
+                      
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        onClick={() => isInComparison ? removeBrokerFromComparison(broker.id) : addBrokerToComparison(broker.id)}
+                        style={{
+                          borderColor: isInComparison ? designSystem.colors.primary[300] : designSystem.colors.neutral[300],
+                          color: isInComparison ? designSystem.colors.primary[600] : designSystem.colors.neutral[600]
+                        }}
+                      >
+                        <BarChart3 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </CardHeader>
+              
               <CardContent>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  {brokerSEODescription}
-                </p>
-
-                {/* Quick Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
-                  <div className="text-center p-2 md:p-3 bg-blue-50 rounded-lg">
-                    <div className="text-xl md:text-2xl font-bold text-blue-600">1978</div>
-                    <div className="text-xs md:text-xs text-blue-700">Founded</div>
+                {/* Professional Stats Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  <div 
+                    className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md"
+                    style={{ 
+                      backgroundColor: designSystem.colors.neutral[50],
+                      border: `1px solid ${designSystem.colors.neutral[200]}`
+                    }}
+                  >
+                    <div 
+                      className="text-2xl md:text-3xl font-bold mb-1"
+                      style={{ color: designSystem.colors.primary[600] }}
+                    >
+                      {brokerStats.founded}
+                    </div>
+                    <div className="text-sm font-medium" style={{ color: designSystem.colors.neutral[600] }}>
+                      Founded
+                    </div>
                   </div>
-                  <div className="text-center p-2 md:p-3 bg-green-50 rounded-lg">
-                    <div className="text-xl md:text-2xl font-bold text-green-600">150+</div>
-                    <div className="text-xs md:text-xs text-green-700">Markets</div>
+                  
+                  <div 
+                    className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md"
+                    style={{ 
+                      backgroundColor: designSystem.colors.neutral[50],
+                      border: `1px solid ${designSystem.colors.neutral[200]}`
+                    }}
+                  >
+                    <div 
+                      className="text-2xl md:text-3xl font-bold mb-1"
+                      style={{ color: designSystem.colors.primary[600] }}
+                    >
+                      {formatNumber(brokerStats.marketsAvailable)}+
+                    </div>
+                    <div className="text-sm font-medium" style={{ color: designSystem.colors.neutral[600] }}>
+                      Markets
+                    </div>
                   </div>
-                  <div className="text-center p-2 md:p-3 bg-purple-50 rounded-lg">
-                    <div className="text-xl md:text-2xl font-bold text-purple-600">$0</div>
-                    <div className="text-xs md:text-xs text-purple-700">Min Deposit</div>
+                  
+                  <div 
+                    className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md"
+                    style={{ 
+                      backgroundColor: designSystem.colors.neutral[50],
+                      border: `1px solid ${designSystem.colors.neutral[200]}`
+                    }}
+                  >
+                    <div 
+                      className="text-2xl md:text-3xl font-bold mb-1"
+                      style={{ color: designSystem.colors.primary[600] }}
+                    >
+                      {formatCurrency(brokerStats.minDeposit)}
+                    </div>
+                    <div className="text-sm font-medium" style={{ color: designSystem.colors.neutral[600] }}>
+                      Min Deposit
+                    </div>
                   </div>
-                  <div className="text-center p-2 md:p-3 bg-orange-50 rounded-lg">
-                    <div className="text-xl md:text-2xl font-bold text-orange-600">24/5</div>
-                    <div className="text-xs md:text-xs text-orange-700">Support</div>
+                  
+                  <div 
+                    className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md"
+                    style={{ 
+                      backgroundColor: designSystem.colors.neutral[50],
+                      border: `1px solid ${designSystem.colors.neutral[200]}`
+                    }}
+                  >
+                    <div 
+                      className="text-2xl md:text-3xl font-bold mb-1"
+                      style={{ color: designSystem.colors.primary[600] }}
+                    >
+                      {brokerStats.supportHours}
+                    </div>
+                    <div className="text-sm font-medium" style={{ color: designSystem.colors.neutral[600] }}>
+                      Support
+                    </div>
                   </div>
                 </div>
-
-                {/* Key Features */}
-                <div className="flex flex-wrap gap-2">
-                  {broker.pros?.slice(0, 4).map((pro, index) => (
-                    <Badge key={`pros-${index}-${pro.slice(0, 10)}`} variant="secondary" className="text-xs">
-                      {pro}
-                    </Badge>
-                  ))}
+                
+                {/* Broker Summary */}
+                <div 
+                  className="p-4 rounded-lg"
+                  style={{ 
+                    backgroundColor: designSystem.colors.primary[50],
+                    border: `1px solid ${designSystem.colors.primary[200]}`
+                  }}
+                >
+                  <p className="text-base leading-relaxed" style={{ color: designSystem.colors.neutral[700] }}>
+                    {broker.summary || broker.description}
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -616,28 +853,28 @@ const BrokerDetailPage: React.FC = () => {
                   <CardContent>
                     <DetailTable>
                       <DetailRow label="Spreads (EUR/USD)" helpText="Typical spread on EUR/USD currency pair">
-                        <span className="font-medium">{broker.tradingConditions.spreads.eurusd} pips</span>
+                        <span className="font-medium">{broker.tradingConditions?.spreads?.eurusd || '1.0'} pips</span>
                       </DetailRow>
                       <DetailRow label="Spread Type">
-                        <span className="font-medium capitalize">{broker.fees.trading.spreadType}</span>
+                        <span className="font-medium capitalize">{broker.fees?.trading?.spreadType || 'Variable'}</span>
                       </DetailRow>
                       <DetailRow label="Commission" helpText="Per standard lot (100,000 units)">
-                        <span className="font-medium">{broker.tradingConditions.commission}</span>
+                        <span className="font-medium">{broker.tradingConditions?.commission || 'No commission'}</span>
                       </DetailRow>
                       <DetailRow label="Leverage" helpText="Maximum leverage offered">
-                        <span className="font-medium">1:{broker.tradingConditions.maxLeverage}</span>
+                        <span className="font-medium">{broker.tradingConditions?.maxLeverage || '1:100'}</span>
                       </DetailRow>
                       <DetailRow label="Minimum Deposit">
-                        <span className="font-medium">${broker.accessibility.minDeposit}</span>
+                        <span className="font-medium">${broker.accessibility?.minDeposit || 100}</span>
                       </DetailRow>
                     </DetailTable>
                   </CardContent>
                 </Card>
 
-                {/* Why Choose Interactive Brokers */}
+                {/* Why Choose This Broker */}
                 <Card>
                   <CardHeader>
-                    <h2 className="text-2xl font-bold">Why Choose Interactive Brokers</h2>
+                    <h2 className="text-2xl font-bold">Why Choose {broker.name}</h2>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -669,31 +906,478 @@ const BrokerDetailPage: React.FC = () => {
               </TabsContent>
 
               <TabsContent value="fees" className="space-y-6">
-                <FeeComparisonTable />
+                {/* Dynamic Fee Information */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Trading Fees & Costs</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Comprehensive fee breakdown for {broker.name}
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Trading Fees */}
+                      <div>
+                        <h3 className="font-semibold mb-4">Trading Fees</h3>
+                        <DetailTable>
+                          <DetailRow label="Spread Type">
+                            <span className="font-medium">{broker.fees?.trading?.spreadType || 'Variable'}</span>
+                          </DetailRow>
+                          <DetailRow label="EUR/USD Spread">
+                            <span className="font-medium">{broker.tradingConditions?.spreads?.eurusd || '1.0'} pips</span>
+                          </DetailRow>
+                          <DetailRow label="Commission Structure">
+                            <span className="font-medium">{broker.fees?.trading?.commissionStructure || 'No commission'}</span>
+                          </DetailRow>
+                          <DetailRow label="Overnight Swap Fees">
+                            <span className="font-medium">{broker.fees?.trading?.overnightSwapFees || 'Standard rates'}</span>
+                          </DetailRow>
+                        </DetailTable>
+                      </div>
+                      
+                      {/* Non-Trading Fees */}
+                      <div>
+                        <h3 className="font-semibold mb-4">Account Fees</h3>
+                        <DetailTable>
+                          <DetailRow label="Inactivity Fee">
+                            <span className="font-medium">{broker.fees?.nonTrading?.inactivityFee || 'None'}</span>
+                          </DetailRow>
+                          <DetailRow label="Withdrawal Fee">
+                            <span className="font-medium">{broker.fees?.nonTrading?.withdrawalFee || 'None'}</span>
+                          </DetailRow>
+                          <DetailRow label="Deposit Fee">
+                            <span className="font-medium">{broker.fees?.nonTrading?.depositFee || 'None'}</span>
+                          </DetailRow>
+                          <DetailRow label="Minimum Deposit">
+                            <span className="font-medium">${broker.accessibility?.minDeposit || 100}</span>
+                          </DetailRow>
+                        </DetailTable>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
 
               <TabsContent value="platforms" className="space-y-6">
-                <PlatformFeatureMatrix />
+                {/* Dynamic Platform Information */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Trading Platforms</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Available trading platforms from {broker.name}
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {broker.technology?.platforms && broker.technology.platforms.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          {broker.technology.platforms.map((platform, index) => (
+                            <div key={index} className="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Monitor className="w-5 h-5 text-primary" />
+                                <h3 className="font-semibold">{platform}</h3>
+                              </div>
+                              <p className="text-sm text-muted-foreground mb-3">
+                                Professional trading platform with advanced features
+                              </p>
+                              <div className="flex flex-wrap gap-1">
+                                {broker.platformFeatures?.charting && (
+                                  <Badge variant="secondary" className="text-xs">
+                                    {broker.platformFeatures.charting.indicators || 50}+ Indicators
+                                  </Badge>
+                                )}
+                                {broker.technology?.apiAccess && (
+                                  <Badge variant="secondary" className="text-xs">API Access</Badge>
+                                )}
+                                {broker.technology?.eaSupport && (
+                                  <Badge variant="secondary" className="text-xs">EA Support</Badge>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-muted-foreground">Platform information not available</p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
 
               <TabsContent value="safety" className="space-y-6">
-                <SafetyRegulationSection />
+                {/* Dynamic Safety Information */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Safety & Regulation</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Regulatory information and safety features for {broker.name}
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      {/* Regulatory Information */}
+                      <div>
+                        <h3 className="font-semibold mb-4">Regulatory Authorities</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {broker.security?.regulatedBy && broker.security.regulatedBy.length > 0 ? (
+                            broker.security.regulatedBy.map((reg, index) => (
+                              <div key={index} className="p-4 border rounded-lg">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <Shield className="w-4 h-4 text-green-600" />
+                                  <span className="font-medium">{reg.regulator}</span>
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                  License: {reg.licenseNumber || 'Licensed'}
+                                </p>
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-muted-foreground">Regulatory information not available</p>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {/* Safety Features */}
+                      <div>
+                        <h3 className="font-semibold mb-4">Safety Features</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {broker.security?.segregatedAccounts && (
+                            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                              <CheckCircle className="w-5 h-5 text-green-600" />
+                              <span className="font-medium">Segregated Accounts</span>
+                            </div>
+                          )}
+                          {broker.tradingConditionsExtended?.negativeBalanceProtection && (
+                            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                              <CheckCircle className="w-5 h-5 text-green-600" />
+                              <span className="font-medium">Negative Balance Protection</span>
+                            </div>
+                          )}
+                          {broker.security?.investorCompensationScheme?.available && (
+                            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                              <CheckCircle className="w-5 h-5 text-green-600" />
+                              <span className="font-medium">Investor Compensation: {broker.security.investorCompensationScheme.amount}</span>
+                            </div>
+                          )}
+                          {broker.security?.twoFactorAuth && (
+                            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                              <CheckCircle className="w-5 h-5 text-green-600" />
+                              <span className="font-medium">Two-Factor Authentication</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
 
               <TabsContent value="account" className="space-y-6">
-                <AccountOpeningGuide />
+                {/* Dynamic Account Information */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Account Information</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Account types and requirements for {broker.name}
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      {/* Account Types */}
+                      {broker.accountTypes && broker.accountTypes.length > 0 && (
+                        <div>
+                          <h3 className="font-semibold mb-4">Available Account Types</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {broker.accountTypes.map((account, index) => (
+                              <div key={index} className="p-4 border rounded-lg">
+                                <h4 className="font-medium mb-2">{account.name}</h4>
+                                <div className="space-y-2 text-sm">
+                                  <div><strong>Type:</strong> {account.type}</div>
+                                  <div><strong>Min Deposit:</strong> ${account.minDeposit}</div>
+                                  <div><strong>Spreads:</strong> {account.spreads}</div>
+                                  <div><strong>Commission:</strong> {account.commission}</div>
+                                  <div><strong>Best For:</strong> {account.bestFor}</div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Account Features */}
+                      <div>
+                        <h3 className="font-semibold mb-4">Account Features</h3>
+                        <DetailTable>
+                          <DetailRow label="Minimum Deposit">
+                            <span className="font-medium">${broker.accessibility?.minDeposit || 100}</span>
+                          </DetailRow>
+                          <DetailRow label="Base Currencies">
+                            <div className="flex flex-wrap gap-1">
+                              {broker.accountManagement?.baseCurrencies?.map((currency, index) => (
+                                <Badge key={index} variant="secondary" className="text-xs">{currency}</Badge>
+                              )) || <span>USD, EUR</span>}
+                            </div>
+                          </DetailRow>
+                          <DetailRow label="Islamic Account">
+                            <span className="font-medium">
+                              {broker.accountManagement?.islamicAccount?.available ? 'Available' : 'Not Available'}
+                            </span>
+                          </DetailRow>
+                          <DetailRow label="Demo Account">
+                            <span className="font-medium">
+                              {broker.coreInfo?.demoAccount ? 'Available' : 'Not Available'}
+                            </span>
+                          </DetailRow>
+                        </DetailTable>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
 
               <TabsContent value="interest" className="space-y-6">
-                <InterestRateCalculator />
+                {/* Trading Conditions */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Trading Conditions</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Detailed trading conditions for {broker.name}
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <DetailTable>
+                      <DetailRow label="Maximum Leverage">
+                        <span className="font-medium">{broker.tradingConditions?.maxLeverage || '1:100'}</span>
+                      </DetailRow>
+                      <DetailRow label="Minimum Lot Size">
+                        <span className="font-medium">{broker.tradingConditions?.minLotSize || 0.01}</span>
+                      </DetailRow>
+                      <DetailRow label="Margin Call Level">
+                        <span className="font-medium">{broker.tradingConditionsExtended?.marginCallLevel || '100%'}</span>
+                      </DetailRow>
+                      <DetailRow label="Stop Out Level">
+                        <span className="font-medium">{broker.tradingConditionsExtended?.stopOutLevel || '50%'}</span>
+                      </DetailRow>
+                      <DetailRow label="Scalping Allowed">
+                        <span className="font-medium">
+                          {broker.tradingConditionsExtended?.scalpingAllowed ? 'Yes' : 'No'}
+                        </span>
+                      </DetailRow>
+                      <DetailRow label="EA Support">
+                        <span className="font-medium">
+                          {broker.tradingConditionsExtended?.eaAllowed ? 'Yes' : 'No'}
+                        </span>
+                      </DetailRow>
+                      <DetailRow label="Hedging Allowed">
+                        <span className="font-medium">
+                          {broker.tradingConditionsExtended?.hedgingAllowed ? 'Yes' : 'No'}
+                        </span>
+                      </DetailRow>
+                    </DetailTable>
+                  </CardContent>
+                </Card>
               </TabsContent>
 
               <TabsContent value="products" className="space-y-6">
-                <ProductSelectionEnhanced />
+                {/* Trading Instruments */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Trading Instruments</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Available trading instruments from {broker.name}
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {broker.tradableInstruments?.forexPairs && (
+                        <div className="p-4 border rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Globe className="w-5 h-5 text-primary" />
+                            <h3 className="font-semibold">Forex Pairs</h3>
+                          </div>
+                          <div className="text-2xl font-bold text-primary mb-1">
+                            {typeof broker.tradableInstruments.forexPairs === 'object' && broker.tradableInstruments.forexPairs.total 
+                              ? broker.tradableInstruments.forexPairs.total 
+                              : 50}
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {typeof broker.tradableInstruments.forexPairs === 'object' && broker.tradableInstruments.forexPairs.details 
+                              ? broker.tradableInstruments.forexPairs.details 
+                              : 'Major and minor pairs'}
+                          </p>
+                        </div>
+                      )}
+                      
+                      {broker.tradableInstruments?.stocks && (
+                        <div className="p-4 border rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <TrendingUp className="w-5 h-5 text-primary" />
+                            <h3 className="font-semibold">Stocks</h3>
+                          </div>
+                          <div className="text-2xl font-bold text-primary mb-1">
+                            {typeof broker.tradableInstruments.stocks === 'object' && broker.tradableInstruments.stocks.total 
+                              ? broker.tradableInstruments.stocks.total 
+                              : 1000}+
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {typeof broker.tradableInstruments.stocks === 'object' && broker.tradableInstruments.stocks.details 
+                              ? broker.tradableInstruments.stocks.details 
+                              : 'Global stock CFDs'}
+                          </p>
+                        </div>
+                      )}
+                      
+                      {broker.tradableInstruments?.commodities && (
+                        <div className="p-4 border rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <DollarSign className="w-5 h-5 text-primary" />
+                            <h3 className="font-semibold">Commodities</h3>
+                          </div>
+                          <div className="text-2xl font-bold text-primary mb-1">
+                            {typeof broker.tradableInstruments.commodities === 'object' && broker.tradableInstruments.commodities.total 
+                              ? broker.tradableInstruments.commodities.total 
+                              : 20}
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {typeof broker.tradableInstruments.commodities === 'object' && broker.tradableInstruments.commodities.details 
+                              ? broker.tradableInstruments.commodities.details 
+                              : 'Metals, energies, agricultural'}
+                          </p>
+                        </div>
+                      )}
+                      
+                      {broker.tradableInstruments?.indices && (
+                        <div className="p-4 border rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <BarChart3 className="w-5 h-5 text-primary" />
+                            <h3 className="font-semibold">Indices</h3>
+                          </div>
+                          <div className="text-2xl font-bold text-primary mb-1">
+                            {typeof broker.tradableInstruments.indices === 'object' && broker.tradableInstruments.indices.total 
+                              ? broker.tradableInstruments.indices.total 
+                              : 25}
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {typeof broker.tradableInstruments.indices === 'object' && broker.tradableInstruments.indices.details 
+                              ? broker.tradableInstruments.indices.details 
+                              : 'Global stock indices'}
+                          </p>
+                        </div>
+                      )}
+                      
+                      {broker.tradableInstruments?.cryptocurrencies && (
+                        <div className="p-4 border rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Zap className="w-5 h-5 text-primary" />
+                            <h3 className="font-semibold">Cryptocurrencies</h3>
+                          </div>
+                          <div className="text-2xl font-bold text-primary mb-1">
+                            {typeof broker.tradableInstruments.cryptocurrencies === 'object' && broker.tradableInstruments.cryptocurrencies.total 
+                              ? broker.tradableInstruments.cryptocurrencies.total 
+                              : 10}
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {typeof broker.tradableInstruments.cryptocurrencies === 'object' && broker.tradableInstruments.cryptocurrencies.details 
+                              ? broker.tradableInstruments.cryptocurrencies.details 
+                              : 'Major digital assets'}
+                          </p>
+                        </div>
+                      )}
+                      
+                      {broker.tradableInstruments?.etfs && (
+                        <div className="p-4 border rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Users className="w-5 h-5 text-primary" />
+                            <h3 className="font-semibold">ETFs</h3>
+                          </div>
+                          <div className="text-2xl font-bold text-primary mb-1">
+                            {typeof broker.tradableInstruments.etfs === 'object' && broker.tradableInstruments.etfs.total 
+                              ? broker.tradableInstruments.etfs.total 
+                              : 100}+
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {typeof broker.tradableInstruments.etfs === 'object' && broker.tradableInstruments.etfs.details 
+                              ? broker.tradableInstruments.etfs.details 
+                              : 'Exchange-traded funds'}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
 
               <TabsContent value="education" className="space-y-6">
-                <EducationalResources />
+                {/* Customer Support & Education */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Support & Resources</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Customer support and educational resources from {broker.name}
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      {/* Customer Support */}
+                      <div>
+                        <h3 className="font-semibold mb-4">Customer Support</h3>
+                        <DetailTable>
+                          <DetailRow label="Support Hours">
+                            <span className="font-medium">{broker.customerSupport?.hours || '24/5'}</span>
+                          </DetailRow>
+                          <DetailRow label="Contact Methods">
+                            <div className="flex flex-wrap gap-1">
+                              {broker.customerSupport?.channels?.map((channel, index) => (
+                                <Badge key={index} variant="secondary" className="text-xs">{channel}</Badge>
+                              )) || <span>Live Chat, Email, Phone</span>}
+                            </div>
+                          </DetailRow>
+                          <DetailRow label="Languages">
+                            <div className="flex flex-wrap gap-1">
+                              {broker.customerSupport?.languages?.slice(0, 5).map((language, index) => (
+                                <Badge key={index} variant="secondary" className="text-xs">{language}</Badge>
+                              )) || <span>English</span>}
+                              {broker.customerSupport?.languages && broker.customerSupport.languages.length > 5 && (
+                                <Badge variant="secondary" className="text-xs">+{broker.customerSupport.languages.length - 5} more</Badge>
+                              )}
+                            </div>
+                          </DetailRow>
+                        </DetailTable>
+                      </div>
+                      
+                      {/* Additional Features */}
+                      <div>
+                        <h3 className="font-semibold mb-4">Additional Features</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {broker.platformFeatures?.copyTrading?.available && (
+                            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                              <Users className="w-5 h-5 text-blue-600" />
+                              <span className="font-medium">Copy Trading Available</span>
+                            </div>
+                          )}
+                          {broker.platformFeatures?.backtesting && (
+                            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                              <BarChart3 className="w-5 h-5 text-blue-600" />
+                              <span className="font-medium">Strategy Backtesting</span>
+                            </div>
+                          )}
+                          {broker.technology?.apiAccess && (
+                            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                              <Code className="w-5 h-5 text-blue-600" />
+                              <span className="font-medium">API Access</span>
+                            </div>
+                          )}
+                          {broker.platformFeatures?.newsIntegration && (
+                            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                              <Globe className="w-5 h-5 text-blue-600" />
+                              <span className="font-medium">News Integration</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
             </Tabs>
 
@@ -718,7 +1402,7 @@ const BrokerDetailPage: React.FC = () => {
                       <div className="text-sm text-muted-foreground">User Reviews</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-purple-600">{broker.tradingConditions.spreads.eurusd}</div>
+                      <div className="text-3xl font-bold text-purple-600">{broker.tradingConditions?.spreads?.eurusd || '1.0'}</div>
                       <div className="text-sm text-muted-foreground">EUR/USD Spreads</div>
                     </div>
                   </div>
@@ -789,7 +1473,7 @@ const BrokerDetailPage: React.FC = () => {
             </Card>
 
             {/* AI Alternatives */}
-            <AIAlternatives />
+            {broker && <AIAlternatives targetBroker={broker} />}
 
             {/* Discussion Section */}
             <Card>
@@ -868,7 +1552,7 @@ const BrokerDetailPage: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  {broker.regulation.regulators.map((regulator, index) => (
+                  {(broker.regulation?.regulators || []).map((regulator, index) => (
                     <div key={index} className="flex items-center gap-2">
                       <Icons.shield className="w-4 h-4 text-green-600" />
                       <span className="text-sm">{regulator}</span>

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import {
-  Speed,
+  Gauge,
   Accessibility,
   Smartphone,
   Monitor,
@@ -179,7 +179,7 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
-              <Speed className="h-5 w-5" />
+              <Gauge className="h-5 w-5" />
               Core Web Vitals
             </CardTitle>
             <div className="flex items-center gap-2">

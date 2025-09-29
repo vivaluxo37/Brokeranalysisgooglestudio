@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-09-29T11:32:29.989Z",
+  "brokers": {
+    "success": true,
+    "filename": "brokers_backup_2025-09-29T11-32-30-668Z.json",
+    "recordCount": 75
+  },
+  "blogs": {
+    "success": false,
+    "error": "Could not find the table 'public.blogs' in the schema cache"
+  }
+}

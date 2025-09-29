@@ -42,13 +42,14 @@ const SEOInsights: React.FC = () => {
 
     const newInsights: SEOInsight[] = [];
 
-    // Technical SEO Analysis
-    const titleLength = document.title.length;
-    const metaDescription = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
-    const h1Tags = document.querySelectorAll('h1').length;
-    const images = document.querySelectorAll('img');
-    const imagesWithoutAlt = Array.from(images).filter(img => !img.alt).length;
-    const structuredData = document.querySelectorAll('script[type="application/ld+json"]').length;
+    try {
+      // Technical SEO Analysis
+      const titleLength = document.title.length;
+      const metaDescription = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+      const h1Tags = document.querySelectorAll('h1').length;
+      const images = document.querySelectorAll('img');
+      const imagesWithoutAlt = Array.from(images).filter(img => !img.alt).length;
+      const structuredData = document.querySelectorAll('script[type="application/ld+json"]').length;
 
     if (titleLength < 30 || titleLength > 60) {
       newInsights.push({
@@ -126,16 +127,16 @@ const SEOInsights: React.FC = () => {
       });
     }
 
-    // Content Analysis
-    const wordCount = document.body.innerText.split(/\s+/).length;
-    const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-    const links = document.querySelectorAll('a');
-    const internalLinks = Array.from(links).filter(link =>
-      link.href.includes(window.location.hostname)
-    ).length;
-    const externalLinks = Array.from(links).filter(link =>
-      !link.href.includes(window.location.hostname) && link.href !== '#'
-    ).length;
+      // Content Analysis
+      const wordCount = document.body.innerText.split(/\s+/).length;
+      const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      const links = document.querySelectorAll('a');
+      const internalLinks = Array.from(links).filter(link =>
+        link.href.includes(window.location.hostname)
+      ).length;
+      const externalLinks = Array.from(links).filter(link =>
+        !link.href.includes(window.location.hostname) && link.href !== '#'
+      ).length;
 
     if (wordCount < 300) {
       newInsights.push({
@@ -163,9 +164,9 @@ const SEOInsights: React.FC = () => {
       });
     }
 
-    // Performance Analysis
-    const pageLoadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-    const domContentLoaded = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart;
+      // Performance Analysis
+      const pageLoadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+      const domContentLoaded = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart;
 
     if (pageLoadTime > 3000) {
       newInsights.push({
@@ -220,7 +221,22 @@ const SEOInsights: React.FC = () => {
       });
     }
 
-    setInsights(newInsights.sort((a, b) => a.priority - b.priority));
+      setInsights(newInsights.sort((a, b) => a.priority - b.priority));
+    } catch (error) {
+      console.error('Error generating SEO insights:', error);
+      // Add an insight about the error
+      newInsights.push({
+        id: 'analysis-error',
+        type: 'error',
+        category: 'technical',
+        title: 'Analysis Error',
+        description: 'An error occurred while analyzing the page for SEO insights.',
+        action: 'Please check the browser console for more details and try again.',
+        impact: 'high',
+        priority: 1
+      });
+      setInsights(newInsights);
+    }
     setLoading(false);
   };
 

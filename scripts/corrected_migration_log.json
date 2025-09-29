@@ -1,0 +1,180 @@
+{
+  "timestamp": "2025-09-29T11:17:27.448Z",
+  "stats": {
+    "brokersProcessed": 78,
+    "brokersSuccess": 70,
+    "brokersFailed": 8,
+    "totalBatches": 10,
+    "successfulBatches": 9,
+    "failedBatches": 1
+  },
+  "migrationLog": [
+    {
+      "timestamp": "2025-09-29T11:17:01.421Z",
+      "type": "BROKER_BATCH_SUCCESS",
+      "batch": 2,
+      "count": 8,
+      "brokerNames": [
+        "Saxo Bank",
+        "IG Group",
+        "CMC Markets"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:17:04.519Z",
+      "type": "BROKER_BATCH_SUCCESS",
+      "batch": 3,
+      "count": 8,
+      "brokerNames": [
+        "Vantage",
+        "Eightcap",
+        "Blueberry Markets"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:17:07.628Z",
+      "type": "BROKER_BATCH_SUCCESS",
+      "batch": 4,
+      "count": 8,
+      "brokerNames": [
+        "Alpari",
+        "InstaForex",
+        "HotForex"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:17:10.738Z",
+      "type": "BROKER_BATCH_SUCCESS",
+      "batch": 5,
+      "count": 8,
+      "brokerNames": [
+        "NordFX",
+        "AMarkets",
+        "FreshForex"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:17:13.828Z",
+      "type": "BROKER_BATCH_SUCCESS",
+      "batch": 6,
+      "count": 8,
+      "brokerNames": [
+        "Charles Schwab",
+        "E*TRADE",
+        "Fidelity"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:17:17.029Z",
+      "type": "BROKER_BATCH_SUCCESS",
+      "batch": 7,
+      "count": 8,
+      "brokerNames": [
+        "Freetrade",
+        "Hargreaves Lansdown",
+        "AJ Bell"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:17:20.432Z",
+      "type": "BROKER_BATCH_SUCCESS",
+      "batch": 8,
+      "count": 8,
+      "brokerNames": [
+        "NatWest Invest",
+        "Santander Investment",
+        "Virgin Money"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:17:23.545Z",
+      "type": "BROKER_BATCH_SUCCESS",
+      "batch": 9,
+      "count": 8,
+      "brokerNames": [
+        "Starling Bank",
+        "Revolut Trading",
+        "Freetrade Plus"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:17:26.651Z",
+      "type": "BROKER_BATCH_SUCCESS",
+      "batch": 10,
+      "count": 6,
+      "brokerNames": [
+        "State Street",
+        "JPMorgan Asset",
+        "Goldman Sachs"
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": "2025-09-29T11:16:58.172Z",
+      "type": "BROKER_BATCH_ERROR",
+      "batch": 1,
+      "error": "duplicate key value violates unique constraint \"brokers_slug_key\"",
+      "brokerNames": [
+        "eToro",
+        "Plus500",
+        "AvaTrade"
+      ],
+      "sampleRating": 3.9
+    }
+  ],
+  "verification": {
+    "success": true,
+    "totalBrokers": 75,
+    "samples": [
+      {
+        "name": "XM Group",
+        "slug": "xm-group",
+        "overall_rating": 4.5,
+        "trust_score": 4.3
+      },
+      {
+        "name": "FXTM",
+        "slug": "fxtm",
+        "overall_rating": 4.4,
+        "trust_score": 4.2
+      },
+      {
+        "name": "IC Markets",
+        "slug": "ic-markets",
+        "overall_rating": 4.6,
+        "trust_score": 4.5
+      },
+      {
+        "name": "Pepperstone",
+        "slug": "pepperstone",
+        "overall_rating": 4.4,
+        "trust_score": 4.3
+      },
+      {
+        "name": "Admiral Markets",
+        "slug": "admiral-markets",
+        "overall_rating": 4.3,
+        "trust_score": 4.1
+      },
+      {
+        "name": "Saxo Bank",
+        "slug": "saxo-bank",
+        "overall_rating": 4.4,
+        "trust_score": 4.3
+      },
+      {
+        "name": "IG Group",
+        "slug": "ig-group",
+        "overall_rating": 4.4,
+        "trust_score": 4.6
+      },
+      {
+        "name": "CMC Markets",
+        "slug": "cmc-markets",
+        "overall_rating": 4.3,
+        "trust_score": 4.7
+      }
+    ]
+  }
+}

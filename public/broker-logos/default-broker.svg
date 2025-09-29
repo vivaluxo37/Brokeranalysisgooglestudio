@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none">
+  <rect width="120" height="120" rx="12" fill="#f8fafc"/>
+  <rect x="8" y="8" width="104" height="104" rx="8" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2"/>
+  <circle cx="60" cy="40" r="12" fill="#64748b"/>
+  <rect x="30" y="65" width="60" height="8" rx="4" fill="#94a3b8"/>
+  <rect x="40" y="80" width="40" height="6" rx="3" fill="#cbd5e1"/>
+  <text x="60" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748b">BROKER</text>
+</svg>

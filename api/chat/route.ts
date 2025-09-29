@@ -1,9 +1,9 @@
 import { NextRequest } from 'next/server';
-import { getChatbotResponseStream, getAiTutorResponseStream } from '@/lib/gemini';
-import { ChatRequestSchema, type ChatRequest } from '@/lib/validation';
-import { cors, handleOptions } from '@/middleware/cors';
-import { checkRateLimit, createRateLimitResponse } from '@/middleware/rateLimit';
-import { authenticateUser } from '@/middleware/auth';
+import { getChatbotResponseStream, getAiTutorResponseStream } from '../lib/gemini.js';
+import { ChatRequestSchema, type ChatRequest } from '../lib/validation.js';
+import { cors, handleOptions } from '../middleware/cors.js';
+import { checkRateLimit, createRateLimitResponse } from '../middleware/rateLimit.js';
+import { authenticateUser } from '../middleware/auth.js';
 
 export async function POST(request: NextRequest) {
   // Handle CORS preflight

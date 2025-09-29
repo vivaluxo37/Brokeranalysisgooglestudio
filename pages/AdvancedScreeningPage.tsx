@@ -191,7 +191,7 @@ const AdvancedScreeningPage: React.FC = () => {
                     </p>
                     {filteredBrokers.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                            {filteredBrokers.map(broker => <BrokerCard key={broker.id} broker={broker} onQuickView={handleOpenQuickView} />)}
+                            {filteredBrokers.map(broker => <BrokerCard key={`screening-${broker.id}`} broker={broker} onQuickView={handleOpenQuickView} />)}
                         </div>
                     ) : (
                         <div className="text-center py-20 bg-card rounded-lg border border-input">

@@ -1,0 +1,160 @@
+{
+  "timestamp": "2025-09-29T11:14:59.802Z",
+  "stats": {
+    "brokersProcessed": 78,
+    "brokersSuccess": 0,
+    "brokersFailed": 78,
+    "totalBatches": 8,
+    "successfulBatches": 0,
+    "failedBatches": 8
+  },
+  "migrationLog": [],
+  "errors": [
+    {
+      "timestamp": "2025-09-29T11:14:44.665Z",
+      "type": "BROKER_BATCH_ERROR",
+      "batch": 1,
+      "error": "new row for relation \"brokers\" violates check constraint \"brokers_overall_rating_check\"",
+      "brokerNames": [
+        "eToro",
+        "Plus500",
+        "AvaTrade",
+        "XTB",
+        "Admiral Markets",
+        "Exness",
+        "Oanda",
+        "Interactive Brokers",
+        "Saxo Bank",
+        "IG Group"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:14:46.851Z",
+      "type": "BROKER_BATCH_ERROR",
+      "batch": 2,
+      "error": "new row for relation \"brokers\" violates check constraint \"brokers_overall_rating_check\"",
+      "brokerNames": [
+        "CMC Markets",
+        "City Index",
+        "Darwinex",
+        "FP Markets",
+        "Tickmill",
+        "Axi",
+        "Vantage",
+        "Eightcap",
+        "Blueberry Markets",
+        "Blackbull Markets"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:14:49.026Z",
+      "type": "BROKER_BATCH_ERROR",
+      "batch": 3,
+      "error": "new row for relation \"brokers\" violates check constraint \"brokers_overall_rating_check\"",
+      "brokerNames": [
+        "ThinkMarkets",
+        "GO Markets",
+        "Global Prime",
+        "MultiBank Group",
+        "Alpari",
+        "InstaForex",
+        "HotForex",
+        "XM Global",
+        "FBS",
+        "OctaFX"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:14:51.222Z",
+      "type": "BROKER_BATCH_ERROR",
+      "batch": 4,
+      "error": "new row for relation \"brokers\" violates check constraint \"brokers_overall_rating_check\"",
+      "brokerNames": [
+        "RoboForex",
+        "LiteForex",
+        "NordFX",
+        "AMarkets",
+        "FreshForex",
+        "Weltrade",
+        "CedarFX",
+        "FXCM",
+        "Forex.com",
+        "TD Ameritrade"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:14:53.364Z",
+      "type": "BROKER_BATCH_ERROR",
+      "batch": 5,
+      "error": "new row for relation \"brokers\" violates check constraint \"brokers_overall_rating_check\"",
+      "brokerNames": [
+        "Charles Schwab",
+        "E*TRADE",
+        "Fidelity",
+        "Merrill Edge",
+        "Questrade",
+        "WealthSimple Trade",
+        "Degiro",
+        "Trading 212",
+        "Freetrade",
+        "Hargreaves Lansdown"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:14:55.463Z",
+      "type": "BROKER_BATCH_ERROR",
+      "batch": 6,
+      "error": "new row for relation \"brokers\" violates check constraint \"brokers_overall_rating_check\"",
+      "brokerNames": [
+        "AJ Bell",
+        "Interactive Investor",
+        "Halifax Share Dealing",
+        "Lloyds Bank",
+        "Barclays Smart Investor",
+        "HSBC InvestDirect",
+        "NatWest Invest",
+        "Santander Investment",
+        "Virgin Money",
+        "Nationwide FlexAccount"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:14:57.630Z",
+      "type": "BROKER_BATCH_ERROR",
+      "batch": 7,
+      "error": "new row for relation \"brokers\" violates check constraint \"brokers_overall_rating_check\"",
+      "brokerNames": [
+        "TSB Invest",
+        "Metro Bank",
+        "First Direct",
+        "Monzo Investments",
+        "Starling Bank",
+        "Revolut Trading",
+        "Freetrade Plus",
+        "InvestEngine",
+        "Nutmeg",
+        "Vanguard Personal"
+      ]
+    },
+    {
+      "timestamp": "2025-09-29T11:14:59.709Z",
+      "type": "BROKER_BATCH_ERROR",
+      "batch": 8,
+      "error": "new row for relation \"brokers\" violates check constraint \"brokers_overall_rating_check\"",
+      "brokerNames": [
+        "iShares Core",
+        "BlackRock",
+        "State Street",
+        "JPMorgan Asset",
+        "Goldman Sachs",
+        "Morgan Stanley",
+        "UBS",
+        "Credit Suisse"
+      ]
+    }
+  ],
+  "verification": {
+    "success": false,
+    "error": "Cannot read properties of null (reading 'count')"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "migration_summary": {
+    "start_time": "2025-09-29T11:48:10.342Z",
+    "end_time": "2025-09-29T11:48:11.173Z",
+    "duration_seconds": 1,
+    "total_blogs": 0,
+    "successful_blogs": 0,
+    "failed_blogs": 0,
+    "success_rate": 0
+  },
+  "migration_log": [],
+  "errors": [],
+  "generated_at": "2025-09-29T11:48:11.173Z"
+}

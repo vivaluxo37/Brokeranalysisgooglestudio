@@ -14,6 +14,7 @@ import { DiscussionProvider } from './contexts/DiscussionContext';
 import { TradingJournalProvider } from './contexts/TradingJournalContext';
 import { EducationProvider } from './contexts/EducationContext';
 import { OnboardingProvider } from './contexts/OnboardingContext';
+import { SEOProvider } from './contexts/SEOContext';
 
 // For SSR, we need to provide a mock Clerk context
 const PUBLISHABLE_KEY = process.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_ZW5hYmxpbmcta2F0eWRpZC02MC5jbGVyay5hY2NvdW50cy5kZXYk';
@@ -34,7 +35,9 @@ export function render(url: string) {
                           <EducationProvider>
                             <TradingJournalProvider>
                               <OnboardingProvider>
-                                <App />
+                                <SEOProvider baseUrl="https://brokeranalysis.com">
+                                  <App />
+                                </SEOProvider>
                               </OnboardingProvider>
                             </TradingJournalProvider>
                           </EducationProvider>

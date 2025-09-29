@@ -162,7 +162,7 @@ const CostAnalyzerPage: React.FC = () => {
                             const isCheapestMonthly = broker.monthlyCost !== null && broker.monthlyCost === minMonthlyCost && Object.keys(monthlyCosts).length > 1;
                             const highlightClass = isCheapestMonthly ? 'bg-green-900/30 border-green-800' : (isCheapest ? 'bg-green-900/10' : 'border-input');
                             
-                            return (<tr key={broker.id} className={`border-b last:border-b-0 transition-colors ${highlightClass}`}>
+                            return (<tr key={`analyzer-${broker.id}`} className={`border-b last:border-b-0 transition-colors ${highlightClass}`}>
                                 <td className="p-4 flex items-center gap-3">
                                     <Link to={`/broker/${broker.id}`} className="flex items-center gap-3 group">
                                         <img src={broker.logoUrl} alt={broker.name} className="h-8 bg-white p-1 rounded-md" />

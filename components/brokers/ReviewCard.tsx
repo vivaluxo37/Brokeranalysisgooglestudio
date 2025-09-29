@@ -30,7 +30,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
                         <div className="flex items-center gap-2">
                             <p className="font-semibold text-card-foreground">{review.userName}</p>
                             {review.verified && (
-                                <Badge variant="success" Icon={Icons.verified}>
+                                <Badge variant="secondary">
+                                    <Icons.verified className="h-3.5 w-3.5 mr-1" />
                                     Verified Trader
                                 </Badge>
                             )}

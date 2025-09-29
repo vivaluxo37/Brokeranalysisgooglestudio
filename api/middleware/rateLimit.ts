@@ -1,4 +1,4 @@
-import type { Request } from '@vercel/node';
+import type { VercelRequest } from '@vercel/node';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 
 // Create rate limiters for different endpoints
@@ -17,6 +17,11 @@ const authLimiter = new RateLimiterMemory({
   duration: 300, // Per 300 seconds (5 minutes)
 });
 
+const calculatorLimiter = new RateLimiterMemory({
+  points: 50, // Number of requests
+  duration: 60, // Per 60 seconds (1 minute)
+});
+
 export interface RateLimitResult {
   success: boolean;
   remainingPoints: number;
@@ -24,14 +29,17 @@ export interface RateLimitResult {
 }
 
 export async function checkRateLimit(
-  request: NextRequest,
-  type: 'chat' | 'general' | 'auth' = 'general'
+  request: VercelRequest,
+  type: 'chat' | 'general' | 'auth' | 'calculator' = 'general'
 ): Promise<RateLimitResult> {
-  const ip = request.ip || 'unknown';
-  const userId = request.headers.get('x-user-id') || ip;
+  const ip = (request.headers['x-forwarded-for'] as string) || 
+            (request.headers['x-real-ip'] as string) || 
+            'unknown';
+  const userId = (request.headers['x-user-id'] as string) || ip;
 
   const limiter = type === 'chat' ? chatLimiter :
-                   type === 'auth' ? authLimiter : generalLimiter;
+                   type === 'auth' ? authLimiter :
+                   type === 'calculator' ? calculatorLimiter : generalLimiter;
 
   try {
     await limiter.consume(userId);
@@ -50,18 +58,21 @@ export async function checkRateLimit(
 }
 
 export function createRateLimitResponse(remainingPoints: number, msBeforeNext: number) {
-  return new Response(JSON.stringify({
+  const response = {
     error: 'Too many requests',
     message: 'Rate limit exceeded',
     retryAfter: Math.ceil(msBeforeNext / 1000)
-  }), {
+  };
+
+  return {
     status: 429,
     headers: {
       'Content-Type': 'application/json',
-      'X-RateLimit-Limit': '30',
+      'X-RateLimit-Limit': '100',
       'X-RateLimit-Remaining': remainingPoints.toString(),
       'X-RateLimit-Reset': Math.ceil((Date.now() + msBeforeNext) / 1000).toString(),
       'Retry-After': Math.ceil(msBeforeNext / 1000).toString()
-    }
-  });
+    },
+    body: JSON.stringify(response)
+  };
 }

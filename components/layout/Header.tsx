@@ -85,6 +85,7 @@ const Header: React.FC = () => {
                                                 <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.coreTools')}</h3>
                                                 <div className="flex flex-col space-y-2">
                                                     <NavLink to="/brokers">{t('header.megaMenu.allBrokers')}</NavLink>
+                                                    <NavLink to="/brokers/promotions">Current Promotions</NavLink>
                                                     <NavLink to="/compare">{t('header.megaMenu.compareBrokers')}</NavLink>
                                                     <NavLink to="/cost-analyzer">{t('header.megaMenu.costAnalyzer')}</NavLink>
                                                     <NavLink to="/broker-matcher">{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
@@ -138,6 +139,7 @@ const Header: React.FC = () => {
                                 <NavLink to="/market-news">{t('header.marketNews')}</NavLink>
                                 <NavLink to="/blog">Blog</NavLink>
                                 <NavLink to="/methodology">{t('header.methodology')}</NavLink>
+
                             </div>
                         </div>
                     </div>
@@ -219,6 +221,7 @@ const Header: React.FC = () => {
                     <div className="border-t border-input/50">
                         <MobileAccordionLink title={t('header.brokers')}>
                            <NavLink to="/brokers" onClick={closeMobileMenu} className="block">{t('header.megaMenu.allBrokers')}</NavLink>
+                           <NavLink to="/brokers/promotions" onClick={closeMobileMenu} className="block">Current Promotions</NavLink>
                            <NavLink to="/compare" onClick={closeMobileMenu} className="block">{t('header.megaMenu.compareBrokers')}</NavLink>
                            <NavLink to="/cost-analyzer" onClick={closeMobileMenu} className="block">{t('header.megaMenu.costAnalyzer')}</NavLink>
                            <NavLink to="/broker-matcher" onClick={closeMobileMenu} className="block">{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
@@ -239,6 +242,7 @@ const Header: React.FC = () => {
                         <NavLink to="/market-news" onClick={closeMobileMenu} className="block m-3">{t('header.marketNews')}</NavLink>
                         <NavLink to="/blog" onClick={closeMobileMenu} className="block m-3">Blog</NavLink>
                         <NavLink to="/methodology" onClick={closeMobileMenu} className="block m-3">{t('header.methodology')}</NavLink>
+
                     </div>
                      <div className="px-5 py-4 border-t border-input/50 flex items-center justify-between">
                          <span className="text-sm font-medium text-card-foreground/70">Settings</span>

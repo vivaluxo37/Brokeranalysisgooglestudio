@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSupabaseClient, getSupabaseClientWithAuth } from '@/lib/supabase';
-import { ReviewSchema, type Review } from '@/lib/validation';
-import { cors, handleOptions } from '@/middleware/cors';
-import { checkRateLimit, createRateLimitResponse } from '@/middleware/rateLimit';
-import { requireAuth, createUnauthorizedResponse } from '@/middleware/auth';
+import { getSupabaseClient, getSupabaseClientWithAuth } from '../lib/supabase.js';
+import { ReviewSchema, type Review } from '../lib/validation.js';
+import { cors, handleOptions } from '../middleware/cors.js';
+import { checkRateLimit, createRateLimitResponse } from '../middleware/rateLimit.js';
+import { requireAuth, createUnauthorizedResponse } from '../middleware/auth.js';
 
 export async function GET(request: NextRequest) {
   // Handle CORS preflight

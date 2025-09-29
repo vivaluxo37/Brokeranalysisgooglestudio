@@ -14,9 +14,12 @@ import { DiscussionProvider } from './contexts/DiscussionContext';
 import { TradingJournalProvider } from './contexts/TradingJournalContext';
 import { EducationProvider } from './contexts/EducationContext';
 import { OnboardingProvider } from './contexts/OnboardingContext';
+import { SEOProvider } from './contexts/SEOContext';
 import './src/index.css';
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+// Clerk Publishable Key - Using development keys for local development
+// TODO: Replace with production keys when deploying to production
+const PUBLISHABLE_KEY = (import.meta as any).env.VITE_CLERK_PUBLISHABLE_KEY;
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Clerk Publishable Key");
 }
@@ -41,7 +44,9 @@ const app = (
                         <EducationProvider>
                           <TradingJournalProvider>
                             <OnboardingProvider>
-                              <App />
+                              <SEOProvider baseUrl="https://brokeranalysis.com">
+                                <App />
+                              </SEOProvider>
                             </OnboardingProvider>
                           </TradingJournalProvider>
                         </EducationProvider>

@@ -31,20 +31,30 @@ const OnboardingGuide: React.FC = () => {
                 return;
             }
 
-            const targetElement = document.querySelector(currentStepConfig.targetSelector);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+            try {
+                const targetElement = document.querySelector(currentStepConfig.targetSelector);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
 
-                setTimeout(() => {
-                    const rect = targetElement.getBoundingClientRect();
-                    setTargetRect({
-                        top: rect.top,
-                        left: rect.left,
-                        width: rect.width,
-                        height: rect.height,
-                    });
-                }, 300); // Delay for scroll animation
-            } else {
+                    setTimeout(() => {
+                        try {
+                            const rect = targetElement.getBoundingClientRect();
+                            setTargetRect({
+                                top: rect.top,
+                                left: rect.left,
+                                width: rect.width,
+                                height: rect.height,
+                            });
+                        } catch (error) {
+                            console.error('Error getting bounding rect:', error);
+                            setTargetRect(null);
+                        }
+                    }, 300); // Delay for scroll animation
+                } else {
+                    setTargetRect(null);
+                }
+            } catch (error) {
+                console.error('Error finding target element:', error);
                 setTargetRect(null);
             }
         };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Broker } from '../../types';
 import { getBrokerAlternatives } from '../../services/geminiService';
-import { brokers as allBrokers } from '../../data/brokers';
+import { useBrokers } from '../../hooks/useBrokers';
 import { Icons } from '../../constants';
 import MiniBrokerCard from '../news/MiniBrokerCard';
 import Spinner from '../ui/Spinner';
@@ -11,12 +11,18 @@ interface AIAlternativesProps {
 }
 
 const AIAlternatives: React.FC<AIAlternativesProps> = ({ targetBroker }) => {
+    const { brokers: allBrokers } = useBrokers();
     const [recommendations, setRecommendations] = useState<{ broker: Broker; reasoning: string; }[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchAlternatives = async () => {
+            if (!allBrokers || allBrokers.length === 0) {
+                setIsLoading(true);
+                return;
+            }
+            
             setIsLoading(true);
             setError(null);
             try {
@@ -39,7 +45,7 @@ const AIAlternatives: React.FC<AIAlternativesProps> = ({ targetBroker }) => {
         };
 
         fetchAlternatives();
-    }, [targetBroker]);
+    }, [targetBroker, allBrokers]);
 
     if (isLoading) {
         return (
@@ -68,7 +74,7 @@ const AIAlternatives: React.FC<AIAlternativesProps> = ({ targetBroker }) => {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {recommendations.map(({ broker, reasoning }) => (
-                        <div key={broker.id} className="flex flex-col gap-2">
+                        <div key={`ai-alternative-${broker.id}`} className="flex flex-col gap-2">
                             <MiniBrokerCard broker={broker} />
                             <p className="text-xs text-center italic text-card-foreground/70 p-2 bg-input/40 rounded-md">
                                 "{reasoning}"

@@ -1,20 +1,87 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🏦 Broker Analysis - AI-Powered Forex Broker Reviews & Comparisons
 
-# Run and deploy your AI Studio app
+> **Free, Fast & Trusted** - Find the safest and cheapest broker for your trading style with real-time cost analysis, AI safety alerts, and personalized recommendations.
 
-This contains everything you need to run your app locally.
+## ✨ Features
 
-View your app in AI Studio: https://ai.studio/apps/drive/1VbI7Wc9p_iDY784pGbJUKRoQPGMPVSpp
+- 📊 **80+ Broker Database** - Comprehensive analysis of major forex brokers
+- 🤖 **AI-Powered Matching** - Intelligent broker recommendations based on your profile
+- 📈 **Live Cost Analysis** - Real-time spread and commission comparisons
+- 🛡️ **Safety Scoring** - AI-generated trust scores based on regulation data
+- 🌙 **Dark Mode Support** - Full dark/light theme with automatic switching
+- ⚡ **High Performance** - Built with Vite + React + TypeScript for optimal speed
 
-## Run Locally
+## 🚀 Quick Start
 
-**Prerequisites:**  Node.js
+**Prerequisites:** Node.js 18+ and npm
 
+1. **Clone and Install**
+   ```bash
+   git clone <your-repo-url>
+   cd Brokeranalysisgooglestudio
+   npm install
+   ```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+2. **Environment Setup**
+   Create `.env.local` with required environment variables:
+   ```env
+   # Supabase Configuration (Optional - falls back to static data)
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   
+   # AI Features
+   GEMINI_API_KEY=your_gemini_api_key
+   ```
+
+3. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view the app.
+
+## 🏗️ Architecture
+
+### Data Management
+The application uses a **hybrid data architecture** for maximum reliability:
+
+- **Primary**: Supabase database for dynamic broker data
+- **Fallback**: Static JSON files in `data/brokers.ts` 
+- **Service**: `UnifiedBrokerService` automatically handles failover
+
+```typescript
+// Unified data access - tries DB first, falls back to static
+import { useBrokers } from './hooks/useBrokers';
+
+const { brokers, loading, error } = useBrokers();
+```
+
+### Key Services
+- `unifiedBrokerService.ts` - Single source of truth for broker data
+- `useBrokers.ts` - React hooks with loading states and error handling
+- `brokerDatabaseService.ts` - Supabase integration layer
+
+## 📱 Available Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production with SSG
+npm run preview      # Preview production build
+npm run test         # Run test suite
+npm run lint         # ESLint code quality checks
+npm run type-check   # TypeScript validation
+npm run sitemap      # Generate SEO sitemap
+```
+
+## 🌐 Deployment
+
+The app includes **Static Site Generation (SSG)** for optimal SEO:
+
+```bash
+npm run build        # Builds and pre-renders all broker pages
+npm run preview      # Test the built app locally
+```
+
+Deploy the `dist/` folder to any static hosting service:
+- Vercel, Netlify, GitHub Pages
+- AWS S3 + CloudFront
+- Any CDN or web server

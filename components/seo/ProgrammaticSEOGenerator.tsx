@@ -236,7 +236,7 @@ const ProgrammaticSEOGenerator: React.FC<ProgrammaticSEOGeneratorProps> = ({
         ) : (
           <div className="grid gap-6">
             {sortedBrokers.slice(0, 10).map((broker, index) => (
-              <Card key={broker.id} className="overflow-hidden">
+              <Card key={`seo-${broker.id}`} className="overflow-hidden">
                 <CardContent className="p-6">
                   <div className="flex flex-col lg:flex-row gap-6">
                     {/* Broker Info */}

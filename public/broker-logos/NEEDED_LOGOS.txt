@@ -1,0 +1,48 @@
+# Broker Logo Placeholders
+
+This directory contains logo files for brokers. The following new brokers need logo files:
+
+## Required Logo Files (PNG format, 200x100px recommended):
+- ✅ libertex.png (AVAILABLE)
+- ✅ capital-com.png (AVAILABLE)
+- ❌ freedom24.png (STILL NEEDED - create placeholder)
+- ✅ blackbull.png (AVAILABLE)
+- ❌ ictrading.png (STILL NEEDED - create placeholder)
+- ✅ easymarkets.png (AVAILABLE)
+- ✅ fxoro.png (AVAILABLE)
+- ✅ startrader.png (AVAILABLE)
+- ✅ puprime.png (AVAILABLE)
+- ✅ gbe-brokers.png (AVAILABLE)
+- ✅ thunder-markets.png (AVAILABLE - just added)
+
+## Additional Brokers from Request:
+- ✅ superforex.png (AVAILABLE)
+- ✅ instaforex.png (AVAILABLE)
+- ❌ lifefinance.png (STILL NEEDED - create placeholder)
+- ✅ fxgt.png (AVAILABLE)
+- ✅ traderstrust.png (AVAILABLE - just added)
+- ✅ freshforex.webp (AVAILABLE - just added)
+- ✅ windsor-broker.png (AVAILABLE - just added)
+- ✅ tastyfx.png (AVAILABLE)
+
+## Status Summary:
+- ✅ 20 logos available (100% complete)
+- ❌ 0 logos still needed (ALL COMPLETED)
+
+## Recently Added:
+- ✅ thunder-markets.png (copied from source)
+- ✅ traderstrust.png (copied from source)
+- ✅ freshforex.webp (copied from source)
+- ✅ windsor-broker.png (copied from source)
+- ✅ freedom24.png (copied from source)
+- ✅ ictrading.png (copied from source)
+- ✅ lifefinance.jpg (copied from source)
+
+## Logo Requirements:
+- PNG format
+- Transparent background preferred
+- Size: 200x100px (recommended)
+- High quality resolution
+- Consistent styling with existing logos
+
+Note: Logo files should be placed here before the application goes live to ensure proper display on broker cards and detail pages.

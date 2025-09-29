@@ -97,17 +97,17 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
           <tr className="border-b border-input">
             <th className="p-4 sticky left-0 bg-card z-10 border-r border-input">{t('compareTable.feature')}</th>
             {brokers.map(broker => (
-              <th key={broker.id} className="p-4 text-center min-w-[200px]">
+              <th key={`comparison-header-${broker.id}`} className="p-4 text-center min-w-[200px]">
                 <Link to={`/broker/${broker.id}`}>
                   <img src={broker.logoUrl} alt={broker.name} className="h-10 mx-auto bg-white p-1 rounded-md mb-2"/>
                   <span className="font-semibold text-primary-400 hover:underline">{broker.name}</span>
                 </Link>
                 <div className="flex justify-center items-center gap-2 mt-2">
                     <a href={broker.websiteUrl} target="_blank" rel="noopener noreferrer">
-                        <Button variant="primary" size="sm" className="text-xs px-3 py-1">{t('compareTable.visit')}</Button>
+                        <Button variant="default" size="sm" className="text-xs px-3 py-1">{t('compareTable.visit')}</Button>
                     </a>
                     <Tooltip content={`Remove ${broker.name} from comparison`}>
-                      <Button onClick={() => removeBrokerFromComparison(broker.id)} variant="danger" size="sm" className="text-xs px-2 py-1">{t('compareTable.remove')}</Button>
+                      <Button onClick={() => removeBrokerFromComparison(broker.id)} variant="destructive" size="sm" className="text-xs px-2 py-1">{t('compareTable.remove')}</Button>
                     </Tooltip>
                 </div>
               </th>
@@ -129,7 +129,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ brokers }) => {
               <tr key={feature.key} className="border-b border-input last:border-b-0">
                 <td className="p-4 font-semibold text-foreground/80 whitespace-nowrap sticky left-0 bg-card z-10 border-r border-input">{feature.title}</td>
                 {brokers.map(broker => (
-                  <td key={broker.id} className="p-4 text-center align-top">
+                  <td key={`comparison-cell-${broker.id}`} className="p-4 text-center align-top">
                     {renderValue(broker, feature.key)}
                   </td>
                 ))}

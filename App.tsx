@@ -12,6 +12,7 @@ import BrokerDetailPage from './pages/BrokerDetailPage';
 import BrokerDuelPage from './pages/BrokerDuelPage';
 import BrokerFeesQuizPage from './pages/BrokerFeesQuizPage';
 import BrokerMatcherPage from './pages/BrokerMatcherPage';
+import BrokerPromotionsPage from './pages/BrokerPromotionsPage';
 import CalculatorsPage from './pages/CalculatorsPage';
 import CandlestickPatternsQuizPage from './pages/CandlestickPatternsQuizPage';
 import CarryTradeQuizPage from './pages/CarryTradeQuizPage';
@@ -61,6 +62,7 @@ import SupportResistanceQuizPage from './pages/SupportResistanceQuizPage';
 import TradingJournalPage from './pages/TradingJournalPage';
 import TradingPsychologyQuizPage from './pages/TradingPsychologyQuizPage';
 import WebinarsPage from './pages/WebinarsPage';
+import DebugBrokersPage from './pages/DebugBrokersPage';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -73,7 +75,9 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/brokers" element={<AllBrokersPage />} />
+        <Route path="/debug-brokers" element={<DebugBrokersPage />} />
         <Route path="/brokers/advanced-screening" element={<AdvancedScreeningPage />} />
+        <Route path="/brokers/promotions" element={<BrokerPromotionsPage />} />
         <Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/:brokerId1/vs/:brokerId2" element={<BrokerDuelPage />} />

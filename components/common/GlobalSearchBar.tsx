@@ -92,7 +92,7 @@ const GlobalSearchBar: React.FC = () => {
                             <h3 className="text-xs font-semibold uppercase text-foreground/60 p-3 border-b border-input">Brokers</h3>
                             <div className="p-2">
                                 {results.brokers.map(broker => (
-                                    <Link key={broker.id} to={`/broker/${broker.id}`} onClick={handleLinkClick} className="flex items-center gap-3 p-2 rounded-md hover:bg-input transition-colors">
+                                    <Link key={`search-${broker.id}`} to={`/broker/${broker.id}`} onClick={handleLinkClick} className="flex items-center gap-3 p-2 rounded-md hover:bg-input transition-colors">
                                         <img src={broker.logoUrl} alt={broker.name} className="h-8 w-8 bg-white p-1 rounded-md" />
                                         <span>{broker.name}</span>
                                     </Link>

@@ -75,6 +75,155 @@ export interface DiscussionPost {
   replies: DiscussionReply[];
 }
 
+// Enhanced promotion types for the new promotion system
+export type PromotionType = 
+  | 'cashback' 
+  | 'deposit_bonus' 
+  | 'commission_discount' 
+  | 'copy_trading' 
+  | 'vip_program' 
+  | 'platform_bonus'
+  | 'welcome_bonus'
+  | 'no_deposit_bonus'
+  | 'loyalty_program'
+  | 'trading_competition';
+
+export type ActivationMethod = 'automatic' | 'manual' | 'contact_required';
+export type RateType = 'percentage' | 'fixed_per_lot' | 'fixed_amount';
+export type PaymentFrequency = 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'one_time';
+export type FeatureType = 'advantage' | 'requirement' | 'note' | 'warning';
+
+export interface ContactInfo {
+  email?: string;
+  telegram?: string;
+  phone?: string;
+  whatsapp?: string;
+  skype?: string;
+}
+
+export interface PromotionRequirements {
+  minDeposit?: number;
+  accountTypes?: string[];
+  tradingVolume?: number;
+  eligibleCountries?: string[];
+  excludedCountries?: string[];
+  minAge?: number;
+  verificationRequired?: boolean;
+  newClientsOnly?: boolean;
+}
+
+export interface PromotionRate {
+  id: string;
+  promotionId: string;
+  tierName?: string;
+  minVolume: number;
+  maxVolume?: number;
+  rateType: RateType;
+  rateValue: number;
+  currency: string;
+  frequency: PaymentFrequency;
+  description?: string;
+  displayOrder: number;
+}
+
+export interface PromotionFeature {
+  id: string;
+  promotionId: string;
+  featureText: string;
+  featureType: FeatureType;
+  displayOrder: number;
+  isHighlighted: boolean;
+}
+
+export interface PromotionAnalytics {
+  id: string;
+  promotionId: string;
+  date: string;
+  views: number;
+  clicks: number;
+  conversions: number;
+  uniqueVisitors: number;
+}
+
+export interface Promotion {
+  id: string;
+  brokerId: string;
+  broker?: {
+    name: string;
+    logo: string;
+    rating: number;
+    platforms: string[];
+  };
+  title: string;
+  description?: string;
+  promotionType: PromotionType;
+  isActive: boolean;
+  isFeatured: boolean;
+  isExclusive: boolean;
+  isPopular: boolean;
+  startDate: string;
+  endDate?: string;
+  activationMethod: ActivationMethod;
+  contactInfo?: ContactInfo;
+  requirements: PromotionRequirements;
+  terms?: string;
+  websiteUrl?: string;
+  rates?: PromotionRate[];
+  features?: PromotionFeature[];
+  analytics?: PromotionAnalytics[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CalculationResult {
+  rebateAmount: number;
+  rateValue: number;
+  rateType: RateType;
+  tierName?: string;
+  currency: string;
+  frequency: PaymentFrequency;
+  dailyRebate?: number;
+  monthlyRebate?: number;
+  yearlyRebate?: number;
+  effectiveCostReduction?: number;
+  nextTierVolume?: number;
+  nextTierRebate?: number;
+}
+
+export interface PromotionFilters {
+  brokers?: string[];
+  promotionTypes?: PromotionType[];
+  rebateRange?: {
+    min: number;
+    max: number;
+  };
+  accountTypes?: string[];
+  activationMethod?: ActivationMethod[];
+  sortBy?: 'rating' | 'rebate_amount' | 'popularity' | 'newest';
+  sortOrder?: 'asc' | 'desc';
+}
+
+export interface AvailableFilters {
+  brokers: Array<{ id: string; name: string; count: number }>;
+  promotionTypes: Array<{ type: PromotionType; count: number }>;
+  activationMethods: Array<{ method: ActivationMethod; count: number }>;
+  rebateRanges: Array<{ min: number; max: number; count: number }>;
+}
+
+// Legacy interface for backward compatibility
+export interface BrokerPromotion {
+  type: 'welcome-bonus' | 'deposit-bonus' | 'no-deposit-bonus' | 'cashback' | 'loyalty-program' | 'trading-competition';
+  title: string;
+  description: string;
+  amount: string;
+  validUntil?: string;
+  minDeposit: number;
+  terms: string;
+  isExclusive: boolean;
+  isPopular: boolean;
+  isActive: boolean;
+  websiteUrl?: string;
+}
 
 export interface AccountType {
     name: string;
@@ -99,6 +248,7 @@ export interface DepositWithdrawal {
 }
 
 export interface Promotions {
+    currentPromotions?: BrokerPromotion[];
     welcomeBonus?: string;
     depositBonus?: string;
     loyaltyProgram?: boolean;
@@ -447,6 +597,112 @@ export interface BrokerAlternativesResponse {
 }
 
 
+// API Request/Response Types for Promotions
+export interface GetPromotionsRequest {
+  filters?: {
+    brokerIds?: string[];
+    promotionTypes?: PromotionType[];
+    isActive?: boolean;
+    isFeatured?: boolean;
+    minRebate?: number;
+    maxRebate?: number;
+    activationMethod?: ActivationMethod[];
+    accountTypes?: string[];
+  };
+  sort?: {
+    field: 'rating' | 'rebate_amount' | 'popularity' | 'newest' | 'created_at' | 'updated_at';
+    order: 'asc' | 'desc';
+  };
+  pagination?: {
+    page: number;
+    limit: number;
+  };
+}
+
+export interface GetPromotionsResponse {
+  promotions: Promotion[];
+  totalCount: number;
+  hasMore: boolean;
+  filters: AvailableFilters;
+  pagination: {
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+export interface CalculateRebateRequest {
+  promotionId: string;
+  monthlyVolume: number;
+  accountType?: string;
+}
+
+export interface CalculateRebateResponse {
+  result: CalculationResult;
+  recommendations?: Promotion[];
+}
+
+export interface CreatePromotionRequest {
+  brokerId: string;
+  title: string;
+  description?: string;
+  promotionType: PromotionType;
+  activationMethod: ActivationMethod;
+  contactInfo?: ContactInfo;
+  requirements: PromotionRequirements;
+  rates: Omit<PromotionRate, 'id' | 'promotionId'>[];
+  features?: Omit<PromotionFeature, 'id' | 'promotionId'>[];
+  startDate: string;
+  endDate?: string;
+  isFeatured?: boolean;
+  isExclusive?: boolean;
+  isPopular?: boolean;
+  terms?: string;
+  websiteUrl?: string;
+}
+
+export interface UpdatePromotionRequest {
+  id: string;
+  title?: string;
+  description?: string;
+  promotionType?: PromotionType;
+  activationMethod?: ActivationMethod;
+  contactInfo?: ContactInfo;
+  requirements?: PromotionRequirements;
+  rates?: Omit<PromotionRate, 'id' | 'promotionId'>[];
+  features?: Omit<PromotionFeature, 'id' | 'promotionId'>[];
+  startDate?: string;
+  endDate?: string;
+  isFeatured?: boolean;
+  isExclusive?: boolean;
+  isPopular?: boolean;
+  isActive?: boolean;
+  terms?: string;
+  websiteUrl?: string;
+}
+
+export interface PromotionStatsResponse {
+  promotionId: string;
+  totalViews: number;
+  totalClicks: number;
+  totalConversions: number;
+  conversionRate: number;
+  topReferrers: string[];
+  performanceByDate: Array<{
+    date: string;
+    views: number;
+    clicks: number;
+    conversions: number;
+  }>;
+}
+
+export interface ApiError {
+  code: string;
+  message: string;
+  details?: any;
+  timestamp: string;
+}
+
 export interface QuizProgress {
     [quizKey: string]: {
         score: number;
@@ -489,4 +745,105 @@ export interface OnboardingContextType {
   currentStep: number;
   isActive: boolean;
   tourSteps: OnboardingStep[];
+}
+
+// ============================================================================
+// PROMOTION API INTERFACES
+// ============================================================================
+
+export interface GetPromotionsRequest {
+  filters?: PromotionFilters;
+  sort?: {
+    field: string;
+    order: 'asc' | 'desc';
+  };
+  pagination?: {
+    page: number;
+    limit: number;
+  };
+}
+
+export interface GetPromotionsResponse {
+  promotions: Promotion[];
+  totalCount: number;
+  hasMore: boolean;
+  filters: AvailableFilters;
+}
+
+export interface CalculateRebateRequest {
+  promotionId: string;
+  monthlyVolume: number;
+  accountType?: string;
+}
+
+export interface CalculateRebateResponse {
+  result: CalculationResult;
+  recommendations?: Promotion[];
+}
+
+export interface CreatePromotionRequest {
+  brokerId: string;
+  title: string;
+  description?: string;
+  promotionType: PromotionType;
+  activationMethod: ActivationMethod;
+  contactInfo?: ContactInfo;
+  requirements: PromotionRequirements;
+  rates: Omit<PromotionRate, 'id' | 'promotionId'>[];
+  features: Omit<PromotionFeature, 'id' | 'promotionId'>[];
+  startDate: string;
+  endDate?: string;
+  isFeatured?: boolean;
+  isExclusive?: boolean;
+  isPopular?: boolean;
+  terms?: string;
+  websiteUrl?: string;
+}
+
+export interface UpdatePromotionRequest extends Partial<CreatePromotionRequest> {
+  id: string;
+}
+
+export interface PromotionStatsResponse {
+  promotionId: string;
+  totalViews: number;
+  totalClicks: number;
+  totalConversions: number;
+  conversionRate: number;
+  clickThroughRate: number;
+  daysActive: number;
+  topReferrers?: string[];
+  performanceByDate?: Array<{
+    date: string;
+    views: number;
+    clicks: number;
+    conversions: number;
+  }>;
+}
+
+export interface AdminPromotionAnalytics {
+  overview: {
+    totalPromotions: number;
+    activePromotions: number;
+    featuredPromotions: number;
+    totalViews: number;
+    totalClicks: number;
+    totalConversions: number;
+    averageConversionRate: number;
+  };
+  topPerformingPromotions: Array<{
+    promotion: Promotion;
+    stats: PromotionStatsResponse;
+  }>;
+  promotionsByType: Array<{
+    type: PromotionType;
+    count: number;
+    conversionRate: number;
+  }>;
+  recentActivity: Array<{
+    date: string;
+    views: number;
+    clicks: number;
+    conversions: number;
+  }>;
 }

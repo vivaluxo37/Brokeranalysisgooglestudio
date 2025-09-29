@@ -8,6 +8,7 @@ const Footer: React.FC = () => {
   const mainLinks = [
     { name: t('footer.links.home'), path: '/' },
     { name: t('footer.links.allBrokers'), path: '/brokers' },
+    { name: 'Current Promotions', path: '/brokers/promotions' },
     { name: t('footer.links.compareBrokers'), path: '/compare' },
     { name: t('footer.links.costAnalyzer'), path: '/cost-analyzer' },
     { name: t('footer.links.brokerMatcher'), path: '/broker-matcher' },
@@ -15,6 +16,7 @@ const Footer: React.FC = () => {
     { name: t('footer.links.marketNews'), path: '/market-news' },
     { name: t('footer.links.educationHub'), path: '/education' },
     { name: 'Blog', path: '/blog' },
+
   ];
 
   const toolLinks = [

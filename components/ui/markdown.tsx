@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/github.css';
-import { cn } from '/lib/utils';
+import { cn } from '../../lib/utils';
 
 interface MarkdownProps {
   content: string;

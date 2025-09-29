@@ -44,7 +44,7 @@ const app = (
                         <EducationProvider>
                           <TradingJournalProvider>
                             <OnboardingProvider>
-                              <SEOProvider baseUrl="https://brokeranalysis.com">
+                              <SEOProvider baseUrl="https://brokeranalysis.com" supportedLocales={['en', 'es', 'fr', 'de']}>
                                 <App />
                               </SEOProvider>
                             </OnboardingProvider>

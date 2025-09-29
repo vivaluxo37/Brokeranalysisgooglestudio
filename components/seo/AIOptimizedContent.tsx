@@ -1,5 +1,10 @@
 import React from 'react';
-import { FAQItem } from './FAQSection';
+import FAQSection, { BrokerFAQs } from './FAQSection';
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
 import AIStructuredData from './AIStructuredData';
 import { useAIStructuredData } from '../../hooks/useAIStructuredData';
 

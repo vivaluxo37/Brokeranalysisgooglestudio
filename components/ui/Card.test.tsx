@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '../../tests/utils/test-utils';
 import { describe, it, expect } from 'vitest';
-import { Card, CardHeader, CardContent, CardFooter } from './Card';
+import { Card, CardHeader, CardContent, CardFooter } from './card';
 
 describe('Card components', () => {
     it('renders a Card with children', () => {

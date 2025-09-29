@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '../../tests/utils/test-utils';
 import { describe, it, expect, vi } from 'vitest';
-import { Button } from './Button';
+import { Button } from './button';
 
 describe('Button component', () => {
     it('renders children correctly', () => {

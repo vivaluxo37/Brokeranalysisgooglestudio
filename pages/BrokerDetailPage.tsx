@@ -565,15 +565,12 @@ const BrokerDetailPage: React.FC = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6 lg:space-y-8">
             {/* Professional Broker Header */}
-            <Card className="overflow-hidden" style={{ 
-              background: `linear-gradient(135deg, ${designSystem.colors.primary[50]} 0%, ${designSystem.colors.neutral[50]} 100%)`,
-              border: `1px solid ${designSystem.colors.neutral[200]}`
-            }}>
-              <CardHeader className="bg-white/70 backdrop-blur-sm">
+            <Card className="overflow-hidden bg-gradient-to-br from-primary/5 to-secondary/5 border-border">
+              <CardHeader className="bg-background/70 backdrop-blur-sm">
                 <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0">
-                      <div className="w-20 h-20 bg-white rounded-xl shadow-md flex items-center justify-center p-3">
+                      <div className="w-20 h-20 bg-background rounded-xl shadow-md border flex items-center justify-center p-3">
                         <img
                           src={broker.logoUrl}
                           alt={`${broker.name} logo`}
@@ -587,17 +584,12 @@ const BrokerDetailPage: React.FC = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-2">
-                        <h1 className="text-2xl lg:text-4xl font-bold tracking-tight" style={{ color: designSystem.colors.neutral[900] }}>
+                        <h1 className="text-2xl lg:text-4xl font-bold tracking-tight text-foreground">
                           {broker.name}
                         </h1>
                         {broker.regulation?.regulators && broker.regulation.regulators.length > 0 && (
                           <Badge 
-                            className="flex items-center gap-1" 
-                            style={{ 
-                              backgroundColor: designSystem.colors.success[100],
-                              color: designSystem.colors.success[800],
-                              border: `1px solid ${designSystem.colors.success[200]}`
-                            }}
+                            className="flex items-center gap-1 bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-700"
                           >
                             <Shield className="w-3 h-3" />
                             Regulated
@@ -605,7 +597,7 @@ const BrokerDetailPage: React.FC = () => {
                         )}
                       </div>
                       
-                      <p className="text-lg mb-4" style={{ color: designSystem.colors.neutral[600] }}>
+                      <p className="text-lg mb-4 text-muted-foreground">
                         Professional Review & Analysis {new Date().getFullYear()}
                       </p>
                       
@@ -619,31 +611,31 @@ const BrokerDetailPage: React.FC = () => {
                                 className={`w-5 h-5 ${
                                   star <= Math.round(overallRating) 
                                     ? 'text-yellow-400 fill-yellow-400' 
-                                    : 'text-gray-300'
+                                    : 'text-muted-foreground'
                                 }`}
                               />
                             ))}
                           </div>
-                          <span className="font-semibold" style={{ color: designSystem.colors.neutral[700] }}>
+                          <span className="font-semibold text-foreground">
                             {overallRating.toFixed(1)}/5.0
                           </span>
                         </div>
                         
                         <div className="flex items-center gap-2">
-                          <BarChart3 className="w-4 h-4" style={{ color: designSystem.colors.primary[600] }} />
-                          <span className="font-semibold" style={{ color: designSystem.colors.primary[700] }}>
+                          <BarChart3 className="w-4 h-4 text-primary" />
+                          <span className="font-semibold text-primary">
                             {broker.score?.toFixed(1) || '8.5'}/10
                           </span>
-                          <span className="text-sm" style={{ color: designSystem.colors.neutral[500] }}>Overall Score</span>
+                          <span className="text-sm text-muted-foreground">Overall Score</span>
                         </div>
                         
                         {trustScore && (
                           <div className="flex items-center gap-2">
-                            <Shield className="w-4 h-4" style={{ color: designSystem.colors.success[600] }} />
-                            <span className="font-semibold" style={{ color: designSystem.colors.success[700] }}>
+                            <Shield className="w-4 h-4 text-green-600 dark:text-green-400" />
+                            <span className="font-semibold text-green-600 dark:text-green-400">
                               {trustScore.score}/10
                             </span>
-                            <span className="text-sm" style={{ color: designSystem.colors.neutral[500] }}>Trust Score</span>
+                            <span className="text-sm text-muted-foreground">Trust Score</span>
                           </div>
                         )}
                       </div>
@@ -654,12 +646,7 @@ const BrokerDetailPage: React.FC = () => {
                           <Badge 
                             key={`highlight-${index}`} 
                             variant="outline"
-                            className="text-sm font-medium"
-                            style={{
-                              borderColor: designSystem.colors.primary[300],
-                              color: designSystem.colors.primary[700],
-                              backgroundColor: `${designSystem.colors.primary[50]}80`
-                            }}
+                            className="text-sm font-medium border-primary/30 text-primary bg-primary/10"
                           >
                             <CheckCircle className="w-3 h-3 mr-1" />
                             {pro}
@@ -672,12 +659,7 @@ const BrokerDetailPage: React.FC = () => {
                   {/* Action Buttons */}
                   <div className="flex gap-3 lg:flex-col lg:w-48">
                     <Button
-                      className="flex-1 lg:w-full transition-all duration-200"
-                      style={{
-                        backgroundColor: designSystem.colors.primary[600],
-                        color: 'white',
-                        fontWeight: '600'
-                      }}
+                      className="flex-1 lg:w-full transition-all duration-200 bg-primary text-primary-foreground font-semibold"
                       onClick={() => window.open(broker.websiteUrl, '_blank')}
                     >
                       <ExternalLink className="w-4 h-4 mr-2" />
@@ -688,12 +670,10 @@ const BrokerDetailPage: React.FC = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex-1"
                         onClick={() => isFavorite ? removeBrokerFromFavorites(broker.id) : addBrokerToFavorites(broker.id)}
-                        style={{
-                          borderColor: isFavorite ? designSystem.colors.danger[300] : designSystem.colors.neutral[300],
-                          color: isFavorite ? designSystem.colors.danger[600] : designSystem.colors.neutral[600]
-                        }}
+                        className={`flex-1 ${
+                          isFavorite ? 'border-red-300 text-red-600 dark:border-red-700 dark:text-red-400' : 'border-border text-muted-foreground'
+                        }`}
                       >
                         <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
                       </Button>
@@ -701,12 +681,10 @@ const BrokerDetailPage: React.FC = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex-1"
                         onClick={() => isInComparison ? removeBrokerFromComparison(broker.id) : addBrokerToComparison(broker.id)}
-                        style={{
-                          borderColor: isInComparison ? designSystem.colors.primary[300] : designSystem.colors.neutral[300],
-                          color: isInComparison ? designSystem.colors.primary[600] : designSystem.colors.neutral[600]
-                        }}
+                        className={`flex-1 ${
+                          isInComparison ? 'border-primary text-primary' : 'border-border text-muted-foreground'
+                        }`}
                       >
                         <BarChart3 className="w-4 h-4" />
                       </Button>
@@ -718,20 +696,11 @@ const BrokerDetailPage: React.FC = () => {
               <CardContent>
                 {/* Professional Stats Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                  <div 
-                    className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md"
-                    style={{ 
-                      backgroundColor: designSystem.colors.neutral[50],
-                      border: `1px solid ${designSystem.colors.neutral[200]}`
-                    }}
-                  >
-                    <div 
-                      className="text-2xl md:text-3xl font-bold mb-1"
-                      style={{ color: designSystem.colors.primary[600] }}
-                    >
+                  <div className="text-center p-4 rounded-lg transition-all duration-200 hover:shadow-md bg-muted/50 border">
+                    <div className="text-2xl md:text-3xl font-bold mb-1 text-primary">
                       {brokerStats.founded}
                     </div>
-                    <div className="text-sm font-medium" style={{ color: designSystem.colors.neutral[600] }}>
+                    <div className="text-sm font-medium text-muted-foreground">
                       Founded
                     </div>
                   </div>
@@ -799,7 +768,7 @@ const BrokerDetailPage: React.FC = () => {
                     border: `1px solid ${designSystem.colors.primary[200]}`
                   }}
                 >
-                  <p className="text-base leading-relaxed" style={{ color: designSystem.colors.neutral[700] }}>
+                  <p className="text-base leading-relaxed text-muted-foreground">
                     {broker.summary || broker.description}
                   </p>
                 </div>
@@ -879,22 +848,22 @@ const BrokerDetailPage: React.FC = () => {
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <h3 className="font-semibold text-green-700 mb-3">Key Advantages</h3>
+                        <h3 className="font-semibold text-green-600 dark:text-green-400 mb-3">Key Advantages</h3>
                         <ul className="space-y-2 text-sm">
                           {broker.pros?.map((pro, index) => (
                             <li key={`pros-list-${index}-${pro.slice(0, 10)}`} className="flex items-start gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                              <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                               {pro}
                             </li>
                           ))}
                         </ul>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-red-700 mb-3">Considerations</h3>
+                        <h3 className="font-semibold text-red-600 dark:text-red-400 mb-3">Considerations</h3>
                         <ul className="space-y-2 text-sm">
                           {broker.cons?.map((con, index) => (
                             <li key={`cons-list-${index}-${con.slice(0, 10)}`} className="flex items-start gap-2">
-                              <AlertCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                              <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
                               {con}
                             </li>
                           ))}
@@ -1350,26 +1319,26 @@ const BrokerDetailPage: React.FC = () => {
                         <h3 className="font-semibold mb-4">Additional Features</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {broker.platformFeatures?.copyTrading?.available && (
-                            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                              <Users className="w-5 h-5 text-blue-600" />
+                            <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                              <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                               <span className="font-medium">Copy Trading Available</span>
                             </div>
                           )}
                           {broker.platformFeatures?.backtesting && (
-                            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                              <BarChart3 className="w-5 h-5 text-blue-600" />
+                            <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                              <BarChart3 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                               <span className="font-medium">Strategy Backtesting</span>
                             </div>
                           )}
                           {broker.technology?.apiAccess && (
-                            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                              <Code className="w-5 h-5 text-blue-600" />
+                            <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                              <Code className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                               <span className="font-medium">API Access</span>
                             </div>
                           )}
                           {broker.platformFeatures?.newsIntegration && (
-                            <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                              <Globe className="w-5 h-5 text-blue-600" />
+                            <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                              <Globe className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                               <span className="font-medium">News Integration</span>
                             </div>
                           )}
@@ -1394,15 +1363,15 @@ const BrokerDetailPage: React.FC = () => {
                       <div className="text-sm text-muted-foreground">Overall Rating</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-green-600">{trustScore?.score || '8.5'}/10</div>
+                      <div className="text-3xl font-bold text-green-600 dark:text-green-400">{trustScore?.score || '8.5'}/10</div>
                       <div className="text-sm text-muted-foreground">Trust Score</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-blue-600">{reviews.length}</div>
+                      <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{reviews.length}</div>
                       <div className="text-sm text-muted-foreground">User Reviews</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-purple-600">{broker.tradingConditions?.spreads?.eurusd || '1.0'}</div>
+                      <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">{broker.tradingConditions?.spreads?.eurusd || '1.0'}</div>
                       <div className="text-sm text-muted-foreground">EUR/USD Spreads</div>
                     </div>
                   </div>
@@ -1554,7 +1523,7 @@ const BrokerDetailPage: React.FC = () => {
                 <div className="space-y-2">
                   {(broker.regulation?.regulators || []).map((regulator, index) => (
                     <div key={index} className="flex items-center gap-2">
-                      <Icons.shield className="w-4 h-4 text-green-600" />
+                      <Icons.shield className="w-4 h-4 text-green-600 dark:text-green-400" />
                       <span className="text-sm">{regulator}</span>
                     </div>
                   ))}

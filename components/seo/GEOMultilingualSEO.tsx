@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSEO } from '../../contexts/SEOContext';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { Globe, MapPin } from 'lucide-react';
+// Removed Globe and MapPin imports as they are no longer used
 
 interface GEOMultilingualSEOProps {
   title: string;
@@ -91,56 +91,8 @@ const GEOMultilingualSEO: React.FC<GEOMultilingualSEOProps> = ({
   );
 
   return (
-    <div className="geom-multilingual-seo">
-      {/* Language Switcher */}
-      <div className="bg-white border-b border-gray-200 py-4">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Globe className="h-5 w-5 text-gray-600" />
-              <span className="text-sm font-medium text-gray-700">
-                Available in {supportedLocales.length} languages
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {supportedLocales.map(locale => (
-                <button
-                  key={locale}
-                  onClick={() => changeLanguage(locale)}
-                  className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                    currentLocale === locale
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {locale.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Geo Targeting Info */}
-      {geoTargeting && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <div className="flex items-center gap-2 mb-2">
-            <MapPin className="h-5 w-5 text-blue-600" />
-            <h3 className="font-semibold text-blue-900">
-              Localized for {geoTargeting.country}
-              {geoTargeting.region && `, ${geoTargeting.region}`}
-              {geoTargeting.city && ` - ${geoTargeting.city}`}
-            </h3>
-          </div>
-          <p className="text-sm text-blue-700">
-            This content is optimized for traders in {geoTargeting.country}.
-            {geoTargeting.region && ` Local regulations and market conditions for ${geoTargeting.region} are considered.`}
-          </p>
-        </div>
-      )}
-
-      {/* Structured Data for Geo and Language */}
+    <>
+      {/* Structured Data for Geo and Language - SEO Only, No Visible UI */}
       <script type="application/ld+json">
         {JSON.stringify({
           '@context': 'https://schema.org',
@@ -170,7 +122,7 @@ const GEOMultilingualSEO: React.FC<GEOMultilingualSEOProps> = ({
           }
         }, null, 2)}
       </script>
-    </div>
+    </>
   );
 };
 

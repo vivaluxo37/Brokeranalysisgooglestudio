@@ -530,9 +530,13 @@ const parseMarkdown = (markdown: string): string => {
             .replace(/_([^_]+)_/g, '<em>$1</em>')
             .replace(/`([^`]+)`/g, '<code class="bg-input text-primary-400 font-mono py-1 px-2 rounded text-sm">$1</code>')
             .replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
-                 return url.startsWith('/#/') 
-                    ? `<a href="${url.replace('/#/', '#/')}" class="text-primary-400 hover:underline">${linkText}</a>`
-                    : `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline">${linkText} <span class="inline-block align-middle">&#8599;</span></a>`;
+                // External links (http, https, www)
+                if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('www.')) {
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-400 hover:underline font-semibold">${linkText} <span class="inline-block align-middle">↗</span></a>`;
+                }
+                // Internal links - convert to React Router hash format
+                const internalUrl = url.startsWith('/') ? `#${url}` : `#/${url}`;
+                return `<a href="${internalUrl}" class="text-primary-400 hover:underline font-semibold">${linkText}</a>`;
             });
     };
 

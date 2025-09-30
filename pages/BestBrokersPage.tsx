@@ -203,7 +203,7 @@ const BestBrokersPage: React.FC = () => {
             {/* Statistics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <div className="text-center">
-                <div className="bg-blue-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="bg-white bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
                   <TrophyIcon className="h-8 w-8" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{categories.length}+ Categories</h3>
@@ -211,7 +211,7 @@ const BestBrokersPage: React.FC = () => {
               </div>
               
               <div className="text-center">
-                <div className="bg-blue-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="bg-white bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
                   <ShieldCheckIcon className="h-8 w-8" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">Verified Rankings</h3>
@@ -219,7 +219,7 @@ const BestBrokersPage: React.FC = () => {
               </div>
               
               <div className="text-center">
-                <div className="bg-blue-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                <div className="bg-white bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
                   <StarIcon className="h-8 w-8" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">80+ Countries</h3>

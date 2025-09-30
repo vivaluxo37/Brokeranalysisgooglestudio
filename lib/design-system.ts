@@ -167,7 +167,7 @@ export const iconGuidelines = {
       'Decorative icons without function',
       'Multiple icons in same context',
       'Complex illustrated icons',
-      'Icons that don't add meaning',
+      'Icons that do not add meaning',
     ],
   },
 };

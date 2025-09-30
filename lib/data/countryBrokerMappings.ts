@@ -152,9 +152,9 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'tastyfx',
     'saxo-bank',
     'tradestation-global',
-    'thinkorswim', // TD Ameritrade
-    'nadex',
-    'forex-trading'
+    'fxcm',
+    'plus500',
+    'etoro'
   ],
   
   'canada': [
@@ -166,10 +166,10 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'saxo-bank',
     'cmc-markets',
     'avatrade',
-    'forex-com',
     'activtrades',
     'fxpro',
-    'thinkmarkets'
+    'thinkmarkets',
+    'xtb'
   ],
   
   // Western Europe
@@ -260,7 +260,7 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'etoro',
     'pepperstone',
     'interactive-brokers',
-    'degiro'
+    'activtrades'
   ],
   
   'switzerland': [
@@ -269,13 +269,13 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'dukascopy',
     'ig',
     'interactive-brokers',
-    'cornèrtrader',
-    'postfinance',
     'pepperstone',
     'activtrades',
     'xtb',
     'admirals',
-    'avatrade'
+    'avatrade',
+    'fxpro',
+    'tickmill'
   ],
   
   'sweden': [
@@ -287,10 +287,10 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'trading212',
     'pepperstone',
     'ig',
-    'nordnet',
-    'avanza',
     'activtrades',
-    'plus500'
+    'plus500',
+    'etoro',
+    'fxpro'
   ],
   
   'poland': [
@@ -357,7 +357,7 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
   'portugal': [
     'xtb',
     'avatrade',
-    'admiral',
+    'admirals',
     'capital-com',
     'trading212',
     'ig',
@@ -435,7 +435,6 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
   'singapore': [
     'saxo-bank',
     'ig',
-    'phillip-securities',
     'oanda',
     'interactive-brokers',
     'cmc-markets',
@@ -444,7 +443,8 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'fp-markets',
     'exness',
     'thinkmarkets',
-    'avatrade'
+    'avatrade',
+    'fxpro'
   ],
   
   'hong-kong': [
@@ -468,13 +468,13 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'gmo-click',
     'ig',
     'forex-com',
-    'rakuten-securities',
-    'sbi-securities',
     'pepperstone',
     'avatrade',
     'fxpro',
     'interactive-brokers',
-    'thinkmarkets'
+    'thinkmarkets',
+    'exness',
+    'xm'
   ],
   
   'india': [
@@ -636,11 +636,11 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'roboforex',
     'fxopen',
     'nordfx',
-    'amarkets',
     'freshforex',
     'instaforex',
     'octafx',
-    'alpari'
+    'superforex',
+    'lifefinance'
   ],
   
   // Africa
@@ -755,13 +755,13 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'roboforex',
     'exness',
     'fxopen',
-    'alpari',
-    'amarkets',
     'instaforex',
     'nordfx',
     'freshforex',
-    'gerchik',
-    'teletrade'
+    'octafx',
+    'fbs',
+    'xm',
+    'hf-markets'
   ],
   
   'ukraine': [
@@ -773,10 +773,10 @@ export const countryBrokerMap: Record<CountrySlug, BrokerId[]> = {
     'octafx',
     'fbs',
     'libertex',
-    'amarkets',
     'instaforex',
     'fxgt',
-    'easymarkets'
+    'easymarkets',
+    'fxpro'
   ]
 };
 

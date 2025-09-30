@@ -63,13 +63,18 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {displayCategories.map((category) => {
-        const icon = getCategoryIcon(category.category_type, category.name);
-        const colorClasses = getCategoryColor(category.category_type);
+        // Safe property access with fallbacks
+        const categoryType = category?.category_type || 'default';
+        const categoryName = category?.name || 'Unknown Category';
+        const categoryDescription = category?.description || 'No description available';
+        
+        const icon = getCategoryIcon(categoryType, categoryName);
+        const colorClasses = getCategoryColor(categoryType);
 
         return (
           <Link
-            key={category.id}
-            to={`/best-brokers/${category.slug}`}
+            key={category?.id || Math.random().toString()}
+            to={`/best-brokers/${category?.slug || 'unknown'}`}
             className={`group bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border-2 ${colorClasses}`}
           >
             {/* Category Icon & Title */}
@@ -79,26 +84,27 @@ const CategoryGrid: React.FC<CategoryGridProps> = ({
               </div>
               <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors text-lg leading-tight">
-                  {category.name}
+                  {categoryName}
                 </h3>
               </div>
             </div>
             
             {/* Description */}
             <p className="text-gray-600 text-sm line-clamp-2 mb-4 leading-relaxed">
-              {category.description}
+              {categoryDescription}
             </p>
             
             {/* Category Type Badge */}
             <div className="flex items-center justify-between">
               <span className={`
                 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                ${category.category_type === 'broker_type' ? 'bg-blue-100 text-blue-800' : ''}
-                ${category.category_type === 'execution' ? 'bg-green-100 text-green-800' : ''}
-                ${category.category_type === 'strategy' ? 'bg-purple-100 text-purple-800' : ''}
-                ${category.category_type === 'features' ? 'bg-orange-100 text-orange-800' : ''}
+                ${categoryType === 'broker_type' ? 'bg-blue-100 text-blue-800' : ''}
+                ${categoryType === 'execution' ? 'bg-green-100 text-green-800' : ''}
+                ${categoryType === 'strategy' ? 'bg-purple-100 text-purple-800' : ''}
+                ${categoryType === 'features' ? 'bg-orange-100 text-orange-800' : ''}
+                ${categoryType === 'default' ? 'bg-gray-100 text-gray-800' : ''}
               `}>
-                {category.category_type.replace('_', ' ')}
+                {categoryType.replace('_', ' ')}
               </span>
               
               {/* Arrow Icon */}

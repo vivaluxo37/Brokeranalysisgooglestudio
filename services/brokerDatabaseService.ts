@@ -61,17 +61,29 @@ interface CompleteBrokerData extends BrokerData {
 
 class BrokerDatabaseService {
   private supabase;
+  private isConfigured: boolean;
 
   constructor() {
-    // Initialize Supabase connection with correct project details
-    this.supabase = createClient(
-      'https://sdanjzsxwczlwsgspihb.supabase.co',
-      'sbp_a008ee810fd64e9c06e14a517d53ba1878f74e8c'
-    );
+    // Initialize Supabase connection using environment variables
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    
+    this.isConfigured = !!(supabaseUrl && supabaseKey);
+    
+    if (this.isConfigured) {
+      this.supabase = createClient(supabaseUrl, supabaseKey);
+    } else {
+      console.warn('⚠️ Supabase not configured - using fallback data only');
+      this.supabase = null;
+    }
   }
 
   // Get all brokers with basic information (for listings)
   async getAllBrokers(): Promise<BrokerData[]> {
+    if (!this.isConfigured || !this.supabase) {
+      throw new Error('Supabase not configured');
+    }
+    
     const { data, error } = await this.supabase
       .from('brokers')
       .select('*')

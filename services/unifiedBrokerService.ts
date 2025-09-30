@@ -44,7 +44,10 @@ class UnifiedBrokerService {
         return transformedBrokers;
       }
     } catch (error) {
-      console.warn('⚠️ Database fetch failed, falling back to static data:', error);
+      // Only show detailed error in development
+      if (import.meta.env.DEV) {
+        console.warn('⚠️ Database fetch failed, falling back to static data:', error.message);
+      }
     }
 
     // Fallback to static data

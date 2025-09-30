@@ -204,6 +204,11 @@ export class PerformanceMetrics {
       for (const entry of list.getEntries()) {
         const { name, value } = entry as any;
         
+        // Skip undefined or invalid entries
+        if (!name || value === undefined || value === null) {
+          continue;
+        }
+        
         // Report to analytics (replace with your analytics service)
         console.log(`Web Vital: ${name}`, value);
         
@@ -242,8 +247,18 @@ export class PerformanceMetrics {
         if (navigation) {
           this.metrics.domContentLoaded = navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart;
           this.metrics.loadComplete = navigation.loadEventEnd - navigation.loadEventStart;
-          this.metrics.firstPaint = performance.getEntriesByType('paint').find(p => p.name === 'first-paint')?.startTime || 0;
-          this.metrics.firstContentfulPaint = performance.getEntriesByType('paint').find(p => p.name === 'first-contentful-paint')?.startTime || 0;
+          
+          // Safely get paint metrics
+          try {
+            const paintEntries = performance.getEntriesByType('paint');
+            const firstPaint = paintEntries.find(p => p.name === 'first-paint');
+            const firstContentfulPaint = paintEntries.find(p => p.name === 'first-contentful-paint');
+            
+            this.metrics.firstPaint = firstPaint?.startTime || 0;
+            this.metrics.firstContentfulPaint = firstContentfulPaint?.startTime || 0;
+          } catch (e) {
+            console.warn('Could not retrieve paint metrics:', e);
+          }
         }
       }, 0);
     });
@@ -280,8 +295,8 @@ export class MemoryManager {
       const memory = (window as any).performance.memory;
       const usage = memory.usedJSHeapSize / memory.totalJSHeapSize;
       
-      // If memory usage is above 90%, trigger cleanup
-      if (usage > 0.9) {
+      // If memory usage is above 95%, trigger cleanup (was too aggressive at 90%)
+      if (usage > 0.95) {
         console.warn('High memory usage detected, running cleanup');
         this.cleanup();
         

@@ -39,8 +39,13 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
         const container = containerRef.current;
         if (!container || typeof document === 'undefined') return;
 
-        // Clear any previous widget
-        container.innerHTML = '';
+        // Clear any previous widget safely
+        try {
+            container.innerHTML = '';
+        } catch (e) {
+            console.warn('Could not clear container:', e);
+            return;
+        }
 
         const finalOptions = {
             ...options,
@@ -94,19 +99,48 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
              script.innerHTML = JSON.stringify(config, null, 2);
 
              script.onload = () => {
-                 console.log(`${widgetType} widget loaded`);
+                 try {
+                     console.log(`${widgetType} widget loaded`);
+                 } catch (e) {
+                     // Silent catch for iframe communication issues
+                 }
              };
 
-             script.onerror = () => {
-                 console.error(`Failed to load ${widgetType} widget`);
-                 widgetDiv.innerHTML = `
-                     <div class="p-3 text-center text-sm text-muted-foreground">
-                         Market ticker • EUR/USD • GBP/USD • Gold • S&P 500 • BTC
-                     </div>
-                 `;
+             script.onerror = (error) => {
+                 console.warn(`TradingView ${widgetType} widget failed to load:`, error);
+                 // Provide fallback content
+                 if (widgetDiv && widgetDiv.parentNode) {
+                     widgetDiv.innerHTML = `
+                         <div class="p-3 text-center text-sm text-gray-500 bg-gray-50 rounded-lg border">
+                             <div class="mb-2">📊 Market Data</div>
+                             <div class="text-xs">Live market ticker temporarily unavailable</div>
+                         </div>
+                     `;
+                 }
              };
 
-             widgetDiv.appendChild(script);
+             // Add script with timeout protection
+             try {
+                 widgetDiv.appendChild(script);
+                 
+                 // Fallback timeout in case widget doesn't load
+                 setTimeout(() => {
+                     if (widgetDiv && !widgetDiv.querySelector('.tradingview-widget-container__widget iframe')) {
+                         console.warn(`${widgetType} widget timeout - showing fallback`);
+                         const fallback = widgetDiv.querySelector('.tradingview-widget-container__widget');
+                         if (fallback) {
+                             fallback.innerHTML = `
+                                 <div class="p-3 text-center text-sm text-gray-500 bg-gray-50 rounded-lg border">
+                                     <div class="mb-2">📊 Market Data</div>
+                                     <div class="text-xs">Loading market ticker...</div>
+                                 </div>
+                             `;
+                         }
+                     }
+                 }, 10000); // 10 second timeout
+             } catch (error) {
+                 console.error('Error appending TradingView script:', error);
+             }
         }
         
     }, [widgetType, options, theme, language]);

@@ -4,12 +4,12 @@
 // IN A REAL-WORLD APPLICATION, THIS LOGIC WOULD LIVE ON A SERVER-SIDE
 // ENDPOINT, AND THE API KEY WOULD BE A SERVER ENVIRONMENT VARIABLE.
 
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood, BrokerAlternativesResponse } from '../types';
 import { brokers } from '../data/brokers';
 
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
-const model = "gemini-2.5-flash";
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
+const model = "gemini-1.5-pro";
 
 // --- Chatbot Functionality ---
 
@@ -45,11 +45,9 @@ ${brokerContext}
 
 User's question: "${message}"`;
 
-  const response = await ai.models.generateContentStream({
-    model: model,
-    contents: prompt,
-  });
-  return response;
+  const generativeModel = genAI.getGenerativeModel({ model: model });
+  const result = await generativeModel.generateContentStream(prompt);
+  return result.stream;
 };
 
 
@@ -90,12 +88,13 @@ export const handleAiTutorStream = async (message: string, history: { sender: 'u
   - If a user asks about a specific broker, explain that your role is to teach trading concepts, but they can use the **[Broker Comparison Tool](/#/compare)** to research specific companies.
   - If a question is completely off-topic (e.g., about the weather), politely steer the conversation back to trading education.`;
     
-    const response = await ai.models.generateContentStream({
+    const generativeModel = genAI.getGenerativeModel({ 
         model: model,
-        contents: [...chatHistory, { role: 'user', parts: [{ text: message }] }],
-        config: { systemInstruction }
+        systemInstruction: systemInstruction 
     });
-    return response;
+    const chat = generativeModel.startChat({ history: chatHistory });
+    const result = await chat.sendMessageStream(message);
+    return result.stream;
 };
 
 

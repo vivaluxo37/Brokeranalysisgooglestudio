@@ -23,15 +23,20 @@
    ```
 
 2. **Environment Setup**
-   Create `.env.local` with required environment variables:
+   Create `.env` with required environment variables:
    ```env
+   # Google AI API (for chatbot assistant)
+   VITE_API_KEY=your_google_ai_api_key_here
+   
    # Supabase Configuration (Optional - falls back to static data)
    VITE_SUPABASE_URL=your_supabase_url
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
    
-   # AI Features
-   GEMINI_API_KEY=your_gemini_api_key
+   # Clerk Authentication
+   VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
    ```
+   
+   Get your Google AI API key from: https://makersuite.google.com/app/apikey
 
 3. **Run Development Server**
    ```bash

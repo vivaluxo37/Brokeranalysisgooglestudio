@@ -85,7 +85,7 @@ const Chatbot: React.FC = () => {
             let currentText = "";
             
             for await (const chunk of stream) {
-                currentText += chunk.text;
+                currentText += chunk.text();
                 if (firstChunk) {
                     setIsLoading(false); // Hide typing indicator
                     const aiMessage: ChatMessage = { sender: 'ai', text: currentText };
@@ -104,7 +104,7 @@ const Chatbot: React.FC = () => {
             if (firstChunk) setIsLoading(false); // Handle empty stream
         } catch (error) {
             console.error('Gemini API error:', error);
-            const errorMessage: ChatMessage = { sender: 'ai', text: "Sorry, I'm having trouble connecting right now." };
+            const errorMessage: ChatMessage = { sender: 'ai', text: "Sorry, I'm having trouble connecting right now. Please try again." };
             setMessages(prev => [...prev, errorMessage]);
             setIsLoading(false);
         }

@@ -19,30 +19,40 @@ export default defineConfig(({ command, ssrBuild }) => ({
     environment: 'jsdom',
     setupFiles: './setupTests.ts',
   },
-  // Configure server for history API fallback and stable HMR
+  // Configure server for stable development
   server: {
     port: 3000,
     host: 'localhost',
     open: true,
     hmr: {
       overlay: true,
-      port: 3000
+      port: 24678 // Use different port for HMR to avoid conflicts
     },
     watch: {
-      usePolling: true,
-      interval: 300,
+      usePolling: false, // Disable polling - causes excessive reloads on Windows
+      interval: 1000,
       followSymlinks: false,
       ignored: [
         '**/node_modules/**',
         '**/.git/**',
         '**/dist/**',
         '**/build/**',
-        '**/.DS_Store',
         '**/coverage/**',
-        '**/.kiro/**',
-        '**/.claude/**',
-        '**/*.tmp',
-        '**/*.log'
+        '**/.vite/**',
+        '**/.cache/**',
+        '**/.temp/**',
+        '**/.tmp/**',
+        '**/*.log',
+        '**/*.log.*',
+        '**/scripts/**/*.json',
+        '**/backups/**',
+        '**/reports/**',
+        '**/*audit-report*.json',
+        '**/*optimization-report*.json',
+        '**/*migration*.json',
+        '**/*.csv',
+        '**/.DS_Store',
+        '**/Thumbs.db'
       ]
     }
   },

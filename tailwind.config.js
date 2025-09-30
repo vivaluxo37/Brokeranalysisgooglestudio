@@ -81,9 +81,101 @@ export default {
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out forwards',
+        'fade-in-up': 'fadeIn 0.5s ease-out forwards',
         'pulse': 'pulse 2s infinite',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+        'bounce-gentle': 'bounceGentle 2s infinite',
+      },
+      // Add shimmer and bounce animations
+      shimmer: {
+        '0%': { transform: 'translateX(-100%)' },
+        '100%': { transform: 'translateX(100%)' },
+      },
+      bounceGentle: {
+        '0%, 100%': { transform: 'translateY(-5%)' },
+        '50%': { transform: 'translateY(0)' },
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Add performance-optimized plugins
+    function({ addUtilities, addComponents, theme }) {
+      const newUtilities = {
+        '.skeleton': {
+          position: 'relative',
+          overflow: 'hidden',
+          backgroundColor: theme('colors.gray.200'),
+          '&::after': {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            transform: 'translateX(-100%)',
+            backgroundImage: `linear-gradient(
+              90deg,
+              transparent,
+              rgba(255, 255, 255, 0.4),
+              transparent
+            )`,
+            animation: 'shimmer 2s infinite',
+            content: '""',
+          },
+        },
+        '.lazy-loading': {
+          filter: 'blur(5px)',
+          transition: 'filter 0.3s ease',
+        },
+        '.lazy-loaded': {
+          filter: 'none',
+        },
+        '.lazy-error': {
+          backgroundColor: theme('colors.gray.200'),
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: theme('colors.gray.500'),
+          fontSize: theme('fontSize.sm'),
+        },
+      };
+
+      addUtilities(newUtilities);
+    },
+  ],
+  // Performance optimizations
+  mode: 'jit',
+  // Purge configuration for production builds
+  ...(process.env.NODE_ENV === 'production' && {
+    purge: {
+      enabled: true,
+      content: [
+        "./index.html",
+        "./*.{js,ts,jsx,tsx}",
+        "./components/**/*.{js,ts,jsx,tsx}",
+        "./pages/**/*.{js,ts,jsx,tsx}",
+        "./contexts/**/*.{js,ts,jsx,tsx}",
+        "./hooks/**/*.{js,ts,jsx,tsx}",
+        "./services/**/*.{js,ts,jsx,tsx}",
+        "./src/**/*.{js,ts,jsx,tsx}",
+        "./lib/**/*.{js,ts,jsx,tsx}",
+        "./api/**/*.{js,ts,jsx,tsx}"
+      ],
+      // Safelist dynamic classes
+      safelist: [
+        'bg-blue-50', 'bg-green-50', 'bg-yellow-50', 'bg-red-50',
+        'text-blue-600', 'text-green-600', 'text-yellow-600', 'text-red-600',
+        'border-blue-200', 'border-green-200', 'border-yellow-200', 'border-red-200',
+        'animate-pulse', 'animate-spin', 'animate-shimmer',
+        'skeleton', 'lazy-loading', 'lazy-loaded', 'lazy-error',
+        /^bg-(blue|green|yellow|red|gray)-(50|100|200|300|400|500|600|700|800|900)$/,
+        /^text-(blue|green|yellow|red|gray)-(50|100|200|300|400|500|600|700|800|900)$/,
+        /^border-(blue|green|yellow|red|gray)-(50|100|200|300|400|500|600|700|800|900)$/,
+      ],
+      options: {
+        keyframes: true,
+        fontFace: true,
+      },
+    },
+  }),
 }

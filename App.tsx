@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { initializePerformanceOptimizations } from './utils/performance';
+import { initializePerformanceOptimizations, lazyWithRetry } from './lib/performance';
+import { PageSkeleton, AdminDashboardSkeleton, CountryPageSkeleton } from './components/ui/SkeletonLoaders';
 import PerformanceMonitor from './components/ui/PerformanceMonitor';
 import AdvancedScreeningPage from './pages/AdvancedScreeningPage';
 import AiTutorPage from './pages/AiTutorPage';
@@ -63,6 +64,19 @@ import TradingJournalPage from './pages/TradingJournalPage';
 import TradingPsychologyQuizPage from './pages/TradingPsychologyQuizPage';
 import WebinarsPage from './pages/WebinarsPage';
 import DebugBrokersPage from './pages/DebugBrokersPage';
+import CountriesPage from './pages/CountriesPage';
+// Lazy load main pages
+const BestBrokersPage = lazyWithRetry(() => import('./pages/BestBrokersPage'), 'BestBrokersPage');
+const BestBrokersCategoryPage = lazyWithRetry(() => import('./pages/CategoryPage'), 'CategoryPage');
+const BestBrokersCountryPage = lazyWithRetry(() => import('./pages/CountryPage'), 'CountryPage');
+import { AdminAuthProvider } from './contexts/AdminAuthContext';
+import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute';
+// Lazy load admin pages
+const AdminLogin = lazyWithRetry(() => import('./pages/admin/AdminLogin'), 'AdminLogin');
+const AdminDashboard = lazyWithRetry(() => import('./pages/admin/AdminDashboard'), 'AdminDashboard');
+const VerificationManagement = lazyWithRetry(() => import('./pages/admin/VerificationManagement'), 'VerificationManagement');
+const RankingWeights = lazyWithRetry(() => import('./pages/admin/RankingWeights'), 'RankingWeights');
+const ActivityLogs = lazyWithRetry(() => import('./pages/admin/ActivityLogs'), 'ActivityLogs');
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -71,11 +85,63 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <Layout>
-      <Routes>
+    <AdminAuthProvider>
+      <Layout>
+        <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/brokers" element={<AllBrokersPage />} />
         <Route path="/debug-brokers" element={<DebugBrokersPage />} />
+        <Route path="/best-brokers" element={
+          <Suspense fallback={<PageSkeleton />}>
+            <BestBrokersPage />
+          </Suspense>
+        } />
+        <Route path="/best-brokers/:categorySlug" element={
+          <Suspense fallback={<PageSkeleton />}>
+            <BestBrokersCategoryPage />
+          </Suspense>
+        } />
+        <Route path="/best-forex-brokers/:countrySlug" element={
+          <Suspense fallback={<CountryPageSkeleton />}>
+            <BestBrokersCountryPage />
+          </Suspense>
+        } />
+        <Route path="/countries" element={<CountriesPage />} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={
+          <Suspense fallback={<PageSkeleton />}>
+            <AdminLogin />
+          </Suspense>
+        } />
+        <Route path="/admin" element={
+          <ProtectedAdminRoute>
+            <Suspense fallback={<AdminDashboardSkeleton />}>
+              <AdminDashboard />
+            </Suspense>
+          </ProtectedAdminRoute>
+        } />
+        <Route path="/admin/verification" element={
+          <ProtectedAdminRoute>
+            <Suspense fallback={<PageSkeleton />}>
+              <VerificationManagement />
+            </Suspense>
+          </ProtectedAdminRoute>
+        } />
+        <Route path="/admin/ranking-weights" element={
+          <ProtectedAdminRoute>
+            <Suspense fallback={<PageSkeleton />}>
+              <RankingWeights />
+            </Suspense>
+          </ProtectedAdminRoute>
+        } />
+        <Route path="/admin/logs" element={
+          <ProtectedAdminRoute>
+            <Suspense fallback={<PageSkeleton />}>
+              <ActivityLogs />
+            </Suspense>
+          </ProtectedAdminRoute>
+        } />
         <Route path="/brokers/advanced-screening" element={<AdvancedScreeningPage />} />
         <Route path="/brokers/promotions" element={<BrokerPromotionsPage />} />
         <Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
@@ -160,10 +226,11 @@ const App: React.FC = () => {
         } />
 
         <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <Chatbot />
-      <PerformanceMonitor />
-    </Layout>
+        </Routes>
+        <Chatbot />
+        <PerformanceMonitor />
+      </Layout>
+    </AdminAuthProvider>
   );
 };
 

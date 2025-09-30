@@ -1,6 +1,22 @@
 # Changelog
 
-All notable changes to the Brokeranalysisgooglestudio project will be documented in this file.
+All notable changes to this project will be documented in this file.
+
+## [1.0.1] - 2025-01-30
+
+### Fixed
+- **Chatbot Assistant**: Fixed non-working chatbot by updating to @google/generative-ai@0.24.1
+- **API Integration**: Fixed Google Gemini AI integration with proper model (gemini-1.5-pro)
+- **Dependencies**: Removed unused @google/genai@1.21.0 package, consolidated on @google/generative-ai
+- **Environment**: Updated .env and .env.example with correct variable names
+- **TypeScript**: Added missing tsconfig.json and tsconfig.node.json configurations
+- **Streaming**: Fixed streaming response handling for real-time chat experience
+
+### Technical Details
+- Migrated from `@google/genai` to `@google/generative-ai` for better compatibility
+- Updated backend service to use proper API methods and model names
+- Fixed streaming implementation to display responses as they're generated
+- Maintained existing UI/UX while fixing the underlying API issues
 
 ## [1.1.0] - 2025-09-29
 

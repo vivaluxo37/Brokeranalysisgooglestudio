@@ -1,259 +1,396 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink as RRNavLink, Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
-import { Icons } from '../../constants';
-import ThemeToggle from '../ui/ThemeToggle';
-import { Button } from '../ui/button';
-import AlertsDropdown from '../common/AlertsDropdown';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ChevronDownIcon, Bars3Icon, XMarkIcon, UserIcon, StarIcon, GlobeAltIcon, ChartBarIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
+import { getCategoriesByType, POPULAR_CATEGORIES } from '../../lib/constants/categories';
+import { POPULAR_COUNTRIES } from '../../lib/constants/countries';
 import { categoryPageGroups } from '../../pages/categoryPageData';
-import { useTranslation } from '../../hooks/useTranslation';
-import GlobalSearchBar from '../common/GlobalSearchBar';
 
-const NavLink: React.FC<{ to: string; children: React.ReactNode; onClick?: () => void, className?: string }> = ({ to, children, onClick, className = '' }) => (
-    <RRNavLink
-        to={to}
-        onClick={onClick}
-        className={({ isActive }) =>
-            `px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500 ${
-            isActive
-                ? 'bg-primary-500 text-white'
-                : 'text-foreground/70 hover:bg-input hover:text-foreground'
-            } ${className}`
-        }
-    >
-        {children}
-    </RRNavLink>
-);
+interface NavItem {
+  label: string;
+  href?: string;
+  children?: Array<{
+    label: string;
+    href: string;
+    description?: string;
+  }>;
+}
 
-// New component for collapsible sections in the mobile menu
-const MobileAccordionLink: React.FC<{ title: string; children: React.ReactNode; }> = ({ title, children }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-        <div className="border-b border-input/50 last:border-b-0">
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex justify-between items-center px-3 py-3 text-left font-semibold text-card-foreground"
-                aria-expanded={isOpen}
+export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const location = useLocation();
+
+  // Get popular categories for mega menu
+  const generalCategories = getCategoriesByType('general').slice(0, 6);
+  const executionCategories = getCategoriesByType('execution').slice(0, 4);
+  const strategyCategories = getCategoriesByType('strategy').slice(0, 4);
+  const featureCategories = getCategoriesByType('features').slice(0, 4);
+  
+  const popularCountries = POPULAR_COUNTRIES.slice(0, 8);
+
+  const navigation: NavItem[] = [
+    {
+      label: 'Best Brokers',
+      href: '/best-brokers',
+      children: [
+        // Quick Links Section
+        { label: '🏆 Best Brokers Directory', href: '/best-brokers', description: 'Complete directory of top-rated brokers' },
+        { label: '📊 All Brokers List', href: '/brokers', description: 'Browse all forex brokers with detailed reviews' },
+        { label: '🔍 Advanced Screening', href: '/brokers/advanced-screening', description: 'Filter brokers by specific criteria' },
+        { label: '🎁 Latest Promotions', href: '/brokers/promotions', description: 'Current broker bonuses and offers' },
+        { label: '---', href: '#', description: '' }, // Separator
+        
+        // Popular Categories
+        ...generalCategories.map(cat => ({
+          label: cat.name,
+          href: `/best-brokers/${cat.slug}`,
+          description: cat.description.slice(0, 60) + '...'
+        }))
+      ]
+    },
+    {
+      label: 'Categories',
+      children: [
+        // Execution Types
+        { label: '⚡ Execution Types', href: '#', description: 'Browse by execution model' },
+        ...executionCategories.map(cat => ({
+          label: cat.shortName,
+          href: `/best-brokers/${cat.slug}`,
+          description: cat.description.slice(0, 50) + '...'
+        })),
+        { label: '---', href: '#', description: '' }, // Separator
+        
+        // Trading Strategies
+        { label: '📈 Trading Strategies', href: '#', description: 'Brokers by trading style' },
+        ...strategyCategories.map(cat => ({
+          label: cat.shortName,
+          href: `/best-brokers/${cat.slug}`,
+          description: cat.description.slice(0, 50) + '...'
+        })),
+        { label: '---', href: '#', description: '' }, // Separator
+        
+        // Platform Features
+        { label: '⚙️ Platform Features', href: '#', description: 'Brokers by platform type' },
+        ...featureCategories.map(cat => ({
+          label: cat.shortName,
+          href: `/best-brokers/${cat.slug}`,
+          description: cat.description.slice(0, 50) + '...'
+        }))
+      ]
+    },
+    {
+      label: 'Countries',
+      children: [
+        { label: '🌍 Browse by Country', href: '/countries', description: 'Find brokers available in your country' },
+        { label: '---', href: '#', description: '' }, // Separator
+        ...popularCountries.map(country => ({
+          label: `${country.flag} ${country.name}`,
+          href: `/best-forex-brokers/${country.slug}`,
+          description: `Top brokers available in ${country.name}`
+        }))
+      ]
+    },
+    {
+      label: 'Tools',
+      children: [
+        { label: 'Compare Brokers', href: '/compare', description: 'Side-by-side broker comparison tool' },
+        { label: 'Cost Analyzer', href: '/cost-analyzer', description: 'Calculate your trading costs' },
+        { label: 'Broker Matcher', href: '/broker-matcher', description: 'Find your perfect broker match' },
+        { label: '---', href: '#', description: '' },
+        { label: 'Economic Calendar', href: '/tools/economic-calendar', description: 'Track important economic events' },
+        { label: 'Market Data', href: '/tools/market-data', description: 'Real-time market information' },
+        { label: 'Trading Calculators', href: '/tools/calculators', description: 'Essential trading calculators' }
+      ]
+    },
+    {
+      label: 'Learn',
+      children: [
+        { label: 'Education Hub', href: '/education', description: 'Complete trading education center' },
+        { label: 'AI Trading Tutor', href: '/education/ai-tutor', description: 'Personal AI trading assistant' },
+        { label: 'Trading Quizzes', href: '/education/quizzes', description: 'Test your trading knowledge' },
+        { label: 'Trading Simulators', href: '/education/simulators', description: 'Practice trading risk-free' },
+        { label: '---', href: '#', description: '' },
+        { label: 'Live Webinars', href: '/education/webinars', description: 'Join live trading sessions' },
+        { label: 'Market News', href: '/market-news', description: 'Latest forex market updates' },
+        { label: 'Trading Blog', href: '/blog', description: 'Expert insights and analysis' }
+      ]
+    }
+  ];
+
+  const isActiveLink = (href: string) => {
+    return location.pathname === href;
+  };
+
+  return (
+    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center">
+              <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-lg tracking-wide">
+                BROKERANALYSIS
+              </div>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex space-x-6 xl:space-x-8 flex-1 justify-center">
+            {navigation.map((item) => (
+              <div
+                key={item.label}
+                className="relative"
+                onMouseEnter={() => item.children && setActiveDropdown(item.label)}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                {item.href ? (
+                  <Link
+                    to={item.href}
+                    className={`flex items-center px-2 xl:px-3 py-2 text-sm font-medium transition-colors whitespace-nowrap ${
+                      isActiveLink(item.href)
+                        ? 'text-blue-600 border-b-2 border-blue-600'
+                        : 'text-gray-700 hover:text-blue-600'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <button className="flex items-center px-2 xl:px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors whitespace-nowrap">
+                    {item.label}
+                    <ChevronDownIcon className="ml-1 h-4 w-4" />
+                  </button>
+                )}
+
+                {/* Mega Menu Dropdown */}
+                {item.children && activeDropdown === item.label && (
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 w-screen max-w-4xl bg-white rounded-lg shadow-xl border z-50">
+                    <div className="p-6">
+                      {/* Mega Menu for Categories */}
+                      {item.label === 'Categories' ? (
+                        <div className="grid grid-cols-3 gap-8">
+                          {/* Execution Types */}
+                          <div>
+                            <div className="mb-4">
+                              <h3 className="font-semibold text-gray-900">Execution Types</h3>
+                            </div>
+                            <div className="space-y-2">
+                              {executionCategories.map((cat) => (
+                                <Link
+                                  key={cat.slug}
+                                  to={`/best-brokers/${cat.slug}`}
+                                  className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
+                                >
+                                  <div className="font-medium">{cat.shortName}</div>
+                                  <div className="text-xs text-gray-500 mt-1">
+                                    {cat.description.slice(0, 45)}...
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {/* Trading Strategies */}
+                          <div>
+                            <div className="mb-4">
+                              <h3 className="font-semibold text-gray-900">Trading Strategies</h3>
+                            </div>
+                            <div className="space-y-2">
+                              {strategyCategories.map((cat) => (
+                                <Link
+                                  key={cat.slug}
+                                  to={`/best-brokers/${cat.slug}`}
+                                  className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
+                                >
+                                  <div className="font-medium">{cat.shortName}</div>
+                                  <div className="text-xs text-gray-500 mt-1">
+                                    {cat.description.slice(0, 45)}...
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {/* Platform Features */}
+                          <div>
+                            <div className="mb-4">
+                              <h3 className="font-semibold text-gray-900">Platform Features</h3>
+                            </div>
+                            <div className="space-y-2">
+                              {featureCategories.map((cat) => (
+                                <Link
+                                  key={cat.slug}
+                                  to={`/best-brokers/${cat.slug}`}
+                                  className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
+                                >
+                                  <div className="font-medium">{cat.shortName}</div>
+                                  <div className="text-xs text-gray-500 mt-1">
+                                    {cat.description.slice(0, 45)}...
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ) : item.label === 'Countries' ? (
+                        /* Countries Mega Menu */
+                        <div>
+                          <div className="flex items-center justify-between mb-4">
+                            <div>
+                              <h3 className="font-semibold text-gray-900">Popular Countries</h3>
+                            </div>
+                            <Link
+                              to="/countries"
+                              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                            >
+                              View All Countries →
+                            </Link>
+                          </div>
+                          <div className="grid grid-cols-4 gap-4">
+                            {popularCountries.map((country) => (
+                              <Link
+                                key={country.slug}
+                                to={`/best-forex-brokers/${country.slug}`}
+                                className="flex items-center px-3 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors"
+                              >
+                                <span className="text-2xl mr-3">{country.flag}</span>
+                                <div>
+                                  <div className="font-medium">{country.name}</div>
+                                  <div className="text-xs text-gray-500">View Brokers</div>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        /* Standard Dropdown Menu */
+                        <div className="grid grid-cols-2 gap-4 max-h-80 overflow-y-auto">
+                          {item.children.map((child) => (
+                            child.label === '---' ? (
+                              <div key={child.href} className="col-span-2 border-t border-gray-200 my-2"></div>
+                            ) : (
+                              <Link
+                                key={child.href}
+                                to={child.href}
+                                className="block px-3 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 rounded-md transition-colors"
+                              >
+                                <div className="font-medium">{child.label}</div>
+                                {child.description && (
+                                  <div className="text-xs text-gray-500 mt-1 line-clamp-2">
+                                    {child.description}
+                                  </div>
+                                )}
+                              </Link>
+                            )
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </nav>
+
+          {/* Auth & CTA Buttons */}
+          <div className="hidden lg:flex items-center space-x-3 xl:space-x-4 flex-shrink-0">
+            <Link
+              to="/login"
+              className="text-gray-700 hover:text-blue-600 text-sm font-medium transition-colors whitespace-nowrap"
             >
-                <span>{title}</span>
-                <Icons.chevronDown className={`h-5 w-5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+              <span className="hidden xl:inline">Sign In</span>
+              <span className="xl:hidden">Login</span>
+            </Link>
+            <Link
+              to="/register"
+              className="bg-gray-100 text-gray-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors whitespace-nowrap"
+            >
+              <span className="hidden xl:inline">Sign Up</span>
+              <span className="xl:hidden">Join</span>
+            </Link>
+            <Link
+              to="/best-brokers"
+              className="bg-blue-600 text-white px-3 xl:px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors whitespace-nowrap"
+            >
+              <span className="hidden xl:inline">Best Brokers</span>
+              <span className="xl:hidden">Brokers</span>
+            </Link>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="lg:hidden">
+            <button
+              type="button"
+              className="text-gray-700 hover:text-blue-600 transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? (
+                <XMarkIcon className="h-6 w-6" />
+              ) : (
+                <Bars3Icon className="h-6 w-6" />
+              )}
             </button>
-            <div className={`grid transition-all duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
-                <div className="overflow-hidden">
-                    <div className="pt-2 pb-3 ltr:pl-4 rtl:pr-4 space-y-1">
-                        {children}
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    );
-};
 
-const Header: React.FC = () => {
-    const { user, logout } = useAuth();
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { t } = useTranslation();
-
-    const closeMobileMenu = () => setIsMobileMenuOpen(false);
-
-    // Close mobile menu on route change
-    const location = useLocation();
-    useEffect(() => {
-        setIsMobileMenuOpen(false);
-    }, [location]);
-
-    return (
-        <header className="bg-card/50 backdrop-blur-lg sticky top-0 z-50 border-b border-input transition-colors duration-300">
-            <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
-                    {/* Logo and Desktop Nav */}
-                    <div className="flex items-center">
-                        <Link to="/" className="text-lg lg:text-2xl font-bold text-primary-500">
-                            Brokeranalysis
-                        </Link>
-                        <div className="hidden lg:block ltr:ml-10 rtl:mr-10">
-                            <div className="flex items-baseline space-x-1">
-                                
-                                {/* Brokers Mega Menu */}
-                                <div className="group relative">
-                                    <button className="px-3 py-2 rounded-md text-sm font-medium text-foreground/70 group-hover:bg-input group-hover:text-foreground transition-colors flex items-center">
-                                        {t('header.brokers')} <Icons.chevronDown className="h-4 w-4 ltr:ml-1 rtl:mr-1" />
-                                    </button>
-                                    <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-max max-w-2xl bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
-                                        <div className="p-6 grid grid-cols-3 gap-x-8">
-                                            <div className="col-span-1 ltr:border-r rtl:border-l border-input ltr:pr-6 rtl:pl-6">
-                                                <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.coreTools')}</h3>
-                                                <div className="flex flex-col space-y-2">
-                                                    <NavLink to="/brokers">{t('header.megaMenu.allBrokers')}</NavLink>
-                                                    <NavLink to="/brokers/promotions">Current Promotions</NavLink>
-                                                    <NavLink to="/compare">{t('header.megaMenu.compareBrokers')}</NavLink>
-                                                    <NavLink to="/cost-analyzer">{t('header.megaMenu.costAnalyzer')}</NavLink>
-                                                    <NavLink to="/broker-matcher">{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
-                                                    <NavLink to="/brokers/advanced-screening">Advanced Screening</NavLink>
-                                                </div>
-                                            </div>
-                                            <div className="col-span-1">
-                                                <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.byRegion')}</h3>
-                                                <ul className="space-y-1 text-sm">
-                                                    {categoryPageGroups.region.slice(0, 5).map(link => <li key={link.path}><Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</Link></li>)}
-                                                </ul>
-                                            </div>
-                                            <div className="col-span-1">
-                                                <h3 className="font-bold text-card-foreground mb-3">{t('header.megaMenu.platformsAndTypes')}</h3>
-                                                <ul className="space-y-1 text-sm">
-                                                    {categoryPageGroups.platform.slice(0, 5).map(link => <li key={link.path}><Link to={link.path} className="block p-1 rounded hover:bg-input hover:text-primary-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-primary-500">{link.name}</Link></li>)}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Tools Dropdown */}
-                                <div className="group relative">
-                                    <button className="px-3 py-2 rounded-md text-sm font-medium text-foreground/70 group-hover:bg-input group-hover:text-foreground transition-colors flex items-center">
-                                        {t('header.tools')} <Icons.chevronDown className="h-4 w-4 ltr:ml-1 rtl:mr-1" />
-                                    </button>
-                                    <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-56 bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
-                                        <div className="p-2 flex flex-col">
-                                            <NavLink to="/tools/economic-calendar">{t('header.toolsMenu.economicCalendar')}</NavLink>
-                                            <NavLink to="/tools/calculators">{t('header.toolsMenu.calculators')}</NavLink>
-                                            <NavLink to="/tools/market-data">{t('header.toolsMenu.marketData')}</NavLink>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Education Dropdown */}
-                                <div className="group relative">
-                                    <button className="px-3 py-2 rounded-md text-sm font-medium text-foreground/70 group-hover:bg-input group-hover:text-foreground transition-colors flex items-center">
-                                        {t('header.education')} <Icons.chevronDown className="h-4 w-4 ltr:ml-1 rtl:mr-1" />
-                                    </button>
-                                    <div className="absolute ltr:left-0 rtl:right-0 mt-2 w-56 bg-card rounded-lg shadow-2xl border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
-                                        <div className="p-2 flex flex-col">
-                                            <NavLink to="/education">{t('footer.links.educationHub')}</NavLink>
-                                            <NavLink to="/education/ai-tutor">AI Tutor</NavLink>
-                                            <NavLink to="/education/quizzes">{t('education.quizzes.title')}</NavLink>
-                                            <NavLink to="/education/webinars">{t('education.webinars.title')}</NavLink>
-                                            <NavLink to="/education/simulators">{t('education.simulators.title')}</NavLink>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <NavLink to="/market-news">{t('header.marketNews')}</NavLink>
-                                <NavLink to="/blog">Blog</NavLink>
-                                <NavLink to="/methodology">{t('header.methodology')}</NavLink>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Right side items */}
-                    <div className="hidden lg:flex items-center space-x-2">
-                        <GlobalSearchBar />
-                        <AlertsDropdown />
-                        <ThemeToggle />
-                        {user ? (
-                            <div className="ltr:ml-3 rtl:mr-3 relative group">
-                                <Button variant="ghost" size="sm" className="p-2">
-                                    <Icons.user className="h-5 w-5 ltr:mr-2 rtl:ml-2"/> {user.name}
-                                </Button>
-                                <div className="absolute ltr:right-0 rtl:left-0 mt-2 w-48 bg-card rounded-md shadow-lg border border-input opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 z-50">
-                                    <div className="py-1">
-                                        <Link to="/dashboard" className="block px-4 py-2 text-sm text-card-foreground hover:bg-input">{t('header.dashboard')}</Link>
-                                        <Link to="/trading-journal" className="block px-4 py-2 text-sm text-card-foreground hover:bg-input">Trading Journal</Link>
-                                        <button onClick={logout} className="w-full text-left block px-4 py-2 text-sm text-card-foreground hover:bg-input">{t('header.logout')}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="ltr:ml-3 rtl:mr-3 flex items-center space-x-2">
-                                <Link to="/login">
-                                    <Button variant="ghost" size="sm">{t('header.login')}</Button>
-                                </Link>
-                                <Link to="/register">
-                                    <Button variant="primary" size="sm">{t('header.register')}</Button>
-                                </Link>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Mobile Menu Button */}
-                    <div className="ltr:-mr-2 rtl:-ml-2 flex lg:hidden">
-                        <button
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-foreground/70 hover:text-foreground hover:bg-input focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
-                            aria-controls="mobile-menu"
-                            aria-expanded={isMobileMenuOpen}
-                        >
-                            <span className="sr-only">Open main menu</span>
-                            {isMobileMenuOpen ? <Icons.close className="block h-6 w-6" /> : <Icons.menu className="block h-6 w-6" />}
-                        </button>
-                    </div>
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t bg-white">
+            <div className="px-2 pt-2 pb-3 space-y-1 max-h-96 overflow-y-auto">
+              {navigation.map((item) => (
+                <div key={item.label}>
+                  {item.href ? (
+                    <Link
+                      to={item.href}
+                      className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                        isActiveLink(item.href)
+                          ? 'text-blue-600 bg-blue-50'
+                          : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <>
+                      <div className="px-3 py-2 text-base font-medium text-gray-900 border-b">
+                        {item.label}
+                      </div>
+                      <div className="pl-6 space-y-1">
+                        {item.children?.slice(0, 6).map((child) => (
+                          <Link
+                            key={child.href}
+                            to={child.href}
+                            className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
-            </nav>
-
-            {/* Mobile Menu */}
-            <div className={`lg:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`} id="mobile-menu">
-                <div className="bg-card border-b border-input shadow-lg">
-                     <div className="px-4 py-3 border-b border-input/50">
-                        <GlobalSearchBar />
-                    </div>
-                    {user ? (
-                        <div className="pt-4 pb-3 border-t border-input">
-                            <div className="flex items-center px-5">
-                                <div className="flex-shrink-0">
-                                    <span className="flex items-center justify-center h-10 w-10 rounded-full bg-input text-foreground"><Icons.user className="h-6 w-6"/></span>
-                                </div>
-                                <div className="ltr:ml-3 rtl:mr-3">
-                                    <div className="text-base font-medium leading-none text-card-foreground">{user.name}</div>
-                                    <div className="text-sm font-medium leading-none text-foreground/70">{user.email}</div>
-                                </div>
-                            </div>
-                            <div className="mt-3 px-2 space-y-1">
-                                <NavLink to="/dashboard" onClick={closeMobileMenu} className="block">{t('header.dashboard')}</NavLink>
-                                <NavLink to="/trading-journal" onClick={closeMobileMenu} className="block">Trading Journal</NavLink>
-                                <button onClick={() => { logout(); closeMobileMenu(); }} className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-foreground/70 hover:bg-input hover:text-foreground">{t('header.logout')}</button>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                            <NavLink to="/login" onClick={closeMobileMenu} className="block">{t('header.login')}</NavLink>
-                            <NavLink to="/register" onClick={closeMobileMenu} className="block">{t('header.register')}</NavLink>
-                        </div>
-                    )}
-                    <div className="border-t border-input/50">
-                        <MobileAccordionLink title={t('header.brokers')}>
-                           <NavLink to="/brokers" onClick={closeMobileMenu} className="block">{t('header.megaMenu.allBrokers')}</NavLink>
-                           <NavLink to="/brokers/promotions" onClick={closeMobileMenu} className="block">Current Promotions</NavLink>
-                           <NavLink to="/compare" onClick={closeMobileMenu} className="block">{t('header.megaMenu.compareBrokers')}</NavLink>
-                           <NavLink to="/cost-analyzer" onClick={closeMobileMenu} className="block">{t('header.megaMenu.costAnalyzer')}</NavLink>
-                           <NavLink to="/broker-matcher" onClick={closeMobileMenu} className="block">{t('header.megaMenu.aiBrokerMatcher')}</NavLink>
-                           <NavLink to="/brokers/advanced-screening" onClick={closeMobileMenu} className="block">Advanced Screening</NavLink>
-                        </MobileAccordionLink>
-                        <MobileAccordionLink title={t('header.tools')}>
-                           <NavLink to="/tools/economic-calendar" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.economicCalendar')}</NavLink>
-                           <NavLink to="/tools/calculators" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.calculators')}</NavLink>
-                           <NavLink to="/tools/market-data" onClick={closeMobileMenu} className="block">{t('header.toolsMenu.marketData')}</NavLink>
-                        </MobileAccordionLink>
-                        <MobileAccordionLink title={t('header.education')}>
-                           <NavLink to="/education" onClick={closeMobileMenu} className="block">{t('footer.links.educationHub')}</NavLink>
-                           <NavLink to="/education/ai-tutor" onClick={closeMobileMenu} className="block">AI Tutor</NavLink>
-                           <NavLink to="/education/quizzes" onClick={closeMobileMenu} className="block">{t('education.quizzes.title')}</NavLink>
-                           <NavLink to="/education/webinars" onClick={closeMobileMenu} className="block">{t('education.webinars.title')}</NavLink>
-                           <NavLink to="/education/simulators" onClick={closeMobileMenu} className="block">{t('education.simulators.title')}</NavLink>
-                        </MobileAccordionLink>
-                        <NavLink to="/market-news" onClick={closeMobileMenu} className="block m-3">{t('header.marketNews')}</NavLink>
-                        <NavLink to="/blog" onClick={closeMobileMenu} className="block m-3">Blog</NavLink>
-                        <NavLink to="/methodology" onClick={closeMobileMenu} className="block m-3">{t('header.methodology')}</NavLink>
-
-                    </div>
-                     <div className="px-5 py-4 border-t border-input/50 flex items-center justify-between">
-                         <span className="text-sm font-medium text-card-foreground/70">Settings</span>
-                         <div className="flex items-center gap-2">
-                            <ThemeToggle />
-                         </div>
-                    </div>
-                </div>
+              ))}
+              <div className="pt-4 border-t">
+                <Link
+                  to="/best-brokers"
+                  className="block w-full bg-blue-600 text-white text-center px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors mb-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Best Brokers Directory
+                </Link>
+                <Link
+                  to="/compare"
+                  className="block w-full bg-gray-600 text-white text-center px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Compare Brokers
+                </Link>
+              </div>
             </div>
-        </header>
-    );
-};
-
-export default Header;
+          </div>
+        )}
+      </div>
+    </header>
+  );
+}

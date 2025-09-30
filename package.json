@@ -10,6 +10,7 @@
     "build": "vite build --outDir dist/client && vite build --ssr prerender-entry.tsx --outDir dist/server && node scripts/prerender.js",
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.js",
+    "sitemap:generate": "node scripts/generateSitemap.cjs",
     "prerender": "node scripts/prerender.js",
     "test": "vitest",
     "test:ui": "vitest --ui",

@@ -68,9 +68,28 @@ All notable changes to this project will be documented in this file.
 ### 🎯 SEO Optimization
 - Unique content per country page (no duplicate content)
 - Long-tail keyword targeting via FAQs
-- Schema.org structured data ready (to be implemented)
+- Schema.org structured data implemented (4 schema types)
 - Meta tags optimized for 2025 AI search engines
 - Programmatic SEO architecture for scalability
+- Automated sitemap generation (51 URLs)
+- AI-friendly robots.txt
+
+#### SEO Schema Components
+- **FaqSchema.tsx**: FAQ Page structured data for rich snippets
+- **ArticleSchema.tsx**: Article metadata for country guides
+- **BreadcrumbSchema.tsx**: Navigation breadcrumb trails
+- **BrokerListSchema.tsx**: ItemList for broker rankings
+
+#### Sitemap & Indexing
+- **Script**: `scripts/generateSitemap.cjs`
+- **Output**: `public/sitemap.xml` (9 main routes + 42 country pages)
+- **Robots.txt**: AI search engine bot support (Perplexity, ChatGPT, Claude, Gemini)
+- **Command**: `npm run sitemap:generate`
+- **Features**:
+  - Dynamic country page detection
+  - Priority-based URL ordering
+  - Change frequency optimization
+  - 2025 AI bot allowlist
 
 ## [1.0.1] - 2025-01-30
 

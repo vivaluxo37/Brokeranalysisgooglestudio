@@ -4,7 +4,7 @@ import { StarIcon, ShieldCheckIcon, TrophyIcon } from '@heroicons/react/24/solid
 import { StarIcon as StarOutlineIcon } from '@heroicons/react/24/outline';
 
 interface Broker {
-  id: number;
+  id: number | string; // Support both number and string IDs
   name: string;
   overall_rating?: number;
   logo_url?: string;

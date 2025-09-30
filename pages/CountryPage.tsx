@@ -27,10 +27,29 @@ import {
 import { brokers as allBrokers } from '../data/brokers';
 import { Broker } from '../types';
 
+// Transform broker data to match BrokerCard interface
+const transformBrokerForCard = (broker: Broker) => {
+  // Extract regulators for display
+  const regulators = broker.security?.regulatedBy?.map(r => r.regulator).slice(0, 3).join(', ') || 
+                    broker.regulation?.regulators?.slice(0, 3).join(', ') || 
+                    'Regulated';
+  
+  return {
+    id: broker.id, // Keep as string for routing
+    name: broker.name,
+    overall_rating: broker.score || broker.ratings?.regulation || 0,
+    logo_url: broker.logoUrl,
+    minimum_deposit: broker.accessibility?.minDeposit ?? broker.accountTypes?.[0]?.minDeposit ?? 0,
+    regulation_status: regulators,
+    trust_score: broker.ratings?.regulation,
+    website: broker.websiteUrl
+  };
+};
+
 const CountryPage: React.FC = () => {
   const { countrySlug } = useParams<{ countrySlug: string }>();
   const [country, setCountry] = useState<CountryConfig | null>(null);
-  const [countryBrokers, setCountryBrokers] = useState<Broker[]>([]);
+  const [countryBrokers, setCountryBrokers] = useState<any[]>([]); // Changed to any[] for transformed data
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
@@ -75,10 +94,13 @@ const CountryPage: React.FC = () => {
         console.warn(`No brokers mapped for country: ${countrySlug}`);
       }
 
-      // Map broker IDs to full broker objects
+      // Map broker IDs to full broker objects and transform for BrokerCard
       const mappedBrokers = brokerIds
-        .map(brokerId => allBrokers.find(b => b.id === brokerId))
-        .filter((broker): broker is Broker => broker !== undefined);
+        .map(brokerId => {
+          const broker = allBrokers.find(b => b.id === brokerId);
+          return broker ? transformBrokerForCard(broker) : null;
+        })
+        .filter((broker): broker is any => broker !== null);
 
       setCountryBrokers(mappedBrokers);
 

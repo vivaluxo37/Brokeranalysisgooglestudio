@@ -1,31 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRightIcon, GlobeAltIcon, ShieldCheckIcon, StarIcon } from '@heroicons/react/24/outline';
+import { 
+  ChevronRightIcon, 
+  GlobeAltIcon, 
+  ShieldCheckIcon, 
+  StarIcon,
+  CheckCircleIcon,
+  BanknotesIcon,
+  ScaleIcon,
+  ChatBubbleLeftRightIcon
+} from '@heroicons/react/24/outline';
 import SEOHead from '../components/seo/SEOHead';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import BrokerCard from '../components/directory/BrokerCard';
+import { getCountryBySlug, CountryConfig } from '../lib/constants/countries';
+import { getBrokersForCountry } from '../lib/data/countryBrokerMappings';
 import { 
-  COUNTRIES, 
-  getCountryBySlug, 
-  CountryConfig 
-} from '../lib/constants/countries';
-
-interface FeaturedBroker {
-  id: number;
-  name: string;
-  overall_rating: number;
-  logo_url?: string;
-  minimum_deposit: number;
-  regulation_status: string;
-  website?: string;
-}
+  generateHeroIntro, 
+  generateLocalRelevance, 
+  generateFAQs, 
+  generateMetaTags,
+  generateBrokerCategories,
+  type FAQItem,
+  type BrokerCategory
+} from '../utils/contentGenerators';
+import { brokers as allBrokers } from '../data/brokers';
+import { Broker } from '../types';
 
 const CountryPage: React.FC = () => {
   const { countrySlug } = useParams<{ countrySlug: string }>();
   const [country, setCountry] = useState<CountryConfig | null>(null);
-  const [brokers, setBrokers] = useState<FeaturedBroker[]>([]);
+  const [countryBrokers, setCountryBrokers] = useState<Broker[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  // Generate content using our utilities
+  const content = useMemo(() => {
+    if (!country) return null;
+    return {
+      heroIntro: generateHeroIntro(country),
+      localRelevance: generateLocalRelevance(country),
+      faqs: generateFAQs(country),
+      metaTags: generateMetaTags(country, countryBrokers.length),
+      categories: generateBrokerCategories()
+    };
+  }, [country, countryBrokers.length]);
 
   useEffect(() => {
     loadPageData();
@@ -40,6 +60,7 @@ const CountryPage: React.FC = () => {
         throw new Error('Country slug is required');
       }
 
+      // Get country configuration
       const countryData = getCountryBySlug(countrySlug);
       if (!countryData) {
         throw new Error('Country not found');
@@ -47,38 +68,21 @@ const CountryPage: React.FC = () => {
 
       setCountry(countryData);
 
-      // Mock brokers for this country - in a real app, you'd fetch from your API
-      const mockBrokers: FeaturedBroker[] = [
-        {
-          id: 1,
-          name: 'IG Markets',
-          overall_rating: 4.8,
-          logo_url: 'https://example.com/ig-logo.png',
-          minimum_deposit: 250,
-          regulation_status: 'FCA, ASIC, CYSEC',
-          website: 'https://www.ig.com'
-        },
-        {
-          id: 2,
-          name: 'XM Group',
-          overall_rating: 4.5,
-          logo_url: 'https://example.com/xm-logo.png',
-          minimum_deposit: 5,
-          regulation_status: 'CYSEC, ASIC, FCA',
-          website: 'https://www.xm.com'
-        },
-        {
-          id: 3,
-          name: 'Plus500',
-          overall_rating: 4.2,
-          logo_url: 'https://example.com/plus500-logo.png',
-          minimum_deposit: 100,
-          regulation_status: 'FCA, CYSEC, ASIC',
-          website: 'https://www.plus500.com'
-        }
-      ];
+      // Get broker IDs for this country
+      const brokerIds = getBrokersForCountry(countrySlug);
+      
+      if (brokerIds.length === 0) {
+        console.warn(`No brokers mapped for country: ${countrySlug}`);
+      }
 
-      setBrokers(mockBrokers);
+      // Map broker IDs to full broker objects
+      const mappedBrokers = brokerIds
+        .map(brokerId => allBrokers.find(b => b.id === brokerId))
+        .filter((broker): broker is Broker => broker !== undefined);
+
+      setCountryBrokers(mappedBrokers);
+
+      console.log(`Loaded ${mappedBrokers.length} brokers for ${countryData.name}`);
 
     } catch (err) {
       console.error('Error loading country page data:', err);
@@ -88,12 +92,12 @@ const CountryPage: React.FC = () => {
     }
   };
 
-  // JSON-LD structured data
-  const jsonLd = country ? {
+  // JSON-LD structured data with FAQs
+  const jsonLd = country && content ? {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `${country.name} Forex Brokers`,
-    description: country.metaDescription,
+    description: content.metaTags.description,
     url: typeof window !== 'undefined' ? window.location.href : `https://brokeranalysis.com/best-forex-brokers/${country.slug}`,
     breadcrumb: {
       '@type': 'BreadcrumbList',
@@ -117,6 +121,17 @@ const CountryPage: React.FC = () => {
           item: typeof window !== 'undefined' ? window.location.href : `https://brokeranalysis.com/best-forex-brokers/${country.slug}`
         }
       ]
+    },
+    mainEntity: {
+      '@type': 'FAQPage',
+      mainEntity: content.faqs.map(faq => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer
+        }
+      }))
     }
   } : null;
 
@@ -156,10 +171,10 @@ const CountryPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <SEOHead
-        title={country.seoTitle}
-        description={country.metaDescription}
+        title={content?.metaTags.title || country.seoTitle}
+        description={content?.metaTags.description || country.metaDescription}
         keywords={country.keywords}
         jsonLd={jsonLd}
       />
@@ -195,24 +210,30 @@ const CountryPage: React.FC = () => {
               </div>
             </div>
             
-            <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
-              {country.description}
+            <p className="text-lg md:text-xl mb-8 text-blue-100 max-w-4xl mx-auto leading-relaxed">
+              {content?.heroIntro}
             </p>
             
             {/* Quick Navigation */}
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <a 
                 href="#brokers"
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-colors inline-flex items-center justify-center"
+                className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors inline-flex items-center justify-center"
               >
-                View Available Brokers
+                View Brokers
                 <ChevronRightIcon className="ml-2 h-5 w-5" />
               </a>
               <a 
                 href="#info"
-                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors inline-flex items-center justify-center"
+                className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors inline-flex items-center justify-center"
               >
-                Country Information
+                Local Info
+              </a>
+              <a 
+                href="#faq"
+                className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors inline-flex items-center justify-center"
+              >
+                FAQs
               </a>
             </div>
 
@@ -222,7 +243,7 @@ const CountryPage: React.FC = () => {
                 <div className="bg-blue-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
                   <GlobeAltIcon className="h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{brokers.length} Available Brokers</h3>
+                <h3 className="text-lg font-semibold mb-2">{countryBrokers.length} Available Brokers</h3>
                 <p className="text-blue-100 text-sm">Licensed and regulated brokers</p>
               </div>
               
@@ -258,9 +279,9 @@ const CountryPage: React.FC = () => {
             </p>
           </div>
 
-          {brokers.length > 0 ? (
+          {countryBrokers.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {brokers.map((broker, index) => (
+              {countryBrokers.map((broker, index) => (
                 <BrokerCard
                   key={broker.id}
                   broker={broker}
@@ -272,7 +293,7 @@ const CountryPage: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No brokers currently available for {country.name}</p>
+              <p className="text-gray-500 dark:text-gray-400 text-lg">No brokers currently available for {country.name}</p>
             </div>
           )}
         </div>
@@ -291,40 +312,89 @@ const CountryPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-sm">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Regulatory Environment</h3>
-              <p className="text-gray-600 leading-relaxed">
-                {country.name} maintains a well-regulated financial services sector with strong oversight
-                of forex and CFD brokers. All recommended brokers are properly licensed and regulated
-                to serve clients in this jurisdiction.
+            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <ShieldCheckIcon className="h-8 w-8 text-blue-600 dark:text-blue-400 mr-3" />
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Regulatory Environment</h3>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {content?.localRelevance.regulatory}
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Payment Methods</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Most brokers accepting clients from {country.name} support local payment methods
-                including bank transfers, credit/debit cards, and popular e-wallets for convenient
-                funding and withdrawals.
+            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <BanknotesIcon className="h-8 w-8 text-green-600 dark:text-green-400 mr-3" />
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Payment Methods</h3>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {content?.localRelevance.payments}
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Tax Considerations</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Trading profits may be subject to taxation in {country.name}. We recommend consulting
-                with a local tax professional to understand your obligations and ensure compliance
-                with local tax laws.
+            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <ScaleIcon className="h-8 w-8 text-purple-600 dark:text-purple-400 mr-3" />
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Tax Considerations</h3>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {content?.localRelevance.taxation}
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-sm">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Local Support</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Many brokers offer customer support in local languages and during business hours
-                suitable for {country.name} traders. Look for brokers with dedicated local support teams.
+            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <ChatBubbleLeftRightIcon className="h-8 w-8 text-orange-600 dark:text-orange-400 mr-3" />
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Local Support</h3>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {content?.localRelevance.support}
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="py-16 bg-white dark:bg-gray-800">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              Common questions about forex trading in {country.name}
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {content?.faqs.map((faq, index) => (
+              <div 
+                key={index}
+                className="bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden"
+              >
+                <button
+                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                  className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                >
+                  <span className="text-lg font-semibold text-gray-900 dark:text-white pr-8">
+                    {faq.question}
+                  </span>
+                  <ChevronRightIcon 
+                    className={`h-5 w-5 text-gray-500 dark:text-gray-400 flex-shrink-0 transition-transform ${
+                      expandedFaq === index ? 'transform rotate-90' : ''
+                    }`}
+                  />
+                </button>
+                {expandedFaq === index && (
+                  <div className="px-6 py-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-600">
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </section>

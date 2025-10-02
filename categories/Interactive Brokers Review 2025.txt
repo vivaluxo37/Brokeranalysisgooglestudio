@@ -1,0 +1,605 @@
+
+Interactive Brokers Review 2025
+
+Updated
+23h ago
+
+Key data
+
+Fees
+
+Safety
+
+Deposit and withdrawal
+
+Account opening
+
+Mobile app
+
+Desktop platform
+
+Product selection
+Regulated and trusted. Tested via live trading.
+2
+5
+6
+,
+8
+9
+1
+ people chose this broker
+Available in Philippines
+Why choose Interactive Brokers
+Interactive Brokers (IBKR) is highly recommended for those seeking a broker with all-round great services at low fees.
+
+It has an unrivaled selection of all asset types from exchanges across the globe, and offers many trading platforms with great functionality and advanced research.
+
+The IBKR Global Trader app is a great way, even for beginners, to start trading stocks, ETFs, options and cryptos. Meanwhile, more experienced users can enjoy the complex capabilities of Trader Workstation at the other end of the spectrum.
+
+Among the broker's drawbacks, account opening is long and tedious, some platforms may be too complex for beginner traders, and customer service can be busy.
+
+In all, IBKR tops our list of brokerages: it is the highest-rated broker at BrokerChooser.
+
+Pros
+Cons
+Extremely low fees
+Wide range of products
+Many great research tools
+Complicated account opening process
+Complex services
+Understaffed customer service
+Interactive Brokers
+Overall score
+4.9/5
+Minimum deposit
+$0
+Stock fee
+Low
+Options fee
+Low
+Inactivity fee
+no
+Account opening
+1-3 days
+Visit Interactive Brokers
+See how the best brokers in the Philippines compare to Interactive Brokers
+US stock fee
+Estimated commission of a $2,000 trade, assuming a $240 stock price
+Interactive Brokers
+TradeStation Global
+MEXEM
+XTB
+Trading 212
+$0
+$1
+$2
+$1.0
+$1.5
+$1.0
+$0.0
+$0.0
+visit Interactive Brokers
+Fees
+Score: 4.3/5
+Interactive Brokers has low trading fees and the best margin rates in the industry. IB currently pays interest (up to 3.83% for USD) on cash balances if you have a $100k account (net asset value). For US and Singaporean clients, stock and ETF trading is free if they choose the Lite plan.
+Pros
+Cons
+Low trading fees
+Free stock and ETF trading for US and Singaporean clients
+Low margin rates
+Average CFD and forex fees
+We compared Interactive Brokers's fees with two similar brokers we selected, Saxo and DEGIRO. These competitors were selected based on objective factors such as available products, client profile, fee structure, etc. See a more detailed comparison of Interactive Brokers alternatives.
+
+Low stock and ETF commission
+Interactive Brokers US stock fees are less than half of the industry average. US stock fees are calculated as follows: Fixed pricing: $0.005 per share, min. $1, max. 1% of trade value. Free for US clients choosing IBKR Lite plan.
+
+Broker	
+US stock
+Interactive Brokers	
+$1.0
+Saxo	
+$1.6
+DEGIRO	
+$2.1
+Interactive Brokers stock and ETF commission
+For IBKR Pro clients, SMART routing continually scans competing markets and automatically routes orders directly to the best available market based on price while also taking into account factors such as the availability of automatic order execution.
+
+Low margin rates
+Interactive Brokers has the lowest USD margin rate fees among brokers we reviewed. USD margin rate fees are calculated as follows: Tiered margin rate. Lowest tier has a rate of 4.83% at IBKR PRO (6.83% at IBKR Lite)
+
+Broker	
+USD margin rate
+Interactive Brokers	
+4.8%
+Saxo	
+-
+DEGIRO	
+6.9%
+Interactive Brokers annual margin rates
+Interactive Brokers's margin rates are one of the best in the industry for IBKR Pro customers. However, if you choose the IBKR Lite plan, you'll be charged a higher annual rate – for example, the markup is 2.5% for IBKR Lite, while it's 0.5%-1.5% in the case of IBKR Pro.
+
+Low options commission
+Interactive Brokers US stock index options fees are about half of the industry average. US stock index options fees are calculated as follows: Less than 10,000 contract per month and for a 10 contracts trade: $0.65 per contract with $1 min for the IBKR Lite pricing plan. Contracts are as low as $0.15 under IBKR Pro
+
+Broker	
+US stock index options
+Interactive Brokers	
+$6.5
+Saxo	
+$20.0
+DEGIRO	
+$7.5
+Interactive Brokers benchmark stock index options commission for 10 contracts
+No inactivity fee, no withdrawal fee
+Interactive Brokers does not have a monthly inactivity fee, and it doesn't charge an account or deposit fee, either. The first withdrawal each month is free of charge while subsequent withdrawals carry a fee (e.g. $10 in case of USD withdrawal).
+
+Broker	
+Inactivity fee
+Withdrawal fee
+Interactive Brokers	
+$0
+Saxo	
+$0
+DEGIRO	
+$0
+Interactive Brokers inactivity, withdrawal and other fees
+Other commissions and fees
+High mutual fund commission: trading mutual funds involves the following charges: $14.95 per transaction or 3% of trade value, whichever is lower. There are also more than 20,000 funds with no transaction fee.
+
+Low futures fees: US index futures fees are as follows: $0.25 per contract.
+
+Average forex fees: Interactive Brokers charges a forex commmission: Trade value less than $1 billion: 0.2 bps * trade value; min. $2. Spread costs come on top of this, e.g. the EURUSD spread is 0.1.
+
+Low spot crypto fees: at Interactive Brokers, crypto trading costs 0.12-0.18% of trade value with a $1.75 minimum per order (capped at 1% of trade value).
+
+Low bond commission: US treasury bonds come with the following charges: For the first $1,000,000 face value: 0.002% of trade value with $5 min..
+
+High index CFD fees: Interactive Brokers charges a commission for index CFDs, calculated as 0.005% of trade value with $1 min. There is also a spread cost. For example, the S&P 500 index CFD spread is 0.8.
+
+Low stock CFD fees: the commission for stock CFD trading is the following - Below $300,000 monthly volume: $0.005 per share with $1 min.
+
+Broker	
+EURUSD spread
+FX commission per lot value
+Interactive Brokers	
+0.1
+$2.00
+Saxo	
+0.9
+-
+DEGIRO	
+-
+-
+Other fees compared to competitors
+Check out a detailed analysis of all the fees, commissions, and other charges levied by Interactive Brokers for more information.
+
+Safety
+Interactive Brokers is a legit brokerage. It is regulated by several financial authorities, including top-tier ones like the SEC in the US and the UK's FCA. Its parent company is listed on the US NASDAQ exchange.
+Pros
+Cons
+Listed on stock exchange
+Negative balance protection
+Regulated by top-tier financial authorities
+None
+Is Interactive Brokers regulated?
+Yes, it is regulated by multiple top-tier financial authorities, like the US Securities and Exchange Commission (SEC), the UK Financial Conduct Authority (FCA), The Australian Securities & Investments Commission (ASIC), the Canadian Investment Regulatory Organization (CIRO), the Central Bank of Ireland (CBI), the Hong Kong Securities and Futures Commission (SFC) and the Monetary Authority of Singapore (MAS).
+
+Interactive Brokers is also regulated by the Kanto Local Finance Bureau and is a member of Japan Securities Dealers Association and The Commodity Futures Association of Japan.
+
+Is Interactive Brokers safe?
+To be certain that a brokerage is safe, we highly advise that you check two facts:
+
+how you are protected if something goes wrong, and
+the background of the broker.
+How you are protected
+Interactive Brokers Group is an international broker, operating through multiple entities globally. This matters for you because the investor protection amount and the regulating authority differ from entity to entity.
+
+Interactive Brokers in Australia, Ireland, and the United Kingdom provide negative balance protection for its retail clients trading CFDs. Professional clients are not covered with this negative balance protection.
+
+You can also hear directly from Interactive Brokers chairman and founder Thomas Peterffy about the safety of client funds held at brokers in general and at Interactive Brokers accounts in particular, by watching this CNBC interview (interview date: March 13, 2023).
+
+Interactive Brokers legal entities
+Operating entity country	Protection amount	Regulator	Legal entity
+UK	£85,000*	Financial Conduct Authority (FCA)	Interactive Brokers (U.K.) Limited
+USA	$500,000 ($250,000 cash limit)**	Financial Industry Regulatory Authority (FINRA)
+
+US Securities and Exchange Commission (SEC)	Interactive Brokers LLC
+EU countries	€20,000***	Central Bank of Ireland (CBI)	Interactive Brokers Ireland Limited
+Canada	CAD 1,000,000	Canadian Investment Regulatory Organization (CIRO)	Interactive Brokers Canada Inc.
+Australia	No protection	Australian Securities and Investments Commission (ASIC)	Interactive Brokers Australia PTY LTD
+India	No protection****	Securities and Exchange Board of India (BSE)	Interactive Brokers (India) PVT. LTD.
+Japan	No protection	Financial Services Agency (FSA)	Interactive Brokers Securities Japan Inc.
+Hong Kong	HKD 500,000	Hong Kong Securities and Futures Commission	Interactive Brokers Hong Kong Limited
+Singapore	No protection***	Monetary Authority of Singapore	Interactive Brokers Singapore Pte. Ltd.
+*If you are a client of Interactive Brokers in the UK, the regulator and the protection amount also depends on the type of assets that you are trading:
+
+If you trade CFDs, non-US stock index options and futures, you are protected by the FCA, up to the amount of £85,000.
+If you trade stocks, bonds, funds and US stock index options, you are protected by the US investor protection (the protection amount is $500,000 with a cash limit of $250,000).
+**In general, SIPC covers notes, stocks, bonds, mutual funds and other investment company shares, as well as other registered securities. It does not cover instruments such as unregistered investment contracts, unregistered limited partnerships, fixed annuity contracts, currency, and interests in gold, silver, or other commodity futures contracts or commodity options.
+
+***If you are a client of Interactive Brokers Ireland Limited or Interactive Brokers Singapore Pte. Ltd., the protection amount also depends on the type of assets that you are trading:
+
+If you trade stocks, bonds, funds and US stock index options, you are protected by the US investor protection (the protection amount is $500,000 with a cash limit of $250,000).
+****For funds, clients have a protection of INR 2.5 million against the broker becoming deficient.
+
+Our brokerage experts put together a comprehensive guide on the safety profile of Interactive Brokers.
+
+Background
+Interactive Brokers is based in the USA and was founded in 1977. During the last more four decades, IB managed to remain a leading force in the global brokerage market, despite multiple economic crises, which is a good sign for the broker's safety.
+
+Interactive Brokers Group (the holding company of the different entities) is listed on the NASDAQ Stock Exchange and is also part of the S&P 500 index. This inclusion underscores the company's scale and stability. Being publicly listed makes the broker more transparent, as it has to publish financial statements regularly.
+
+The listing and the fact that it's regulated by both the UK's FCA and the US SEC are all great signs for Interactive Brokers's safety.
+
+In negative news from the past few years, Interactive Brokers was fined $38 million by US regulators in August 2020 for not monitoring hundreds of millions of wire transfers that were potentially used for money laundering purposes. In addition, IB also failed to report some potential manipulations regarding microcap securities.
+
+Why trust this information?
+BrokerChooser is recognized across the industry as an authoritative voice on broker safety and investment fraud. For almost a decade, our seasoned legal and trading experts have been mapping the retail brokerage landscape and put together a comprehensive list identifying more than 40,000 brokers as potential scammers that we don't recommend.
+
+Combining a mastery of online search data and an in-depth knowledge about trading scams, BrokerChooser released the study Unmasking evil - Data-Driven Insights into the Most Visited Investment Scams in Europe in 2024. This publication drew the appreciation of major European financial regulators for its detailed insights and actionable advice. The study was also co-signed and endorsed by some of the world's top online brokers.
+
+In addition to top-shelf research, BrokerChooser has also turned its expertise into impactful practice. Our articles on potential scam brokers and our searchable scam broker database have drawn more than 5 million visitors from around the world, potentially saving that many investors from fraudulent providers.
+
+Find your safe broker
+
+Show less about Safety
+Deposit and withdrawal
+Score: 3.3/5
+Interactive Brokers offers several account base currencies and one free withdrawal per month. The main drawback is that you can only use bank transfer.
+Pros
+Cons
+No deposit fee
+Several account base currencies
+First withdrawal free each month
+Bank card not available
+Read more about Deposit and withdrawal
+Account opening
+Score: 3.1/5
+IB's account opening is fully digital and there is no required minimum deposit (except for a margin account). On the negative side, the process is complicated and account verification takes relatively long. The GlobalTrader app offers a somewhat better account opening experience.
+Pros
+Cons
+Fully digital
+Minimum deposit only for margin account
+Not user-friendly
+Read more about Account opening
+Mobile app
+Score: 4.3/5
+The IBKR GlobalTrader app is user-friendly and has many functionalities, but it lacks some order types and price alerts.
+Pros
+Cons
+User-friendly
+Good search function
+Touch/Face ID login
+Limited order types
+No price alerts
+Interactive Brokers has three different mobile trading platforms, all of which are available both for iOS and Android devices.
+
+IBKR GlobalTrader: we tested this app for the review, as we believe it is the best choice to start your IBKR trading journey. We recommend GlobalTrader as it's easy to use, provides the best experience and meets the needs of most users. Read our detailed review on IBKR GlobalTrader.
+IBKR Mobile, Interactive Brokers's original mobile trading platform, provides the broadest selection of assets to trade, however it can be a bit complicated for less experienced investors.
+IMPACT is a well-designed, and easy-to-use platform catered to the needs of those interested in ESG investing. It is a great product: you can read more about it in our separate IMPACT app review.
+In this review, we tested IBKR GlobalTrader.
+
+The mobile trading platform is available in several languages.
+
+Interactive Brokers available languages on mobile platform
+English	German	Dutch	French
+Italian	Japanese	Portuguese	Russian
+Spanish	Turkish	Chinese (Simplified)	Chinese (Traditional)
+Arabic	Hebrew
+Look and feel
+The IBKR GlobalTrader app is a well-designed and easy-to-use platform.
+
+Its overall look and user-friendliness is far better than IBKR's other platform, IBKR Mobile, and it stacks up well against the apps of major competitors.
+
+Interactive Brokers review - Mobile trading platform
+Interactive Brokers review - Mobile trading platform
+Login and security
+Interactive Brokers provides a safer, two-step login for its mobile platform.
+
+You can log in using biometric authentication, which is a convenient feature.
+
+Search functions
+The search functions are good.
+
+You can find the asset you want easily, simply by starting to type its name. Screening functions are included, while you can also browse some pre-selected lists of stocks or ETFs (e.g. value ETFs or top ESG shares).
+After you select the product you are interested in, you'll see an information and trading window that shows
+
+a chart with price history,
+calendar events related to the asset (e.g. dividend payments),
+some fundamental data,
+a company profile summary,
+an overview of analyst ratings,
+related news,
+and the 'Swap', 'Buy', 'Sell' and 'Options' buttons that transfer you to the relevant order panel.
+Interactive Brokers review - Mobile trading platform - Search
+Interactive Brokers review - Mobile trading platform - Search
+Placing orders
+You can use the following order types on the mobile trading platform:
+
+Limit
+Market
+Stop
+You can submit a 'Swap' order that makes it possible to replace a stock in your portfolio with another one in a simple trade.
+
+There are also order time limits you can use:
+
+Day
+Good till Canceled
+Interactive Brokers review - Mobile trading platform - Order panel
+Interactive Brokers review - Mobile trading platform - Order panel
+Alerts and notifications
+You cannot set alerts and notifications on the Interactive Brokers mobile platform.
+
+Products
+Products available through GlobalTrader are a bit limited compared to IBKR's other platforms, but the most important products are all available: stocks/ETFs, options and crypto.
+
+IBKR GlobalTrader available asset types
+Available
+Stocks	Yes
+Fractional shares	Yes
+ETFs	Yes
+Forex	No
+Funds	Yes
+Bonds	No
+Options	Yes
+Futures	No
+Crypto* 	Yes
+CFDs 	No
+*Spot crypto is available for clients of Interactive Brokers LLC on IBKR GlobalTrader through Zero Hash and Paxos Trust Company
+
+Our analysts personally tested Interactive Brokers's mobile trading platform; read the Interactive Brokers mobile app review for a detailed verdict on its performance and features.
+
+Visit broker
+Interactive Brokers
+Overall score
+4.9/5
+Minimum deposit
+$0
+Stock fee
+Low
+Options fee
+Low
+Inactivity fee
+no
+Account opening
+1-3 days
+Visit Interactive Brokers
+Show less about Mobile app
+Desktop platform
+Score: 5/5
+IBKR's new desktop platform is an excellent choice for users searching for a user-friendly platform with many advanced and great features (such as easy charting, screener, options analysis, news, and many more).
+Pros
+Cons
+User-friendly
+Good variety of order types
+Two-step (safer) login
+None
+Read more about Desktop platform
+Product selection
+Score: 4.9/5
+At Interactive Brokers, you have access to an extremely wide range of markets. Every type of asset is available.
+Interactive Brokers has a great selection of products, with an exceptionally wide range of ETFs and bonds. IB also offers a couple of more exotic assets, such as warrants and structured products. It only lags behind its competitors in terms of FX pair and CFD selection. Availability of products depend on IB affiliate and country of residence.
+
+IB provides access to more than 160 exchanges worldwide, including its alternative services, such as Interactive Advisors. This is an asset management service that is a mix of robo-advisory and social trading.
+
+Interactive Brokers also offers an Overnight Trading Hours service that lists over 10,000 US stocks and ETFs, as well as the CBOE SPX Suite of Index Options. In addition, overnight trading is available to stock/ETF CFDs (where these products permitted). You can trade these US equities nearly 24 hours a day, five days a week. To find more information, visit Interactive Brokers's page on overnight trading.
+
+Interactive Brokers asset classes
+Interactive Brokers
+Saxo
+DEGIRO
+Stocks
+Yes
+Yes
+Yes
+ETFs
+Yes
+Yes
+Yes
+Forex
+Yes
+Yes
+No
+Funds
+Yes
+Yes
+Yes
+Bonds
+Yes
+Yes
+Yes
+Options
+Yes
+Yes
+Yes
+Futures
+Yes
+Yes
+Yes
+CFDs
+Yes
+Yes
+No
+Crypto
+Yes
+Yes
+No
+Interactive Brokers's product selection is great compared to its closest competitors. Both Saxo and DEGIRO offer fewer stock markets to trade on.
+
+Stocks and ETFs
+Interactive Brokers allows you access to more stock markets than its competitors.
+
+This includes major stock markets like the NASDAQ, the New York Stock Exchange (NYSE) and the London Stock Exchange (LSE), as well as minor ones such as the Warsaw Stock Exchange or Mexican markets. In addition to regular stocks, penny stocks are also available.
+
+Besides stocks, you can also trade more than 13,000 ETFs at IB. This is an extensive selection compared to its competitors.
+
+Broker	
+Stock markets (#)
+Interactive Brokers	
+90
+Saxo	
+50
+DEGIRO	
+29
+Interactive Brokers stock and ETF selection
+Interactive Brokers provide the possibility of buying and selling fractional shares of a stock or ETF, which allows traders to invest small amounts and still diversify their portfolios. Fractional shares are available for US and European stocks and ETFs and all stocks and ETFs listed on the Toronto Stock Exchange and on CBOE Canada.
+
+Forex
+The number of forex pairs available is great at Interactive Brokers. You'll likely find the FX pair you want to trade.
+
+Broker	
+Currency pairs (#)
+Interactive Brokers	
+100
+Saxo	
+190
+DEGIRO	
+-
+Interactive Brokers forex selection
+This selection is average compared to competing brokers.
+
+Funds
+Through IB, you have access to more than 500 fund providers, including big names like BlackRock and Vanguard.
+
+Broker	
+Fund providers (#)
+Interactive Brokers	
+500
+Saxo	
+17
+DEGIRO	
+64
+Interactive Brokers mutual fund selection
+This selection is great compared to competing brokers. Both Saxo and DEGIRO offer fewer fund providers to choose from.
+
+Bonds
+Interactive Brokers gives you access to a massive number of bonds. Out of all government and corporate bonds available at IB, 1+ million are so-called municipal bonds: these are fixed income investments issued by US local governments, cities, states and counties, but they can be traded only by US residents.
+
+The table below does not include municipal bonds in the overall number of bonds.
+
+Broker	
+Bonds (#)
+Interactive Brokers	
+33,000
+Saxo	
+5,900
+DEGIRO	
+649
+Interactive Brokers bond selection
+This selection is great compared to competing brokers. Both Saxo and DEGIRO list fewer bonds.
+
+Interactive Brokers offers extended trading hours on US Treasury bonds, UK Gilts, and European Government Bonds. You can trade these bonds 22 hours a day, from 7 p.m. to 5 p.m. EST.
+
+Options
+As with other product types, Interactive Brokers offers an extremely wide range of options markets. You can access the biggest ones, like the Chicago Board Options Exchange (CBOE) or the CME Group, as well as smaller markets, such as the Korea Stock Exchange (KSE) and the Mexican Derivatives Exchange (MEXDER).
+
+Broker	
+Options exchanges (#)
+Interactive Brokers	
+30
+Saxo	
+20
+DEGIRO	
+11
+Interactive Brokers options selection
+This selection is great compared to competing brokers. Both Saxo and DEGIRO offer fewer option markets to trade on.
+
+Interactive Brokers offers several tools to assist with options trading. While most of these tools are accessible through the TWS platform, some basic tools are also available via the Client Portal.
+
+Master options trading with Options Wizard
+One of the simplest tools, called the Options Wizard, can be found in the Client Portal by clicking 'Trade,' then 'Option Chains,' searching for and selecting the underlying symbol, and finally clicking 'Options Wizard.'
+
+The Options Wizard helps you choose an options trading strategy based on your expectations for the price or volatility of the underlying asset.
+
+For example, if you anticipate that stock X's price will rise within a specific time frame, you can input these details into the Options Wizard, and Interactive Brokers will provide you with options trading strategies that align with your view.
+
+
+
+Futures
+Interactive Brokers offers an extensive selection of futures products and markets. There are 30 markets available, which is more than what competitors offer. Similarly to options, you will find both major and minor markets.
+
+Broker	
+Futures markets (#)
+Interactive Brokers	
+30
+Saxo	
+28
+DEGIRO	
+13
+Interactive Brokers futures selection
+This selection is great compared to competing brokers. Both Saxo and DEGIRO offer fewer futures markets to trade on.
+
+CFDs
+Clients from the US are not eligible to trade CFDs. IBKR offers mainly stock and stock index CFDs.
+
+Broker	
+Stock index CFDs (#)
+Interactive Brokers	
+13
+Saxo	
+20
+DEGIRO	
+-
+Interactive Brokers CFD selection
+Disclaimer: CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. 60.0% of retail investor accounts lose money when trading CFDs with this provider. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money.
+
+Cryptos
+At IB, you can trade cryptos the following ways:
+
+Bitcoin and Ethereum ETNs traded on regular stock exchanges.
+Bitcoin futures are available on the CME Group.
+Spot cryptos through a partnership with Paxos and Zero Hash, eligible IBLLC clients can trade and custody cryptocurrencies including Avalanche, Bitcoin, Bitcoin Cash, Cardano, Chainlink, Dogecoin, Ethereum, Litecoin, Ripple, Solana and Sui.
+If you want to know more about crypto investing, we recommend our crypto blogpost.
+
+Interest on cash balances
+Interactive Brokers offers attractive interest rates on the uninvested cash balances of clients. As an example, the rate is 3.8% for USD for international IBKR Pro clients. However, strict requirements and conditions apply.
+
+Exact rates differ by the country of the client, currency and by the total value of a client's assets, as well as whether the client has an IBKR Lite or IBKR Pro account. To be eligible, accounts must have more than $10,000 (or equivalent) cash in the account.
+
+No interest is paid on the first $10,000. Above that, interest is paid proportionally: to get the maximum interest, you need an account value of $100,000 (or equivalent).
+
+In addition, your idle cash must be held in the securities segment of your account. Cash held in the commodities segment does not earn any interest.
+
+See the table below for interest rates for selected currencies, or check out IB's interest rates page for the latest rates and more details.
+
+Interactive Brokers maximum interest rates for idle cash (as of April 14, 2025)
+Currency	IBKR Lite	IBKR Pro
+USD	2.8%	3.8%
+EUR	0.4%	1.4%
+GBP	3.0%	3.7%
+AED	2.9%	3.9%
+AUD	2.9%	4.2%
+CAD	2.1%	3.1%
+CHF	0.0%	0.3%
+CNH	0.5%	0.5%
+CZK	0.7%	1.7%
+DKK	1.3%	2.3%
+HKD	2.5%	3.5%
+HUF	2.3%	3.3%
+ILS	0.0%	0.0%
+INR	0.0%	0.0%
+JPY	-1.2%	-0.2%
+KRW	0.5%	1.5%
+MXN	8.4%	9.4%
+NOK	1.5%	2.5%
+NZD	1.1%	2.1%
+PLN	2.7%	3.7%
+SAR	3.3%	4.3%
+SEK	1.1%	2.1%
+SGD	1.4%	2.4%
+TRY	4.0%	5.0%
+ZAR	6.6%	6.8%
+See less
+Asset management service
+Interactive Advisors is IB's own asset management service, which allows you to invest with the help of professional portfolio managers.
+
+You can choose from among many portfolio managers to find the one that fits you best, with real-time portfolio performance available.
+
+The minimum investment depends on the portfolio you want to invest in: the lowest investment amount starts at $100.
+
+Compare product portfolios
+
+Show less about Product selection
+
+OG of Online Brokerage Business
+“Interactive Brokers has an extended legacy of offering its customers access to global markets, with fees that are among the lowest in the industry. You can trade equities, options, fixed income products, and futures around the world and around the clock, on your desktop or on a mobile device. IBKR is well-suited to sophisticated traders who want to take advantage of the low fees for transactions and for margin loans, and has taken strides towards serving less experienced traders over the last five years. The firm’s order routing engine squeezes every pip out of executing an order. I would still advise new traders to gain experience at a more user-friendly broker before taking the leap to IBKR’s services; however, they could give IBKR’s Global Trader app a try.”

@@ -1,10 +1,12 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { MetaTagData, metaTagOptimizer, useMetaTagOptimizer } from '../../services/metaTagOptimizer';
 
 interface MetaTagsProps {
-  title: string;
-  description: string;
-  canonicalUrl: string;
+  // Legacy props for backward compatibility
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
   imageUrl?: string;
   type?: 'website' | 'article' | 'product' | 'broker';
   publishDate?: string;
@@ -19,9 +21,15 @@ interface MetaTagsProps {
   availability?: 'in stock' | 'out of stock' | 'preorder';
   rating?: number;
   reviewCount?: number;
+  
+  // New advanced props
+  metaTagData?: MetaTagData;
+  optimized?: boolean;
+  performanceTracking?: boolean;
 }
 
 const MetaTags: React.FC<MetaTagsProps> = ({
+  // Legacy props
   title,
   description,
   canonicalUrl,
@@ -39,13 +47,112 @@ const MetaTags: React.FC<MetaTagsProps> = ({
   availability,
   rating,
   reviewCount,
+  
+  // New advanced props
+  metaTagData,
+  optimized = false,
+  performanceTracking = true
 }) => {
+  const [appliedMetaTags, setAppliedMetaTags] = useState<MetaTagData | null>(null);
+  const { getSEOMetrics } = useMetaTagOptimizer();
   useEffect(() => {
     try {
-      // Set Title with site name
-      const siteName = 'BrokerAnalysis';
-      const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
-      document.title = fullTitle;
+      const siteName = 'Broker Analysis';
+      
+      // Use advanced meta tag data if provided, otherwise fall back to legacy props
+      let effectiveMetaTags: MetaTagData;
+      
+      if (metaTagData) {
+        effectiveMetaTags = metaTagData;
+      } else {
+        // Create meta tag data from legacy props
+        effectiveMetaTags = createLegacyMetaTags({
+          title: title || '',
+          description: description || '',
+          canonicalUrl: canonicalUrl || '',
+          imageUrl,
+          type,
+          keywords,
+          siteName,
+          author,
+          noIndex
+        });
+      }
+      
+      setAppliedMetaTags(effectiveMetaTags);
+      
+      // Apply meta tags to document
+      applyMetaTagsToDocument(effectiveMetaTags, siteName);
+      
+      // Track performance metrics if enabled
+      if (performanceTracking && canonicalUrl) {
+        const metrics = getSEOMetrics(`meta:${canonicalUrl}`);
+        if (metrics && process.env.NODE_ENV === 'development') {
+          console.log('SEO Metrics:', metrics);
+        }
+      }
+      
+    } catch (error) {
+      console.error('Error in MetaTags useEffect:', error);
+    }
+  }, [
+    title, description, canonicalUrl, imageUrl, type, publishDate, 
+    modifiedDate, author, keywords, locale, noIndex, metaTagData, 
+    optimized, performanceTracking
+  ]);
+
+  // Function to create legacy meta tags format
+  const createLegacyMetaTags = ({
+    title,
+    description,
+    canonicalUrl,
+    imageUrl,
+    type,
+    keywords,
+    siteName,
+    author,
+    noIndex
+  }: any): MetaTagData => {
+    const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+    
+    return {
+      title: fullTitle,
+      description: description,
+      keywords: keywords || [],
+      canonical: canonicalUrl,
+      robots: noIndex ? 'noindex, nofollow' : 'index, follow',
+      og: {
+        title: fullTitle,
+        description: description,
+        type: type || 'website',
+        url: canonicalUrl,
+        image: imageUrl || 'https://brokeranalysis.com/images/og-default.jpg',
+        imageAlt: title,
+        siteName: siteName,
+        locale: locale
+      },
+      twitter: {
+        card: imageUrl ? 'summary_large_image' : 'summary',
+        site: '@brokeranalysis',
+        creator: '@brokeranalysis',
+        title: fullTitle,
+        description: description,
+        image: imageUrl || 'https://brokeranalysis.com/images/og-default.jpg',
+        imageAlt: title
+      },
+      customMeta: [
+        { name: 'author', content: author || 'Broker Analysis Team' },
+        { name: 'theme-color', content: '#2563eb' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      ]
+    };
+  };
+
+  // Function to apply meta tags to document
+  const applyMetaTagsToDocument = (metaTags: MetaTagData, siteName: string) => {
+    try {
+      // Set document title
+      document.title = metaTags.title;
 
       // Helper to set/create meta tags
       const setMetaTag = (attr: 'name' | 'property' | 'http-equiv', value: string, content: string) => {
@@ -57,6 +164,7 @@ const MetaTags: React.FC<MetaTagsProps> = ({
             document.head.appendChild(element);
           }
           element.setAttribute('content', content);
+          element.setAttribute('data-dynamic', 'true');
         } catch (error) {
           console.error(`Error setting meta tag ${attr}="${value}":`, error);
         }
@@ -72,6 +180,7 @@ const MetaTags: React.FC<MetaTagsProps> = ({
             document.head.appendChild(element);
           }
           element.setAttribute('href', href);
+          element.setAttribute('data-dynamic', 'true');
           if (attributes) {
             Object.entries(attributes).forEach(([key, value]) => {
               element.setAttribute(key, value);
@@ -82,10 +191,10 @@ const MetaTags: React.FC<MetaTagsProps> = ({
         }
       };
 
-      // Remove existing tags to avoid duplicates
+      // Clean up existing dynamic tags
       const cleanupTags = () => {
         try {
-          const tagsToRemove = document.querySelectorAll('meta[data-dynamic="true"]');
+          const tagsToRemove = document.querySelectorAll('meta[data-dynamic="true"], link[data-dynamic="true"]');
           tagsToRemove.forEach(tag => tag.remove());
         } catch (error) {
           console.error('Error cleaning up meta tags:', error);
@@ -94,80 +203,69 @@ const MetaTags: React.FC<MetaTagsProps> = ({
 
       cleanupTags();
 
-      // Robots meta tag
-      if (noIndex) {
-        setMetaTag('name', 'robots', 'noindex, nofollow');
-      } else {
-        setMetaTag('name', 'robots', 'index, follow');
-      }
+      // Apply standard meta tags
+      setMetaTag('name', 'description', metaTags.description);
+      setMetaTag('name', 'keywords', metaTags.keywords.join(', '));
+      setMetaTag('name', 'robots', metaTags.robots);
+      setLinkTag('canonical', metaTags.canonical);
 
-      // Standard Meta Tags
-      setMetaTag('name', 'description', description);
-      setMetaTag('name', 'keywords', keywords.join(', '));
-      setMetaTag('name', 'author', author || 'BrokerAnalysis Team');
-      setLinkTag('canonical', canonicalUrl);
+      // Apply Open Graph tags
+      setMetaTag('property', 'og:title', metaTags.og.title);
+      setMetaTag('property', 'og:description', metaTags.og.description);
+      setMetaTag('property', 'og:type', metaTags.og.type);
+      setMetaTag('property', 'og:url', metaTags.og.url);
+      setMetaTag('property', 'og:image', metaTags.og.image);
+      setMetaTag('property', 'og:image:alt', metaTags.og.imageAlt);
+      setMetaTag('property', 'og:site_name', metaTags.og.siteName);
+      setMetaTag('property', 'og:locale', metaTags.og.locale);
+      setMetaTag('property', 'og:image:width', '1200');
+      setMetaTag('property', 'og:image:height', '630');
 
-      // Viewport and compatibility
-      setMetaTag('name', 'viewport', 'width=device-width, initial-scale=1');
-      setMetaTag('http-equiv', 'Content-Type', 'text/html; charset=utf-8');
-      setMetaTag('name', 'theme-color', '#2563eb');
+      // Apply Twitter Card tags
+      setMetaTag('name', 'twitter:card', metaTags.twitter.card);
+      setMetaTag('name', 'twitter:site', metaTags.twitter.site);
+      setMetaTag('name', 'twitter:creator', metaTags.twitter.creator);
+      setMetaTag('name', 'twitter:title', metaTags.twitter.title);
+      setMetaTag('name', 'twitter:description', metaTags.twitter.description);
+      setMetaTag('name', 'twitter:image', metaTags.twitter.image);
+      setMetaTag('name', 'twitter:image:alt', metaTags.twitter.imageAlt);
 
-      // Open Graph (Facebook, LinkedIn, etc.)
-      setMetaTag('property', 'og:title', fullTitle);
-      setMetaTag('property', 'og:description', description);
-      setMetaTag('property', 'og:url', canonicalUrl);
-      setMetaTag('property', 'og:type', type);
-      setMetaTag('property', 'og:site_name', siteName);
-      setMetaTag('property', 'og:locale', locale);
+      // Apply custom meta tags
+      metaTags.customMeta?.forEach(meta => {
+        if (meta.name) {
+          setMetaTag('name', meta.name, meta.content);
+        } else if (meta.property) {
+          setMetaTag('property', meta.property, meta.content);
+        } else if (meta.httpEquiv) {
+          setMetaTag('http-equiv', meta.httpEquiv, meta.content);
+        }
+      });
 
-      if (imageUrl) {
-        setMetaTag('property', 'og:image', imageUrl);
-        setMetaTag('property', 'og:image:width', '1200');
-        setMetaTag('property', 'og:image:height', '630');
-        setMetaTag('property', 'og:image:alt', title);
-      }
-
-      // Article specific Open Graph tags
-      if (type === 'article' && publishDate) {
+      // Legacy compatibility - apply additional tags for backward compatibility
+      if (publishDate && type === 'article') {
         setMetaTag('property', 'article:published_time', publishDate);
         if (modifiedDate) {
           setMetaTag('property', 'article:modified_time', modifiedDate);
         }
-        if (author) {
-          setMetaTag('property', 'article:author', author);
-        }
       }
 
-      // Product specific tags
-      if (type === 'product' && price) {
+      if (price && type === 'product') {
         setMetaTag('property', 'product:price:amount', price);
-        setMetaTag('property', 'product:price:currency', currency);
+        setMetaTag('property', 'product:price:currency', currency || 'USD');
         if (availability) {
           setMetaTag('property', 'product:availability', availability);
         }
       }
 
-      // Twitter Card
-      setMetaTag('name', 'twitter:card', imageUrl ? 'summary_large_image' : 'summary');
-      setMetaTag('name', 'twitter:title', fullTitle);
-      setMetaTag('name', 'twitter:description', description);
-      setMetaTag('name', 'twitter:site', '@brokeranalysis');
-
-      if (imageUrl) {
-        setMetaTag('name', 'twitter:image', imageUrl);
-        setMetaTag('name', 'twitter:image:alt', title);
-      }
-
-      // Additional SEO tags
+      // Standard performance and compatibility tags
       setMetaTag('name', 'format-detection', 'telephone=no');
       setMetaTag('name', 'mobile-web-app-capable', 'yes');
       setMetaTag('name', 'apple-mobile-web-app-status-bar-style', 'default');
       setMetaTag('name', 'apple-mobile-web-app-title', siteName);
 
-      // Hreflang tags for international SEO
-      const supportedLocales = ['en_US', 'en_GB', 'en_AU', 'en_CA'];
-      supportedLocales.forEach(loc => {
-        setLinkTag('alternate', canonicalUrl.replace(/\/$/, ''), { hreflang: loc.toLowerCase() });
+      // Alternate language tags
+      metaTags.alternateLanguages?.forEach(alt => {
+        setLinkTag('alternate', alt.href, { hreflang: alt.hreflang });
       });
 
       // DNS prefetch for performance
@@ -181,26 +279,101 @@ const MetaTags: React.FC<MetaTagsProps> = ({
         setLinkTag('dns-prefetch', domain);
       });
 
-      // Preconnect for critical third-party resources
+      // Preconnect for critical resources
       setLinkTag('preconnect', 'https://fonts.googleapis.com', { crossorigin: 'anonymous' });
       setLinkTag('preconnect', 'https://fonts.gstatic.com', { crossorigin: 'anonymous' });
 
-      // Mark dynamic tags for cleanup
-      try {
-        document.querySelectorAll('meta[content], link[href]').forEach(tag => {
-          if (!tag.hasAttribute('data-dynamic')) {
-            tag.setAttribute('data-dynamic', 'true');
-          }
-        });
-      } catch (error) {
-        console.error('Error marking dynamic tags:', error);
-      }
     } catch (error) {
-      console.error('Error in MetaTags useEffect:', error);
+      console.error('Error applying meta tags:', error);
     }
-  }, [title, description, canonicalUrl, imageUrl, type, publishDate, modifiedDate, author, keywords, locale, noIndex, breadcrumbs, price, currency, availability, rating, reviewCount]);
+  };
+
+  // Development mode: display SEO metrics
+  if (process.env.NODE_ENV === 'development' && appliedMetaTags && performanceTracking) {
+    return (
+      <div 
+        style={{
+          position: 'fixed',
+          bottom: '10px',
+          right: '10px',
+          background: 'rgba(0,0,0,0.8)',
+          color: 'white',
+          padding: '10px',
+          borderRadius: '5px',
+          fontSize: '12px',
+          zIndex: 9999,
+          maxWidth: '300px'
+        }}
+      >
+        <div><strong>SEO Debug Info</strong></div>
+        <div>Title Length: {appliedMetaTags.title.length}</div>
+        <div>Description Length: {appliedMetaTags.description.length}</div>
+        <div>Keywords: {appliedMetaTags.keywords.length}</div>
+        <div>Robots: {appliedMetaTags.robots}</div>
+        <div>OG Image: {appliedMetaTags.og.image ? '✓' : '✗'}</div>
+        <div>Twitter Card: {appliedMetaTags.twitter.card}</div>
+      </div>
+    );
+  }
 
   return null;
+};
+
+// Enhanced component that integrates with the meta tag optimizer
+interface OptimizedMetaTagsProps {
+  pageType: 'category' | 'country' | 'seo';
+  pageSlug: string;
+  brokers?: any[];
+  config?: any;
+  additionalContext?: any;
+}
+
+export const OptimizedMetaTags: React.FC<OptimizedMetaTagsProps> = ({
+  pageType,
+  pageSlug,
+  brokers = [],
+  config,
+  additionalContext
+}) => {
+  const [metaTags, setMetaTags] = useState<MetaTagData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { generateOptimizedMetaTags } = useMetaTagOptimizer();
+
+  useEffect(() => {
+    const generateMetaTags = async () => {
+      if (!config) return;
+      
+      try {
+        setLoading(true);
+        const optimizedTags = await generateOptimizedMetaTags(
+          pageType,
+          pageSlug,
+          brokers,
+          config,
+          additionalContext
+        );
+        setMetaTags(optimizedTags);
+      } catch (error) {
+        console.error('Failed to generate optimized meta tags:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    generateMetaTags();
+  }, [pageType, pageSlug, brokers, config, additionalContext]);
+
+  if (loading || !metaTags) {
+    return null;
+  }
+
+  return (
+    <MetaTags
+      metaTagData={metaTags}
+      optimized={true}
+      performanceTracking={true}
+    />
+  );
 };
 
 export default MetaTags;

@@ -14,10 +14,13 @@ import {
 import { Broker } from '../../../types';
 import { useCachedProgrammaticData } from '../../../hooks/useCachedProgrammaticData';
 import BrokerCard from '../../../components/directory/BrokerCard';
-import MetaTags from '../../../components/common/MetaTags';
+import MetaTags, { OptimizedMetaTags } from '../../../components/common/MetaTags';
 import JsonLdSchema from '../../../components/common/JsonLdSchema';
 import LoadingSpinner from '../../../components/ui/LoadingSpinner';
 import { allSEOPageConfigs, SEOPageConfig } from '../../../data/seoPageConfigs';
+import { useStructuredData } from '../../../services/structuredDataGenerator';
+import { useMetaTagOptimizer } from '../../../services/metaTagOptimizer';
+import { useContentGenerator } from '../../../services/contentGenerator';
 
 interface FilterState {
   minDeposit: number;
@@ -56,6 +59,14 @@ const BrokerCategoryPage: React.FC = () => {
     sortOrder: 'desc'
   });
   const [showFilters, setShowFilters] = useState(false);
+  const [structuredData, setStructuredData] = useState<any[]>([]);
+  const [generatedContent, setGeneratedContent] = useState<any>(null);
+  const [seoOptimized, setSeoOptimized] = useState(false);
+
+  // Advanced SEO hooks
+  const { generatePageStructuredData } = useStructuredData();
+  const { generateOptimizedMetaTags } = useMetaTagOptimizer();
+  const { generateOptimizedContent } = useContentGenerator();
 
   // Use cached programmatic data
   const {
@@ -125,6 +136,39 @@ const BrokerCategoryPage: React.FC = () => {
     };
   }, [config, filteredBrokers]);
 
+  // Generate advanced SEO content
+  useEffect(() => {
+    const generateAdvancedSEO = async () => {
+      if (!config || !filteredBrokers.length || seoOptimized) return;
+
+      try {
+        // Generate structured data
+        const schemas = await generatePageStructuredData(
+          'category',
+          category || '',
+          filteredBrokers,
+          config
+        );
+        setStructuredData(schemas);
+
+        // Generate optimized content
+        const content = await generateOptimizedContent(
+          'category',
+          category || '',
+          filteredBrokers,
+          config
+        );
+        setGeneratedContent(content);
+
+        setSeoOptimized(true);
+      } catch (error) {
+        console.error('Failed to generate advanced SEO content:', error);
+      }
+    };
+
+    generateAdvancedSEO();
+  }, [config, filteredBrokers, category, seoOptimized, generatePageStructuredData, generateOptimizedContent]);
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -163,14 +207,29 @@ const BrokerCategoryPage: React.FC = () => {
 
   return (
     <>
-      <MetaTags
-        title={config.title}
-        description={config.description}
-        canonical={`https://brokeranalysis.com/best-brokers/${category}`}
-        keywords={[...config.highlights, 'forex broker', 'online trading', 'currency trading']}
-      />
+      {/* Use optimized meta tags if available, fallback to standard */}
+      {seoOptimized ? (
+        <OptimizedMetaTags
+          pageType="category"
+          pageSlug={category || ''}
+          brokers={filteredBrokers}
+          config={config}
+        />
+      ) : (
+        <MetaTags
+          title={config.title}
+          description={config.description}
+          canonicalUrl={`https://brokeranalysis.com/best-brokers/${category}`}
+          keywords={[...config.highlights, 'forex broker', 'online trading', 'currency trading']}
+        />
+      )}
 
-      {structuredData && <JsonLdSchema data={structuredData} />}
+      {/* Use advanced structured data if available */}
+      {structuredData.length > 0 ? (
+        <JsonLdSchema schemas={structuredData} />
+      ) : (
+        itemListSchema && <JsonLdSchema data={itemListSchema} />
+      )}
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Breadcrumbs */}

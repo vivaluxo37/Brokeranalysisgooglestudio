@@ -8,6 +8,7 @@ import { Broker } from '../types';
 import { SEOPageConfig } from '../data/seoPageConfigs';
 import { CountryConfig } from '../lib/constants/countries';
 import { programmaticCache } from './programmaticCache';
+import { performanceMonitoring } from './performanceMonitoring';
 
 // Base schema interfaces
 export interface BaseSchema {
@@ -219,11 +220,13 @@ class StructuredDataGeneratorService {
     additionalData?: any
   ): Promise<BaseSchema[]> {
     const cacheKey = `${this.cachePrefix}:${pageType}:${pageSlug}`;
+    const startTime = Date.now();
     
     // Try to get from cache first
     try {
       const cached = await programmaticCache.get('structured-data', pageSlug);
       if (cached) {
+        performanceMonitoring.trackCacheAccess(cacheKey, true, Date.now() - startTime);
         return cached.schemas;
       }
     } catch (error) {
@@ -300,6 +303,7 @@ class StructuredDataGeneratorService {
       console.warn('Failed to cache structured data:', error);
     }
 
+    performanceMonitoring.trackCacheAccess(cacheKey, false, Date.now() - startTime);
     return schemas;
   }
 

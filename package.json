@@ -17,6 +17,7 @@
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.js",
     "sitemap:generate": "node scripts/generateSitemap.cjs",
+    "sitemap:programmatic": "node scripts/generateProgrammaticSitemap.mjs",
     "prerender": "node scripts/prerender.js",
     "test": "vitest",
     "test:ui": "vitest --ui",

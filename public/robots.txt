@@ -1,47 +1,19 @@
-# Broker Analysis - Robots.txt
-# Generated: 2025-09-30T09:54:06.146Z
-
 User-agent: *
 Allow: /
 
 # Sitemaps
 Sitemap: https://brokeranalysis.com/sitemap.xml
 
-# Crawl-delay for respectful bots
-Crawl-delay: 1
-
-# Disallow admin and API routes
+# Block admin areas
 Disallow: /admin/
 Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
 
-# Disallow search result pages (if any)
-Disallow: /search?
+# Allow important pages
+Allow: /brokers/
+Allow: /best-brokers/
+Allow: /best-forex-brokers/
 
-# Allow specific bots unrestricted access
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Slurp
-Allow: /
-
-# AI Search Engine Bots (2025)
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
+# Crawl delay for bots
+Crawl-delay: 1

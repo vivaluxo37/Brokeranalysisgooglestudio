@@ -1,0 +1,483 @@
+{
+  "generated": "2025-10-03T10:23:40.344Z",
+  "baseUrl": "https://brokeranalysis.com",
+  "stats": {
+    "total": 92,
+    "seoPages": 20,
+    "countries": 43,
+    "static": 9,
+    "categoryPages": 20,
+    "byPriority": {
+      "high": 87,
+      "medium": 4,
+      "low": 1
+    }
+  },
+  "summary": {
+    "programmaticPages": 83,
+    "staticPages": 9,
+    "totalPages": 92
+  },
+  "pages": [
+    {
+      "url": "https://brokeranalysis.com/",
+      "priority": 1,
+      "changefreq": "daily"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers",
+      "priority": 0.9,
+      "changefreq": "daily"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers",
+      "priority": 0.9,
+      "changefreq": "daily"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/no-minimum-deposit",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/low-deposit",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/metatrader4-mt4",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/ecn-brokers",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/islamic-swap-free",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/copy-trading",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/usa-traders",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/uk-fca-regulated",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/scalping",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/day-trading",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/no-minimum-deposit",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/low-deposit",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/metatrader4-mt4",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/ecn-brokers",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/islamic-swap-free",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/copy-trading",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/usa-traders",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/uk-fca-regulated",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/scalping",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/day-trading",
+      "priority": 0.9,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/countries",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/100-deposit",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/metatrader5-mt5",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/ctrader",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/stp-brokers",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/swing-trading",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/zero-commission",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/low-commission",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/high-leverage",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/crypto-trading",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/brokers/stock-cfds",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/united-states",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/united-kingdom",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/australia",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/germany",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/canada",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/france",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/italy",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/spain",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/netherlands",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/switzerland",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/singapore",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/hong-kong",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/japan",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/south-africa",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/new-zealand",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/belgium",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/sweden",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/norway",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/denmark",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/finland",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/poland",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/czech-republic",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/austria",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/ireland",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/portugal",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/greece",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/cyprus",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/malta",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/luxembourg",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/estonia",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/latvia",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/lithuania",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/slovakia",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/slovenia",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/hungary",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/romania",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/bulgaria",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/croatia",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/serbia",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/bosnia-herzegovina",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/montenegro",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/albania",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-forex-brokers/macedonia",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/100-deposit",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/metatrader5-mt5",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/ctrader",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/stp-brokers",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/swing-trading",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/zero-commission",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/low-commission",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/high-leverage",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/crypto-trading",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/best-brokers/stock-cfds",
+      "priority": 0.8,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/compare",
+      "priority": 0.7,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/blog",
+      "priority": 0.6,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/education",
+      "priority": 0.6,
+      "changefreq": "weekly"
+    },
+    {
+      "url": "https://brokeranalysis.com/methodology",
+      "priority": 0.5,
+      "changefreq": "monthly"
+    },
+    {
+      "url": "https://brokeranalysis.com/sources",
+      "priority": 0.4,
+      "changefreq": "monthly"
+    }
+  ]
+}

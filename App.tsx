@@ -69,6 +69,11 @@ import CountriesPage from './pages/CountriesPage';
 const BestBrokersPage = lazyWithRetry(() => import('./pages/BestBrokersPage'), 'BestBrokersPage');
 const BestBrokersCategoryPage = lazyWithRetry(() => import('./pages/CategoryPage'), 'CategoryPage');
 const BestBrokersCountryPage = lazyWithRetry(() => import('./pages/CountryPage'), 'CountryPage');
+
+// Lazy load programmatic pages
+const ProgrammaticCategoryPage = lazyWithRetry(() => import('./pages/best-brokers/[category]/index'), 'ProgrammaticCategoryPage');
+const ProgrammaticCountryPage = lazyWithRetry(() => import('./pages/best-forex-brokers/[country]/index'), 'ProgrammaticCountryPage'); 
+const ProgrammaticSEOPage = lazyWithRetry(() => import('./pages/brokers/[seoSlug]/index'), 'ProgrammaticSEOPage');
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute';
 // Lazy load admin pages
@@ -96,6 +101,18 @@ const App: React.FC = () => {
             <BestBrokersPage />
           </Suspense>
         } />
+        <Route path="/best-brokers/:category" element={
+          <Suspense fallback={<PageSkeleton />}>
+            <ProgrammaticCategoryPage />
+          </Suspense>
+        } />
+        <Route path="/best-forex-brokers/:country" element={
+          <Suspense fallback={<CountryPageSkeleton />}>
+            <ProgrammaticCountryPage />
+          </Suspense>
+        } />
+        
+        {/* Legacy routes for backward compatibility */}
         <Route path="/best-brokers/:categorySlug" element={
           <Suspense fallback={<PageSkeleton />}>
             <BestBrokersCategoryPage />
@@ -197,8 +214,12 @@ const App: React.FC = () => {
         <Route path="/tools/calculators" element={<CalculatorsPage />} />
 
         {/* Programmatic SEO Routes */}
+        <Route path="/brokers/:seoSlug" element={
+          <Suspense fallback={<PageSkeleton />}>
+            <ProgrammaticSEOPage />
+          </Suspense>
+        } />
         <Route path="/:seoSlug" element={<SEOPage />} />
-        <Route path="/brokers/:seoSlug" element={<SEOPage />} />
 
         {/* Dynamically create routes for all category pages */}
         {categoryPages.map(({ path, title, description, filterFn }) => (

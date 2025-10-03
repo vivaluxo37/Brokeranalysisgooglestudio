@@ -117,8 +117,8 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// Mock React Helmet Async
-vi.mock('react-helmet-async', () => ({
+// Mock our custom Helmet components
+vi.mock('../../components/seo/HelmetAsync', () => ({
   Helmet: ({ children }: { children: React.ReactNode }) => children,
   HelmetProvider: ({ children }: { children: React.ReactNode }) => children,
 }));

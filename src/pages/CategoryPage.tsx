@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from '../../components/seo/HelmetAsync';
 import { supabase } from '../lib/supabase';
 import { getContentGenerator, type ContentTemplate, type BrokerSummary } from '../lib/contentGeneration';
 import { getBrokerRanking } from '../lib/brokerRanking';

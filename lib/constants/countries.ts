@@ -20,6 +20,8 @@ export interface CountryConfig {
   isPopular?: boolean;
   regulatoryNotes?: string;
   commonPaymentMethods: string[];
+  demonym?: string; // What to call people from this country
+  language?: string; // Primary language
 }
 
 export const COUNTRIES: CountryConfig[] = [
@@ -39,7 +41,9 @@ export const COUNTRIES: CountryConfig[] = [
     priority: 100,
     isPopular: true,
     regulatoryNotes: 'Must be NFA/CFTC regulated with strict leverage limits (50:1 major pairs, 20:1 minors)',
-    commonPaymentMethods: ['Bank Wire', 'ACH', 'Credit Card', 'Check']
+    commonPaymentMethods: ['Bank Wire', 'ACH', 'Credit Card', 'Check'],
+    demonym: 'American',
+    language: 'English'
   },
   {
     code: 'GB',
@@ -56,7 +60,9 @@ export const COUNTRIES: CountryConfig[] = [
     priority: 95,
     isPopular: true,
     regulatoryNotes: 'Must be FCA regulated with FSCS protection up to £85,000',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'Debit Card', 'PayPal', 'Skrill']
+    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'Debit Card', 'PayPal', 'Skrill'],
+    demonym: 'British',
+    language: 'English'
   },
   {
     code: 'AU',

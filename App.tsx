@@ -71,9 +71,9 @@ const BestBrokersCategoryPage = lazyWithRetry(() => import('./pages/CategoryPage
 const BestBrokersCountryPage = lazyWithRetry(() => import('./pages/CountryPage'), 'CountryPage');
 
 // Lazy load programmatic pages
-const ProgrammaticCategoryPage = lazyWithRetry(() => import('./pages/best-brokers/[category]/index'), 'ProgrammaticCategoryPage');
-const ProgrammaticCountryPage = lazyWithRetry(() => import('./pages/best-forex-brokers/[country]/index'), 'ProgrammaticCountryPage'); 
-const ProgrammaticSEOPage = lazyWithRetry(() => import('./pages/brokers/[seoSlug]/index'), 'ProgrammaticSEOPage');
+const ProgrammaticCategoryPage = lazyWithRetry(() => import('./pages/best-brokers/[category]'), 'ProgrammaticCategoryPage');
+const ProgrammaticCountryPage = lazyWithRetry(() => import('./pages/best-forex-brokers/[country]'), 'ProgrammaticCountryPage'); 
+const ProgrammaticSEOPage = lazyWithRetry(() => import('./pages/brokers/[seoSlug]'), 'ProgrammaticSEOPage');
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute';
 // Lazy load admin pages

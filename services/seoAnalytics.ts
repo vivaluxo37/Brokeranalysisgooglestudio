@@ -1070,4 +1070,7 @@ export const useSeoAnalytics = () => {
   };
 };
 
+// Alternative hook name for consistency
+export const useSEOAnalytics = useSeoAnalytics;
+
 export default seoAnalytics;

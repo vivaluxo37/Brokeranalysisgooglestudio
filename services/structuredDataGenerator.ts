@@ -797,7 +797,7 @@ class StructuredDataGeneratorService {
 // Create singleton instance
 export const structuredDataGenerator = new StructuredDataGeneratorService();
 
-// React hook for structured data
+// React hook for structured data  
 export const useStructuredData = () => {
   return {
     generatePageStructuredData: structuredDataGenerator.generatePageStructuredData.bind(structuredDataGenerator),
@@ -806,5 +806,8 @@ export const useStructuredData = () => {
     getCacheStats: structuredDataGenerator.getCacheStats.bind(structuredDataGenerator)
   };
 };
+
+// Alternative hook name for consistency
+export const useStructuredDataGenerator = useStructuredData;
 
 export default structuredDataGenerator;

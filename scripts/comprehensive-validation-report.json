@@ -1,0 +1,67 @@
+{
+  "timestamp": "2025-10-02T07:21:35.471Z",
+  "expectedCount": 78,
+  "authorizedCount": 78,
+  "validations": {
+    "Main Brokers File": {
+      "passed": true,
+      "message": "Found 78 brokers, 0 unauthorized, 0 missing",
+      "details": {
+        "found": 78,
+        "unauthorized": [],
+        "missing": []
+      },
+      "timestamp": "2025-10-02T07:21:35.480Z"
+    },
+    "New Brokers File": {
+      "passed": true,
+      "message": "Found 12 new brokers, 0 unauthorized",
+      "details": {
+        "found": 12,
+        "unauthorized": []
+      },
+      "timestamp": "2025-10-02T07:21:35.482Z"
+    },
+    "Sitemap Generation": {
+      "passed": true,
+      "message": "Sitemap script includes authorized broker filtering",
+      "details": {
+        "hasAuthorizedList": true,
+        "hasFiltering": true
+      },
+      "timestamp": "2025-10-02T07:21:35.483Z"
+    },
+    "Category Filtering": {
+      "passed": true,
+      "message": "Category filtering includes authorized broker check",
+      "details": {
+        "hasAuthorizedImport": true,
+        "hasAuthorizedFilter": true
+      },
+      "timestamp": "2025-10-02T07:21:35.483Z"
+    },
+    "Generated Sitemap": {
+      "passed": true,
+      "message": "Sitemap contains 78 broker URLs (expected 78)",
+      "details": {
+        "brokerUrlCount": 78,
+        "expectedCount": 78
+      },
+      "timestamp": "2025-10-02T07:21:35.484Z"
+    },
+    "Cross-File Consistency": {
+      "passed": true,
+      "message": "Broker count (78) matches authorized list (78)",
+      "details": {
+        "brokersFileCount": 78,
+        "authorizedListCount": 78
+      },
+      "timestamp": "2025-10-02T07:21:35.488Z"
+    }
+  },
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "warnings": 0
+  }
+}

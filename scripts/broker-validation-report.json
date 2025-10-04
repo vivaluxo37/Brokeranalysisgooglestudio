@@ -1,0 +1,8 @@
+{
+  "timestamp": "2025-10-02T07:18:32.475Z",
+  "expectedCount": 78,
+  "actualCount": 78,
+  "unauthorizedBrokers": [],
+  "missingBrokers": [],
+  "validationPassed": true
+}

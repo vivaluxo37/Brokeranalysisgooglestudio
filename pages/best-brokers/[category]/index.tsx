@@ -110,7 +110,7 @@ const BrokerCategoryPage: React.FC = () => {
   }, [category]);
 
   // Generate structured data
-  const structuredData = useMemo(() => {
+  const pageStructuredData = useMemo(() => {
     if (!config || !filteredBrokers.length) return null;
 
     return {

@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from './components/seo/HelmetAsync';
 import './src/index.css';
 
-// Import HMR helper for debugging
-import './src/utils/vite-hmr-helper';
+// Import HMR helper for debugging (temporarily disabled)
+// import './src/utils/vite-hmr-helper';
 
 // Import real App component
 import App from './App';

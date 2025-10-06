@@ -1600,6 +1600,7 @@ const AllBrokersPage: React.FC = () => {
               )}
             </SkeletonWrapper>
         </main>
+      </main>
     </PerformanceOptimizer>
   );
 };

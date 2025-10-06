@@ -26,11 +26,16 @@ export default defineConfig(({ command, ssrBuild }) => ({
     open: true,
     hmr: {
       overlay: true,
-      port: 24678 // Use different port for HMR to avoid conflicts
+      port: 24678, // Use different port for HMR to avoid conflicts
+      host: 'localhost',
+      protocol: 'ws',
+      clientPort: 24678,
+      timeout: 10000, // Shorter timeout to detect issues faster
+      reconnectInterval: 1000 // Faster reconnection
     },
     watch: {
-      usePolling: false, // Disable polling - causes excessive reloads on Windows
-      interval: 1000,
+      usePolling: false, // Keep disabled for Linux - only enable for Windows/WSL2
+      interval: 300, // Faster interval for better responsiveness
       followSymlinks: false,
       ignored: [
         '**/node_modules/**',
@@ -52,7 +57,15 @@ export default defineConfig(({ command, ssrBuild }) => ({
         '**/*migration*.json',
         '**/*.csv',
         '**/.DS_Store',
-        '**/Thumbs.db'
+        '**/Thumbs.db',
+        // Additional patterns to prevent reload loops
+        '**/.git/objects/**',
+        '**/.git/refs/**',
+        '**/.git/logs/**',
+        '**/tsconfig.tsbuildinfo',
+        '**/*.swp',
+        '**/*.swo',
+        '**/.*~'
       ]
     }
   },

@@ -22,8 +22,14 @@ export default defineConfig(({ command, ssrBuild }) => ({
   // Configure server for stable development
   server: {
     port: 3000,
-    host: 'localhost',
-    open: true,
+    host: '0.0.0.0', // Allow external access
+    open: false, // Don't auto-open browser in sandbox
+    allowedHosts: [
+      'localhost',
+      '3000-iehoqspv8juoxncwv77wn-6532622b.e2b.dev',
+      '3001-iehoqspv8juoxncwv77wn-6532622b.e2b.dev',
+      /.*-iehoqspv8juoxncwv77wn-6532622b\.e2b\.dev$/ // Allow all ports for this sandbox
+    ],
     hmr: {
       overlay: true,
       port: 24678, // Use different port for HMR to avoid conflicts

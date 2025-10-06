@@ -9,10 +9,13 @@ export default defineConfig({
   
   // Simple server configuration optimized for Linux
   server: {
-    port: 3000,
-    host: 'localhost',
+    port: 3003, // Use a different port
+    host: '0.0.0.0', // Allow external access
     open: false, // Don't auto-open browser
-    strictPort: true, // Fail if port is in use
+    strictPort: false, // Try next port if in use
+    
+    // Disable host checking for sandbox access
+    allowedHosts: 'all',
     
     // Simplified HMR configuration
     hmr: {

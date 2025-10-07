@@ -1,38 +1,65 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { BaseSchema } from '../../services/structuredDataGenerator';
 
 const SCRIPT_ID = 'json-ld-schema';
 
 interface JsonLdSchemaProps {
-  data: Record<string, any>;
+  data?: Record<string, any> | BaseSchema | BaseSchema[];
+  schemas?: BaseSchema[];
   type?: 'organization' | 'website' | 'broker' | 'article' | 'breadcrumb' | 'faq' | 'product';
   id?: string;
+  clearOnUnmount?: boolean;
 }
 
-const JsonLdSchema: React.FC<JsonLdSchemaProps> = ({ data, type = 'website', id }) => {
-  useEffect(() => {
-    const scriptId = id ? `${SCRIPT_ID}-${id}` : SCRIPT_ID;
-    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
+const JsonLdSchema: React.FC<JsonLdSchemaProps> = ({ 
+  data, 
+  schemas,
+  type = 'website', 
+  id,
+  clearOnUnmount = true 
+}) => {
+  const [mountedScripts, setMountedScripts] = useState<string[]>([]);
 
-    // Create script if it doesn't exist
-    if (!script) {
-      script = document.createElement('script');
+  useEffect(() => {
+    // Clean up existing scripts
+    mountedScripts.forEach(scriptId => {
+      const existingScript = document.getElementById(scriptId);
+      if (existingScript) {
+        document.head.removeChild(existingScript);
+      }
+    });
+
+    const newScriptIds: string[] = [];
+    const schemasToRender = schemas || (data ? (Array.isArray(data) ? data : [data]) : []);
+
+    // Create script tags for each schema
+    schemasToRender.forEach((schema, index) => {
+      const scriptId = id ? `${SCRIPT_ID}-${id}-${index}` : `${SCRIPT_ID}-${type}-${index}`;
+      
+      const script = document.createElement('script');
       script.id = scriptId;
       script.type = 'application/ld+json';
+      script.innerHTML = JSON.stringify(schema, null, 0); // Minified JSON for production
       document.head.appendChild(script);
-    }
+      
+      newScriptIds.push(scriptId);
+    });
 
-    // Set the content with proper formatting
-    script.innerHTML = JSON.stringify(data, null, 2);
+    setMountedScripts(newScriptIds);
 
-    // Cleanup on unmount for SPA navigation
+    // Cleanup on unmount
     return () => {
-      const scriptToRemove = document.getElementById(scriptId);
-      if (scriptToRemove) {
-        document.head.removeChild(scriptToRemove);
+      if (clearOnUnmount) {
+        newScriptIds.forEach(scriptId => {
+          const scriptToRemove = document.getElementById(scriptId);
+          if (scriptToRemove) {
+            document.head.removeChild(scriptToRemove);
+          }
+        });
       }
     };
-  }, [data, type, id]);
+  }, [data, schemas, type, id, clearOnUnmount]);
 
   return null; // This component does not render any visible elements
 };

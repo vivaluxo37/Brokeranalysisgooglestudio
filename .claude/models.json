@@ -1,0 +1,9 @@
+{
+  "models": {
+    "default": {
+      "opus": "glm-4.6",
+      "sonnet": "glm-4.6",
+      "haiku": "glm-4.5-air"
+    }
+  }
+}

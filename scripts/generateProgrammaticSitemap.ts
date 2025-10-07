@@ -1,264 +1,185 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 
-import { writeFileSync } from 'fs';
-import { join } from 'path';
-import { generateSitemapEntries } from '../services/programmaticRouting';
+/**
+ * Generate Sitemap for Programmatic Directory Pages
+ * Creates sitemap.xml entries for all programmatic broker category and country pages
+ */
+
+import fs from 'fs';
+import path from 'path';
 import { allSEOPageConfigs } from '../data/seoPageConfigs';
+import { COUNTRIES } from '../lib/constants/countries';
 
 interface SitemapEntry {
   url: string;
   lastmod: string;
-  changefreq: string;
+  changefreq: 'daily' | 'weekly' | 'monthly' | 'yearly';
   priority: number;
 }
 
+const BASE_URL = 'https://brokeranalysis.com';
+const OUTPUT_FILE = path.join(process.cwd(), 'public', 'sitemap-programmatic.xml');
+
 /**
- * Generate XML sitemap for all programmatic pages
+ * Generate sitemap entries for programmatic pages
+ */
+function generateProgrammaticSitemapEntries(): SitemapEntry[] {
+  const entries: SitemapEntry[] = [];
+  const today = new Date().toISOString().split('T')[0];
+
+  // 1. Category pages (/best-brokers/[category])
+  allSEOPageConfigs.forEach(config => {
+    const categorySlug = config.path.split('/').pop();
+    if (categorySlug) {
+      entries.push({
+        url: `${BASE_URL}/best-brokers/${categorySlug}`,
+        lastmod: today,
+        changefreq: config.changefreq || 'weekly',
+        priority: config.priority || 0.8
+      });
+    }
+  });
+
+  // 2. SEO pages (/brokers/[seo-slug])
+  allSEOPageConfigs.forEach(config => {
+    const seoSlug = config.path.split('/').pop();
+    if (seoSlug) {
+      entries.push({
+        url: `${BASE_URL}/brokers/${seoSlug}`,
+        lastmod: today,
+        changefreq: config.changefreq || 'weekly',
+        priority: config.priority || 0.7
+      });
+    }
+  });
+
+  // 3. Country pages (/best-forex-brokers/[country])
+  COUNTRIES.forEach(country => {
+    entries.push({
+      url: `${BASE_URL}/best-forex-brokers/${country.slug}`,
+      lastmod: today,
+      changefreq: 'weekly',
+      priority: country.priority / 100 || 0.6
+    });
+  });
+
+  return entries;
+}
+
+/**
+ * Generate XML sitemap content
  */
 function generateSitemapXML(entries: SitemapEntry[]): string {
   const header = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">`;
 
-  const footer = `</urlset>`;
+  const footer = '</urlset>';
 
-  const urls = entries.map(entry => `  <url>
+  const urls = entries
+    .sort((a, b) => b.priority - a.priority)
+    .map(entry => `  <url>
     <loc>${entry.url}</loc>
     <lastmod>${entry.lastmod}</lastmod>
     <changefreq>${entry.changefreq}</changefreq>
     <priority>${entry.priority.toFixed(1)}</priority>
-  </url>`).join('\n');
+  </url>`)
+    .join('\n');
 
   return `${header}\n${urls}\n${footer}`;
 }
 
 /**
- * Generate robots.txt with sitemap references
+ * Generate robots.txt entry for the programmatic sitemap
  */
-function generateRobotsTxt(sitemapUrls: string[]): string {
-  return `User-agent: *
-Allow: /
-
-# Sitemaps
-${sitemapUrls.map(url => `Sitemap: ${url}`).join('\n')}
-
-# Block admin areas
-Disallow: /admin/
-Disallow: /api/
-Disallow: /_next/
-Disallow: /static/
-
-# Allow important pages
-Allow: /brokers/
-Allow: /best-brokers/
-Allow: /best-forex-brokers/
-
-# Crawl delay for bots
-Crawl-delay: 1`;
+function generateRobotsTxtEntry(): string {
+  return `\n# Programmatic Directory Sitemap\nSitemap: ${BASE_URL}/sitemap-programmatic.xml`;
 }
 
 /**
- * Main sitemap generation function
+ * Generate summary report
  */
-async function generateProgrammaticSitemap() {
-  const baseUrl = 'https://brokeranalysis.com';
-  const outputDir = join(process.cwd(), 'public');
+function generateSummaryReport(entries: SitemapEntry[]): void {
+  const categoryPages = entries.filter(e => e.url.includes('/best-brokers/')).length;
+  const countryPages = entries.filter(e => e.url.includes('/best-forex-brokers/')).length;
+  const seoPages = entries.filter(e => e.url.includes('/brokers/')).length;
+
+  console.log('\n📊 PROGRAMMATIC SITEMAP GENERATION COMPLETE');
+  console.log('===========================================');
+  console.log(`✅ Total Pages Generated: ${entries.length}`);
+  console.log(`   📂 Category Pages: ${categoryPages}`);
+  console.log(`   🌍 Country Pages: ${countryPages}`);
+  console.log(`   🔍 SEO Pages: ${seoPages}`);
+  console.log(`📄 Output File: ${OUTPUT_FILE}`);
+  console.log(`🌐 Base URL: ${BASE_URL}`);
   
-  console.log('🚀 Generating programmatic sitemap...');
+  console.log('\n📋 TOP 10 HIGHEST PRIORITY PAGES:');
+  const topPages = entries
+    .sort((a, b) => b.priority - a.priority)
+    .slice(0, 10);
+  
+  topPages.forEach((page, index) => {
+    const type = page.url.includes('/best-brokers/') ? 'Category' : 
+                 page.url.includes('/best-forex-brokers/') ? 'Country' : 'SEO';
+    console.log(`   ${index + 1}. [${type}] ${page.url} (${page.priority})`);
+  });
 
+  console.log('\n🔄 UPDATE INSTRUCTIONS:');
+  console.log('1. Add this line to your main robots.txt:');
+  console.log(`   Sitemap: ${BASE_URL}/sitemap-programmatic.xml`);
+  console.log('2. Submit sitemap to Google Search Console');
+  console.log('3. Update main sitemap index to include this file');
+  console.log('\n✨ Programmatic directory is now SEO-ready!');
+}
+
+/**
+ * Main execution function
+ */
+async function main(): Promise<void> {
   try {
-    // Generate programmatic route entries
-    const programmaticEntries = generateSitemapEntries(baseUrl);
-    console.log(`📄 Found ${programmaticEntries.length} programmatic pages`);
+    console.log('🚀 Generating programmatic directory sitemap...');
 
-    // Add static pages
-    const staticPages = [
-      { path: '/', priority: 1.0, changefreq: 'daily' },
-      { path: '/brokers', priority: 0.9, changefreq: 'daily' },
-      { path: '/best-brokers', priority: 0.9, changefreq: 'daily' },
-      { path: '/countries', priority: 0.8, changefreq: 'weekly' },
-      { path: '/compare', priority: 0.7, changefreq: 'weekly' },
-      { path: '/blog', priority: 0.6, changefreq: 'weekly' },
-      { path: '/education', priority: 0.6, changefreq: 'weekly' },
-      { path: '/methodology', priority: 0.5, changefreq: 'monthly' },
-      { path: '/sources', priority: 0.4, changefreq: 'monthly' }
-    ];
+    // Generate sitemap entries
+    const entries = generateProgrammaticSitemapEntries();
 
-    const staticEntries: SitemapEntry[] = staticPages.map(page => ({
-      url: `${baseUrl}${page.path}`,
-      lastmod: new Date().toISOString().split('T')[0],
-      changefreq: page.changefreq as any,
-      priority: page.priority
-    }));
-
-    // Combine all entries
-    const allEntries = [...staticEntries, ...programmaticEntries];
-    console.log(`📚 Total pages in sitemap: ${allEntries.length}`);
-
-    // Sort by priority (highest first)
-    allEntries.sort((a, b) => b.priority - a.priority);
-
-    // Generate main sitemap
-    const sitemapXML = generateSitemapXML(allEntries);
-    const sitemapPath = join(outputDir, 'sitemap.xml');
-    writeFileSync(sitemapPath, sitemapXML, 'utf8');
-    console.log(`✅ Main sitemap generated: ${sitemapPath}`);
-
-    // Generate category-specific sitemaps for better organization
-    const categorySitemaps = generateCategorySitemaps(allEntries, baseUrl, outputDir);
-    
-    // Generate sitemap index if we have multiple sitemaps
-    if (categorySitemaps.length > 0) {
-      const sitemapIndex = generateSitemapIndex([`${baseUrl}/sitemap.xml`, ...categorySitemaps], baseUrl);
-      const indexPath = join(outputDir, 'sitemap-index.xml');
-      writeFileSync(indexPath, sitemapIndex, 'utf8');
-      console.log(`✅ Sitemap index generated: ${indexPath}`);
+    if (entries.length === 0) {
+      console.error('❌ No programmatic pages found to generate sitemap');
+      process.exit(1);
     }
 
-    // Generate robots.txt
-    const robotsTxt = generateRobotsTxt([`${baseUrl}/sitemap.xml`]);
-    const robotsPath = join(outputDir, 'robots.txt');
-    writeFileSync(robotsPath, robotsTxt, 'utf8');
-    console.log(`✅ Robots.txt generated: ${robotsPath}`);
+    // Generate XML content
+    const sitemapXML = generateSitemapXML(entries);
 
-    // Generate sitemap statistics
-    generateSitemapStats(allEntries, programmaticEntries.length);
+    // Ensure public directory exists
+    const publicDir = path.dirname(OUTPUT_FILE);
+    if (!fs.existsSync(publicDir)) {
+      fs.mkdirSync(publicDir, { recursive: true });
+    }
 
-    console.log('🎉 Sitemap generation completed successfully!');
+    // Write sitemap file
+    fs.writeFileSync(OUTPUT_FILE, sitemapXML, 'utf-8');
+
+    // Generate summary report
+    generateSummaryReport(entries);
+
+    // Generate robots.txt entry (optional)
+    const robotsEntry = generateRobotsTxtEntry();
+    console.log(`\n📝 Add to robots.txt: ${robotsEntry}`);
 
   } catch (error) {
-    console.error('❌ Error generating sitemap:', error);
+    console.error('❌ Error generating programmatic sitemap:', error);
     process.exit(1);
   }
 }
 
-/**
- * Generate category-specific sitemaps
- */
-function generateCategorySitemaps(allEntries: SitemapEntry[], baseUrl: string, outputDir: string): string[] {
-  const categorySitemaps: string[] = [];
-
-  // Group entries by category
-  const categories = {
-    brokers: allEntries.filter(e => e.url.includes('/brokers/')),
-    countries: allEntries.filter(e => e.url.includes('/best-forex-brokers/')),
-    categories: allEntries.filter(e => e.url.includes('/best-brokers/'))
-  };
-
-  Object.entries(categories).forEach(([category, entries]) => {
-    if (entries.length > 0) {
-      const categoryXML = generateSitemapXML(entries);
-      const categoryPath = join(outputDir, `sitemap-${category}.xml`);
-      writeFileSync(categoryPath, categoryXML, 'utf8');
-      categorySitemaps.push(`${baseUrl}/sitemap-${category}.xml`);
-      console.log(`✅ ${category} sitemap generated: ${entries.length} pages`);
-    }
-  });
-
-  return categorySitemaps;
-}
-
-/**
- * Generate sitemap index XML
- */
-function generateSitemapIndex(sitemapUrls: string[], baseUrl: string): string {
-  const lastmod = new Date().toISOString();
-  
-  const header = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
-
-  const footer = `</sitemapindex>`;
-
-  const sitemaps = sitemapUrls.map(url => `  <sitemap>
-    <loc>${url}</loc>
-    <lastmod>${lastmod}</lastmod>
-  </sitemap>`).join('\n');
-
-  return `${header}\n${sitemaps}\n${footer}`;
-}
-
-/**
- * Generate and display sitemap statistics
- */
-function generateSitemapStats(allEntries: SitemapEntry[], programmaticCount: number) {
-  const stats = {
-    total: allEntries.length,
-    programmatic: programmaticCount,
-    static: allEntries.length - programmaticCount,
-    byPriority: {
-      high: allEntries.filter(e => e.priority >= 0.8).length,
-      medium: allEntries.filter(e => e.priority >= 0.5 && e.priority < 0.8).length,
-      low: allEntries.filter(e => e.priority < 0.5).length
-    },
-    byChangeFreq: {
-      daily: allEntries.filter(e => e.changefreq === 'daily').length,
-      weekly: allEntries.filter(e => e.changefreq === 'weekly').length,
-      monthly: allEntries.filter(e => e.changefreq === 'monthly').length
-    }
-  };
-
-  console.log('\n📊 Sitemap Statistics:');
-  console.log(`Total pages: ${stats.total}`);
-  console.log(`├── Programmatic: ${stats.programmatic}`);
-  console.log(`└── Static: ${stats.static}`);
-  console.log(`\nBy Priority:`);
-  console.log(`├── High (≥0.8): ${stats.byPriority.high}`);
-  console.log(`├── Medium (0.5-0.7): ${stats.byPriority.medium}`);
-  console.log(`└── Low (<0.5): ${stats.byPriority.low}`);
-  console.log(`\nBy Update Frequency:`);
-  console.log(`├── Daily: ${stats.byChangeFreq.daily}`);
-  console.log(`├── Weekly: ${stats.byChangeFreq.weekly}`);
-  console.log(`└── Monthly: ${stats.byChangeFreq.monthly}`);
-}
-
-/**
- * Validate sitemap entries
- */
-function validateSitemapEntries(entries: SitemapEntry[]): boolean {
-  const errors: string[] = [];
-
-  entries.forEach((entry, index) => {
-    // Check URL format
-    try {
-      new URL(entry.url);
-    } catch {
-      errors.push(`Invalid URL at index ${index}: ${entry.url}`);
-    }
-
-    // Check priority range
-    if (entry.priority < 0 || entry.priority > 1) {
-      errors.push(`Invalid priority at index ${index}: ${entry.priority}`);
-    }
-
-    // Check changefreq values
-    const validFreqs = ['daily', 'weekly', 'monthly'];
-    if (!validFreqs.includes(entry.changefreq)) {
-      errors.push(`Invalid changefreq at index ${index}: ${entry.changefreq}`);
-    }
-
-    // Check lastmod format
-    if (!/\\d{4}-\\d{2}-\\d{2}/.test(entry.lastmod)) {
-      errors.push(`Invalid lastmod format at index ${index}: ${entry.lastmod}`);
-    }
-  });
-
-  if (errors.length > 0) {
-    console.error('❌ Sitemap validation errors:');
-    errors.forEach(error => console.error(`  ${error}`));
-    return false;
-  }
-
-  console.log('✅ Sitemap validation passed');
-  return true;
-}
-
-// Run the script if called directly
+// Execute if run directly
 if (require.main === module) {
-  generateProgrammaticSitemap()
-    .then(() => process.exit(0))
-    .catch((error) => {
-      console.error(error);
-      process.exit(1);
-    });
+  main().catch(error => {
+    console.error('Fatal error:', error);
+    process.exit(1);
+  });
 }
 
-export { generateProgrammaticSitemap, generateSitemapXML, generateRobotsTxt };
+export { generateProgrammaticSitemapEntries, generateSitemapXML };

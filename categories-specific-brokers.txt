@@ -1,0 +1,149 @@
+
+My web app already has:
+
+A dataset of 70+ top brokers
+
+Country-specific broker pages with minimum 10 brokers each (already created and styled correctly).
+
+Now, I want you to enhance the  Broker Category Pages with the same style, structure, and components as the country-specific pages.
+
+use your webssearch mcp servers and built in tools to search and enhance .
+
+Categories to enhance  -- these have already been implemented but each categories has all 70+ brokers instead of broker with the speicific features for that categorsy 
+
+General Broker Types
+
+Top 10 Online Trading Brokers
+
+Top 10 CFD Brokers & Platforms
+
+Top 10 Forex Brokers
+
+Execution Types
+
+ECN Brokers
+
+DMA (Direct Market Access) Brokers
+
+STP Brokers
+
+No Dealing Desk Brokers
+
+Raw Spread Brokers
+
+Instant Execution Brokers
+
+Fixed Spread Brokers
+
+No Spread Brokers
+
+Strategy Types
+
+PAMM Brokers
+
+HFT Brokers
+
+Scalping Brokers
+
+Swing Trading Brokers
+
+Hedging Brokers
+
+Brokers for Beginners
+
+Day Trading Brokers
+
+API Trading Brokers
+
+Feature Types
+
+Most Regulated Brokers
+
+Micro Accounts Brokers
+
+High Leverage Brokers
+
+Islamic Account Brokers
+
+No Deposit Brokers
+
+No Minimum Deposit Brokers
+
+MT4 Brokers
+
+MT5 Brokers
+
+TradingView Brokers
+
+Crypto CFD Brokers
+
+Stock CFD Brokers
+
+Offshore Brokers
+
+Corporate Account Brokers
+
+Trailing Stop Loss Brokers
+
+Page Requirements (same as country pages)
+
+Minimum Brokers Per Page
+
+Each page must include at least 5–7 brokers from my dataset (or more if applicable).
+
+Only use brokers in my dataset.
+
+Use web search if necessary to verify which brokers fit into the given category (example: confirm if a broker offers ECN execution, or if it supports MT5).
+
+Page Structure (SEO-optimized)
+
+H1 Title: “Best [Category] Brokers in 2025”
+
+Intro (150–200 words): Explain what this category means (e.g., “ECN brokers provide direct access to liquidity providers with tight spreads…”). Keep it simple but professional.
+
+Broker List:
+
+For each broker: include broker name, description, regulation, key feature that makes it fit the category.
+
+Comparison/Highlights Section: Highlight 2–3 brokers as standout picks for this category.
+
+Local Context Section (150–200 words): Explain why traders use this type of broker, what advantages/disadvantages exist, and who this category is best for (beginners, scalpers, professionals, etc.).
+
+FAQ Section (SEO long-tail):
+Examples:
+
+“What is an ECN broker and why do traders use them?”
+
+“Which brokers are best for scalping in 2025?”
+
+“Is high leverage safe for beginners?”
+
+“What’s the difference between MT4 and MT5 brokers?”
+
+SEO & Optimization (2025)
+
+Generate meta titles and meta descriptions for each page dynamically.
+
+Add schema markup (FAQ + Article).
+
+Ensure crawlability and fast-loading with semantic HTML.
+
+Support AI search engine indexing (Google Gemini, Perplexity, OpenAI).
+
+Output
+
+Create one fully structured page per category (as listed above).
+
+Keep formatting, layout, and components consistent with my existing country broker pages.
+
+Ensure content is unique per page, not duplicated, with SEO-friendly keyword variations.
+
+👉 This prompt ensures:
+
+All categories are populated (no empty pages).
+
+Each category has at least 5–7 brokers.
+
+Pages follow the same high-SEO structure as your country-specific broker pages.
+
+AI search + programmatic SEO are built in.

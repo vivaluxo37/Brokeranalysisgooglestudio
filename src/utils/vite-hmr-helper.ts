@@ -1,51 +1,14 @@
 /**
- * Vite HMR Helper
- * Utilities for handling Hot Module Replacement in development
+ * Simplified Vite HMR Helper - Only logs errors without interfering with updates
+ * This prevents the helper itself from causing reload issues
  */
 
-// HMR acceptance wrapper
-export const acceptHMR = (importMeta: any, callback?: () => void) => {
-  if (importMeta.hot) {
-    importMeta.hot.accept(callback);
-  }
-};
+if (import.meta.hot) {
+  // Only log critical errors, don't intercept or modify HMR behavior
+  import.meta.hot.on('vite:error', (error) => {
+    console.error('❌ HMR Error:', error);
+  });
 
-// HMR dispose wrapper
-export const disposeHMR = (importMeta: any, callback: () => void) => {
-  if (importMeta.hot) {
-    importMeta.hot.dispose(callback);
-  }
-};
-
-// HMR decline wrapper
-export const declineHMR = (importMeta: any) => {
-  if (importMeta.hot) {
-    importMeta.hot.decline();
-  }
-};
-
-// HMR invalidate wrapper
-export const invalidateHMR = (importMeta: any) => {
-  if (importMeta.hot) {
-    importMeta.hot.invalidate();
-  }
-};
-
-// Development check
-export const isDevelopment = import.meta.env.MODE === 'development';
-
-// HMR debug utility
-export const debugHMR = (importMeta: any, message: string, data?: any) => {
-  if (importMeta.env?.MODE === 'development' && importMeta.hot) {
-    console.log(`[HMR] ${message}`, data);
-  }
-};
-
-export default {
-  acceptHMR,
-  disposeHMR,
-  declineHMR,
-  invalidateHMR,
-  isDevelopment,
-  debugHMR
-};
+  // Log when HMR connection is established
+  console.log('🔧 Vite HMR connected');
+}

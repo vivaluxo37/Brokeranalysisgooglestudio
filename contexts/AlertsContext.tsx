@@ -20,23 +20,26 @@ export const AlertsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         return;
     }
     try {
-      const savedAlerts = typeof window !== 'undefined' && localStorage ? localStorage.getItem(storageKey) : null;
+      const savedAlerts = typeof window !== 'undefined' && window.localStorage
+        ? window.localStorage.getItem(storageKey)
+        : null;
       if (savedAlerts) {
-        setAlerts(JSON.parse(savedAlerts));
+        const parsed = JSON.parse(savedAlerts);
+        setAlerts(sanitizeAlerts(parsed));
       } else {
         // First time user sees alerts, seed them and mark some as read.
-        const seededAlerts = mockAlerts.map((alert, index) => ({
+        const seededAlerts = sanitizeAlerts(mockAlerts).map((alert, index) => ({
             ...alert,
             read: index > 2 // Mark older ones as read
         }));
         setAlerts(seededAlerts);
-        if (typeof window !== 'undefined' && localStorage) {
-          localStorage.setItem(storageKey, JSON.stringify(seededAlerts));
+        if (typeof window !== 'undefined' && window.localStorage) {
+          window.localStorage.setItem(storageKey, JSON.stringify(seededAlerts));
         }
       }
     } catch (e) {
       console.error("Failed to load alerts from localStorage", e);
-      setAlerts(mockAlerts);
+      setAlerts(sanitizeAlerts(mockAlerts));
     }
   }, [storageKey]);
 
@@ -47,17 +50,52 @@ export const AlertsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   }, [alerts, storageKey]);
 
-  const getAlertsForFavorites = (favoriteBrokerIds: string[]): Alert[] => {
+  // Validation utilities
+  const isValidBrokerId = (id: unknown): id is string => {
+    return typeof id === 'string' && id.trim().length > 0 && id.trim().length <= 100;
+  };
+
+  const sanitizeAlerts = (alertsList: unknown): Alert[] => {
+    if (!Array.isArray(alertsList)) {
+      return [];
+    }
+
+    return alertsList.filter(alert => {
+      return (
+        alert &&
+        typeof alert === 'object' &&
+        isValidBrokerId(alert.brokerId) &&
+        typeof alert.title === 'string' &&
+        alert.title.trim().length > 0 &&
+        typeof alert.message === 'string' &&
+        alert.message.trim().length > 0 &&
+        typeof alert.type === 'string' &&
+        ['info', 'warning', 'success', 'error'].includes(alert.type) &&
+        typeof alert.date === 'string' &&
+        alert.date.length > 0
+      );
+    });
+  };
+
+  const getAlertsForFavorites = (favoriteBrokerIds: unknown[]): Alert[] => {
+    if (!Array.isArray(favoriteBrokerIds)) {
+      console.warn('Invalid favorite broker IDs provided to getAlertsForFavorites');
+      return [];
+    }
+
+    const validIds = favoriteBrokerIds.filter(isValidBrokerId);
+
     return alerts
-      .filter(alert => favoriteBrokerIds.includes(alert.brokerId))
+      .filter(alert => validIds.includes(alert.brokerId))
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   };
 
   const markAllAsRead = () => {
     setAlerts(prev =>
-      prev.map(alert =>
-        favoritesList.includes(alert.brokerId) ? { ...alert, read: true } : alert
-      )
+      prev.map(alert => {
+        const isInFavorites = favoritesList.some(fav => fav === alert.brokerId);
+        return isInFavorites ? { ...alert, read: true } : alert;
+      })
     );
   };
 

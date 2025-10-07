@@ -25,13 +25,14 @@ export default defineConfig(({ command, ssrBuild }) => ({
     host: 'localhost',
     open: true,
     hmr: {
-      overlay: true,
-      port: 24678 // Use different port for HMR to avoid conflicts
+      overlay: false, // Disable error overlay to prevent restart loops
+      port: 24678, // Use different port for HMR to avoid conflicts
     },
     watch: {
       usePolling: false, // Disable polling - causes excessive reloads on Windows
       interval: 1000,
       followSymlinks: false,
+      // Enhanced ignore list to prevent restart loops
       ignored: [
         '**/node_modules/**',
         '**/.git/**',
@@ -52,7 +53,19 @@ export default defineConfig(({ command, ssrBuild }) => ({
         '**/*migration*.json',
         '**/*.csv',
         '**/.DS_Store',
-        '**/Thumbs.db'
+        '**/Thumbs.db',
+        // Ignore error boundary and provider files temporarily
+        '**/components/error/**',
+        '**/contexts/*Context.tsx',
+        '**/contexts/AppProviders.tsx',
+        // Ignore large data files
+        '**/data/**/*.json',
+        '**/*.min.js',
+        '**/*.min.css',
+        // Ignore lock files
+        '**/package-lock.json',
+        '**/yarn.lock',
+        '**/pnpm-lock.yaml',
       ]
     }
   },
@@ -142,6 +155,8 @@ export default defineConfig(({ command, ssrBuild }) => ({
       'clsx',
       'tailwind-merge'
     ],
+    // Pre-bundle Clerk dependencies to avoid chunk loading issues
+    force: true,
   },
   // Resolve aliases
   resolve: {

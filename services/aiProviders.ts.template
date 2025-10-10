@@ -1,0 +1,95 @@
+/**
+ * AI Provider Configuration and Management System - TEMPLATE
+ * 
+ * IMPORTANT: This is a template file. To use it:
+ * 1. Copy this file to aiProviders.ts
+ * 2. Add your API keys to .env.local (see .env.example)
+ * 3. Uncomment the import statements
+ * 
+ * This template shows the structure without exposing API keys.
+ */
+
+// Uncomment these imports when setting up the file:
+// import { GoogleGenerativeAI } from '@google/generative-ai';
+// import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood, BrokerAlternativesResponse } from '../types';
+// import { brokers } from '../data/brokers';
+
+// AI Provider Types and Interfaces
+export interface AIProvider {
+  name: string;
+  type: 'gemini' | 'huggingface' | 'openrouter';
+  apiKey: string;
+  baseUrl?: string;
+  models: AIModel[];
+  priority: number; // Lower number = higher priority
+  rateLimit?: {
+    requestsPerMinute?: number;
+    requestsPerDay?: number;
+    tokensPerMinute?: number;
+  };
+  isAvailable: boolean;
+  lastError?: string;
+  lastUsed?: Date;
+  failureCount: number;
+  successCount: number;
+}
+
+export interface AIModel {
+  id: string;
+  name: string;
+  contextWindow: number;
+  isFree?: boolean;
+  capabilities?: string[];
+}
+
+export interface StreamResponse {
+  stream: ReadableStream;
+  provider: string;
+  model: string;
+}
+
+// API Keys and Configuration - These will be loaded from environment variables
+// const GEMINI_API_KEY = import.meta.env.VITE_API_KEY;
+// const HUGGINGFACE_API_KEY = import.meta.env.VITE_HUGGINGFACE_KEY;
+// const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_KEY;
+
+// Provider Configurations - Uncomment when setting up
+/*
+export const AI_PROVIDERS: AIProvider[] = [
+  {
+    name: 'Google Gemini',
+    type: 'gemini',
+    apiKey: GEMINI_API_KEY,
+    priority: 1,
+    models: [
+      { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro', contextWindow: 128000 },
+      { id: 'gemini-1.5-flash', name: 'Gemini 1.5 Flash', contextWindow: 128000 },
+      { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash Experimental', contextWindow: 128000 }
+    ],
+    rateLimit: {
+      requestsPerMinute: 60,
+      requestsPerDay: 1500
+    },
+    isAvailable: true,
+    failureCount: 0,
+    successCount: 0
+  },
+  // ... add other providers following the same pattern
+];
+*/
+
+// Export singleton instance - Uncomment when setup is complete
+// export const aiProviderManager = new AIProviderManager();
+
+/**
+ * SETUP INSTRUCTIONS:
+ * 
+ * 1. Copy this file to aiProviders.ts
+ * 2. Add your API keys to .env.local:
+ *    - VITE_API_KEY=your_gemini_key
+ *    - VITE_HUGGINGFACE_KEY=your_huggingface_key  
+ *    - VITE_OPENROUTER_KEY=your_openrouter_key
+ * 3. Uncomment all commented code sections
+ * 4. Import aiProviderManager in backendService.ts
+ * 5. Test the system using the /ai-test page
+ */

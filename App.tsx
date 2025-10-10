@@ -5,6 +5,8 @@ import { PageSkeleton, AdminDashboardSkeleton, CountryPageSkeleton } from './com
 import PerformanceMonitor from './components/ui/PerformanceMonitor';
 import AdvancedScreeningPage from './pages/AdvancedScreeningPage';
 import AiTutorPage from './pages/AiTutorPage';
+import AITestPage from './pages/AITestPage';
+import CountryTestPage from './pages/CountryTestPage';
 import AllBrokersPage from './pages/AllBrokersPage';
 import AuthorPage from './pages/AuthorPage';
 import BlogPage from './pages/BlogPage';
@@ -96,6 +98,8 @@ const App: React.FC = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/brokers" element={<AllBrokersPage />} />
         <Route path="/debug-brokers" element={<DebugBrokersPage />} />
+        <Route path="/ai-test" element={<AITestPage />} />
+        <Route path="/country-test" element={<CountryTestPage />} />
         <Route path="/best-brokers" element={
           <Suspense fallback={<PageSkeleton />}>
             <BestBrokersPage />

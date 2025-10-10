@@ -103,8 +103,18 @@ const Chatbot: React.FC = () => {
             }
             if (firstChunk) setIsLoading(false); // Handle empty stream
         } catch (error) {
-            console.error('Gemini API error:', error);
-            const errorMessage: ChatMessage = { sender: 'ai', text: "Sorry, I'm having trouble connecting right now. Please try again." };
+            console.error('AI Chatbot error:', error);
+            console.error('Error details:', {
+                message: error instanceof Error ? error.message : 'Unknown error',
+                stack: error instanceof Error ? error.stack : 'No stack trace',
+                name: error instanceof Error ? error.name : 'Unknown'
+            });
+            
+            // More detailed error message for debugging
+            const errorMessage: ChatMessage = { 
+                sender: 'ai', 
+                text: "Sorry, I'm having trouble connecting right now. Please try again. (Check browser console for details)" 
+            };
             setMessages(prev => [...prev, errorMessage]);
             setIsLoading(false);
         }

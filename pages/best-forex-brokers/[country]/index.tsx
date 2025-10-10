@@ -1,6 +1,6 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { 
+import {
   ChevronRightIcon,
   GlobeAltIcon,
   ShieldCheckIcon,
@@ -18,6 +18,7 @@ import BrokerCard from '../../../components/directory/BrokerCard';
 import MetaTags from '../../../components/common/MetaTags';
 import JsonLdSchema from '../../../components/common/JsonLdSchema';
 import LoadingSpinner from '../../../components/ui/LoadingSpinner';
+import ContextErrorBoundary from '../../../components/error/ContextErrorBoundary';
 import { getCountryBySlug, CountryConfig } from '../../../lib/constants/countries';
 
 interface FilterState {
@@ -29,9 +30,62 @@ interface FilterState {
   sortBy: string;
 }
 
+// Helper function to transform broker data for BrokerCard component
+const transformBrokerForCard = (broker: Broker) => {
+  return {
+    id: broker.id,
+    name: broker.name,
+    logoUrl: broker.logoUrl,
+    score: broker.score,
+    minDeposit: broker.accessibility.minDeposit,
+    spreads: broker.tradingConditions.spreads.eurusd,
+    maxLeverage: broker.tradingConditions.maxLeverage,
+    regulation: broker.regulation.regulators.length > 0,
+    websiteUrl: broker.websiteUrl,
+    internalPath: `/broker/${broker.id}`,
+    platforms: broker.technology.platforms,
+    commission: broker.tradingConditions.commission,
+    executionType: broker.technology.executionType,
+    features: broker.features || [],
+    bonuses: broker.bonuses || [],
+    accountTypes: broker.accountTypes || [],
+    support: broker.support,
+    education: broker.education,
+    copyTrading: broker.copyTrading,
+    apiAccess: broker.technology.apiAccess,
+    swapFeeCategory: broker.tradingConditions.swapFeeCategory
+  };
+};
+
 const CountryBrokerPage: React.FC = () => {
   const { country } = useParams<{ country: string }>();
-  const { brokers: allBrokers, loading, error } = useBrokers();
+
+  // Safe hook usage with error boundary
+  const [brokersData, setBrokersData] = useState({ 
+    brokers: [], 
+    loading: true, 
+    error: null, 
+    refetch: async () => {} 
+  });
+  
+  // Try to use the hook with proper error handling
+  try {
+    const hookData = useBrokers();
+    // Update state when hook data changes
+    useEffect(() => {
+      setBrokersData(hookData);
+    }, [hookData]);
+  } catch (hookError) {
+    console.error('Hook usage error in CountryBrokerPage:', hookError);
+    setBrokersData({
+      brokers: [],
+      loading: false,
+      error: hookError instanceof Error ? hookError.message : 'Hook initialization failed',
+      refetch: async () => {}
+    });
+  }
+
+  const { brokers: allBrokers, loading, error } = brokersData;
   const [filters, setFilters] = useState<FilterState>({
     search: '',
     regulated: 'all',
@@ -151,19 +205,7 @@ const CountryBrokerPage: React.FC = () => {
     return globalRegulators.includes(regulator);
   };
 
-  // Generate country-specific content
-  const countryContent = useMemo(() => {
-    if (!countryConfig) return null;
-
-    return {
-      heroIntro: generateHeroIntro(countryConfig, filteredBrokers.length),
-      localRelevance: generateLocalRelevance(countryConfig),
-      faqs: generateCountryFAQs(countryConfig),
-      regulatoryInfo: generateRegulatoryInfo(countryConfig)
-    };
-  }, [countryConfig, filteredBrokers.length]);
-
-  // Content generation functions
+  // Content generation functions - Define BEFORE they are used
   const generateHeroIntro = (country: CountryConfig, brokerCount: number) => {
     return `Discover the ${brokerCount} best forex brokers available in ${country.name}. Our comprehensive analysis covers regulated brokers with competitive spreads, reliable platforms, and excellent customer support for ${country.demonym || 'local'} traders.`;
   };
@@ -225,6 +267,18 @@ const CountryBrokerPage: React.FC = () => {
     };
   };
 
+  // Generate country-specific content - Now the functions are defined above
+  const countryContent = useMemo(() => {
+    if (!countryConfig) return null;
+
+    return {
+      heroIntro: generateHeroIntro(countryConfig, filteredBrokers.length),
+      localRelevance: generateLocalRelevance(countryConfig),
+      faqs: generateCountryFAQs(countryConfig),
+      regulatoryInfo: generateRegulatoryInfo(countryConfig)
+    };
+  }, [countryConfig, filteredBrokers.length]);
+
   // Generate breadcrumbs
   const breadcrumbs = useMemo(() => {
     if (!countryConfig) return [];
@@ -280,6 +334,12 @@ const CountryBrokerPage: React.FC = () => {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Brokers</h2>
           <p className="text-gray-600">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
@@ -303,15 +363,16 @@ const CountryBrokerPage: React.FC = () => {
   }
 
   return (
-    <>
+    <ContextErrorBoundary contextName="CountryBrokerPage">
+      <>
       <MetaTags
-        title={`Best Forex Brokers in ${countryConfig.name} 2025 | Top ${filteredBrokers.length} Regulated Brokers`}
-        description={`Compare the ${filteredBrokers.length} best forex brokers available in ${countryConfig.name}. Regulated brokers with competitive spreads, reliable platforms, and local support for ${countryConfig.demonym || 'local'} traders.`}
+        title={`Best Forex Brokers in ${countryConfig?.name || 'Country'} 2025 | Top ${filteredBrokers.length} Regulated Brokers`}
+        description={`Compare the ${filteredBrokers.length} best forex brokers available in ${countryConfig?.name || 'this country'}. Regulated brokers with competitive spreads, reliable platforms, and local support for ${countryConfig?.demonym || 'local'} traders.`}
         canonical={`https://brokeranalysis.com/best-forex-brokers/${country}`}
         keywords={[
-          `forex brokers ${countryConfig.name}`,
-          `${countryConfig.name} forex trading`,
-          `regulated brokers ${countryConfig.name}`,
+          `forex brokers ${countryConfig?.name || 'country'}`,
+          `${countryConfig?.name || 'country'} forex trading`,
+          `regulated brokers ${countryConfig?.name || 'country'}`,
           'forex trading platform',
           'currency trading'
         ]}
@@ -596,7 +657,8 @@ const CountryBrokerPage: React.FC = () => {
           </div>
         )}
       </div>
-    </>
+      </>
+    </ContextErrorBoundary>
   );
 };
 

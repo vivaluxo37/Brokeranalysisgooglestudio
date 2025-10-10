@@ -57,6 +57,47 @@ const transformBrokerForCard = (broker: Broker) => {
   };
 };
 
+// Helper function to check broker availability (define BEFORE it's used)
+const checkBrokerAvailability = (broker: Broker, country: CountryConfig): boolean => {
+  // This is a simplified implementation
+  // In a real app, this would query the broker_country_availability table
+  
+  // Check regulatory compatibility
+  const countryRegulators = getCountryRegulators(country.code);
+  const hasCompatibleRegulation = broker.regulation.regulators.some(reg => 
+    countryRegulators.includes(reg) || isGloballyAccepted(reg)
+  );
+
+  // Check if broker explicitly excludes this country
+  if (broker.restrictions?.excludedCountries?.includes(country.code)) {
+    return false;
+  }
+
+  return hasCompatibleRegulation;
+};
+
+// Helper function to get country regulators
+const getCountryRegulators = (countryCode: string): string[] => {
+  const regulatorMap: Record<string, string[]> = {
+    'US': ['NFA', 'CFTC'],
+    'GB': ['FCA'],
+    'AU': ['ASIC'],
+    'DE': ['BaFin'],
+    'CY': ['CySEC'],
+    'CH': ['FINMA'],
+    'CA': ['IIROC'],
+    'JP': ['FSA'],
+    'SG': ['MAS']
+  };
+  return regulatorMap[countryCode] || [];
+};
+
+// Helper function to check globally accepted regulators
+const isGloballyAccepted = (regulator: string): boolean => {
+  const globalRegulators = ['FCA', 'ASIC', 'CySEC', 'NFA', 'BaFin', 'FINMA'];
+  return globalRegulators.includes(regulator);
+};
+
 const CountryBrokerPage: React.FC = () => {
   const { country } = useParams<{ country: string }>();
 
@@ -163,47 +204,6 @@ const CountryBrokerPage: React.FC = () => {
 
     return brokers;
   }, [allBrokers, countryConfig, filters]);
-
-  // Helper function to check broker availability (simplified)
-  const checkBrokerAvailability = (broker: Broker, country: CountryConfig): boolean => {
-    // This is a simplified implementation
-    // In a real app, this would query the broker_country_availability table
-    
-    // Check regulatory compatibility
-    const countryRegulators = getCountryRegulators(country.code);
-    const hasCompatibleRegulation = broker.regulation.regulators.some(reg => 
-      countryRegulators.includes(reg) || isGloballyAccepted(reg)
-    );
-
-    // Check if broker explicitly excludes this country
-    if (broker.restrictions?.excludedCountries?.includes(country.code)) {
-      return false;
-    }
-
-    return hasCompatibleRegulation;
-  };
-
-  // Helper function to get country regulators
-  const getCountryRegulators = (countryCode: string): string[] => {
-    const regulatorMap: Record<string, string[]> = {
-      'US': ['NFA', 'CFTC'],
-      'GB': ['FCA'],
-      'AU': ['ASIC'],
-      'DE': ['BaFin'],
-      'CY': ['CySEC'],
-      'CH': ['FINMA'],
-      'CA': ['IIROC'],
-      'JP': ['FSA'],
-      'SG': ['MAS']
-    };
-    return regulatorMap[countryCode] || [];
-  };
-
-  // Helper function to check globally accepted regulators
-  const isGloballyAccepted = (regulator: string): boolean => {
-    const globalRegulators = ['FCA', 'ASIC', 'CySEC', 'NFA', 'BaFin', 'FINMA'];
-    return globalRegulators.includes(regulator);
-  };
 
   // Content generation functions - Define BEFORE they are used
   const generateHeroIntro = (country: CountryConfig, brokerCount: number) => {

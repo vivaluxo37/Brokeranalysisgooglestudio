@@ -84,25 +84,54 @@ class BrokerDatabaseService {
       throw new Error('Supabase not configured');
     }
     
-    const { data, error } = await this.supabase
-      .from('brokers')
-      .select('*')
-      .order('score', { ascending: false });
+    // Try ordering by score first, if that fails, fallback to name
+    try {
+      const { data, error } = await this.supabase
+        .from('brokers')
+        .select('*')
+        .order('score', { ascending: false });
 
-    if (error) throw error;
-    return data || [];
+      if (error) throw error;
+      return data || [];
+    } catch (scoreError) {
+      console.warn('Score column not found, ordering by name instead:', scoreError.message);
+      
+      // Fallback to ordering by name
+      const { data, error } = await this.supabase
+        .from('brokers')
+        .select('*')
+        .order('name', { ascending: true });
+
+      if (error) throw error;
+      return data || [];
+    }
   }
 
   // Get top brokers by score
   async getTopBrokers(limit = 20): Promise<BrokerData[]> {
-    const { data, error } = await this.supabase
-      .from('brokers')
-      .select('*')
-      .order('score', { ascending: false })
-      .limit(limit);
+    // Try ordering by score first, if that fails, fallback to name
+    try {
+      const { data, error } = await this.supabase
+        .from('brokers')
+        .select('*')
+        .order('score', { ascending: false })
+        .limit(limit);
 
-    if (error) throw error;
-    return data || [];
+      if (error) throw error;
+      return data || [];
+    } catch (scoreError) {
+      console.warn('Score column not found in getTopBrokers, ordering by name instead:', scoreError.message);
+      
+      // Fallback to ordering by name
+      const { data, error } = await this.supabase
+        .from('brokers')
+        .select('*')
+        .order('name', { ascending: true })
+        .limit(limit);
+
+      if (error) throw error;
+      return data || [];
+    }
   }
 
   // Get complete broker data for detail page

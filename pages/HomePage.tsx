@@ -170,7 +170,7 @@ const HomePage: React.FC = () => {
             </Link>
             <Link to="/broker-matcher" className="w-full sm:w-auto">
                 <Button size="lg" variant="secondary" className="w-full sm:w-auto border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-4">
-                    🎯 Find My Perfect Broker
+                    🎯 Broker Matcher
                 </Button>
             </Link>
         </div>
@@ -178,16 +178,16 @@ const HomePage: React.FC = () => {
         {/* Quick Access Pills */}
         <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link to="/best-brokers/ecn-brokers" className="bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-700 px-4 py-2 rounded-full text-sm font-medium transition-colors">
-                ⚡ ECN Brokers
+                ECN Brokers
             </Link>
-            <Link to="/best-brokers/scalping-brokers" className="bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-700 px-4 py-2 rounded-full text-sm font-medium transition-colors">
-                💪 Scalping Brokers
+            <Link to="/best-brokers/scalping" className="bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-700 px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                Scalping Brokers
             </Link>
-            <Link to="/best-brokers/copy-trading-brokers" className="bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-700 px-4 py-2 rounded-full text-sm font-medium transition-colors">
-                👥 Copy Trading
+            <Link to="/best-brokers/copy-trading" className="bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-700 px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                Copy Trading
             </Link>
-            <Link to="/best-brokers/mt4-brokers" className="bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-700 px-4 py-2 rounded-full text-sm font-medium transition-colors">
-                📊 MT4 Brokers
+            <Link to="/best-brokers/metatrader4-mt4" className="bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-700 px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                MT4 Brokers
             </Link>
         </div>
         <div className="mt-10 flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm text-foreground/70">

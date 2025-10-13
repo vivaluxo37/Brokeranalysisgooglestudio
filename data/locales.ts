@@ -72,7 +72,7 @@ export const translations = {
             "Trusted by traders in 120+ countries"
         ]
       },
-      trustedBy: "Trusted by top traders",
+      trustedBy: "Trusted by top Brokers",
       whyChoose: "Why Choose Brokeranalysis?",
       features: {
         data: {

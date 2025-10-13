@@ -166,7 +166,7 @@ app.post('/api/chatbot', async (req, res) => {
     // Sanitize input
     const sanitizedMessage = message.trim().substring(0, 2000); // Limit message length
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
     const prompt = `You are BrokerBot, an expert AI assistant for forex trading. You have access to a database of forex brokers in JSON format below. Use this data to answer user questions accurately. You can and should create links in your response using markdown format [link text](url).
 
@@ -216,7 +216,7 @@ app.post('/api/tutor', async (req, res) => {
       return res.status(400).json({ error: 'Invalid topic format' });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
     const prompt = `You are an expert forex trading tutor. Provide educational content about "${topic}" suitable for a ${difficulty || 'beginner'} level. The user has a ${userLevel || 'beginner'} level of knowledge.
 
@@ -260,7 +260,7 @@ app.post('/api/broker-matcher', async (req, res) => {
       return res.status(400).json({ error: 'Invalid preferences format' });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
     const prompt = `You are a forex broker matching expert. Based on the following user preferences, recommend the most suitable brokers:
 

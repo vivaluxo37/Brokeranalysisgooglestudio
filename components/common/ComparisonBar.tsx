@@ -1,13 +1,20 @@
-import React from 'react';
-import { useComparison } from '../../hooks/useComparison';
+import React, { useContext } from 'react';
+import { ComparisonContext } from '../../contexts/ComparisonContext';
 import { brokers as allBrokers } from '../../data/brokers';
 import { Button } from '../ui/button';
 import { Icons } from '../../constants';
 import * as ReactRouterDOM from 'react-router-dom';
 
 const ComparisonBar: React.FC = () => {
-    const { comparisonList, clearComparison, removeBrokerFromComparison } = useComparison();
     const location = ReactRouterDOM.useLocation();
+    
+    // Safely access context - return null if not available yet
+    const context = useContext(ComparisonContext);
+    if (!context) {
+        return null; // Context not loaded yet, don't render anything
+    }
+    
+    const { comparisonList, clearComparison, removeBrokerFromComparison } = context;
 
     if (comparisonList.length === 0 || location.pathname === '/compare' || location.pathname.startsWith('/compare/')) {
         return null;
@@ -46,6 +53,12 @@ const ComparisonBar: React.FC = () => {
                         <Button variant="ghost" size="sm" onClick={clearComparison}>
                             Clear All
                         </Button>
+                        <ReactRouterDOM.Link to="/cost-analyzer">
+                            <Button variant="default" size="sm" className="flex items-center gap-2">
+                                <Icons.calculator className="h-4 w-4" />
+                                Cost Analyzer
+                            </Button>
+                        </ReactRouterDOM.Link>
                         <ReactRouterDOM.Link to="/compare">
                             <Button variant="default" size="sm">
                                 Compare Now ({comparisonList.length})

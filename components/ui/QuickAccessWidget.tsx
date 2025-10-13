@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  ChevronUpIcon, 
+import {
+  ChevronUpIcon,
   ChevronDownIcon,
   StarIcon,
   MagnifyingGlassIcon,
   GlobeAltIcon,
-  ChartBarIcon,
-  CurrencyDollarIcon
+  ChartBarIcon
 } from '@heroicons/react/24/outline';
 
 interface QuickLink {
@@ -53,7 +52,7 @@ const QuickAccessWidget: React.FC = () => {
   ];
 
   return (
-    <div className="fixed right-6 bottom-6 z-40 flex flex-col items-end">
+    <div className="fixed right-6 bottom-24 z-40 flex flex-col items-end pointer-events-none">
       {/* Expanded Menu */}
       {isExpanded && (
         <div className="mb-3 space-y-2 animate-in slide-in-from-bottom duration-200">
@@ -65,6 +64,7 @@ const QuickAccessWidget: React.FC = () => {
                 flex items-center p-3 rounded-lg shadow-lg transition-all transform hover:scale-105
                 ${link.color} min-w-[200px] group
                 animate-in slide-in-from-bottom duration-200
+                pointer-events-auto
               `}
               style={{ animationDelay: `${index * 50}ms` }}
               onClick={() => setIsExpanded(false)}
@@ -90,7 +90,7 @@ const QuickAccessWidget: React.FC = () => {
             ? 'bg-gray-600 hover:bg-gray-700 rotate-0' 
             : 'bg-blue-600 hover:bg-blue-700 hover:scale-110'
           }
-          text-white group
+          text-white group pointer-events-auto
         `}
         aria-label={isExpanded ? 'Close quick access menu' : 'Open quick access menu'}
       >

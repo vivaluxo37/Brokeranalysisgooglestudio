@@ -39,6 +39,17 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
         const container = containerRef.current;
         if (!container || typeof document === 'undefined') return;
 
+        const tickerHeight = widgetType === 'ticker_tape'
+            ? (typeof options.height === 'number' ? options.height : 48)
+            : null;
+
+        if (tickerHeight) {
+            container.style.height = `${tickerHeight}px`;
+            container.style.minHeight = `${tickerHeight}px`;
+            container.style.maxHeight = `${tickerHeight}px`;
+            container.style.overflow = 'hidden';
+        }
+
         // Clear any previous widget safely
         try {
             container.innerHTML = '';
@@ -72,12 +83,14 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
              widgetDiv.className = 'tradingview-widget-container';
              widgetDiv.innerHTML = `
                  <div class="tradingview-widget-container__widget"></div>
-                 <div class="tradingview-widget-copyright">
-                     <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-                         <span class="blue-text">Track all markets on TradingView</span>
-                     </a>
-                 </div>
              `;
+             if (tickerHeight) {
+                widgetDiv.style.height = `${tickerHeight}px`;
+                widgetDiv.style.minHeight = `${tickerHeight}px`;
+                widgetDiv.style.maxHeight = `${tickerHeight}px`;
+                widgetDiv.style.overflow = 'hidden';
+             }
+
              container.appendChild(widgetDiv);
 
              const script = document.createElement('script');
@@ -101,6 +114,13 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
              script.onload = () => {
                  try {
                      console.log(`${widgetType} widget loaded`);
+                    const widgetContent = widgetDiv.querySelector('.tradingview-widget-container__widget');
+                    if (tickerHeight && widgetContent instanceof HTMLElement) {
+                        widgetContent.style.height = `${tickerHeight}px`;
+                        widgetContent.style.minHeight = `${tickerHeight}px`;
+                        widgetContent.style.maxHeight = `${tickerHeight}px`;
+                        widgetContent.style.overflow = 'hidden';
+                    }
                  } catch (e) {
                      // Silent catch for iframe communication issues
                  }
@@ -116,6 +136,12 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
                              <div class="text-xs">Live market ticker temporarily unavailable</div>
                          </div>
                      `;
+                     if (tickerHeight) {
+                        widgetDiv.style.height = `${tickerHeight}px`;
+                        widgetDiv.style.minHeight = `${tickerHeight}px`;
+                        widgetDiv.style.maxHeight = `${tickerHeight}px`;
+                        widgetDiv.style.overflow = 'hidden';
+                     }
                  }
              };
 
@@ -135,6 +161,12 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
                                      <div class="text-xs">Loading market ticker...</div>
                                  </div>
                              `;
+                             if (tickerHeight) {
+                                (fallback as HTMLElement).style.height = `${tickerHeight}px`;
+                                (fallback as HTMLElement).style.minHeight = `${tickerHeight}px`;
+                                (fallback as HTMLElement).style.maxHeight = `${tickerHeight}px`;
+                                (fallback as HTMLElement).style.overflow = 'hidden';
+                             }
                          }
                      }
                  }, 10000); // 10 second timeout
@@ -157,7 +189,12 @@ const TradingViewWidget: React.FC<TradingViewWidgetProps> = ({ widgetType, optio
     }, []);
 
     return (
-        <div id={containerId} ref={containerRef} className={`tradingview-widget-container ${className}`} style={{ height: '100%', width: '100%' }}>
+        <div
+            id={containerId}
+            ref={containerRef}
+            className={`tradingview-widget-container ${className}`}
+            style={{ height: '100%', width: '100%', overflow: 'hidden' }}
+        >
         </div>
     );
 };

@@ -20,7 +20,7 @@ interface LayoutProps {
 
 const MarketTickerWidget: React.FC = () => {
     return (
-        <div className="bg-card border-b border-input">
+        <div className="bg-card border-b border-input overflow-hidden">
             <div className="container mx-auto">
                  <TradingViewWidget
                     widgetType="ticker_tape"
@@ -39,6 +39,7 @@ const MarketTickerWidget: React.FC = () => {
                         "colorTheme": "dark", // Will be adapted by the widget component
                         "locale": "en"
                     }}
+                    className="h-12 min-h-[48px]"
                 />
             </div>
         </div>

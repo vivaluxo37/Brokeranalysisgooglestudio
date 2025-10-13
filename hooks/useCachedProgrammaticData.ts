@@ -6,7 +6,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Broker } from '../types';
 import { useBrokers } from './useBrokers';
-import { allSEOPageConfigs, SEOPageConfig, generatePageContent } from '../data/seoPageConfigs';
+import { SEOPageConfig, getSEOPageConfigBySlug } from '../data/seoPageConfigs';
 import { getCountryBySlug, CountryConfig } from '../lib/constants/countries';
 import { programmaticCache, ProgrammaticPageData } from '../services/programmaticCache';
 import { performanceMonitoring } from '../services/performanceMonitoring';
@@ -37,6 +37,150 @@ interface UseCachedProgrammaticDataOptions {
   preloadRelated?: boolean;
 }
 
+const toNumber = (value: unknown, fallback = 0): number => {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const parsed = parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+  }
+  return fallback;
+};
+
+const ensureArray = <T>(value: T | T[] | null | undefined): T[] => {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+};
+
+const getBrokerRegulators = (broker: Broker): string[] => {
+  const fromSecurity = ensureArray(broker.security?.regulatedBy)
+    .map(entry => entry?.regulator)
+    .filter(Boolean) as string[];
+  const fromLegacy = ensureArray(broker.regulation?.regulators).filter(Boolean) as string[];
+  return Array.from(new Set([...fromSecurity, ...fromLegacy]));
+};
+
+const getBrokerPlatforms = (broker: Broker): string[] => {
+  return ensureArray(broker.technology?.platforms).filter(Boolean) as string[];
+};
+
+const OFFSHORE_REGULATOR_KEYWORDS = [
+  'seychelles',
+  'belize',
+  'svg',
+  'st. vincent',
+  'saint vincent',
+  'grenadines',
+  'vanuatu',
+  'vfsc',
+  'mauritius',
+  'labuan',
+  'bahamas',
+  'bvi',
+  'british virgin',
+  'cayman',
+  'marshall islands',
+  'dominica',
+  'curacao',
+  'panama',
+  'cook islands'
+];
+
+const OFFSHORE_HEADQUARTERS_KEYWORDS = [
+  'seychelles',
+  'belize',
+  'vanuatu',
+  'st. vincent',
+  'saint vincent',
+  'grenadines',
+  'mauritius',
+  'bahamas',
+  'cayman',
+  'bvi',
+  'british virgin',
+  'marshall islands',
+  'dominica',
+  'curacao',
+  'panama'
+];
+
+const parseMaxLeverage = (value?: string | number | null): number => {
+  if (typeof value === 'number') {
+    return value;
+  }
+  if (!value) {
+    return 0;
+  }
+
+  const text = String(value).toLowerCase();
+  if (text.includes('unlimited') || text.includes('no limit')) {
+    return 10000;
+  }
+  const match = text.match(/1\s*[:\/\-]\s*(\d{1,5})/);
+  if (match) {
+    return parseInt(match[1], 10) || 0;
+  }
+
+  const numeric = parseInt(text.replace(/[^0-9]/g, ''), 10);
+  return Number.isFinite(numeric) ? numeric : 0;
+};
+
+const isOffshoreBroker = (broker: Broker): boolean => {
+  const regulators = getBrokerRegulators(broker).map(reg => reg.toLowerCase());
+  const headquarters = (broker.headquarters || '').toLowerCase();
+
+  const hasOffshoreRegulator = regulators.some(reg =>
+    OFFSHORE_REGULATOR_KEYWORDS.some(keyword => reg.includes(keyword))
+  );
+
+  const hasOffshoreHeadquarters = OFFSHORE_HEADQUARTERS_KEYWORDS.some(keyword =>
+    headquarters.includes(keyword)
+  );
+
+  const maxLeverageValue = parseMaxLeverage(broker.tradingConditions?.maxLeverage);
+  const offersHighLeverage = maxLeverageValue >= 400;
+
+  return hasOffshoreRegulator || hasOffshoreHeadquarters || offersHighLeverage;
+};
+
+const getBrokerScore = (broker: Broker): number => {
+  if (typeof broker.score !== 'undefined') {
+    const score = toNumber(broker.score);
+    if (score) return score;
+  }
+  const fallback = broker.ratings?.regulation ?? broker.ratings?.platforms ?? broker.ratings?.costs;
+  return toNumber(fallback, 0);
+};
+
+const getBrokerMinDeposit = (broker: Broker): number => {
+  const deposits: number[] = [];
+
+  if (typeof broker.accessibility?.minDeposit !== 'undefined') {
+    deposits.push(toNumber(broker.accessibility.minDeposit));
+  }
+
+  if (Array.isArray(broker.accountTypes)) {
+    broker.accountTypes.forEach(account => {
+      if (typeof account?.minDeposit !== 'undefined') {
+        deposits.push(toNumber(account.minDeposit));
+      }
+    });
+  }
+
+  const numericDeposits = deposits.filter(value => Number.isFinite(value));
+  if (!numericDeposits.length) {
+    return 0;
+  }
+
+  return Math.min(...numericDeposits);
+};
+
+const getBrokerSpread = (broker: Broker): number => {
+  const spread = broker.tradingConditions?.spreads?.eurusd;
+  return toNumber(spread, 0);
+};
+
 export function useCachedProgrammaticData({
   type,
   slug,
@@ -51,6 +195,11 @@ export function useCachedProgrammaticData({
 
   const { brokers: allBrokers, loading: brokersLoading, error: brokersError } = useBrokers();
 
+  const normalizedSlug = useMemo(() => {
+    if (!slug) return '';
+    return slug.split('?')[0].replace(/\/+$/, '').toLowerCase();
+  }, [slug]);
+
   /**
    * Generate page data from brokers and configuration
    */
@@ -63,21 +212,16 @@ export function useCachedProgrammaticData({
 
     let config: SEOPageConfig | CountryConfig | null = null;
     let filteredBrokers: Broker[] = [];
+    const normalizedPageSlug = pageSlug
+      ? pageSlug.split('?')[0].replace(/\/+$/, '').toLowerCase()
+      : '';
 
     try {
       // Get configuration based on page type
-      if (pageType === 'category') {
-        config = allSEOPageConfigs.find(page => {
-          const pathSegment = page.path.split('/').pop();
-          return pathSegment === pageSlug;
-        }) || null;
+      if (pageType === 'category' || pageType === 'seo') {
+        config = getSEOPageConfigBySlug(normalizedPageSlug);
       } else if (pageType === 'country') {
-        config = getCountryBySlug(pageSlug);
-      } else if (pageType === 'seo') {
-        config = allSEOPageConfigs.find(page => {
-          const pathSegment = page.path.split('/').pop();
-          return pathSegment === pageSlug;
-        }) || null;
+        config = getCountryBySlug(normalizedPageSlug);
       }
 
       if (!config) {
@@ -141,26 +285,29 @@ export function useCachedProgrammaticData({
     return brokers.filter(broker => {
       // Regulatory filter
       if (filters.regulators?.length > 0) {
+        const brokerRegulators = getBrokerRegulators(broker);
         const hasRequiredRegulator = filters.regulators.some((regulator: string) =>
-          broker.regulation.regulators.includes(regulator)
+          brokerRegulators.includes(regulator)
         );
         if (!hasRequiredRegulator) return false;
       }
 
       // Platform filter
       if (filters.platforms?.length > 0) {
+        const brokerPlatforms = getBrokerPlatforms(broker).map(platform => platform.toLowerCase());
         const hasRequiredPlatform = filters.platforms.some((platform: string) =>
-          broker.technology.platforms.includes(platform)
+          brokerPlatforms.includes(platform.toLowerCase())
         );
         if (!hasRequiredPlatform) return false;
       }
 
       // Deposit filters
-      if (filters.minDeposit !== undefined) {
-        if (broker.accessibility.minDeposit < filters.minDeposit) return false;
+      const brokerMinDeposit = getBrokerMinDeposit(broker);
+      if (typeof filters.minDeposit !== 'undefined' && brokerMinDeposit < filters.minDeposit) {
+        return false;
       }
-      if (filters.maxDeposit !== undefined) {
-        if (broker.accessibility.minDeposit > filters.maxDeposit) return false;
+      if (typeof filters.maxDeposit !== 'undefined' && brokerMinDeposit > filters.maxDeposit) {
+        return false;
       }
 
       // Features filter
@@ -168,12 +315,16 @@ export function useCachedProgrammaticData({
         const hasRequiredFeatures = filters.features.every((feature: string) => {
           switch (feature.toLowerCase()) {
             case 'copytrading':
-              return broker.copyTrading || broker.platformFeatures?.copyTrading?.available;
+              return Boolean(broker.copyTrading || broker.platformFeatures?.copyTrading?.available);
             case 'islamic':
-              return broker.isIslamic || broker.accountManagement?.islamicAccount?.available;
-            case 'scalping':
-              return broker.technology.executionType.includes('ECN') ||
-                     broker.tradingConditions.spreads.eurusd < 1.0;
+              return Boolean(broker.isIslamic || broker.accountManagement?.islamicAccount?.available);
+            case 'scalping': {
+              const executionType = broker.technology?.executionType?.toLowerCase() || '';
+              const spreads = getBrokerSpread(broker);
+              return executionType.includes('ecn') || spreads < 1.0;
+            }
+            case 'offshore':
+              return isOffshoreBroker(broker);
             default:
               return true;
           }
@@ -192,16 +343,21 @@ export function useCachedProgrammaticData({
     return brokers.filter(broker => {
       // Check regulatory compatibility
       const countryRegulators = getCountryRegulators(country.code);
-      const hasCompatibleRegulation = broker.regulation.regulators.some(reg => 
+      const brokerRegulators = getBrokerRegulators(broker);
+      const hasCompatibleRegulation = brokerRegulators.some(reg => 
         countryRegulators.includes(reg) || isGloballyAccepted(reg)
       );
+
+      if (!hasCompatibleRegulation) {
+        return false;
+      }
 
       // Check if broker excludes this country
       if (broker.restrictions?.excludedCountries?.includes(country.code)) {
         return false;
       }
 
-      return hasCompatibleRegulation;
+      return true;
     });
   };
 
@@ -210,14 +366,17 @@ export function useCachedProgrammaticData({
    */
   const applyUserFilters = (brokers: Broker[], filters: Record<string, any>): Broker[] => {
     return brokers.filter(broker => {
-      if (filters.minDeposit > 0 && broker.accessibility.minDeposit < filters.minDeposit) {
+      const brokerMinDeposit = getBrokerMinDeposit(broker);
+      if (filters.minDeposit > 0 && brokerMinDeposit < filters.minDeposit) {
         return false;
       }
       
       if (filters.regulation && filters.regulation !== 'all') {
-        if (filters.regulation === 'regulated' && !broker.regulation.regulators.length) {
-          return false;
+        if (filters.regulation === 'regulated') {
+          return getBrokerRegulators(broker).length > 0;
         }
+        const brokerRegulators = getBrokerRegulators(broker).map(reg => reg.toLowerCase());
+        return brokerRegulators.includes(filters.regulation.toLowerCase());
       }
 
       return true;
@@ -230,16 +389,15 @@ export function useCachedProgrammaticData({
   const sortBrokers = (brokers: Broker[], sortBy: string): Broker[] => {
     return [...brokers].sort((a, b) => {
       switch (sortBy) {
-        case 'score':
-          return (b.score || 0) - (a.score || 0);
         case 'minDeposit':
-          return a.accessibility.minDeposit - b.accessibility.minDeposit;
+          return getBrokerMinDeposit(a) - getBrokerMinDeposit(b);
         case 'spreads':
-          return a.tradingConditions.spreads.eurusd - b.tradingConditions.spreads.eurusd;
+          return getBrokerSpread(a) - getBrokerSpread(b);
         case 'name':
           return a.name.localeCompare(b.name);
+        case 'score':
         default:
-          return 0;
+          return getBrokerScore(b) - getBrokerScore(a);
       }
     });
   };
@@ -259,10 +417,20 @@ export function useCachedProgrammaticData({
       };
     }
 
-    const avgRating = brokers.reduce((sum, b) => sum + (b.score || 0), 0) / brokers.length;
-    const minDeposit = Math.min(...brokers.map(b => b.accessibility.minDeposit));
-    const avgSpread = brokers.reduce((sum, b) => sum + b.tradingConditions.spreads.eurusd, 0) / brokers.length;
-    const allRegulators = brokers.flatMap(b => b.regulation.regulators);
+    const ratingValues = brokers.map(getBrokerScore).filter(value => Number.isFinite(value) && value > 0);
+    const avgRating = ratingValues.length
+      ? ratingValues.reduce((sum, rating) => sum + rating, 0) / ratingValues.length
+      : 0;
+
+    const depositValues = brokers.map(getBrokerMinDeposit).filter(value => Number.isFinite(value) && value >= 0);
+    const minDeposit = depositValues.length ? Math.min(...depositValues) : 0;
+
+    const spreadValues = brokers.map(getBrokerSpread).filter(value => Number.isFinite(value) && value >= 0);
+    const avgSpread = spreadValues.length
+      ? spreadValues.reduce((sum, spread) => sum + spread, 0) / spreadValues.length
+      : 0;
+
+    const allRegulators = brokers.flatMap(getBrokerRegulators);
     const regulatorCounts = allRegulators.reduce((acc, reg) => {
       acc[reg] = (acc[reg] || 0) + 1;
       return acc;
@@ -315,7 +483,7 @@ export function useCachedProgrammaticData({
           "@type": "FinancialProduct",
           "name": broker.name,
           "url": `https://brokeranalysis.com/broker/${broker.id}`,
-          "description": `${broker.name} forex broker with ${broker.regulation.regulators.join(', ')} regulation`
+          "description": `${broker.name} forex broker${getBrokerRegulators(broker).length ? ` with ${getBrokerRegulators(broker).join(', ')} regulation` : ''}`
         }
       }))
     };
@@ -349,15 +517,20 @@ export function useCachedProgrammaticData({
    * Load data with caching
    */
   const loadData = useCallback(async (forceRefresh: boolean = false) => {
-    if (!enabled || brokersLoading || !allBrokers.length) return;
+    if (!enabled || brokersLoading || !allBrokers.length || !normalizedSlug) return;
 
     setLoading(true);
     setError(null);
 
     // Start performance tracking
-    const pageKey = `${type}:${slug}`;
+    const pageKey = `${type}:${normalizedSlug}`;
     const loadStartTime = Date.now();
-    performanceMonitoring.startPageLoad(pageKey);
+    // Call method safely to avoid runtime errors using optional chaining
+    try {
+      performanceMonitoring?.startPageLoad?.(pageKey);
+    } catch (e) {
+      console.warn('Failed to call startPageLoad:', e);
+    }
 
     try {
       // Try cache first
@@ -365,15 +538,20 @@ export function useCachedProgrammaticData({
       
       if (!forceRefresh) {
         const cacheStartTime = Date.now();
-        cachedData = await programmaticCache.get(type, slug, filters);
+        cachedData = await programmaticCache.get(type, normalizedSlug, filters);
         const cacheTime = Date.now() - cacheStartTime;
         
         // Track cache performance
-        performanceMonitoring.trackCacheAccess(
-          pageKey,
-          cachedData !== null,
-          cacheTime
-        );
+        // Call method safely using optional chaining
+        try {
+          performanceMonitoring?.trackCacheAccess?.(
+            pageKey,
+            cachedData !== null,
+            cacheTime
+          );
+        } catch (e) {
+          console.warn('Failed to call trackCacheAccess:', e);
+        }
       }
 
       if (cachedData) {
@@ -382,23 +560,28 @@ export function useCachedProgrammaticData({
         setLoading(false);
         
         // Track successful cache hit
-        performanceMonitoring.endPageLoad(pageKey, {
-          loadTime: Date.now() - loadStartTime,
-          cacheHit: true,
-          brokerCount: cachedData.brokers.length,
-          filters: Object.keys(filters).length
-        });
+        // Call method safely using optional chaining
+        try {
+          performanceMonitoring?.endPageLoad?.(pageKey, {
+            loadTime: Date.now() - loadStartTime,
+            cacheHit: true,
+            brokerCount: cachedData.brokers.length,
+            filters: Object.keys(filters).length
+          });
+        } catch (e) {
+          console.warn('Failed to call endPageLoad:', e);
+        }
         return;
       }
 
       // Generate new data
       const generationStartTime = Date.now();
-      const newData = await generatePageData(type, slug, filters);
+      const newData = await generatePageData(type, normalizedSlug, filters);
       const generationTime = Date.now() - generationStartTime;
       
       if (newData) {
         // Cache the data
-        await programmaticCache.set(type, slug, newData, {
+        await programmaticCache.set(type, normalizedSlug, newData, {
           filters,
           dependencies: [`brokers:all`],
           version: '1.0'
@@ -408,13 +591,18 @@ export function useCachedProgrammaticData({
         setIsFromCache(false);
         
         // Track successful generation
-        performanceMonitoring.endPageLoad(pageKey, {
-          loadTime: Date.now() - loadStartTime,
-          cacheHit: false,
-          brokerCount: newData.brokers.length,
-          filters: Object.keys(filters).length,
-          generationTime
-        });
+        // Call method safely using optional chaining
+        try {
+          performanceMonitoring?.endPageLoad?.(pageKey, {
+            loadTime: Date.now() - loadStartTime,
+            cacheHit: false,
+            brokerCount: newData.brokers.length,
+            filters: Object.keys(filters).length,
+            generationTime
+          });
+        } catch (e) {
+          console.warn('Failed to call endPageLoad:', e);
+        }
       } else {
         throw new Error('Failed to generate page data');
       }
@@ -425,11 +613,19 @@ export function useCachedProgrammaticData({
       console.error('Error loading programmatic data:', err);
       
       // Track error
-      performanceMonitoring.trackError(pageKey, errorMessage);
+      // Call method safely using optional chaining
+      try {
+        performanceMonitoring?.trackError?.(pageKey, errorMessage);
+      } catch (e) {
+        console.warn('Failed to call trackError:', e);
+      }
     } finally {
       setLoading(false);
     }
-  }, [enabled, brokersLoading, allBrokers, type, slug, filters, generatePageData]);
+  // Minimize dependencies - only essential ones that should trigger reload
+  // Use stringified filters to avoid object reference changes
+  // generatePageData is stable as it's created with useCallback
+  }, [type, normalizedSlug, JSON.stringify(filters), generatePageData, enabled, brokersLoading, allBrokers.length]);
 
   /**
    * Refresh data (bypass cache)
@@ -442,9 +638,9 @@ export function useCachedProgrammaticData({
    * Preload related pages
    */
   const preload = useCallback(async () => {
-    if (preloadRelated && data?.config) {
+    if (preloadRelated && data?.config && normalizedSlug) {
       // Preload related pages based on current page type
-      const relatedPages = getRelatedPages(type, slug);
+      const relatedPages = getRelatedPages(type, normalizedSlug);
       const preloadStartTime = Date.now();
       
       for (const page of relatedPages) {
@@ -465,24 +661,36 @@ export function useCachedProgrammaticData({
               });
               
               // Track preload performance
-              performanceMonitoring.trackPreload(pageKey, {
-                generationTime,
-                brokerCount: generatedData.brokers.length
-              });
+              try {
+                performanceMonitoring?.trackPreload?.(pageKey, {
+                  generationTime,
+                  brokerCount: generatedData.brokers.length
+                });
+              } catch (e) {
+                console.warn('Failed to call trackPreload:', e);
+              }
             }
           }
         } catch (error) {
           console.warn(`Failed to preload ${page.type}/${page.slug}:`, error);
-          performanceMonitoring.trackError(pageKey, 'Preload failed');
+          try {
+            performanceMonitoring?.trackError?.(pageKey, 'Preload failed');
+          } catch (e) {
+            console.warn('Failed to call trackError:', e);
+          }
         }
       }
       
       const totalPreloadTime = Date.now() - preloadStartTime;
-      performanceMonitoring.trackBatchPreload({
-        pageCount: relatedPages.length,
-        totalTime: totalPreloadTime,
-        currentPage: `${type}:${slug}`
-      });
+      try {
+        performanceMonitoring?.trackBatchPreload?.({
+          pageCount: relatedPages.length,
+          totalTime: totalPreloadTime,
+          currentPage: `${type}:${slug}`
+        });
+      } catch (e) {
+        console.warn('Failed to call trackBatchPreload:', e);
+      }
     }
   }, [preloadRelated, data?.config, type, slug, generatePageData]);
 
@@ -512,10 +720,10 @@ export function useCachedProgrammaticData({
 
   // Load data on mount and when dependencies change
   useEffect(() => {
-    if (enabled && !brokersLoading && allBrokers.length > 0) {
+    if (enabled && !brokersLoading && allBrokers.length > 0 && normalizedSlug) {
       loadData();
     }
-  }, [loadData, enabled, brokersLoading, allBrokers.length]);
+  }, [enabled, brokersLoading, normalizedSlug, allBrokers.length, loadData]);
 
   // Handle broker data errors
   useEffect(() => {
@@ -526,18 +734,30 @@ export function useCachedProgrammaticData({
 
   // Performance stats
   const performanceStats = useMemo(() => {
-    const pageKey = `${type}:${slug}`;
-    const pageStats = performanceMonitoring.getPageStats(pageKey);
-    const realtimeStats = performanceMonitoring.getRealtimeStats();
+    const pageKey = `${type}:${normalizedSlug}`;
+    let pageStats = null;
+    let realtimeStats = null;
+    
+    try {
+      pageStats = performanceMonitoring?.getPageStats?.(pageKey);
+    } catch (e) {
+      console.warn('Failed to call getPageStats:', e);
+    }
+    
+    try {
+      realtimeStats = performanceMonitoring?.getRealtimeStats?.();
+    } catch (e) {
+      console.warn('Failed to call getRealtimeStats:', e);
+    }
     
     return {
       avgLoadTime: pageStats?.avgLoadTime || 0,
       recentLoadTime: realtimeStats.recentPages.find(p => 
-        p.type === type && p.slug === slug
+        p.type === type && p.slug === normalizedSlug
       )?.loadTime || 0,
       systemHealth: realtimeStats.systemHealth
     };
-  }, [type, slug, data]);
+  }, [type, normalizedSlug, data]);
 
   return {
     data,

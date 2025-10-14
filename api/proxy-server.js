@@ -298,6 +298,155 @@ Format your response as a JSON array of broker recommendations with detailed exp
   }
 });
 
+// Users API endpoints for development
+app.post('/api/users', async (req, res) => {
+  try {
+    const { id, email, name, preferences } = req.body;
+    
+    // Validate required fields
+    if (!id || !email || !name) {
+      return res.status(400).json({
+        error: 'Missing required fields: id, email, name'
+      });
+    }
+    
+    // Mock user data storage (in production, this would be a database)
+    const mockUser = {
+      id,
+      email,
+      name,
+      preferences: preferences || {},
+      created_at: new Date().toISOString(),
+      avatar_url: null,
+      trading_level: 'beginner',
+      trading_experience: 'none',
+      preferred_instruments: [],
+      risk_tolerance: 'medium'
+    };
+    
+    console.log('[Dev API] Created user:', mockUser);
+    
+    res.json({
+      success: true,
+      user: mockUser,
+      message: 'User created successfully'
+    });
+  } catch (error) {
+    console.error('Create user error:', error);
+    res.status(500).json({
+      error: 'Failed to create user',
+      message: error.message
+    });
+  }
+});
+
+app.get('/api/users', async (req, res) => {
+  try {
+    const { id } = req.query;
+    
+    if (!id) {
+      return res.status(400).json({
+        error: 'User ID is required'
+      });
+    }
+    
+    // Mock user data (in production, this would be a database query)
+    const mockUser = {
+      id,
+      email: `user-${id}@example.com`,
+      name: `User ${id}`,
+      preferences: {
+        tradingLevel: 'beginner',
+        riskTolerance: 'medium'
+      },
+      created_at: new Date().toISOString(),
+      avatar_url: null,
+      trading_level: 'beginner',
+      trading_experience: 'none',
+      preferred_instruments: ['EUR/USD', 'GBP/USD'],
+      risk_tolerance: 'medium'
+    };
+    
+    console.log('[Dev API] Retrieved user:', mockUser);
+    
+    res.json({
+      success: true,
+      user: mockUser
+    });
+  } catch (error) {
+    console.error('Get user error:', error);
+    res.status(500).json({
+      error: 'Failed to fetch user',
+      message: error.message
+    });
+  }
+});
+
+app.put('/api/users', async (req, res) => {
+  try {
+    const { id, name, preferences } = req.body;
+    
+    if (!id) {
+      return res.status(400).json({
+        error: 'User ID is required'
+      });
+    }
+    
+    // Mock updated user data
+    const mockUpdatedUser = {
+      id,
+      email: `user-${id}@example.com`,
+      name: name || `User ${id}`,
+      preferences: preferences || {},
+      updated_at: new Date().toISOString(),
+      avatar_url: null,
+      trading_level: 'beginner',
+      trading_experience: 'none',
+      preferred_instruments: ['EUR/USD', 'GBP/USD'],
+      risk_tolerance: 'medium'
+    };
+    
+    console.log('[Dev API] Updated user:', mockUpdatedUser);
+    
+    res.json({
+      success: true,
+      user: mockUpdatedUser,
+      message: 'User updated successfully'
+    });
+  } catch (error) {
+    console.error('Update user error:', error);
+    res.status(500).json({
+      error: 'Failed to update user',
+      message: error.message
+    });
+  }
+});
+
+app.delete('/api/users', async (req, res) => {
+  try {
+    const { id } = req.query;
+    
+    if (!id) {
+      return res.status(400).json({
+        error: 'User ID is required'
+      });
+    }
+    
+    console.log('[Dev API] Deleted user:', id);
+    
+    res.json({
+      success: true,
+      message: 'User deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete user error:', error);
+    res.status(500).json({
+      error: 'Failed to delete user',
+      message: error.message
+    });
+  }
+});
+
 // Performance Analytics Endpoint
 app.post('/api/analytics/performance', async (req, res) => {
   try {

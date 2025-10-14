@@ -22,6 +22,16 @@ class DependencyPreloader {
   private preloadedAssets = new Set<string>()
   private preloadQueue: Promise<void>[] = []
 
+  /**
+   * Static import map for reliable module preloading
+   */
+  private readonly importMap: Record<string, () => Promise<any>> = {
+    'react-router-dom': () => import('react-router-dom'),
+    'lucide-react': () => import('lucide-react'),
+    'react-chartjs-2': () => import('react-chartjs-2'),
+    '@heroicons/react': () => import('@heroicons/react'),
+  }
+
   // Configuration for different dependency types
   private readonly config: PreloadConfig = {
     critical: [
@@ -31,21 +41,13 @@ class DependencyPreloader {
       { source: '/node_modules/.vite/deps/react-dom_client.js', kind: 'url' },
     ],
     important: [
-      // Router and navigation (use dynamic import to avoid brittle URLs)
-      { source: 'react-router-dom', kind: 'module' },
-
       // Authentication remains URL-based because Vite currently emits stable path
       { source: '/node_modules/.vite/deps/@clerk_clerk-react.js', kind: 'url' },
-
-      // UI components (dynamic import to avoid 404s)
-      { source: 'lucide-react', kind: 'module' },
+      
+      // Removed react-router-dom and lucide-react from here - they're handled by importMap
     ],
     optional: [
-      // Chart libraries
-      { source: 'react-chartjs-2', kind: 'module' },
-
-      // Additional UI libraries
-      { source: '@heroicons/react', kind: 'module' },
+      // Removed react-chartjs-2 and @heroicons/react from here - they're handled by importMap
     ]
   }
 
@@ -85,9 +87,23 @@ class DependencyPreloader {
    */
   private preloadImportant(): void {
     console.log('[Preloader] Loading important dependencies...')
-
+    
+    // Preload URL-based dependencies
     this.config.important.forEach((entry) => {
-      this.dispatchPreload(entry, 'auto')
+      if (entry.kind === 'url') {
+        this.dispatchPreload(entry, 'auto')
+      }
+    })
+    
+    // Preload module-based dependencies using importMap
+    Object.keys(this.importMap).forEach(moduleName => {
+      this.preloadModule(moduleName)
+        .then(() => {
+          this.preloadedAssets.add(`module:${moduleName}`)
+        })
+        .catch((error) => {
+          console.warn(`[Preloader] Failed to preload module: ${moduleName}`, error)
+        })
     })
   }
 
@@ -96,10 +112,9 @@ class DependencyPreloader {
    */
   private preloadOptional(): void {
     console.log('[Preloader] Loading optional dependencies...')
-
-    this.config.optional.forEach((entry) => {
-      this.dispatchPreload(entry, 'low')
-    })
+    
+    // Most optional dependencies are now handled by importMap in preloadImportant
+    // This method can be used for truly optional URL-based resources
   }
 
   private dispatchPreload(entry: PreloadEntry, priority: 'high' | 'auto' | 'low'): void {
@@ -260,12 +275,17 @@ class DependencyPreloader {
   }
 
   /**
-   * Preload a specific module dynamically
+   * Preload a specific module using static import map
    */
   async preloadModule(moduleName: string): Promise<any> {
     try {
-      // Use Vite ignore comment to suppress dynamic import warning
-      const module = await import(/* @vite-ignore */ moduleName)
+      const moduleImporter = this.importMap[moduleName];
+      if (!moduleImporter) {
+        console.warn(`[Preloader] Module not in import map: ${moduleName}`)
+        return null;
+      }
+      
+      const module = await moduleImporter();
       console.log(`[Preloader] Module preloaded: ${moduleName}`)
       return module
     } catch (error) {

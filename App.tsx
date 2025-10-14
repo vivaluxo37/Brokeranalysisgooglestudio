@@ -153,6 +153,13 @@ const App: React.FC = () => {
             </Suspense>
           </ProtectedAdminRoute>
         } />
+        <Route path="/admin/dashboard" element={
+          <ProtectedAdminRoute>
+            <Suspense fallback={<AdminDashboardSkeleton />}>
+              <AdminDashboard />
+            </Suspense>
+          </ProtectedAdminRoute>
+        } />
         <Route path="/admin/verification" element={
           <ProtectedAdminRoute>
             <Suspense fallback={<PageSkeleton />}>

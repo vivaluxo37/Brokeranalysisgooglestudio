@@ -45,10 +45,10 @@ export class FieldValidator {
       category: 'core',
       priority: 'critical',
       normalizer: (value: string) => value?.trim().toLowerCase().replace(/[^\w\s]/g, ''),
-      validator: (value: string) => ({
-        isValid: value?.length >= 2,
-        message: value?.length < 2 ? 'Broker name too short' : undefined
-      })
+      validator: (value: string) => {
+        if (!value || value.length < 2) return { isValid: false, message: 'Broker name too short' };
+        return { isValid: true };
+      }
     },
 
     {
@@ -59,10 +59,10 @@ export class FieldValidator {
       category: 'core',
       priority: 'high',
       normalizer: (value: string) => value?.toLowerCase().replace(/\/+$/, ''),
-      validator: (value: string) => ({
-        isValid: /^https?:\/\/.+\..+/i.test(value || ''),
-        message: 'Invalid URL format'
-      })
+      validator: (value: string) => {
+        if (!/^https?:\/\/.+\..+/i.test(value || '')) return { isValid: false, message: 'Invalid URL format' };
+        return { isValid: true };
+      }
     },
 
     {
@@ -105,11 +105,11 @@ export class FieldValidator {
       tolerance: 50, // $50 tolerance
       category: 'financial',
       priority: 'high',
-      validator: (value: number) => ({
-        isValid: value >= 0 && value <= 50000,
-        message: value < 0 ? 'Minimum deposit cannot be negative' : 
-                 value > 50000 ? 'Minimum deposit seems unusually high' : undefined
-      })
+      validator: (value: number) => {
+        if (value < 0) return { isValid: false, message: 'Minimum deposit cannot be negative' };
+        if (value > 50000) return { isValid: false, message: 'Minimum deposit seems unusually high' };
+        return { isValid: true };
+      }
     },
 
     {
@@ -214,10 +214,10 @@ export class FieldValidator {
       maxLength: 2000,
       category: 'optional',
       priority: 'low',
-      validator: (value: string) => ({
-        isValid: value?.length >= 50,
-        message: value?.length < 50 ? 'Description too short (minimum 50 characters)' : undefined
-      })
+      validator: (value: string) => {
+        if (!value || value.length < 50) return { isValid: false, message: 'Description too short (minimum 50 characters)' };
+        return { isValid: true };
+      }
     },
 
     {
@@ -227,10 +227,10 @@ export class FieldValidator {
       pattern: /\.(png|jpg|jpeg|svg|gif)$/i,
       category: 'optional',
       priority: 'low',
-      validator: (value: string) => ({
-        isValid: /\.(png|jpg|jpeg|svg|gif)$/i.test(value || ''),
-        message: 'Logo URL must point to a valid image file'
-      })
+      validator: (value: string) => {
+        if (!/\.(png|jpg|jpeg|svg|gif)$/i.test(value || '')) return { isValid: false, message: 'Logo URL must point to a valid image file' };
+        return { isValid: true };
+      }
     }
   ];
 
@@ -449,18 +449,23 @@ export class FieldValidator {
     // Ensure confidence stays within bounds
     confidence = Math.max(0, Math.min(1, confidence));
 
-    return {
+    const result: FieldComparisonResult = {
       fieldName,
       dbValue,
       webValue,
       normalizedDbValue,
       normalizedWebValue,
       isMatch,
-      difference,
       toleranceExceeded,
       confidence,
       issues
     };
+    
+    if (difference !== undefined) {
+      result.difference = difference;
+    }
+    
+    return result;
   }
 
   /**
@@ -480,25 +485,25 @@ export class FieldValidator {
    * Calculates Levenshtein distance between two strings
    */
   private static levenshteinDistance(str1: string, str2: string): number {
-    const matrix = Array.from({ length: str2.length + 1 }, () => 
+    const matrix: number[][] = Array.from({ length: str2.length + 1 }, () => 
       Array.from({ length: str1.length + 1 }, () => 0)
     );
 
-    for (let i = 0; i <= str1.length; i++) matrix[0][i] = i;
-    for (let j = 0; j <= str2.length; j++) matrix[j][0] = j;
+    for (let i = 0; i <= str1.length; i++) matrix[0]![i] = i;
+    for (let j = 0; j <= str2.length; j++) matrix[j]![0] = j;
 
     for (let j = 1; j <= str2.length; j++) {
       for (let i = 1; i <= str1.length; i++) {
         const substitutionCost = str1[i - 1] === str2[j - 1] ? 0 : 1;
-        matrix[j][i] = Math.min(
-          matrix[j][i - 1] + 1, // deletion
-          matrix[j - 1][i] + 1, // insertion
-          matrix[j - 1][i - 1] + substitutionCost // substitution
+        matrix[j]![i] = Math.min(
+          matrix[j]![i - 1]! + 1, // deletion
+          matrix[j - 1]![i]! + 1, // insertion
+          matrix[j - 1]![i - 1]! + substitutionCost // substitution
         );
       }
     }
 
-    return matrix[str2.length][str1.length];
+    return matrix[str2.length]![str1.length]!;
   }
 
   /**

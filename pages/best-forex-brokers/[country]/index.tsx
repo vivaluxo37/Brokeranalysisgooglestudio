@@ -14,12 +14,88 @@ import {
 } from '@heroicons/react/24/outline';
 import { Broker } from '../../../types';
 import { useBrokers } from '../../../hooks/useBrokers';
-import BrokerCard from '../../../components/directory/BrokerCard';
+import UnifiedBrokerCard from '../../../components/common/UnifiedBrokerCard';
 import MetaTags from '../../../components/common/MetaTags';
 import JsonLdSchema from '../../../components/common/JsonLdSchema';
 import LoadingSpinner from '../../../components/ui/LoadingSpinner';
 import ContextErrorBoundary from '../../../components/error/ContextErrorBoundary';
+import BrokerQuickViewModal from '../../../components/brokers/BrokerQuickViewModal';
 import { getCountryBySlug, CountryConfig } from '../../../lib/constants/countries';
+
+const toNumber = (value: unknown, fallback = 0): number => {
+  if (typeof value === 'number' && Number.isFinite(value)) return value;
+  if (typeof value === 'string') {
+    const match = value.match(/(\d+\.?\d*)/);
+    if (match) {
+      const parsed = parseFloat(match[1]);
+      if (Number.isFinite(parsed)) return parsed;
+    }
+  }
+  return fallback;
+};
+
+const getBrokerRegulators = (broker: Broker): string[] => {
+  const regulators = [
+    ...(Array.isArray(broker?.regulation?.regulators) ? broker.regulation.regulators : []),
+    ...((broker as any)?.security?.regulatedBy?.map((entry: any) => entry?.regulator) || [])
+  ];
+
+  return regulators
+    .filter((reg): reg is string => typeof reg === 'string' && reg.trim().length > 0)
+    .map(reg => reg.toUpperCase());
+};
+
+const getMinDeposit = (broker: Broker): number => {
+  const values: number[] = [];
+  if (typeof broker?.accessibility?.minDeposit !== 'undefined') {
+    values.push(toNumber(broker.accessibility.minDeposit, Infinity));
+  }
+
+  if (Array.isArray(broker?.accountTypes)) {
+    broker.accountTypes.forEach(account => {
+      if (typeof account?.minDeposit !== 'undefined') {
+        values.push(toNumber(account.minDeposit, Infinity));
+      }
+    });
+  }
+
+  return values.length ? Math.min(...values) : Infinity;
+};
+
+const parseLeverageValue = (leverage?: string): number => {
+  if (!leverage) return 0;
+  const normalized = leverage.toLowerCase();
+  if (normalized.includes('unlimited')) return Infinity;
+  const parts = leverage.split(':');
+  if (parts.length !== 2) return toNumber(leverage, 0);
+  const ratio = parseInt(parts[1], 10);
+  return Number.isFinite(ratio) ? ratio : 0;
+};
+
+const getSpreadValue = (broker: Broker, pair: string = 'eurusd'): number => {
+  const spreads = (broker as any)?.tradingConditions?.spreads as Record<string, number | string | undefined> | undefined;
+  const spread = spreads ? spreads[pair] : undefined;
+  return toNumber(spread, 0);
+};
+
+const getBrokerScore = (broker: Broker): number => {
+  if (typeof broker?.score === 'number') return broker.score;
+  if (typeof broker?.ratings?.overall === 'number') return broker.ratings.overall;
+  if (typeof broker?.ratings?.regulation === 'number') return broker.ratings.regulation;
+  return 0;
+};
+
+const isCountryRestricted = (broker: Broker, countryCode: string): boolean => {
+  const exclusions = (broker as any)?.restrictions?.excludedCountries;
+  if (!exclusions) return false;
+  if (Array.isArray(exclusions)) {
+    return exclusions.some(code => typeof code === 'string' && code.toUpperCase() === countryCode.toUpperCase());
+  }
+  if (typeof exclusions === 'string') {
+    return exclusions.split(',').map(code => code.trim().toUpperCase()).includes(countryCode.toUpperCase());
+  }
+  return false;
+};
 
 interface FilterState {
   search: string;
@@ -30,50 +106,25 @@ interface FilterState {
   sortBy: string;
 }
 
-// Helper function to transform broker data for BrokerCard component
-const transformBrokerForCard = (broker: Broker) => {
-  return {
-    id: broker.id,
-    name: broker.name,
-    logoUrl: broker.logoUrl,
-    score: broker.score,
-    minDeposit: broker.accessibility.minDeposit,
-    spreads: broker.tradingConditions.spreads.eurusd,
-    maxLeverage: broker.tradingConditions.maxLeverage,
-    regulation: broker.regulation.regulators.length > 0,
-    websiteUrl: broker.websiteUrl,
-    internalPath: `/broker/${broker.id}`,
-    platforms: broker.technology.platforms,
-    commission: broker.tradingConditions.commission,
-    executionType: broker.technology.executionType,
-    features: broker.features || [],
-    bonuses: broker.bonuses || [],
-    accountTypes: broker.accountTypes || [],
-    support: broker.support,
-    education: broker.education,
-    copyTrading: broker.copyTrading,
-    apiAccess: broker.technology.apiAccess,
-    swapFeeCategory: broker.tradingConditions.swapFeeCategory
-  };
-};
 
 // Helper function to check broker availability (define BEFORE it's used)
 const checkBrokerAvailability = (broker: Broker, country: CountryConfig): boolean => {
-  // This is a simplified implementation
-  // In a real app, this would query the broker_country_availability table
-  
-  // Check regulatory compatibility
-  const countryRegulators = getCountryRegulators(country.code);
-  const hasCompatibleRegulation = broker.regulation.regulators.some(reg => 
-    countryRegulators.includes(reg) || isGloballyAccepted(reg)
-  );
+  const countryRegulators = getCountryRegulators(country.code).map(reg => reg.toUpperCase());
+  const brokerRegulators = getBrokerRegulators(broker);
 
-  // Check if broker explicitly excludes this country
-  if (broker.restrictions?.excludedCountries?.includes(country.code)) {
+  const hasCompatibleRegulation = brokerRegulators.some(reg => {
+    return countryRegulators.includes(reg) || isGloballyAccepted(reg);
+  });
+
+  if (!hasCompatibleRegulation) {
     return false;
   }
 
-  return hasCompatibleRegulation;
+  if (isCountryRestricted(broker, country.code)) {
+    return false;
+  }
+
+  return true;
 };
 
 // Helper function to get country regulators
@@ -94,21 +145,24 @@ const getCountryRegulators = (countryCode: string): string[] => {
 
 // Helper function to check globally accepted regulators
 const isGloballyAccepted = (regulator: string): boolean => {
-  const globalRegulators = ['FCA', 'ASIC', 'CySEC', 'NFA', 'BaFin', 'FINMA'];
-  return globalRegulators.includes(regulator);
+  const globalRegulators = ['FCA', 'ASIC', 'CYSEC', 'NFA', 'BAFIN', 'FINMA'];
+  return globalRegulators.includes(regulator.toUpperCase());
 };
 
 const CountryBrokerPage: React.FC = () => {
   const { country } = useParams<{ country: string }>();
 
   // Safe hook usage with error boundary
-  const [brokersData, setBrokersData] = useState({ 
-    brokers: [], 
-    loading: true, 
-    error: null, 
-    refetch: async () => {} 
+  const [brokersData, setBrokersData] = useState({
+    brokers: [],
+    loading: true,
+    error: null,
+    refetch: async () => {}
   });
-  
+
+  // Quick view state
+  const [selectedBroker, setSelectedBroker] = useState<Broker | null>(null);
+
   // Try to use the hook with proper error handling
   try {
     const hookData = useBrokers();
@@ -125,6 +179,15 @@ const CountryBrokerPage: React.FC = () => {
       refetch: async () => {}
     });
   }
+
+  // Quick view handlers
+  const handleOpenQuickView = (broker: Broker) => {
+    setSelectedBroker(broker);
+  };
+
+  const handleCloseQuickView = () => {
+    setSelectedBroker(null);
+  };
 
   const { brokers: allBrokers, loading, error } = brokersData;
   const [filters, setFilters] = useState<FilterState>({
@@ -160,27 +223,33 @@ const CountryBrokerPage: React.FC = () => {
       }
 
       if (filters.regulated !== 'all') {
-        if (filters.regulated === 'yes' && !broker.regulation.regulators.length) {
+        const regulatorCount = getBrokerRegulators(broker).length;
+        if (filters.regulated === 'yes' && regulatorCount === 0) {
           return false;
         }
-        if (filters.regulated === 'no' && broker.regulation.regulators.length) {
+        if (filters.regulated === 'no' && regulatorCount > 0) {
           return false;
         }
       }
 
       if (filters.minDeposit !== 'all') {
-        const minDeposit = parseInt(filters.minDeposit);
-        if (broker.accessibility.minDeposit > minDeposit) return false;
+        const minDepositThreshold = parseInt(filters.minDeposit, 10);
+        if (Number.isFinite(minDepositThreshold)) {
+          const brokerMinDeposit = getMinDeposit(broker);
+          if (brokerMinDeposit > minDepositThreshold) return false;
+        }
       }
 
       if (filters.maxLeverage !== 'all') {
-        const maxLeverage = parseInt(filters.maxLeverage);
-        const brokerLeverage = parseInt(broker.tradingConditions.maxLeverage.replace(/[^\d]/g, ''));
-        if (brokerLeverage < maxLeverage) return false;
+        const leverageThreshold = parseInt(filters.maxLeverage, 10);
+        if (Number.isFinite(leverageThreshold)) {
+          const brokerLeverage = parseLeverageValue(broker?.tradingConditions?.maxLeverage);
+          if (brokerLeverage < leverageThreshold) return false;
+        }
       }
 
       if (filters.rating > 0) {
-        if ((broker.score || 0) < filters.rating) return false;
+        if (getBrokerScore(broker) < filters.rating) return false;
       }
 
       return true;
@@ -190,11 +259,11 @@ const CountryBrokerPage: React.FC = () => {
     brokers.sort((a, b) => {
       switch (filters.sortBy) {
         case 'rating':
-          return (b.score || 0) - (a.score || 0);
+          return getBrokerScore(b) - getBrokerScore(a);
         case 'deposit':
-          return a.accessibility.minDeposit - b.accessibility.minDeposit;
+          return getMinDeposit(a) - getMinDeposit(b);
         case 'spreads':
-          return a.tradingConditions.spreads.eurusd - b.tradingConditions.spreads.eurusd;
+          return getSpreadValue(a) - getSpreadValue(b);
         case 'name':
           return a.name.localeCompare(b.name);
         default:
@@ -204,6 +273,25 @@ const CountryBrokerPage: React.FC = () => {
 
     return brokers;
   }, [allBrokers, countryConfig, filters]);
+
+  const regulatedBrokerCount = useMemo(
+    () => filteredBrokers.filter(broker => getBrokerRegulators(broker).length > 0).length,
+    [filteredBrokers]
+  );
+
+  const minDepositMetric = useMemo(() => {
+    const deposits = filteredBrokers
+      .map(getMinDeposit)
+      .filter(value => Number.isFinite(value) && value >= 0);
+    return deposits.length ? Math.min(...deposits) : 0;
+  }, [filteredBrokers]);
+
+  const lowestSpreadMetric = useMemo(() => {
+    const spreads = filteredBrokers
+      .map(broker => getSpreadValue(broker))
+      .filter(value => Number.isFinite(value) && value >= 0);
+    return spreads.length ? Math.min(...spreads) : 0;
+  }, [filteredBrokers]);
 
   // Content generation functions - Define BEFORE they are used
   const generateHeroIntro = (country: CountryConfig, brokerCount: number) => {
@@ -365,6 +453,7 @@ const CountryBrokerPage: React.FC = () => {
   return (
     <ContextErrorBoundary contextName="CountryBrokerPage">
       <>
+      <BrokerQuickViewModal broker={selectedBroker} onClose={handleCloseQuickView} />
       <MetaTags
         title={`Best Forex Brokers in ${countryConfig?.name || 'Country'} 2025 | Top ${filteredBrokers.length} Regulated Brokers`}
         description={`Compare the ${filteredBrokers.length} best forex brokers available in ${countryConfig?.name || 'this country'}. Regulated brokers with competitive spreads, reliable platforms, and local support for ${countryConfig?.demonym || 'local'} traders.`}
@@ -432,19 +521,19 @@ const CountryBrokerPage: React.FC = () => {
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold">
-                  {filteredBrokers.filter(b => b.regulation.regulators.length > 0).length}
+                  {regulatedBrokerCount}
                 </div>
                 <div className="text-blue-200">Regulated Brokers</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold">
-                  ${Math.min(...filteredBrokers.map(b => b.accessibility.minDeposit))}
+                  ${minDepositMetric}
                 </div>
                 <div className="text-blue-200">Minimum Deposit</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold">
-                  {Math.min(...filteredBrokers.map(b => b.tradingConditions.spreads.eurusd)).toFixed(1)}
+                  {lowestSpreadMetric.toFixed(1)}
                 </div>
                 <div className="text-blue-200">Lowest Spread</div>
               </div>
@@ -594,13 +683,13 @@ const CountryBrokerPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {filteredBrokers.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredBrokers.map((broker, index) => (
-                <BrokerCard 
+              {filteredBrokers.map((broker) => (
+                <UnifiedBrokerCard
                   key={broker.id}
-                  broker={transformBrokerForCard(broker)}
-                  ranking={index + 1}
-                  showRanking={true}
-                  showDetailsLink={true}
+                  broker={broker}
+                  onQuickView={handleOpenQuickView}
+                  showCountryBadge={country?.code}
+                  variant="compact"
                 />
               ))}
             </div>

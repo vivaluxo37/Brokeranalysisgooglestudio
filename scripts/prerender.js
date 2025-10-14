@@ -25,7 +25,17 @@ try {
 
     // Load the built server entry and the client HTML template
     const template = fs.readFileSync(toAbsolute('../dist/client/index.html'), 'utf-8');
-    const { render } = await import(pathToFileURL(toAbsolute('../dist/server/prerender-entry.js')).href);
+    
+    // Find the prerender entry file (it has a hash in the name)
+    const serverDir = toAbsolute('../dist/server/js');
+    const files = fs.readdirSync(serverDir);
+    const prerenderFile = files.find(f => f.startsWith('prerender-entry-') && f.endsWith('.js'));
+    
+    if (!prerenderFile) {
+        throw new Error('Could not find prerender-entry file in dist/server/js');
+    }
+    
+    const { render } = await import(pathToFileURL(path.join(serverDir, prerenderFile)).href);
     console.log('Loaded template and server bundle.');
 
     // Prerender each broker page

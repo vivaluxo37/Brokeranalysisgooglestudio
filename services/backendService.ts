@@ -4,11 +4,54 @@
 // This service calls the secure proxy server to handle AI requests
 // The proxy server manages API keys and rate limiting
 
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
 import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood, BrokerAlternativesResponse } from '../types';
 import { brokers } from '../data/brokers';
+import { aiProviderManager } from './aiProviders';
 
 // Proxy server configuration
 const PROXY_BASE_URL = import.meta.env.VITE_API_PROXY_URL || 'http://localhost:3001';
+
+const FALLBACK_GEMINI_MODEL = 'gemini-2.0-flash-exp';
+const fallbackGeminiClient = (() => {
+  const apiKey = import.meta.env.VITE_API_KEY;
+  try {
+    return apiKey ? new GoogleGenerativeAI(apiKey) : null;
+  } catch (error) {
+    console.error('Failed to initialize fallback Gemini client:', error);
+    return null;
+  }
+})();
+
+const parseJsonResponse = <T>(rawText: string): T | null => {
+  const attempts: string[] = [];
+
+  if (rawText) {
+    attempts.push(rawText);
+  }
+
+  const fencedMatch = rawText.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fencedMatch) {
+    attempts.push(fencedMatch[1]);
+  }
+
+  const bracketStart = rawText.indexOf('{');
+  const bracketEnd = rawText.lastIndexOf('}');
+  if (bracketStart !== -1 && bracketEnd !== -1 && bracketEnd > bracketStart) {
+    attempts.push(rawText.slice(bracketStart, bracketEnd + 1));
+  }
+
+  for (const attempt of attempts) {
+    try {
+      return JSON.parse(attempt.trim());
+    } catch (error) {
+      continue;
+    }
+  }
+
+  return null;
+};
 
 // --- Chatbot Functionality ---
 
@@ -46,26 +89,25 @@ export const handleChatbotStream = async (message: string) => {
     }
 
     const data = await response.json();
-    
+
     // Create a mock stream from the response
     const text = data.response;
-    const stream = new ReadableStream({
+    const stream = new ReadableStream<string>({
       async start(controller) {
-        // Split the response into chunks for streaming effect
-        const words = text.split(' ');
-        let currentText = '';
-        
-        for (const word of words) {
-          currentText += (word + ' ');
-          controller.enqueue({ text: () => word + ' ' });
+        const segments = text.split(/(\s+)/g);
+        for (const segment of segments) {
+          if (!segment) {
+            continue;
+          }
+          controller.enqueue(segment);
           // Small delay to simulate streaming
-          await new Promise(resolve => setTimeout(resolve, 50));
+          await new Promise(resolve => setTimeout(resolve, 40));
         }
-        
+
         controller.close();
       }
     });
-    
+
     return stream;
     
   } catch (error) {
@@ -97,24 +139,26 @@ export const handleAiTutorStream = async (message: string, history: { sender: 'u
         }
 
         const data = await response.json();
-        
+
         // Create a mock stream from the response
         const text = data.content;
-        const stream = new ReadableStream({
+        const stream = new ReadableStream<string>({
             async start(controller) {
-                // Split the response into chunks for streaming effect
-                const words = text.split(' ');
-                
-                for (const word of words) {
-                    controller.enqueue({ text: () => word + ' ' });
+                const segments = text.split(/(\s+)/g);
+
+                for (const segment of segments) {
+                    if (!segment) {
+                        continue;
+                    }
+                    controller.enqueue(segment);
                     // Small delay to simulate streaming
                     await new Promise(resolve => setTimeout(resolve, 30));
                 }
-                
+
                 controller.close();
             }
         });
-        
+
         return stream;
         
     } catch (error) {
@@ -186,32 +230,44 @@ export const handleStrategyBrokerRecommendations = async (
   try {
     const response = await aiProviderManager.generateResponse(prompt, {
       stream: false,
-      systemInstruction: "You are an expert forex broker analyst. Always respond with valid JSON only."
+      systemInstruction: 'You are an expert forex broker analyst. Always respond with valid JSON only.'
     });
-    
+
     console.log(`Using ${response.provider} (${response.model}) for strategy recommendations`);
-    
-    // Parse the JSON response
-    const responseText = typeof response.result === 'string' ? response.result : await response.result.text();
-    const parsedResponse: BrokerRecommendationResponse = JSON.parse(responseText.trim());
-    return parsedResponse;
-    
-  } catch (error) {
-    console.error('AI Provider Manager failed, falling back to direct Gemini call:', error);
-    
-    // Fallback to original Gemini implementation
-    try {
-      const generativeModel = genAI.getGenerativeModel({ model: model });
-      const response = await generativeModel.generateContent(prompt);
-      
-      // Parse the JSON response (since we instructed it to respond with JSON)
-      const responseText = response.response.text();
-      const parsedResponse: BrokerRecommendationResponse = JSON.parse(responseText.trim());
-      return parsedResponse;
-    } catch (geminiError) {
-      console.error('All AI providers failed:', geminiError);
-      throw new Error('AI service is temporarily unavailable. Please try again later.');
+
+    const responseText = typeof response.result === 'string'
+      ? response.result
+      : await response.result.text();
+
+    const parsedResponse = parseJsonResponse<BrokerRecommendationResponse>(responseText);
+    if (!parsedResponse) {
+      throw new Error('Invalid JSON returned by AI provider');
     }
+
+    return parsedResponse;
+
+  } catch (error) {
+    console.error('AI Provider Manager failed, attempting Gemini fallback:', error);
+
+    if (fallbackGeminiClient) {
+      try {
+        const model = fallbackGeminiClient.getGenerativeModel({ model: FALLBACK_GEMINI_MODEL });
+        const fallbackResult = await model.generateContent(prompt);
+        const fallbackResponse = await fallbackResult.response;
+        const fallbackText = fallbackResponse.text();
+        const parsedResponse = parseJsonResponse<BrokerRecommendationResponse>(fallbackText);
+
+        if (parsedResponse) {
+          return parsedResponse;
+        }
+
+        console.warn('Gemini fallback returned non-JSON response');
+      } catch (geminiError) {
+        console.error('Gemini fallback failed:', geminiError);
+      }
+    }
+
+    throw new Error('AI service is temporarily unavailable. Please try again later.');
   }
 };
 

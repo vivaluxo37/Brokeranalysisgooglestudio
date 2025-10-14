@@ -43,7 +43,13 @@ export default defineConfig({
       'src/**/*.{test,spec}.{js,ts,jsx,tsx}',
       'lib/**/*.{test,spec}.{js,ts,jsx,tsx}',
       'components/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'pages/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'services/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'utils/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'hooks/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'contexts/**/*.{test,spec}.{js,ts,jsx,tsx}',
       '__tests__/**/*.{js,ts,jsx,tsx}',
+      'tests/**/*.{test,spec}.{js,ts,jsx,tsx}',
     ],
     // Mock patterns
     alias: {
@@ -67,7 +73,7 @@ export default defineConfig({
       },
     },
     // Reporter settings
-    reporter: ['verbose', 'junit'],
+    reporters: ['verbose', 'junit'],
     outputFile: {
       junit: './test-results/junit.xml',
     },

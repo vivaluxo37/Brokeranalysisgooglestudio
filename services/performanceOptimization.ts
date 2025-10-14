@@ -4,6 +4,7 @@
  */
 
 import { pageCache } from './pageCache';
+import React from 'react';
 
 interface PrefetchOptions {
   priority?: 'high' | 'medium' | 'low';

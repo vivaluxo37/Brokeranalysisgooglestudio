@@ -36,12 +36,18 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['English'],
     seoTitle: 'Best Forex Brokers in United States 2025 — US Traders Guide',
-    metaDescription: 'Find the best forex brokers accepting US traders in 2025. Compare CFTC-regulated platforms, spreads, and features for American traders.',
-    keywords: ['forex brokers usa', 'us forex trading', 'cftc regulated brokers', 'american forex brokers'],
+    metaDescription: 'Review CFTC and NFA regulated brokers such as IG US, OANDA, FOREX.com, Interactive Brokers, and tastyfx for American traders in 2025. Compare ACH and wire funding, 50:1 leverage caps, and platform technology.',
+    keywords: [
+      'cftc nfa forex brokers 2025',
+      'ach forex broker usa',
+      'oanda us review',
+      'forex.com united states spreads',
+      'interactive brokers forex usa'
+    ],
     priority: 100,
     isPopular: true,
-    regulatoryNotes: 'Must be NFA/CFTC regulated with strict leverage limits (50:1 major pairs, 20:1 minors)',
-    commonPaymentMethods: ['Bank Wire', 'ACH', 'Credit Card', 'Check'],
+    regulatoryNotes: 'NFA/CFTC oversight enforces 50:1 leverage on majors, 20:1 on minors, daily reporting, and risk disclosures for 2025 retail accounts.',
+    commonPaymentMethods: ['ACH Bank Transfer', 'Wire Transfer', 'Visa/Mastercard', 'Bank Check'],
     demonym: 'American',
     language: 'English'
   },
@@ -55,12 +61,18 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['English'],
     seoTitle: 'Best Forex Brokers in United Kingdom 2025 — UK Traders Guide',
-    metaDescription: 'Discover the best FCA-regulated forex brokers for UK traders in 2025. Compare spreads, platforms, and features from top British brokers.',
-    keywords: ['forex brokers uk', 'fca regulated brokers', 'uk forex trading', 'british forex brokers'],
+    metaDescription: 'Compare FCA-regulated forex brokers like Pepperstone, IG, CMC Markets, eToro, Tickmill, and Swissquote for UK traders in 2025. Review GBP accounts, FSCS protection, Faster Payments funding, and negative balance safeguards.',
+    keywords: [
+      'pepperstone uk forex broker',
+      'ig fca regulated 2025',
+      'cmc markets uk review',
+      'tickmill fca leverage 30:1',
+      'faster payments forex brokers'
+    ],
     priority: 95,
     isPopular: true,
-    regulatoryNotes: 'Must be FCA regulated with FSCS protection up to £85,000',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'Debit Card', 'PayPal', 'Skrill'],
+    regulatoryNotes: 'FCA regulation requires FSCS cover to £85,000, mandatory negative balance protection, and a 30:1 retail leverage cap under 2025 rules.',
+    commonPaymentMethods: ['Faster Payments', 'UK Bank Transfer', 'Visa/Mastercard', 'PayPal'],
     demonym: 'British',
     language: 'English'
   },
@@ -74,12 +86,18 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['English'],
     seoTitle: 'Best Forex Brokers in Australia 2025 — Australian Traders Guide',
-    metaDescription: 'Find the top ASIC-regulated forex brokers for Australian traders in 2025. Compare platforms, spreads, and features from leading Aussie brokers.',
-    keywords: ['forex brokers australia', 'asic regulated brokers', 'australian forex trading', 'aussie forex brokers'],
+    metaDescription: 'Compare ASIC-regulated brokers such as Pepperstone, IC Markets, FP Markets, CMC Markets, and IG for Australian traders in 2025. Review AUD accounts, PayID/Osko deposits, and ASIC leverage protections.',
+    keywords: [
+      'pepperstone australia review',
+      'ic markets asic 2025',
+      'fp markets payid deposits',
+      'australian forex brokers aud accounts',
+      'asic leverage 30:1'
+    ],
     priority: 90,
     isPopular: true,
-    regulatoryNotes: 'Must be ASIC regulated with leverage limits (30:1 major pairs for retail clients)',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'PayPal', 'POLi', 'BPay']
+    regulatoryNotes: 'ASIC product intervention orders keep retail leverage at 30:1 on majors, require negative balance protection, and client money segregation through 2025.',
+    commonPaymentMethods: ['PayID/Osko', 'Australian Bank Transfer', 'BPAY', 'Visa/Mastercard']
   },
   {
     code: 'CA',
@@ -109,12 +127,18 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['German'],
     seoTitle: 'Best Forex Brokers in Germany 2025 — German Traders Guide',
-    metaDescription: 'Find the best BaFin-regulated forex brokers for German traders in 2025. Compare EU-regulated platforms with ESMA protection.',
-    keywords: ['forex brokers germany', 'bafin regulated brokers', 'german forex trading', 'deutsche forex broker'],
+    metaDescription: 'Compare BaFin and ESMA compliant brokers like XTB, Admiral Markets, Pepperstone, IG, and CMC Markets for German traders in 2025. Review EUR accounts, MiFID II protections, and low spread pricing.',
+    keywords: [
+      'bafin forex brokers 2025',
+      'xtb germany review',
+      'admiral markets deutschland',
+      'pepperstone germany spreads',
+      'esma 30:1 leverage germany'
+    ],
     priority: 90,
     isPopular: true,
-    regulatoryNotes: 'Must comply with ESMA regulations and BaFin oversight',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'PayPal', 'Skrill', 'Neteller', 'Sofort']
+    regulatoryNotes: 'BaFin and ESMA rules cap retail leverage at 30:1, enforce negative balance protection, and require segregated accounts under MiFID II (2025 update).',
+    commonPaymentMethods: ['SEPA Bank Transfer', 'Sofort/Klarna', 'Visa/Mastercard', 'PayPal']
   },
   {
     code: 'FR',
@@ -127,12 +151,18 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['French'],
     seoTitle: 'Best Forex Brokers in France 2025 — French Traders Guide',
-    metaDescription: 'Découvrez les meilleurs courtiers forex réglementés AMF pour les traders français en 2025. Comparez spreads, plateformes et fonctionnalités.',
-    keywords: ['courtiers forex france', 'brokers forex français', 'amf régulation', 'trading forex france'],
+    metaDescription: 'Découvrez en 2025 les courtiers AMF et ESMA comme CMC Markets, Saxo Bank, Pepperstone, IG et AvaTrade avec comptes en euros, protection Sapin II et méthodes SEPA/Carte.',
+    keywords: [
+      'courtier forex amf 2025',
+      'cmc markets france avis',
+      'saxo bank france trading',
+      'pepperstone france spreads',
+      'forex sepa paiement'
+    ],
     priority: 85,
     isPopular: true,
-    regulatoryNotes: 'Must be AMF regulated with EU investor protection',
-    commonPaymentMethods: ['Virement Bancaire', 'Carte de Crédit', 'PayPal', 'Skrill']
+    regulatoryNotes: 'La loi Sapin II impose des comptes à risque limité, levier plafonné à 30:1 et protection des dépôts via le FGDR pour les traders français en 2025.',
+    commonPaymentMethods: ['Virement SEPA', 'Carte Bancaire', 'PayPal', 'Skrill']
   },
 
   // Major Asian Markets
@@ -146,12 +176,18 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['English', 'Mandarin', 'Malay'],
     seoTitle: 'Best Forex Brokers in Singapore 2025 — Singapore Traders Guide',
-    metaDescription: 'Find the best MAS-regulated forex brokers for Singapore traders in 2025. Compare spreads, platforms, and features from top Asian brokers.',
-    keywords: ['forex brokers singapore', 'mas regulated brokers', 'singapore forex trading', 'asian forex brokers'],
+    metaDescription: 'Compare MAS-licensed brokers such as IG Asia, Saxo Markets, CMC Markets, OANDA, and FOREX.com for Singapore traders in 2025. Evaluate SGD accounts, PayNow/FAST funding, and Capital Markets Services safeguards.',
+    keywords: [
+      'mas regulated forex brokers 2025',
+      'ig asia singapore review',
+      'saxo markets sg trading',
+      'paynow forex deposit',
+      'singapore forex brokers sgd'
+    ],
     priority: 85,
     isPopular: true,
-    regulatoryNotes: 'Must be MAS regulated for financial security',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'PayNow', 'eNETS']
+    regulatoryNotes: 'MAS Capital Markets Services licence requires segregated SGD trust accounts, product risk disclosures, and 2025 conduct rules on leverage (20:1 majors).',
+    commonPaymentMethods: ['PayNow', 'FAST Transfer', 'Singapore Bank GIRO', 'Visa/Mastercard']
   },
   {
     code: 'HK',
@@ -163,12 +199,18 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['English', 'Cantonese', 'Mandarin'],
     seoTitle: 'Best Forex Brokers in Hong Kong 2025 — Hong Kong Traders Guide',
-    metaDescription: 'Discover the best SFC-regulated forex brokers for Hong Kong traders in 2025. Compare platforms, spreads, and features from top HK brokers.',
-    keywords: ['forex brokers hong kong', 'sfc regulated brokers', 'hong kong forex trading', 'hk forex brokers'],
+    metaDescription: 'Review SFC Type 3 licensed brokers like IG, Saxo, FP Markets, IC Markets, Pepperstone, and AvaTrade for Hong Kong traders in 2025 with HKD accounts, FPS/PayMe funding, and Chinese-language support.',
+    keywords: [
+      'sfc forex brokers 2025',
+      'ig hong kong review',
+      'fp markets hk fps',
+      'ic markets hong kong',
+      'unionpay forex brokers'
+    ],
     priority: 80,
     isPopular: true,
-    regulatoryNotes: 'Must be SFC regulated for investor protection',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'Faster Payment System', 'Octopus']
+    regulatoryNotes: 'Hong Kong SFC Type 3 licences enforce client asset rules, suitability checks, and 2025 guidance on FX margin trading disclosure.',
+    commonPaymentMethods: ['FPS / PayMe', 'HSBC Bank Transfer', 'UnionPay', 'Visa/Mastercard']
   },
   {
     code: 'JP',
@@ -180,12 +222,43 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['Japanese'],
     seoTitle: 'Best Forex Brokers in Japan 2025 — Japanese Traders Guide',
-    metaDescription: '2025年の日本のトレーダー向け最高のFX業者を見つけましょう。金融庁規制のプラットフォーム、スプレッド、機能を比較。',
-    keywords: ['forex brokers japan', 'japanese forex trading', 'fsa japan regulated', 'fx 業者 日本'],
+    metaDescription: '2025年版：Pepperstone、OANDA Japan、IG、Saxo、XMなど金融庁（JFSA）認可の主要FX業者を比較。円建て口座、Zengin入金、25倍レバレッジ規制に対応。',
+    keywords: [
+      '日本 fx 業者 2025',
+      '金融庁 認可 ブローカー',
+      'ペッパーストーン 日本',
+      'ig 証券 スプレッド',
+      'zengin 入金 fx'
+    ],
     priority: 90,
     isPopular: true,
-    regulatoryNotes: 'Must be FSA Japan regulated with strict leverage limits (25:1)',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'Convenience Store Payment', 'Net Banking']
+    regulatoryNotes: 'JFSA rules cap retail leverage at 25:1, require segregated trust accounts, negative balance protection, and quarterly disclosure under 2025 reforms.',
+    commonPaymentMethods: ['Zengin Bank Transfer', 'Net Banking', 'Visa/Mastercard', 'Konbini Payment']
+  },
+  {
+    code: 'CN',
+    name: 'China',
+    slug: 'china',
+    flag: '🇨🇳',
+    region: 'Asia',
+    currency: 'CNY',
+    isHighRegulated: false,
+    commonLanguages: ['Mandarin'],
+    seoTitle: 'Best Forex Brokers in China 2025 — Chinese Traders Guide',
+    metaDescription: 'See 2025 offshore forex brokers accepting Chinese traders such as Fusion Markets, IC Markets, Pepperstone, Global Prime, and Hantec Markets with UnionPay, Alipay, and CNY-friendly funding.',
+    keywords: [
+      'china forex brokers 2025',
+      'unionpay forex deposit',
+      'fusion markets china review',
+      'ic markets alipay',
+      'pepperstone chinese traders'
+    ],
+    priority: 85,
+    isPopular: true,
+    regulatoryNotes: 'SAFE capital controls limit onshore leverage, so Chinese residents typically use offshore brokers with UnionPay/Alipay support and transparent CNY conversions (2025 guidance).',
+    commonPaymentMethods: ['UnionPay', 'Alipay', 'WeChat Pay', 'International Wire Transfer'],
+    demonym: 'Chinese',
+    language: 'Mandarin'
   },
   {
     code: 'IN',
@@ -196,12 +269,18 @@ export const COUNTRIES: CountryConfig[] = [
     currency: 'INR',
     commonLanguages: ['Hindi', 'English'],
     seoTitle: 'Best Forex Brokers in India 2025 — Indian Traders Guide',
-    metaDescription: 'Find the best forex brokers for Indian traders in 2025. Compare international brokers accepting Indian clients with INR support.',
-    keywords: ['forex brokers india', 'indian forex trading', 'inr forex brokers', 'india trading platforms'],
+    metaDescription: 'Discover 2025 brokers like Interactive Brokers, IG, FOREX.com, Pepperstone, and IC Markets that accept Indian traders with compliant USD/EUR funding, LRS guidance, and NSE currency access.',
+    keywords: [
+      'interactive brokers india forex',
+      'ig india review 2025',
+      'forex.com india lrs',
+      'pepperstone indian traders',
+      'international forex brokers india'
+    ],
     priority: 85,
     isPopular: true,
-    regulatoryNotes: 'International brokers only - domestic forex trading restricted by RBI',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'UPI', 'Paytm', 'Net Banking']
+    regulatoryNotes: 'RBI and SEBI restrict leveraged forex to NSE currency derivatives; offshore trading must follow Liberalised Remittance Scheme limits and 2025 compliance guidance.',
+    commonPaymentMethods: ['International Wire Transfer', 'Visa/Mastercard', 'Skrill', 'Neteller']
   },
   {
     code: 'KR',
@@ -263,12 +342,18 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['English', 'Afrikaans'],
     seoTitle: 'Best Forex Brokers in South Africa 2025 — South African Traders Guide',
-    metaDescription: 'Find the best FSCA-regulated forex brokers for South African traders in 2025. Compare ZAR-friendly platforms and international brokers.',
-    keywords: ['forex brokers south africa', 'fsca regulated brokers', 'zar forex trading', 'south african forex'],
+    metaDescription: 'Compare FSCA-regulated brokers like IG, AvaTrade, Pepperstone, FP Markets, HFM, and Exness for South African traders in 2025 with ZAR accounts, Instant EFT, and local customer care.',
+    keywords: [
+      'fsca forex brokers 2025',
+      'instant eft forex deposits',
+      'pepperstone south africa review',
+      'avatrade za spreads',
+      'fp markets zar account'
+    ],
     priority: 70,
     isPopular: true,
-    regulatoryNotes: 'FSCA regulated preferred with investor protection',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'EFT', 'Instant EFT']
+    regulatoryNotes: 'FSCA FAIS licensing requires client money segregation, risk disclosures, and 2025 leverage caps for retail traders (30:1 majors).',
+    commonPaymentMethods: ['Instant EFT (Ozow)', 'Standard Bank Transfer', 'Visa/Mastercard', 'SnapScan']
   },
   {
     code: 'NG',
@@ -294,11 +379,17 @@ export const COUNTRIES: CountryConfig[] = [
     currency: 'KES',
     commonLanguages: ['English', 'Swahili'],
     seoTitle: 'Best Forex Brokers in Kenya 2025 — Kenyan Traders Guide',
-    metaDescription: 'Find the best forex brokers for Kenyan traders in 2025. Compare international platforms with KES support and local payment options.',
-    keywords: ['forex brokers kenya', 'kenyan forex trading', 'kes forex brokers', 'kenya trading platforms'],
+    metaDescription: 'Compare 2025 CMA-licensed and tier-1 brokers such as Pepperstone, HFM, Exness, XM, and FBS for Kenyan traders with instant M-Pesa deposits and Swahili support.',
+    keywords: [
+      'mpesa forex brokers 2025',
+      'pepperstone kenya review',
+      'hfm kenya license',
+      'exness mpesa withdrawal',
+      'cma regulated forex kenya'
+    ],
     priority: 60,
-    regulatoryNotes: 'International brokers recommended',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'M-Pesa', 'Airtel Money']
+    regulatoryNotes: 'CMA onboards FX brokers with 2025 conduct rules covering M-Pesa integrations, 400:1 leverage ceilings, and client asset ring-fencing.',
+    commonPaymentMethods: ['M-Pesa', 'Airtel Money', 'Kenyan Bank Transfer', 'Visa/Mastercard']
   },
 
   // Latin America
@@ -430,11 +521,17 @@ export const COUNTRIES: CountryConfig[] = [
     isHighRegulated: true,
     commonLanguages: ['German', 'French', 'Italian'],
     seoTitle: 'Best Forex Brokers in Switzerland 2025 — Swiss Traders Guide',
-    metaDescription: 'Find the best FINMA-regulated forex brokers for Swiss traders in 2025. Compare premium platforms with CHF support.',
-    keywords: ['forex brokers switzerland', 'finma regulated brokers', 'swiss forex trading', 'chf forex brokers'],
+    metaDescription: 'Review FINMA-supervised brokers like Swissquote, Dukascopy, Saxo Bank, Pepperstone, and IG for Swiss traders in 2025 with CHF accounts and Swiss deposit protection.',
+    keywords: [
+      'finma forex brokers 2025',
+      'swissquote chf trading',
+      'dukascopy jforex analysis',
+      'pepperstone switzerland review',
+      'saxo bank swiss clients'
+    ],
     priority: 80,
-    regulatoryNotes: 'FINMA regulation provides strong investor protection',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'PostFinance', 'Twint']
+    regulatoryNotes: 'FINMA banking standards mandate segregated CHF custody, Esisuisse coverage up to CHF 100k, and 2025 negative balance safeguards.',
+    commonPaymentMethods: ['Swiss Bank Transfer', 'PostFinance e-finance', 'Visa/Mastercard', 'TWINT']
   },
   {
     code: 'SE',
@@ -511,12 +608,18 @@ export const COUNTRIES: CountryConfig[] = [
     currency: 'MYR',
     commonLanguages: ['Malay', 'English'],
     seoTitle: 'Best Forex Brokers in Malaysia 2025 — Malaysian Traders Guide',
-    metaDescription: 'Find the best forex brokers for Malaysian traders in 2025. Compare international platforms with MYR support and local payment methods.',
-    keywords: ['forex brokers malaysia', 'malaysian forex trading', 'myr forex brokers', 'malaysia trading platforms'],
+    metaDescription: 'Explore 2025 brokers such as Fusion Markets, Pepperstone, FP Markets, IC Markets, and FBS for Malaysian traders with DuitNow/FPX transfers and MYR-friendly deposits.',
+    keywords: [
+      'duitnow forex brokers',
+      'fpx forex deposit',
+      'fusion markets malaysia review',
+      'pepperstone malaysia spreads',
+      'fp markets myr account'
+    ],
     priority: 70,
     isPopular: true,
-    regulatoryNotes: 'International brokers preferred - verify with BNM regulations',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'FPX', 'Touch n Go']
+    regulatoryNotes: 'Securities Commission Malaysia guidance encourages using tier-1 regulated brokers with 2025 DuitNow/FPX compliant payment rails and Sharia options.',
+    commonPaymentMethods: ['DuitNow', 'FPX Bank Transfer', 'Maybank/Bank Islam Transfer', 'Visa/Mastercard']
   },
   {
     code: 'ID',
@@ -543,11 +646,17 @@ export const COUNTRIES: CountryConfig[] = [
     currency: 'PHP',
     commonLanguages: ['Filipino', 'English'],
     seoTitle: 'Best Forex Brokers in Philippines 2025 — Filipino Traders Guide',
-    metaDescription: 'Find the best forex brokers for Filipino traders in 2025. Compare international platforms with PHP support and local payment options.',
-    keywords: ['forex brokers philippines', 'filipino forex trading', 'php forex brokers', 'philippines trading platforms'],
-    priority: 65,
-    regulatoryNotes: 'International brokers recommended',
-    commonPaymentMethods: ['Bank Transfer', 'Credit Card', 'GCash', 'PayMaya', 'UnionBank']
+    metaDescription: 'Compare 2025 forex brokers like XM, FBS, AvaTrade, Pepperstone, and FP Markets for Filipino traders with PHP-friendly wallets such as GCash, UnionBank, and BPI transfers.',
+    keywords: [
+      'gcash forex brokers',
+      'philippines forex trading 2025',
+      'xm philippines review',
+      'pepperstone manila support',
+      'fbs php deposit'
+    ],
+    priority: 70,
+    regulatoryNotes: 'No SEC CFD licences; choose tier-1 regulated brokers that support PHP wallets like GCash and comply with BSP anti-fraud rules.',
+    commonPaymentMethods: ['GCash', 'BPI/UnionBank Transfer', 'Maya (PayMaya)', 'Visa/Mastercard']
   },
   {
     code: 'VN',

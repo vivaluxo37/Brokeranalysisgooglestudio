@@ -13,11 +13,11 @@ import {
 } from '@heroicons/react/24/outline';
 import { Broker } from '../../../types';
 import { useCachedProgrammaticData } from '../../../hooks/useCachedProgrammaticData';
-import BrokerCard from '../../../components/directory/BrokerCard';
+import UnifiedBrokerCard from '../../../components/common/UnifiedBrokerCard';
 import MetaTags, { OptimizedMetaTags } from '../../../components/common/MetaTags';
 import JsonLdSchema from '../../../components/common/JsonLdSchema';
 import LoadingSpinner from '../../../components/ui/LoadingSpinner';
-import { allSEOPageConfigs, SEOPageConfig } from '../../../data/seoPageConfigs';
+import { SEOPageConfig } from '../../../data/seoPageConfigs';
 import { useStructuredData } from '../../../services/structuredDataGenerator';
 import { useMetaTagOptimizer } from '../../../services/metaTagOptimizer';
 import { useContentGenerator } from '../../../services/contentGenerator';
@@ -30,22 +30,67 @@ interface FilterState {
   sortOrder: 'asc' | 'desc';
 }
 
+const ensureArray = <T,>(value: T | T[] | undefined | null): T[] => {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+};
+
+const extractRegulators = (broker: Broker): string[] => {
+  const fromSecurity = ensureArray(broker.security?.regulatedBy)
+    .map(entry => entry?.regulator)
+    .filter(Boolean) as string[];
+  const fromLegacy = ensureArray(broker.regulation?.regulators).filter(Boolean) as string[];
+  return Array.from(new Set([...fromSecurity, ...fromLegacy]));
+};
+
+const toNumber = (value: unknown, fallback = 0): number => {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const parsed = parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+  }
+  return fallback;
+};
+
+const getMinDeposit = (broker: Broker): number => {
+  const deposits: number[] = [];
+
+  if (typeof broker.accessibility?.minDeposit !== 'undefined') {
+    deposits.push(toNumber(broker.accessibility.minDeposit));
+  }
+
+  if (Array.isArray(broker.accountTypes)) {
+    broker.accountTypes.forEach(account => {
+      if (typeof account?.minDeposit !== 'undefined') {
+        deposits.push(toNumber(account.minDeposit));
+      }
+    });
+  }
+
+  return deposits.length ? Math.min(...deposits.filter(Number.isFinite)) : 0;
+};
+
 // Transform broker data to match BrokerCard interface
 const transformBrokerForCard = (broker: Broker) => {
-  // Extract regulators for display
-  const regulators = broker.security?.regulatedBy?.map(r => r.regulator).slice(0, 3).join(', ') || 
-                    broker.regulation?.regulators?.slice(0, 3).join(', ') || 
-                    'Regulated';
-  
+  const regulators = extractRegulators(broker).slice(0, 3);
+  const rating = toNumber(broker.score ?? broker.ratings?.overall ?? broker.ratings?.regulation, 0);
+  const trustScore = typeof broker.ratings?.regulation !== 'undefined'
+    ? toNumber(broker.ratings.regulation, 0)
+    : undefined;
+  const logoUrl = broker.logoUrl || (broker as any)?.logo_url || (broker as any)?.logo || '';
+  const website = broker.websiteUrl || (broker as any)?.website || (broker as any)?.websiteUrl || undefined;
+
   return {
-    id: broker.id, // Keep as string for routing
+    id: broker.id,
     name: broker.name,
-    overall_rating: broker.score || broker.ratings?.regulation || 0,
-    logo_url: broker.logoUrl,
-    minimum_deposit: broker.accessibility?.minDeposit ?? broker.accountTypes?.[0]?.minDeposit ?? 0,
-    regulation_status: regulators,
-    trust_score: broker.ratings?.regulation,
-    website: broker.websiteUrl
+    overall_rating: rating,
+    logo_url: logoUrl,
+    minimum_deposit: getMinDeposit(broker),
+    regulation_status: regulators.length ? regulators.join(', ') : 'Regulated',
+    trust_score: trustScore,
+    website
   };
 };
 
@@ -59,7 +104,7 @@ const BrokerCategoryPage: React.FC = () => {
     sortOrder: 'desc'
   });
   const [showFilters, setShowFilters] = useState(false);
-  const [structuredData, setStructuredData] = useState<any[]>([]);
+  const [dynamicStructuredData, setDynamicStructuredData] = useState<any[]>([]);
   const [generatedContent, setGeneratedContent] = useState<any>(null);
   const [seoOptimized, setSeoOptimized] = useState(false);
 
@@ -90,24 +135,50 @@ const BrokerCategoryPage: React.FC = () => {
   const filteredBrokers = pageData?.brokers || [];
   const pageMetadata = pageData?.metadata;
 
+  const totalBrokerCount = useMemo(() => pageMetadata?.totalCount ?? filteredBrokers.length, [pageMetadata, filteredBrokers.length]);
+
+  const regulatedCount = useMemo(
+    () => filteredBrokers.filter(broker => extractRegulators(broker).length > 0).length,
+    [filteredBrokers]
+  );
+
+  const minDepositValue = useMemo(() => {
+    if (typeof pageMetadata?.minDeposit !== 'undefined' && pageMetadata?.minDeposit !== null) {
+      return toNumber(pageMetadata.minDeposit, 0);
+    }
+
+    if (!filteredBrokers.length) return 0;
+
+    const deposits = filteredBrokers
+      .map(getMinDeposit)
+      .filter(value => Number.isFinite(value) && value >= 0);
+
+    return deposits.length ? Math.min(...deposits) : 0;
+  }, [filteredBrokers, pageMetadata]);
+
+  const avgSpreadValue = useMemo(() => toNumber(pageMetadata?.avgSpread, 0), [pageMetadata]);
+  const avgRatingValue = useMemo(() => toNumber(pageMetadata?.avgRating, 0), [pageMetadata]);
+
   // Generate breadcrumbs
   const breadcrumbs = useMemo(() => {
     if (!category) return [];
-    
+
+    const label = config?.heading || config?.title || category
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, l => l.toUpperCase())
+      .replace('And', '&')
+      .replace('Usa', 'USA')
+      .replace('Uk', 'UK');
+
     return [
       { name: 'Home', url: '/' },
       { name: 'Best Brokers', url: '/best-brokers' },
-      { 
-        name: category
-          .replace(/-/g, ' ')
-          .replace(/\b\w/g, l => l.toUpperCase())
-          .replace('And', '&')
-          .replace('Usa', 'USA')
-          .replace('Uk', 'UK'),
+      {
+        name: label,
         url: `/best-brokers/${category}`
       }
     ];
-  }, [category]);
+  }, [category, config]);
 
   // Generate structured data
   const structuredData = useMemo(() => {
@@ -119,20 +190,26 @@ const BrokerCategoryPage: React.FC = () => {
       "name": config.title,
       "description": config.description,
       "numberOfItems": filteredBrokers.length,
-      "itemListElement": filteredBrokers.slice(0, 10).map((broker, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "item": {
-          "@type": "FinancialProduct",
-          "name": broker.name,
-          "url": `https://brokeranalysis.com/broker/${broker.id}`,
-          "description": `${broker.name} forex broker with ${broker.regulation.regulators.join(', ')} regulation`,
-          "provider": {
-            "@type": "Organization",
-            "name": broker.name
+      "itemListElement": filteredBrokers.slice(0, 10).map((broker, index) => {
+        const brokerRegulators = extractRegulators(broker);
+
+        return {
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "FinancialProduct",
+            "name": broker.name,
+            "url": `https://brokeranalysis.com/broker/${broker.id}`,
+            "description": brokerRegulators.length
+              ? `${broker.name} forex broker with ${brokerRegulators.join(', ')} regulation`
+              : `${broker.name} forex broker`,
+            "provider": {
+              "@type": "Organization",
+              "name": broker.name
+            }
           }
-        }
-      }))
+        };
+      })
     };
   }, [config, filteredBrokers]);
 
@@ -149,7 +226,7 @@ const BrokerCategoryPage: React.FC = () => {
           filteredBrokers,
           config
         );
-        setStructuredData(schemas);
+        setDynamicStructuredData(schemas);
 
         // Generate optimized content
         const content = await generateOptimizedContent(
@@ -225,10 +302,10 @@ const BrokerCategoryPage: React.FC = () => {
       )}
 
       {/* Use advanced structured data if available */}
-      {structuredData.length > 0 ? (
-        <JsonLdSchema schemas={structuredData} />
+      {structuredData && Object.keys(structuredData).length > 0 ? (
+        <JsonLdSchema schemas={[structuredData]} />
       ) : (
-        itemListSchema && <JsonLdSchema data={itemListSchema} />
+        structuredData && <JsonLdSchema data={structuredData} />
       )}
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -345,25 +422,23 @@ const BrokerCategoryPage: React.FC = () => {
               {/* Key Metrics */}
               <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                  <div className="text-2xl font-bold text-blue-600">{pageMetadata.totalCount}</div>
+                  <div className="text-2xl font-bold text-blue-600">{totalBrokerCount}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Total Brokers</div>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                  <div className="text-2xl font-bold text-green-600">
-                    {filteredBrokers.filter(b => b.regulation.regulators.length > 0).length}
-                  </div>
+                  <div className="text-2xl font-bold text-green-600">{regulatedCount}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Regulated</div>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                  <div className="text-2xl font-bold text-purple-600">${pageMetadata.minDeposit}</div>
+                  <div className="text-2xl font-bold text-purple-600">${minDepositValue}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Min Deposit</div>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                  <div className="text-2xl font-bold text-orange-600">{pageMetadata.avgSpread}</div>
+                  <div className="text-2xl font-bold text-orange-600">{avgSpreadValue.toFixed(2)}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Avg Spread</div>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                  <div className="text-2xl font-bold text-red-600">{pageMetadata.avgRating}/10</div>
+                  <div className="text-2xl font-bold text-red-600">{avgRatingValue.toFixed(1)}/10</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Avg Rating</div>
                 </div>
               </div>
@@ -487,12 +562,11 @@ const BrokerCategoryPage: React.FC = () => {
           {filteredBrokers.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredBrokers.map((broker, index) => (
-                <BrokerCard 
+                <UnifiedBrokerCard 
                   key={broker.id}
-                  broker={transformBrokerForCard(broker)}
-                  ranking={index + 1}
-                  showRanking={true}
-                  showDetailsLink={true}
+                  broker={broker}
+                  priority={index + 1}
+                  variant="compact"
                 />
               ))}
             </div>

@@ -1,77 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="5" failures="5" errors="0" time="39.267">
-    <testsuite name="src/components/BrokerCard.test.tsx" timestamp="2025-09-30T07:11:16.671Z" hostname="DESKTOP-5SUHK24" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/components/BrokerCard.test.tsx" name="src/components/BrokerCard.test.tsx" time="0">
-            <failure message="Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js" type="Error">
-Error: Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js
- ❯ Object.&lt;anonymous&gt; node_modules/@testing-library/react/dist/pure.js:46:12
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;MODULE_NOT_FOUND&apos;, requireStack: [ &apos;C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js&apos; ] }
-            </failure>
-        </testcase>
-    </testsuite>
-    <testsuite name="src/pages/BrokerListing.integration.test.tsx" timestamp="2025-09-30T07:11:16.813Z" hostname="DESKTOP-5SUHK24" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/pages/BrokerListing.integration.test.tsx" name="src/pages/BrokerListing.integration.test.tsx" time="0">
-            <failure message="Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js" type="Error">
-Error: Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js
- ❯ Object.&lt;anonymous&gt; node_modules/@testing-library/react/dist/pure.js:46:12
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;MODULE_NOT_FOUND&apos;, requireStack: [ &apos;C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js&apos; ] }
-            </failure>
-        </testcase>
-    </testsuite>
-    <testsuite name="lib/brokerRanking.test.ts" timestamp="2025-09-30T07:11:16.916Z" hostname="DESKTOP-5SUHK24" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="lib/brokerRanking.test.ts" name="lib/brokerRanking.test.ts" time="0">
-            <failure message="Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js" type="Error">
-Error: Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js
- ❯ Object.&lt;anonymous&gt; node_modules/@testing-library/react/dist/pure.js:46:12
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;MODULE_NOT_FOUND&apos;, requireStack: [ &apos;C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js&apos; ] }
-            </failure>
-        </testcase>
-    </testsuite>
-    <testsuite name="components/ui/Button.test.tsx" timestamp="2025-09-30T07:11:17.053Z" hostname="DESKTOP-5SUHK24" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="components/ui/Button.test.tsx" name="components/ui/Button.test.tsx" time="0">
-            <failure message="Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js" type="Error">
-Error: Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js
- ❯ Object.&lt;anonymous&gt; node_modules/@testing-library/react/dist/pure.js:46:12
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;MODULE_NOT_FOUND&apos;, requireStack: [ &apos;C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js&apos; ] }
-            </failure>
-        </testcase>
-    </testsuite>
-    <testsuite name="components/ui/Card.test.tsx" timestamp="2025-09-30T07:11:17.170Z" hostname="DESKTOP-5SUHK24" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="components/ui/Card.test.tsx" name="components/ui/Card.test.tsx" time="0">
-            <failure message="Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js" type="Error">
-Error: Cannot find module &apos;@testing-library/dom&apos;
-Require stack:
-- C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js
- ❯ Object.&lt;anonymous&gt; node_modules/@testing-library/react/dist/pure.js:46:12
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;MODULE_NOT_FOUND&apos;, requireStack: [ &apos;C:\Users\LENOVO\Desktop\Brokeranalysisgooglestu\Brokeranalysisgooglestudio\node_modules\@testing-library\react\dist\pure.js&apos; ] }
+<testsuites name="vitest tests" tests="1" failures="1" errors="0" time="1193.155">
+    <testsuite name="tests/integration/comparisonFlow.test.tsx" timestamp="2025-10-14T00:08:40.607Z" hostname="DESKTOP-5SUHK24" tests="1" failures="1" errors="0" skipped="0" time="0.2028513">
+        <testcase classname="tests/integration/comparisonFlow.test.tsx" name="Broker Comparison Flow &gt; allows a user to add a broker to comparison and view it on the compare page" time="0.1988312">
+            <failure message="useAuth must be used within an AuthProvider" type="Error">
+Error: useAuth must be used within an AuthProvider
+ ❯ Module.useAuth hooks/useAuth.ts:9:11
+ ❯ AllBrokersPage pages/AllBrokersPage.tsx:204:20
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25904:20
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:7662:22
+ ❯ updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10166:19
+ ❯ beginWork node_modules/react-dom/cjs/react-dom-client.development.js:11778:18
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:17641:22
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom-client.development.js:17469:41
+ ❯ renderRootSync node_modules/react-dom/cjs/react-dom-client.development.js:17450:11
             </failure>
         </testcase>
     </testsuite>

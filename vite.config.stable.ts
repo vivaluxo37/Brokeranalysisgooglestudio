@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import {
+  useSyncExternalStoreShimPlugin,
+  useSyncExternalStoreShimEsbuildPlugin,
+} from './vite.plugins'
 
 /**
  * Stable Vite configuration for development
@@ -17,13 +21,13 @@ export default defineConfig(({ command, ssrBuild }) => {
       __DEV_STABLE__: 'true',
     },
 
-    plugins: [react()],
+    plugins: [react(), useSyncExternalStoreShimPlugin()],
 
     publicDir: 'public',
 
     // Conservative server configuration for stability
     server: isDev ? {
-      port: 3001, // Use different port to avoid conflicts
+      port: Number(process.env.VITE_DEV_PORT) || 3005, // Use configurable port for dev server
       host: 'localhost',
       open: false, // Don't auto-open to prevent issues
       strictPort: true, // Fail if port is occupied
@@ -102,21 +106,36 @@ export default defineConfig(({ command, ssrBuild }) => {
         'react',
         'react-dom',
         'react-router-dom',
-        '@clerk/clerk-react',
+        '@clerk/clerk-react'
       ],
+      exclude: ['use-sync-external-store'],
       force: false, // Don't force re-bundling to prevent loops
+      esbuildOptions: {
+        plugins: [useSyncExternalStoreShimEsbuildPlugin()],
+      },
     },
 
     // Path aliases
     resolve: {
-      alias: {
-        '@': path.resolve(__dirname, './'),
-        '@/src': path.resolve(__dirname, './src'),
-        '@/components': path.resolve(__dirname, './components'),
-        '@/contexts': path.resolve(__dirname, './contexts'),
-        '@/lib': path.resolve(__dirname, './lib'),
-        '@/utils': path.resolve(__dirname, './utils'),
-      },
+      alias: [
+        { find: '@', replacement: path.resolve(__dirname, './') },
+        { find: '@/src', replacement: path.resolve(__dirname, './src') },
+        { find: '@/components', replacement: path.resolve(__dirname, './components') },
+        { find: '@/contexts', replacement: path.resolve(__dirname, './contexts') },
+        { find: '@/lib', replacement: path.resolve(__dirname, './lib') },
+        { find: '@/utils', replacement: path.resolve(__dirname, './utils') },
+        {
+          find: 'set-cookie-parser',
+          replacement: path.resolve(__dirname, './src/polyfills/set-cookie-parser-fix.ts'),
+        },
+        {
+          find: 'use-sync-external-store/shim/index.js',
+          replacement: path.resolve(
+            __dirname,
+            './src/mocks/use-sync-external-store/shim/index.js'
+          )
+        }
+      ],
     },
 
     // Clear screen on restart for better visibility

@@ -3,7 +3,7 @@
  * Handles validation and route generation for programmatic directory pages
  */
 
-import { allSEOPageConfigs } from '../data/seoPageConfigs';
+import { allSEOPageConfigs, getSEOPageConfigBySlug } from '../data/seoPageConfigs';
 import { getCountryBySlug } from '../lib/constants/countries';
 
 export interface ProgrammaticRoute {
@@ -17,13 +17,14 @@ export interface ProgrammaticRoute {
  * Validates if a category slug exists in SEO page configs
  */
 export const validateCategoryRoute = (categorySlug: string): ProgrammaticRoute => {
-  const config = allSEOPageConfigs.find(page => {
-    const pathSegment = page.path.split('/').pop();
-    return pathSegment === categorySlug;
-  });
+  const normalizedSlug = (categorySlug || '')
+    .split('?')[0]
+    .replace(/\/+$/, '')
+    .toLowerCase();
+  const config = getSEOPageConfigBySlug(normalizedSlug);
 
   return {
-    path: `/best-brokers/${categorySlug}`,
+    path: `/best-brokers/${normalizedSlug}`,
     type: 'category',
     isValid: !!config,
     config
@@ -48,13 +49,14 @@ export const validateCountryRoute = (countrySlug: string): ProgrammaticRoute => 
  * Validates if an SEO slug exists in SEO page configs
  */
 export const validateSEORoute = (seoSlug: string): ProgrammaticRoute => {
-  const config = allSEOPageConfigs.find(page => {
-    const pathSegment = page.path.split('/').pop();
-    return pathSegment === seoSlug;
-  });
+  const normalizedSlug = (seoSlug || '')
+    .split('?')[0]
+    .replace(/\/+$/, '')
+    .toLowerCase();
+  const config = getSEOPageConfigBySlug(normalizedSlug);
 
   return {
-    path: `/brokers/${seoSlug}`,
+    path: `/brokers/${normalizedSlug}`,
     type: 'seo',
     isValid: !!config,
     config

@@ -393,6 +393,35 @@ export const assetPages: SEOPageConfig[] = [
     changefreq: 'weekly'
   },
   {
+    title: 'Best Crypto CFD Brokers 2025',
+    description: 'Compare the best cryptocurrency CFD brokers for 2025. Trade Bitcoin, Ethereum, and other crypto CFDs with leverage, competitive spreads, and advanced platforms.',
+    heading: 'Top Cryptocurrency CFD Brokers',
+    subheading: 'Trade crypto CFDs with leverage on regulated platforms. Access Bitcoin, Ethereum, and 50+ cryptocurrencies with competitive spreads and professional tools.',
+    path: '/brokers/crypto-cfd-brokers',
+    filters: { specialties: ['crypto'] },
+    highlights: ['Crypto CFDs', 'Leverage Trading', 'Regulated Platforms', '50+ Cryptos', 'Low Spreads'],
+    faqs: [
+      {
+        question: 'What are cryptocurrency CFDs?',
+        answer: 'Crypto CFDs (Contracts for Difference) allow you to speculate on cryptocurrency price movements without owning the actual coins. You can go long or short with leverage, making profits from both rising and falling markets.'
+      },
+      {
+        question: 'Are crypto CFD brokers safe?',
+        answer: 'Yes, when you choose regulated brokers. Look for brokers regulated by FCA, ASIC, CySEC, or other reputable authorities. These brokers must follow strict rules for client fund protection and fair trading practices.'
+      },
+      {
+        question: 'What\'s the difference between crypto CFDs and real crypto?',
+        answer: 'With CFDs, you don\'t own the actual cryptocurrency - you\'re trading a contract based on the price. CFDs offer leverage, the ability to short sell, and no wallet security concerns, but you can\'t transfer or use the crypto for payments.'
+      }
+    ],
+    relatedPages: [
+      { title: 'Best MT4 Crypto Brokers', url: '/brokers/metatrader4-mt4' },
+      { title: 'Best High Leverage Brokers', url: '/brokers/high-leverage' }
+    ],
+    priority: 0.9,
+    changefreq: 'weekly'
+  },
+  {
     title: 'Best Stock CFD Forex Brokers',
     description: 'Find forex brokers offering stock CFD trading. Trade major company stocks alongside forex pairs from the same trading platform.',
     heading: 'Best Forex Brokers for Stock CFD Trading',
@@ -404,6 +433,623 @@ export const assetPages: SEOPageConfig[] = [
       {
         question: 'What are stock CFDs?',
         answer: 'Stock CFDs (Contracts for Difference) allow you to speculate on stock price movements without owning the actual shares. You can go long or short with leverage.'
+      }
+    ],
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  {
+    title: 'Top 10 CFD Brokers & Trading Platforms 2025',
+    description: 'Compare the top 10 CFD brokers and trading platforms for 2025. Find the best CFD brokers for stocks, forex, indices, commodities, and cryptocurrencies with competitive spreads and advanced platforms.',
+    heading: 'Top 10 CFD Brokers & Trading Platforms',
+    subheading: 'Discover the best CFD brokers offering diverse asset classes including stocks, forex, indices, commodities, and crypto CFDs. Trade multiple markets from one platform with competitive pricing.',
+    path: '/brokers/top-10-cfd-brokers-platforms',
+    filters: { 
+      specialties: ['stocks', 'crypto', 'indices', 'commodities'],
+      minDeposit: 0 
+    },
+    highlights: ['Multi-Asset Trading', 'Stock CFDs', 'Forex CFDs', 'Crypto CFDs', 'Indices & Commodities'],
+    faqs: [
+      {
+        question: 'What is a CFD broker?',
+        answer: 'A CFD (Contract for Difference) broker allows you to trade on price movements of various assets without owning them. You can trade stocks, forex, indices, commodities, and cryptocurrencies as CFDs with leverage.'
+      },
+      {
+        question: 'What makes a top CFD broker?',
+        answer: 'Top CFD brokers offer diverse asset classes, competitive spreads, reliable platforms, strong regulation, and good customer support. They should provide access to global markets with transparent pricing and fast execution.'
+      },
+      {
+        question: 'Can I trade multiple asset types with one CFD broker?',
+        answer: 'Yes, most modern CFD brokers offer multi-asset trading platforms where you can trade stocks, forex, indices, commodities, and cryptocurrencies all from one account with a single platform.'
+      }
+    ],
+    relatedPages: [
+      { title: 'Best Stock CFD Brokers', url: '/brokers/stock-cfds' },
+      { title: 'Best Crypto Trading Brokers', url: '/brokers/crypto-trading' },
+      { title: 'Best MT4 Brokers', url: '/brokers/metatrader4-mt4' }
+    ],
+    priority: 0.9,
+    changefreq: 'weekly'
+  }
+];
+
+// Additional category pages for enhanced coverage
+export const additionalCategoryPages: SEOPageConfig[] = [
+  // Direct Market Access category that was missing
+  {
+    title: 'Best DMA (Direct Market Access) Forex Brokers',
+    description: 'Find the best DMA brokers offering direct market access for professional traders. Compare institutional-level trading platforms with direct interbank access.',
+    heading: 'Top DMA (Direct Market Access) Brokers',
+    subheading: 'Trade with institutional-level access through DMA brokers. Get direct market access to interbank markets with professional trading conditions.',
+    path: '/brokers/dma-direct-market-access-brokers',
+    filters: { features: ['dma'] },
+    highlights: ['Direct Market Access', 'Institutional Trading', 'Interbank Access', 'Professional Tools'],
+    faqs: [
+      {
+        question: 'What is Direct Market Access (DMA)?',
+        answer: 'DMA allows traders to place buy and sell orders directly in the exchange order book, bypassing broker dealing desks for true market prices and transparency.'
+      },
+      {
+        question: 'Who should use DMA brokers?',
+        answer: 'DMA is ideal for professional traders, institutions, and high-volume traders who need direct market access, transparency, and the ability to see market depth.'
+      }
+    ],
+    priority: 0.85,
+    changefreq: 'weekly'
+  },
+  // Top 10 Online Trading Brokers
+  {
+    title: 'Top 10 Online Trading Brokers 2025',
+    description: 'Discover the best online trading brokers of 2025. Compare platforms, fees, and features from leading brokers. Expert reviews and ratings.',
+    heading: 'Top 10 Online Trading Brokers',
+    subheading: 'The best online trading brokers offering comprehensive trading services across multiple asset classes with excellent platforms.',
+    path: '/brokers/top-10-online-trading-brokers',
+    filters: { minDeposit: 0 },
+    highlights: ['Top Rated', 'Multi-Asset', 'Best Platforms', 'Competitive Pricing'],
+    faqs: [
+      {
+        question: 'What makes a top online trading broker?',
+        answer: 'Top brokers offer competitive fees, reliable platforms, strong regulation, diverse assets, excellent customer support, and educational resources.'
+      }
+    ],
+    priority: 1.0,
+    changefreq: 'weekly'
+  },
+  // Top 10 Forex Brokers
+  {
+    title: 'Top 10 Forex Brokers 2025',
+    description: 'Discover the top 10 forex brokers of 2025. Compare spreads, execution, regulation, and features. Expert reviews of the best FX brokers.',
+    heading: 'Top 10 Forex Brokers',
+    subheading: 'The leading forex brokers providing currency trading with tight spreads, fast execution, and professional platforms.',
+    path: '/brokers/top-10-forex-brokers',
+    filters: { minDeposit: 0 },
+    highlights: ['Best Forex', 'Tight Spreads', 'Fast Execution', 'Professional Trading'],
+    faqs: [
+      {
+        question: 'How do I choose a forex broker?',
+        answer: 'Consider regulation, spreads, execution speed, platform features, customer support, and whether they suit your trading style and experience level.'
+      }
+    ],
+    priority: 1.0,
+    changefreq: 'weekly'
+  },
+  // No Dealing Desk
+  {
+    title: 'Best No Dealing Desk (NDD) Brokers',
+    description: 'Find the best No Dealing Desk brokers with direct liquidity provider access. Compare NDD execution and transparent pricing.',
+    heading: 'Top No Dealing Desk Brokers',
+    subheading: 'Trade with NDD brokers that route orders directly to liquidity providers without dealer intervention.',
+    path: '/brokers/no-dealing-desk',
+    filters: { features: ['ndd'] },
+    highlights: ['No Dealing Desk', 'Direct Liquidity', 'Transparent Pricing', 'No Intervention'],
+    faqs: [
+      {
+        question: 'What is a No Dealing Desk broker?',
+        answer: 'NDD brokers route client orders directly to liquidity providers without intervention, ensuring transparent pricing and no conflict of interest.'
+      }
+    ],
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  // Forex Brokers Without Requotes
+  {
+    title: 'Best Forex Brokers Without Requotes',
+    description: 'Trade without requotes at top forex brokers. Compare brokers offering guaranteed execution and price certainty for all orders.',
+    heading: 'Forex Brokers Without Requotes',
+    subheading: 'Get guaranteed order execution without requotes, ensuring price certainty for all trading styles.',
+    path: '/brokers/forex-brokers-without-requotes',
+    filters: { features: ['no-requotes'] },
+    highlights: ['No Requotes', 'Guaranteed Execution', 'Price Certainty', 'Fair Trading'],
+    faqs: [
+      {
+        question: 'What are requotes in forex?',
+        answer: 'Requotes occur when a broker cannot execute your order at the requested price and offers a different price, which can disrupt trading strategies.'
+      }
+    ],
+    priority: 0.75,
+    changefreq: 'weekly'
+  },
+  // Fixed Spread Brokers
+  {
+    title: 'Best Fixed Spread Brokers',
+    description: 'Trade with fixed spreads at top brokers. Compare constant spread brokers offering predictable trading costs in all market conditions.',
+    heading: 'Top Fixed Spread Brokers',
+    subheading: 'Brokers offering fixed spreads that remain constant regardless of market conditions, ideal for consistent trading costs.',
+    path: '/brokers/fixed-spread-brokers',
+    filters: { features: ['fixed-spreads'] },
+    highlights: ['Fixed Spreads', 'Predictable Costs', 'Stable Pricing', 'No Surprises'],
+    faqs: [
+      {
+        question: 'Are fixed spreads better than variable?',
+        answer: 'Fixed spreads offer predictability and are better during volatile markets, while variable spreads can be tighter during calm conditions.'
+      }
+    ],
+    priority: 0.7,
+    changefreq: 'weekly'
+  },
+  // No Spread Forex Brokers
+  {
+    title: 'Best Zero Spread Forex Brokers',
+    description: 'Trade with zero spreads at top forex brokers. Compare no-spread brokers offering the lowest possible trading costs with commission-based pricing.',
+    heading: 'Zero Spread Forex Brokers',
+    subheading: 'Forex brokers offering zero or near-zero spreads, typically charging commission instead for ultra-low trading costs.',
+    path: '/brokers/no-spread-forex-brokers',
+    filters: { features: ['zero-spread'] },
+    highlights: ['Zero Spreads', 'Commission-Based', 'Lowest Costs', 'Raw Pricing'],
+    faqs: [
+      {
+        question: 'How do zero spread brokers make money?',
+        answer: 'Zero spread brokers charge a fixed commission per trade instead of marking up spreads, providing transparent and often lower overall costs.'
+      }
+    ],
+    priority: 0.85,
+    changefreq: 'weekly'
+  },
+  // A-Book Forex Brokers
+  {
+    title: 'Best A-Book Forex Brokers',
+    description: 'Trade with A-Book brokers offering transparent execution. Compare agency model brokers with no conflict of interest.',
+    heading: 'Top A-Book Forex Brokers',
+    subheading: 'A-Book brokers pass all client orders to liquidity providers, ensuring no conflict of interest and transparent execution.',
+    path: '/brokers/a-book-forex-brokers',
+    filters: { features: ['a-book'] },
+    highlights: ['A-Book Model', 'No Conflict', 'Transparent', 'Agency Execution'],
+    faqs: [
+      {
+        question: 'What is an A-Book broker?',
+        answer: 'A-Book brokers pass all client trades directly to liquidity providers without taking the opposite side, eliminating conflicts of interest.'
+      }
+    ],
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  // Raw Spreads
+  {
+    title: 'Best Raw Spread Forex Brokers',
+    description: 'Access raw interbank spreads at top forex brokers. Compare brokers offering minimal markup on currency pairs.',
+    heading: 'Forex Brokers With Raw Spreads',
+    subheading: 'Get raw interbank spreads with minimal markup, offering the most competitive pricing available.',
+    path: '/brokers/forex-brokers-with-raw-spreads',
+    filters: { features: ['raw-spreads'] },
+    highlights: ['Raw Spreads', 'Interbank Pricing', 'Minimal Markup', 'Best Prices'],
+    faqs: [
+      {
+        question: 'What are raw spreads?',
+        answer: 'Raw spreads are the actual interbank spreads without broker markup, typically offered with a commission for transparent pricing.'
+      }
+    ],
+    priority: 0.85,
+    changefreq: 'weekly'
+  },
+  // STP Brokers
+  {
+    title: 'Best STP Forex Brokers',
+    description: 'Trade with STP brokers offering direct liquidity provider access. Compare Straight Through Processing brokers for transparent execution.',
+    heading: 'Top STP (Straight Through Processing) Brokers',
+    subheading: 'STP brokers route orders directly to liquidity providers for transparent execution without dealing desk intervention.',
+    path: '/brokers/stp-forex-brokers',
+    filters: { accountTypes: ['STP'] },
+    highlights: ['STP Execution', 'Direct Routing', 'No Dealing Desk', 'Transparent'],
+    faqs: [
+      {
+        question: 'How do STP brokers work?',
+        answer: 'STP brokers automatically route all orders to liquidity providers without manual intervention, ensuring fast and transparent execution.'
+      }
+    ],
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  // Instant Execution
+  {
+    title: 'Best Instant Execution Brokers',
+    description: 'Trade with instant execution brokers offering the fastest order processing. Compare brokers with sub-second execution speeds.',
+    heading: 'Top Instant Execution Brokers',
+    subheading: 'Get instant order execution for fast-paced trading strategies requiring immediate order fills.',
+    path: '/brokers/instant-execution-brokers',
+    filters: { features: ['instant-execution'] },
+    highlights: ['Instant Execution', 'Fast Processing', 'No Delays', 'Speed Trading'],
+    faqs: [
+      {
+        question: 'What is instant execution?',
+        answer: 'Instant execution means orders are filled immediately at the price shown when you click, ideal for scalping and fast trading strategies.'
+      }
+    ],
+    priority: 0.75,
+    changefreq: 'weekly'
+  },
+  // PAMM Brokers
+  {
+    title: 'Best PAMM Brokers',
+    description: 'Find the best PAMM brokers for professional money management. Compare platforms offering Percentage Allocation Management services.',
+    heading: 'Top PAMM Brokers',
+    subheading: 'PAMM brokers allow professional money management and copy trading services through percentage allocation.',
+    path: '/brokers/pamm-brokers',
+    filters: { features: ['pamm'] },
+    highlights: ['PAMM Accounts', 'Money Management', 'Professional Trading', 'Passive Income'],
+    faqs: [
+      {
+        question: 'What is PAMM in forex?',
+        answer: 'PAMM (Percentage Allocation Management Module) allows investors to allocate funds to professional traders who manage them for a percentage of profits.'
+      }
+    ],
+    priority: 0.7,
+    changefreq: 'weekly'
+  },
+  // HFT Brokers
+  {
+    title: 'Best HFT (High-Frequency Trading) Brokers',
+    description: 'Discover the best HFT brokers for algorithmic trading. Compare high-frequency trading platforms with ultra-low latency.',
+    heading: 'Top HFT Brokers',
+    subheading: 'HFT brokers provide ultra-fast execution and low latency for algorithmic and high-frequency trading strategies.',
+    path: '/brokers/hft-brokers',
+    filters: { features: ['hft'] },
+    highlights: ['HFT Support', 'Ultra-Low Latency', 'Algorithmic Trading', 'VPS Services'],
+    faqs: [
+      {
+        question: 'What do HFT brokers offer?',
+        answer: 'HFT brokers provide ultra-low latency connections, VPS services, API access, and infrastructure optimized for high-frequency trading strategies.'
+      }
+    ],
+    priority: 0.75,
+    changefreq: 'weekly'
+  },
+  // Scalping Brokers (additional entry)
+  {
+    title: 'Best Scalping Forex Brokers',
+    description: 'Find the best brokers for scalping strategies. Compare platforms allowing scalping with fast execution and tight spreads.',
+    heading: 'Top Scalping Brokers',
+    subheading: 'Trade with brokers that allow and support scalping strategies with fast execution, tight spreads, and no restrictions.',
+    path: '/brokers/scalping-brokers',
+    filters: { features: ['scalping'] },
+    highlights: ['Scalping Allowed', 'Fast Execution', 'Tight Spreads', 'No Restrictions'],
+    faqs: [
+      {
+        question: 'What makes a good scalping broker?',
+        answer: 'Good scalping brokers offer tight spreads, fast execution, no restrictions on short-term trading, and preferably ECN/STP execution models.'
+      }
+    ],
+    priority: 0.9,
+    changefreq: 'weekly'
+  },
+  // Trading API Brokers
+  {
+    title: 'Best Trading API Brokers',
+    description: 'Connect via API to top trading brokers. Compare platforms offering robust trading APIs for algorithmic and automated trading.',
+    heading: 'Top Trading API Brokers',
+    subheading: 'Brokers offering robust trading APIs for algorithmic trading, automated strategies, and third-party integrations.',
+    path: '/brokers/trading-api-brokers',
+    filters: { features: ['api-trading'] },
+    highlights: ['Trading APIs', 'Algorithmic Trading', 'Automation', 'Integration'],
+    faqs: [
+      {
+        question: 'Why use a trading API?',
+        answer: 'Trading APIs enable automated trading, custom platform development, algorithmic strategies, and integration with third-party tools and analytics.'
+      }
+    ],
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  // Swing Trading Brokers
+  {
+    title: 'Best Swing Trading Brokers',
+    description: 'Find the best brokers for swing trading strategies. Compare platforms optimized for medium-term trading with low overnight fees.',
+    heading: 'Top Swing Trading Brokers',
+    subheading: 'Ideal brokers for swing trading with competitive overnight fees and platforms designed for medium-term strategies.',
+    path: '/brokers/swing-trading-brokers',
+    filters: { features: ['low-swap'] },
+    highlights: ['Swing Trading', 'Low Swap Fees', 'Medium-Term', 'Position Trading'],
+    faqs: [
+      {
+        question: 'What do swing traders need in a broker?',
+        answer: 'Swing traders need low overnight swap fees, good charting tools, reliable execution, and platforms that support multi-day position holding.'
+      }
+    ],
+    priority: 0.75,
+    changefreq: 'weekly'
+  },
+  // Hedging Brokers
+  {
+    title: 'Best Forex Brokers for Hedging',
+    description: 'Trade with brokers allowing hedging strategies. Compare platforms supporting simultaneous long and short positions.',
+    heading: 'Top Hedging Brokers',
+    subheading: 'Brokers allowing hedging strategies where traders can hold both long and short positions simultaneously.',
+    path: '/brokers/forex-brokers-for-hedging',
+    filters: { features: ['hedging'] },
+    highlights: ['Hedging Allowed', 'Risk Management', 'Long/Short', 'Advanced Strategies'],
+    faqs: [
+      {
+        question: 'What is hedging in forex?',
+        answer: 'Hedging involves opening opposite positions on the same currency pair to protect against adverse price movements and manage risk.'
+      }
+    ],
+    priority: 0.7,
+    changefreq: 'weekly'
+  },
+  // Beginners (moved and updated)
+  {
+    title: 'Best Forex Brokers for Beginners',
+    description: 'Start trading with the best beginner-friendly forex brokers. Compare platforms with education, low deposits, and easy-to-use interfaces.',
+    heading: 'Top Forex Brokers for Beginners',
+    subheading: 'Beginner-friendly brokers with educational resources, low minimum deposits, and user-friendly platforms.',
+    path: '/brokers/forex-brokers-for-beginners',
+    filters: { maxDeposit: 100, minDeposit: 0 },
+    highlights: ['Beginner Friendly', 'Education', 'Demo Accounts', 'Low Deposits'],
+    faqs: [
+      {
+        question: 'What should beginners look for in a forex broker?',
+        answer: 'Beginners should prioritize education, demo accounts, low minimum deposits, user-friendly platforms, and responsive customer support.'
+      }
+    ],
+    priority: 0.95,
+    changefreq: 'weekly'
+  },
+  // Day Trading
+  {
+    title: 'Best Day Trading Brokers',
+    description: 'Find the best brokers for day trading. Compare platforms optimized for intraday trading with fast execution and competitive spreads.',
+    heading: 'Top Day Trading Brokers',
+    subheading: 'Optimal brokers for day trading with fast execution, competitive spreads, and platforms designed for active trading.',
+    path: '/brokers/day-trading-broker',
+    filters: { features: ['day-trading'] },
+    highlights: ['Day Trading', 'Fast Execution', 'Low Costs', 'Active Trading'],
+    faqs: [
+      {
+        question: 'What makes a broker good for day trading?',
+        answer: 'Day trading brokers should offer fast execution, tight spreads, reliable platforms, real-time data, and tools for quick market analysis.'
+      }
+    ],
+    priority: 0.85,
+    changefreq: 'weekly'
+  },
+  // Most Regulated
+  {
+    title: 'Most Regulated Forex Brokers',
+    description: 'Trade with the most regulated forex brokers. Compare multi-licensed platforms with tier-1 regulatory oversight for maximum security.',
+    heading: 'Most Regulated Forex Brokers',
+    subheading: 'The most regulated forex brokers with licenses from multiple tier-1 regulatory authorities for maximum security.',
+    path: '/brokers/most-regulated-forex-brokers',
+    filters: { regulators: ['FCA', 'ASIC', 'NFA', 'CySEC'] },
+    highlights: ['Multi-Licensed', 'Tier-1 Regulation', 'Maximum Security', 'Client Protection'],
+    faqs: [
+      {
+        question: 'Why choose highly regulated brokers?',
+        answer: 'Highly regulated brokers offer better client fund protection, transparency, dispute resolution, and are subject to strict financial requirements.'
+      }
+    ],
+    priority: 0.95,
+    changefreq: 'weekly'
+  },
+  // Trailing Stop Loss
+  {
+    title: 'Best Trailing Stop Loss Brokers',
+    description: 'Use trailing stops at top forex brokers. Compare platforms offering advanced trailing stop loss for automated risk management.',
+    heading: 'Top Trailing Stop Loss Brokers',
+    subheading: 'Brokers offering advanced trailing stop loss functionality for automatic profit protection and risk management.',
+    path: '/brokers/trailing-stop-loss-brokers',
+    filters: { features: ['trailing-stops'] },
+    highlights: ['Trailing Stops', 'Risk Management', 'Profit Protection', 'Automated'],
+    faqs: [
+      {
+        question: 'How do trailing stops work?',
+        answer: 'Trailing stops automatically adjust your stop loss as the price moves in your favor, locking in profits while limiting downside risk.'
+      }
+    ],
+    priority: 0.7,
+    changefreq: 'weekly'
+  },
+  // Micro Accounts
+  {
+    title: 'Best Micro Account Brokers',
+    description: 'Start small with micro account brokers. Compare platforms offering micro lots and flexible position sizing for new traders.',
+    heading: 'Top Micro Account Brokers',
+    subheading: 'Brokers offering micro account options with smaller position sizes perfect for new traders and risk management.',
+    path: '/brokers/micro-accounts',
+    filters: { features: ['micro-accounts'] },
+    highlights: ['Micro Accounts', 'Small Positions', 'Low Risk', 'Flexible Sizing'],
+    faqs: [
+      {
+        question: 'What is a micro account?',
+        answer: 'Micro accounts allow trading with micro lots (0.01 lots or 1,000 units), enabling traders to start with smaller capital and lower risk.'
+      }
+    ],
+    priority: 0.75,
+    changefreq: 'weekly'
+  },
+  // Offshore Brokers
+  {
+    title: 'Best Offshore Forex Brokers',
+    description: 'Trade with offshore forex brokers offering flexible conditions. Compare international brokers with higher leverage and fewer restrictions.',
+    heading: 'Top Offshore Forex Brokers',
+    subheading: 'Offshore forex brokers providing flexible trading conditions and higher leverage options for international traders.',
+    path: '/brokers/offshore-forex-brokers',
+    filters: { features: ['offshore'] },
+    highlights: ['Offshore Trading', 'High Leverage', 'Flexible Conditions', 'International'],
+    faqs: [
+      {
+        question: 'Are offshore brokers safe?',
+        answer: 'Offshore broker safety varies. While some are reputable, they typically have less stringent regulations. Research thoroughly and check client reviews.'
+      }
+    ],
+    priority: 0.6,
+    changefreq: 'weekly'
+  },
+  // Corporate Accounts
+  {
+    title: 'Best Corporate Account Brokers',
+    description: 'Open corporate accounts at top brokers. Compare institutional trading solutions for companies and hedge funds.',
+    heading: 'Top Corporate Account Brokers',
+    subheading: 'Brokers offering corporate account solutions for institutional clients, hedge funds, and trading companies.',
+    path: '/brokers/corporate-accounts',
+    filters: { features: ['corporate'] },
+    highlights: ['Corporate Accounts', 'Institutional', 'Business Trading', 'Professional'],
+    faqs: [
+      {
+        question: 'What are corporate trading accounts?',
+        answer: 'Corporate accounts are designed for businesses, offering features like multiple users, segregated funds, institutional pricing, and tax documentation.'
+      }
+    ],
+    priority: 0.65,
+    changefreq: 'weekly'
+  },
+  // No Deposit Bonus
+  {
+    title: 'Best No Deposit Forex Brokers',
+    description: 'Start trading without deposits at top forex brokers. Compare no deposit bonuses and free trading opportunities.',
+    heading: 'Top No Deposit Forex Brokers',
+    subheading: 'Forex brokers offering no deposit bonuses and demo trading opportunities to start trading without initial capital.',
+    path: '/brokers/no-deposit-forex-brokers',
+    filters: { features: ['no-deposit-bonus'] },
+    highlights: ['No Deposit Bonus', 'Free Trading', 'Start Free', 'Demo Accounts'],
+    faqs: [
+      {
+        question: 'How do no deposit bonuses work?',
+        answer: 'No deposit bonuses provide free trading capital to new clients, allowing them to trade real money without making a deposit, though withdrawal conditions apply.'
+      }
+    ],
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  // High Leverage (updated path)
+  {
+    title: 'Best High Leverage Forex Brokers',
+    description: 'Trade with high leverage at top forex brokers. Compare platforms offering maximum leverage ratios up to 1:3000.',
+    heading: 'Top High Leverage Forex Brokers',
+    subheading: 'Brokers offering high leverage ratios up to 1:3000 for traders seeking maximum capital efficiency.',
+    path: '/brokers/forex-brokers-with-high-leverage',
+    filters: { leverage: 500 },
+    highlights: ['High Leverage', '1:500+', 'Capital Efficiency', 'Professional'],
+    faqs: [
+      {
+        question: 'Is high leverage risky?',
+        answer: 'Yes, high leverage amplifies both profits and losses. It requires strict risk management and is best suited for experienced traders.'
+      }
+    ],
+    priority: 0.85,
+    changefreq: 'weekly'
+  },
+  // No Minimum Deposit (updated path)
+  {
+    title: 'Best No Minimum Deposit Forex Brokers',
+    description: 'Start trading with any amount at no minimum deposit brokers. Compare platforms with zero deposit requirements.',
+    heading: 'Forex Brokers With No Minimum Deposit',
+    subheading: 'Brokers with no minimum deposit requirements, allowing traders to start with any amount they choose.',
+    path: '/brokers/forex-brokers-with-no-minimum-deposit',
+    filters: { maxDeposit: 0 },
+    highlights: ['No Minimum', 'Start Any Amount', 'Flexible', 'Accessible'],
+    faqs: [
+      {
+        question: 'Can I really start with $1?',
+        answer: 'Yes, brokers with no minimum deposit allow you to start with any amount, though you need sufficient funds to open positions based on margin requirements.'
+      }
+    ],
+    priority: 0.9,
+    changefreq: 'weekly'
+  },
+  // Islamic Accounts (updated path)
+  {
+    title: 'Best Islamic Account Forex Brokers',
+    description: 'Trade with Islamic accounts at top brokers. Compare Sharia-compliant, swap-free trading platforms for Muslim traders.',
+    heading: 'Top Islamic Account Brokers',
+    subheading: 'Sharia-compliant Islamic accounts with no swap fees for Muslim traders following Islamic finance principles.',
+    path: '/brokers/islamic-accounts',
+    filters: { features: ['islamic'] },
+    highlights: ['Islamic Accounts', 'Swap-Free', 'Sharia Compliant', 'Halal Trading'],
+    faqs: [
+      {
+        question: 'Are Islamic accounts truly Sharia-compliant?',
+        answer: 'Legitimate Islamic accounts eliminate interest (riba) by removing overnight swap fees, though brokers may charge admin fees or adjust spreads.'
+      }
+    ],
+    priority: 0.8,
+    changefreq: 'weekly'
+  },
+  // MetaTrader 4 (updated path)
+  {
+    title: 'Best MT4 Forex Brokers',
+    description: 'Trade on MetaTrader 4 with top brokers. Compare MT4 platforms offering expert advisors and automated trading.',
+    heading: 'Top MT4 Brokers',
+    subheading: 'Brokers offering MetaTrader 4 platform with expert advisors, custom indicators, and automated trading capabilities.',
+    path: '/brokers/mt4-brokers',
+    filters: { platforms: ['MT4'] },
+    highlights: ['MetaTrader 4', 'Expert Advisors', 'Automated Trading', 'Custom Indicators'],
+    faqs: [
+      {
+        question: 'Why is MT4 so popular?',
+        answer: 'MT4 is popular for its stability, extensive library of indicators and EAs, user-friendly interface, and large community of traders and developers.'
+      }
+    ],
+    priority: 0.9,
+    changefreq: 'weekly'
+  },
+  // MetaTrader 5 (updated path)
+  {
+    title: 'Best MT5 Forex Brokers',
+    description: 'Access MetaTrader 5 at leading brokers. Compare MT5 platforms with advanced features and enhanced analytical tools.',
+    heading: 'Top MT5 Brokers',
+    subheading: 'Brokers supporting MetaTrader 5 with advanced features, more timeframes, and enhanced analytical tools.',
+    path: '/brokers/mt5-brokers',
+    filters: { platforms: ['MT5'] },
+    highlights: ['MetaTrader 5', 'Advanced Features', 'Multi-Asset', 'Enhanced Tools'],
+    faqs: [
+      {
+        question: 'What are the advantages of MT5 over MT4?',
+        answer: 'MT5 offers more timeframes, advanced order types, built-in economic calendar, market depth, and support for more asset classes beyond forex.'
+      }
+    ],
+    priority: 0.9,
+    changefreq: 'weekly'
+  },
+  // TradingView Brokers
+  {
+    title: 'Best TradingView Brokers',
+    description: 'Trade with TradingView integration at top brokers. Compare platforms offering advanced charting and social trading features.',
+    heading: 'Top TradingView Brokers',
+    subheading: 'Brokers integrated with TradingView for advanced charting, social trading, and comprehensive market analysis.',
+    path: '/brokers/tradingview-brokers',
+    filters: { platforms: ['TradingView'] },
+    highlights: ['TradingView', 'Advanced Charts', 'Social Trading', 'Pine Script'],
+    faqs: [
+      {
+        question: 'Can I trade directly from TradingView?',
+        answer: 'Yes, many brokers offer direct TradingView integration, allowing you to analyze and execute trades within the TradingView platform.'
+      }
+    ],
+    priority: 0.85,
+    changefreq: 'weekly'
+  },
+  // Stock CFD Brokers (updated path)
+  {
+    title: 'Best Stock CFD Brokers',
+    description: 'Trade stock CFDs at leading brokers. Compare platforms offering leveraged equity trading on major global exchanges.',
+    heading: 'Top Stock CFD Brokers',
+    subheading: 'Brokers offering stock CFD trading on major exchanges with leverage and the ability to go long or short.',
+    path: '/brokers/stock-cfd-brokers',
+    filters: { specialties: ['stocks'] },
+    highlights: ['Stock CFDs', 'Global Markets', 'Go Long/Short', 'Leverage'],
+    faqs: [
+      {
+        question: 'What\'s the advantage of stock CFDs over stocks?',
+        answer: 'Stock CFDs offer leverage, the ability to short sell easily, no stamp duty in many jurisdictions, and access to global markets from one platform.'
       }
     ],
     priority: 0.8,
@@ -420,8 +1066,31 @@ export const allSEOPageConfigs: SEOPageConfig[] = [
   ...tradingStylePages,
   ...commissionPages,
   ...leveragePages,
-  ...assetPages
+  ...assetPages,
+  ...additionalCategoryPages
 ];
+
+const slugFromPath = (path: string): string => {
+  const cleanedPath = path.split('?')[0]?.replace(/\/+$/, '') || '';
+  const segments = cleanedPath.split('/').filter(Boolean);
+  return segments.pop()?.toLowerCase() || '';
+};
+
+const seoConfigBySlug = new Map<string, SEOPageConfig>();
+
+allSEOPageConfigs.forEach(config => {
+  const slug = slugFromPath(config.path);
+  if (slug) {
+    seoConfigBySlug.set(slug, config);
+  }
+});
+
+
+export const getSEOPageConfigBySlug = (slug: string): SEOPageConfig | null => {
+  if (!slug) return null;
+  const normalizedSlug = slug.split('?')[0]?.toLowerCase() || '';
+  return seoConfigBySlug.get(normalizedSlug) || null;
+};
 
 // Group by category for sitemap generation
 export const seoPageCategories = {

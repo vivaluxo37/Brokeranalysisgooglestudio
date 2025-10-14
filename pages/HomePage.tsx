@@ -193,7 +193,7 @@ const HomePage: React.FC = () => {
         <div className="mt-10 flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm text-foreground/70">
             {(t('home.hero.trustBadges') as string[]).map((badge: string, index: number) => (
                 <span key={index} className="flex items-center gap-2">
-                    <Icons.checkCircle className="h-4 w-4 text-green-500" />
+                    <Icons.checkCircle className="h-4 w-4 text-blue-500" />
                     {badge}
                 </span>
             ))}
@@ -247,23 +247,23 @@ const HomePage: React.FC = () => {
             </div>
             
             <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-              <div className="bg-green-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <Icons.globe className="h-8 w-8 text-green-600" />
+              <div className="bg-blue-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Icons.globe className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">80+ Countries</h3>
               <p className="text-gray-600">Find brokers available in your country with local regulation</p>
-              <Link to="/countries" className="inline-block mt-4 text-green-600 hover:text-green-700 font-medium">
+              <Link to="/countries" className="inline-block mt-4 text-blue-600 hover:text-blue-700 font-medium">
                 Browse Countries →
               </Link>
             </div>
             
             <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-              <div className="bg-purple-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <Icons.shieldCheck className="h-8 w-8 text-purple-600" />
+              <div className="bg-blue-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Icons.shieldCheck className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Expert Analysis</h3>
               <p className="text-gray-600">Independent reviews with detailed scoring and comparison</p>
-              <Link to="/methodology" className="inline-block mt-4 text-purple-600 hover:text-purple-700 font-medium">
+              <Link to="/methodology" className="inline-block mt-4 text-blue-600 hover:text-blue-700 font-medium">
                 Our Method →
               </Link>
             </div>
@@ -356,13 +356,13 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Popular Countries Section */}
-      <div className="text-center bg-gradient-to-br from-green-50 to-emerald-100 -mx-4 px-4 py-20">
+      <div className="text-center bg-gradient-to-br from-blue-50 to-indigo-100 -mx-4 px-4 py-20">
         <h2 className="text-3xl font-bold mb-4 text-gray-900">Find Brokers by Country</h2>
         <p className="text-lg text-gray-600 mb-10 max-w-3xl mx-auto">Discover brokers available in your country with local regulation and support</p>
         
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-6xl mx-auto mb-10">
             {POPULAR_COUNTRIES.slice(0, 12).map(country => (
-            <Link to={`/best-forex-brokers/${country.slug}`} key={country.slug} className="group block p-4 bg-white rounded-lg shadow-sm border border-gray-200 text-center hover:border-green-500 hover:shadow-md hover:-translate-y-1 transition-all">
+            <Link to={`/best-forex-brokers/${country.slug}`} key={country.slug} className="group block p-4 bg-white rounded-lg shadow-sm border border-gray-200 text-center hover:border-blue-500 hover:shadow-md hover:-translate-y-1 transition-all">
                 <div className="text-4xl mb-2">{country.flag}</div>
                 <h3 className="text-sm font-semibold text-gray-900 mb-1">{country.name}</h3>
                 <p className="text-xs text-gray-500">View Brokers</p>
@@ -372,12 +372,12 @@ const HomePage: React.FC = () => {
         
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link to="/countries">
-            <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3">
               🌍 View All Countries
             </Button>
           </Link>
           <Link to="/best-brokers">
-            <Button size="lg" variant="secondary" className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-3">
+            <Button size="lg" variant="secondary" className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3">
               Browse by Category
             </Button>
           </Link>

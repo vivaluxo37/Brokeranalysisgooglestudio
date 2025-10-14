@@ -1,6 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { Link } from 'react-router-dom';
 import { StarIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { StarIcon as StarOutlineIcon } from '@heroicons/react/24/outline';
 
@@ -96,13 +95,11 @@ export default function BrokerCard({
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
             {broker.logo_url ? (
-              <div className="relative w-12 h-12 bg-gray-50 rounded-lg overflow-hidden">
-                <Image
+              <div className="w-12 h-12 bg-gray-50 rounded-lg overflow-hidden p-1 flex items-center justify-center">
+                <img
                   src={broker.logo_url}
                   alt={`${broker.name} logo`}
-                  fill
-                  className="object-contain"
-                  priority={priority <= 3}
+                  className="max-w-full max-h-full object-contain"
                 />
               </div>
             ) : (
@@ -114,8 +111,8 @@ export default function BrokerCard({
             )}
             
             <div>
-              <Link 
-                href={`/broker/${broker.slug}`}
+              <Link
+                to={`/broker/${broker.slug}`}
                 className="font-semibold text-lg text-gray-900 hover:text-blue-600 transition-colors"
               >
                 {broker.name}
@@ -301,7 +298,7 @@ export default function BrokerCard({
       {/* CTA Footer */}
       <div className="p-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
         <Link
-          href={`/broker/${broker.slug}`}
+          to={`/broker/${broker.slug}`}
           className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
         >
           Read Review

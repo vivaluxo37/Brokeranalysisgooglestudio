@@ -1,0 +1,83 @@
+{
+  "summary": {
+    "total": 84,
+    "tested": 33,
+    "working": 28,
+    "broken": 5,
+    "successRate": "100.00%"
+  },
+  "brokenLinks": [
+    {
+      "text": "",
+      "href": "https://pepperstone.com/",
+      "error": "HTTP 0",
+      "section": "main",
+      "statusCode": 0
+    },
+    {
+      "text": "",
+      "href": "https://www.icmarkets.com/",
+      "error": "HTTP 0",
+      "section": "main",
+      "statusCode": 0
+    },
+    {
+      "text": "",
+      "href": "https://www.forex.com/",
+      "error": "HTTP 0",
+      "section": "main",
+      "statusCode": 0
+    },
+    {
+      "text": "",
+      "href": "https://www.ig.com/",
+      "error": "HTTP 0",
+      "section": "main",
+      "statusCode": 0
+    },
+    {
+      "text": "",
+      "href": "https://www.home.saxo/",
+      "error": "HTTP 0",
+      "section": "main",
+      "statusCode": 0
+    }
+  ],
+  "bySection": {
+    "header": {
+      "total": 4,
+      "tested": 4,
+      "working": 4,
+      "broken": 0,
+      "skipped": 0
+    },
+    "nav": {
+      "total": 1,
+      "tested": 1,
+      "working": 1,
+      "broken": 0,
+      "skipped": 0
+    },
+    "footer": {
+      "total": 33,
+      "tested": 6,
+      "working": 6,
+      "broken": 0,
+      "skipped": 27
+    },
+    "main": {
+      "total": 46,
+      "tested": 22,
+      "working": 17,
+      "broken": 5,
+      "skipped": 24
+    },
+    "section": {
+      "total": 0,
+      "tested": 0,
+      "working": 0,
+      "broken": 0,
+      "skipped": 0
+    }
+  }
+}

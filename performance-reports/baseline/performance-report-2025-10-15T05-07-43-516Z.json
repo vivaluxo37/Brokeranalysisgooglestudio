@@ -1,0 +1,53 @@
+{
+  "timestamp": "2025-10-15T05-07-43-516Z",
+  "summary": {
+    "totalBundleSize": 96,
+    "totalFiles": 2,
+    "lighthouseAudits": 0,
+    "failedAudits": 0
+  },
+  "bundleAnalysis": {
+    "timestamp": "2025-10-15T05-07-43-516Z",
+    "javascript": [
+      {
+        "name": "index-iCamL49s.js",
+        "size": 1,
+        "sizeFormatted": "1 KB"
+      }
+    ],
+    "css": [
+      {
+        "name": "index-D2warNg9.css",
+        "size": 95,
+        "sizeFormatted": "95 KB"
+      }
+    ],
+    "total": {
+      "size": 96,
+      "files": 2
+    }
+  },
+  "lighthouseResults": [],
+  "recommendations": [
+    {
+      "category": "Performance",
+      "priority": "high",
+      "description": "Implement virtualization for brokers list to reduce DOM nodes"
+    },
+    {
+      "category": "Performance",
+      "priority": "medium",
+      "description": "Add lazy loading for images and below-the-fold content"
+    },
+    {
+      "category": "Performance",
+      "priority": "medium",
+      "description": "Optimize images with WebP/AVIF formats and responsive srcset"
+    },
+    {
+      "category": "Performance",
+      "priority": "low",
+      "description": "Add service worker for better caching strategy"
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Integration Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .success {
+            border-color: #28a745;
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .loading {
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 AI Features Integration Test</h1>
+
+    <div class="test-container">
+        <h2>Test 1: Chatbot API</h2>
+        <p>Tests the AI chatbot endpoint directly against the proxy server.</p>
+        <button onclick="testChatbot()" id="chatbotBtn">Test Chatbot</button>
+        <div id="chatbotResult" class="result"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Test 2: AI Tutor API</h2>
+        <p>Tests the AI tutor endpoint directly against the proxy server.</p>
+        <button onclick="testAiTutor()" id="tutorBtn">Test AI Tutor</button>
+        <div id="tutorResult" class="result"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Test 3: Broker Matcher API</h2>
+        <p>Tests the AI broker recommendation endpoint.</p>
+        <button onclick="testBrokerMatcher()" id="matcherBtn">Test Broker Matcher</button>
+        <div id="matcherResult" class="result"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Test 4: Proxy Server Health</h2>
+        <p>Tests if the AI proxy server is running and healthy.</p>
+        <button onclick="testHealth()" id="healthBtn">Test Health</button>
+        <div id="healthResult" class="result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3001';
+
+        async function testChatbot() {
+            const btn = document.getElementById('chatbotBtn');
+            const result = document.getElementById('chatbotResult');
+
+            btn.disabled = true;
+            btn.innerHTML = 'Testing<span class="loading"></span>';
+            result.className = 'result';
+            result.textContent = 'Testing chatbot API...';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/chatbot`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'What is forex trading? Explain in one sentence.'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    result.className = 'result success';
+                    result.textContent = `✅ Chatbot API working!\n\nResponse: ${data.response.substring(0, 200)}...`;
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ Chatbot API failed: ${error.message}`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Test Chatbot';
+            }
+        }
+
+        async function testAiTutor() {
+            const btn = document.getElementById('tutorBtn');
+            const result = document.getElementById('tutorResult');
+
+            btn.disabled = true;
+            btn.innerHTML = 'Testing<span class="loading"></span>';
+            result.className = 'result';
+            result.textContent = 'Testing AI tutor API...';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/tutor`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        topic: 'What is a pip in forex?',
+                        difficulty: 'beginner',
+                        userLevel: 'beginner'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    result.className = 'result success';
+                    result.textContent = `✅ AI Tutor API working!\n\nResponse: ${data.content.substring(0, 200)}...`;
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ AI Tutor API failed: ${error.message}`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Test AI Tutor';
+            }
+        }
+
+        async function testBrokerMatcher() {
+            const btn = document.getElementById('matcherBtn');
+            const result = document.getElementById('matcherResult');
+
+            btn.disabled = true;
+            btn.innerHTML = 'Testing<span class="loading"></span>';
+            result.className = 'result';
+            result.textContent = 'Testing broker matcher API...';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/broker-matcher`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        preferences: {
+                            style: 'beginner',
+                            budget: 'low',
+                            platforms: ['MT4', 'MT5']
+                        },
+                        tradingStyle: 'swing trading',
+                        experience: 'beginner',
+                        budget: '$100-500',
+                        region: 'global'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    result.className = 'result success';
+                    result.textContent = `✅ Broker Matcher API working!\n\nResponse: ${data.recommendations.substring(0, 200)}...`;
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ Broker Matcher API failed: ${error.message}`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Test Broker Matcher';
+            }
+        }
+
+        async function testHealth() {
+            const btn = document.getElementById('healthBtn');
+            const result = document.getElementById('healthResult');
+
+            btn.disabled = true;
+            btn.innerHTML = 'Testing<span class="loading"></span>';
+            result.className = 'result';
+            result.textContent = 'Testing proxy server health...';
+
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    result.className = 'result success';
+                    result.textContent = `✅ Proxy server is healthy!\n\nStatus: ${data.status}\nTimestamp: ${data.timestamp}`;
+                } else {
+                    throw new Error('Health check failed');
+                }
+            } catch (error) {
+                result.className = 'result error';
+                result.textContent = `❌ Proxy server health check failed: ${error.message}`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Test Health';
+            }
+        }
+
+        // Auto-run health check on page load
+        window.addEventListener('load', () => {
+            testHealth();
+        });
+    </script>
+</body>
+</html>

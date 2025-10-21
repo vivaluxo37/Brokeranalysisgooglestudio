@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-10-14T23-27-36-737Z",
+  "summary": {
+    "totalBundleSize": 0,
+    "totalFiles": 0,
+    "lighthouseAudits": 0,
+    "failedAudits": 0
+  },
+  "bundleAnalysis": {
+    "timestamp": "2025-10-14T23-27-36-737Z",
+    "javascript": [],
+    "css": [],
+    "total": {
+      "size": 0,
+      "files": 0
+    }
+  },
+  "lighthouseResults": [],
+  "recommendations": [
+    {
+      "category": "Performance",
+      "priority": "high",
+      "description": "Implement virtualization for brokers list to reduce DOM nodes"
+    },
+    {
+      "category": "Performance",
+      "priority": "medium",
+      "description": "Add lazy loading for images and below-the-fold content"
+    },
+    {
+      "category": "Performance",
+      "priority": "medium",
+      "description": "Optimize images with WebP/AVIF formats and responsive srcset"
+    },
+    {
+      "category": "Performance",
+      "priority": "low",
+      "description": "Add service worker for better caching strategy"
+    }
+  ]
+}

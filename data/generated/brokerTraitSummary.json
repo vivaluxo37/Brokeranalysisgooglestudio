@@ -1,0 +1,783 @@
+[
+  {
+    "id": "pepperstone",
+    "name": "Pepperstone",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "ic-markets",
+    "name": "IC Markets",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "xtb",
+    "name": "XTB",
+    "traits": [
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "forex-com",
+    "name": "Forex.com",
+    "traits": [
+      "hasMT4"
+    ]
+  },
+  {
+    "id": "ig",
+    "name": "IG",
+    "traits": [
+      "hasMT4",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "saxo-bank",
+    "name": "Saxo Bank",
+    "traits": []
+  },
+  {
+    "id": "interactive-brokers",
+    "name": "Interactive Brokers",
+    "traits": [
+      "isNDD",
+      "isECN"
+    ]
+  },
+  {
+    "id": "etoro",
+    "name": "eToro",
+    "traits": [
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "plus500",
+    "name": "Plus500",
+    "traits": []
+  },
+  {
+    "id": "avatrade",
+    "name": "AvaTrade",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "oanda",
+    "name": "OANDA",
+    "traits": [
+      "hasMT4"
+    ]
+  },
+  {
+    "id": "fxpro",
+    "name": "FxPro",
+    "traits": [
+      "isNDD",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "axi",
+    "name": "Axi",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "fp-markets",
+    "name": "FP Markets",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "cmc-markets",
+    "name": "CMC Markets",
+    "traits": [
+      "hasMT4"
+    ]
+  },
+  {
+    "id": "admirals",
+    "name": "Admirals",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "tickmill",
+    "name": "Tickmill",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "swissquote",
+    "name": "Swissquote",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "dukascopy",
+    "name": "Dukascopy",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "thinkmarkets",
+    "name": "ThinkMarkets",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "fxcm",
+    "name": "FXCM",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "xm",
+    "name": "XM",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "exness",
+    "name": "Exness",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "hf-markets",
+    "name": "HF Markets",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "fbs",
+    "name": "FBS",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "octafx",
+    "name": "OctaFX",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "roboforex",
+    "name": "RoboForex",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "hycm",
+    "name": "HYCM",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "city-index",
+    "name": "City Index",
+    "traits": [
+      "hasMT4"
+    ]
+  },
+  {
+    "id": "activtrades",
+    "name": "ActivTrades",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "atfx",
+    "name": "ATFX",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "lcg",
+    "name": "LCG",
+    "traits": [
+      "hasMT4"
+    ]
+  },
+  {
+    "id": "markets-com",
+    "name": "Markets.com",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "ironfx",
+    "name": "IronFX",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "gmo-click",
+    "name": "GMO Click",
+    "traits": []
+  },
+  {
+    "id": "gkfx",
+    "name": "GKFX",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "bitget",
+    "name": "Bitget (CFD)",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasCopyTrading",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "tradeview",
+    "name": "Tradeview",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "nordfx",
+    "name": "NordFX",
+    "traits": [
+      "hasMT4",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "fxopen",
+    "name": "FXOpen",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "royal",
+    "name": "Royal",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "captrader",
+    "name": "CapTrader",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "mexem",
+    "name": "Mexem",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "trading212",
+    "name": "Trading 212",
+    "traits": []
+  },
+  {
+    "id": "vt-markets",
+    "name": "VT Markets",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "tmgm",
+    "name": "TMGM",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "trade-nation",
+    "name": "Trade Nation",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "fx-trading",
+    "name": "FX Trading.com",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "multibank",
+    "name": "Multibank",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "tradestation-global",
+    "name": "Tradestation Global",
+    "traits": [
+      "isNDD",
+      "isECN"
+    ]
+  },
+  {
+    "id": "spreadex",
+    "name": "Spreadex",
+    "traits": [
+      "hasMT4"
+    ]
+  },
+  {
+    "id": "fusion-markets",
+    "name": "Fusion Markets",
+    "traits": [
+      "hasMT4",
+      "hasMT5"
+    ]
+  },
+  {
+    "id": "eightcap",
+    "name": "Eightcap",
+    "traits": [
+      "hasMT4",
+      "hasMT5"
+    ]
+  },
+  {
+    "id": "hantec-markets",
+    "name": "Hantec Markets",
+    "traits": [
+      "hasMT4",
+      "hasMT5"
+    ]
+  },
+  {
+    "id": "global-prime",
+    "name": "Global Prime",
+    "traits": [
+      "hasMT4",
+      "hasMT5"
+    ]
+  },
+  {
+    "id": "go-markets",
+    "name": "Go Markets",
+    "traits": [
+      "hasMT4",
+      "hasMT5"
+    ]
+  },
+  {
+    "id": "moneta-markets",
+    "name": "Moneta Markets",
+    "traits": [
+      "hasMT4",
+      "hasMT5"
+    ]
+  },
+  {
+    "id": "blackbull",
+    "name": "BlackBull Markets",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "startrader",
+    "name": "StarTrader",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "libertex",
+    "name": "Libertex",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "capital-com",
+    "name": "Capital.com",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "blackbull-markets",
+    "name": "BlackBull Markets",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "ictrading",
+    "name": "IC Trading",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasCopyTrading",
+      "hasIslamic",
+      "isCopy"
+    ]
+  },
+  {
+    "id": "easymarkets",
+    "name": "EasyMarkets",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "freedom24",
+    "name": "Freedom24",
+    "traits": [
+      "isNDD",
+      "isSTP"
+    ]
+  },
+  {
+    "id": "fxoro",
+    "name": "FXORO",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "startrader-global",
+    "name": "StarTrader",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "puprime",
+    "name": "PU Prime",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "gbe-brokers",
+    "name": "GBE Brokers",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "thunder-markets",
+    "name": "Thunder Markets",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "superforex",
+    "name": "SuperForex",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "instaforex",
+    "name": "InstaForex",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "lifefinance",
+    "name": "LifeFinance",
+    "traits": [
+      "isNDD",
+      "isSTP",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "fxgt",
+    "name": "FXGT",
+    "traits": [
+      "isNDD",
+      "isECN",
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "traderstrust",
+    "name": "TradersTrust",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "freshforex",
+    "name": "FreshForex",
+    "traits": [
+      "hasMT4",
+      "hasMT5",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "windsor-broker",
+    "name": "Windsor Brokers",
+    "traits": [
+      "hasMT4",
+      "hasIslamic"
+    ]
+  },
+  {
+    "id": "tastyfx",
+    "name": "TastyFX",
+    "traits": [
+      "isNDD",
+      "isECN"
+    ]
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "id": "pepperstone",
+    "name": "Pepperstone"
+  },
+  {
+    "id": "ic-markets",
+    "name": "IC Markets"
+  },
+  {
+    "id": "interactive-brokers",
+    "name": "Interactive Brokers"
+  },
+  {
+    "id": "fp-markets",
+    "name": "FP Markets"
+  },
+  {
+    "id": "tickmill",
+    "name": "Tickmill"
+  },
+  {
+    "id": "dukascopy",
+    "name": "Dukascopy"
+  },
+  {
+    "id": "bitget",
+    "name": "Bitget (CFD)"
+  },
+  {
+    "id": "tradeview",
+    "name": "Tradeview"
+  },
+  {
+    "id": "fxopen",
+    "name": "FXOpen"
+  },
+  {
+    "id": "royal",
+    "name": "Royal"
+  },
+  {
+    "id": "captrader",
+    "name": "CapTrader"
+  },
+  {
+    "id": "vt-markets",
+    "name": "VT Markets"
+  },
+  {
+    "id": "tmgm",
+    "name": "TMGM"
+  },
+  {
+    "id": "fx-trading",
+    "name": "FX Trading.com"
+  },
+  {
+    "id": "multibank",
+    "name": "Multibank"
+  },
+  {
+    "id": "tradestation-global",
+    "name": "Tradestation Global"
+  },
+  {
+    "id": "blackbull",
+    "name": "BlackBull Markets"
+  },
+  {
+    "id": "startrader",
+    "name": "StarTrader"
+  },
+  {
+    "id": "blackbull-markets",
+    "name": "BlackBull Markets"
+  },
+  {
+    "id": "ictrading",
+    "name": "IC Trading"
+  },
+  {
+    "id": "puprime",
+    "name": "PU Prime"
+  },
+  {
+    "id": "thunder-markets",
+    "name": "Thunder Markets"
+  },
+  {
+    "id": "superforex",
+    "name": "SuperForex"
+  },
+  {
+    "id": "instaforex",
+    "name": "InstaForex"
+  },
+  {
+    "id": "fxgt",
+    "name": "FXGT"
+  },
+  {
+    "id": "tastyfx",
+    "name": "TastyFX"
+  }
+]

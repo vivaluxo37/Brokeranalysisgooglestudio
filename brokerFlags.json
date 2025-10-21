@@ -1,0 +1,704 @@
+{
+  "pepperstone": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "ic-markets": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "xtb": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "forex-com": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "ig": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "saxo-bank": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "interactive-brokers": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "etoro": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "plus500": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "avatrade": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "oanda": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "fxpro": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "axi": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "fp-markets": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "cmc-markets": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "admirals": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "tickmill": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "swissquote": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": false
+  },
+  "dukascopy": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "thinkmarkets": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "fxcm": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "xm": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "exness": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "hf-markets": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "fbs": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "octafx": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "roboforex": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "hycm": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "city-index": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "activtrades": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "atfx": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "lcg": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "markets-com": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "ironfx": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "gmo-click": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "gkfx": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "bitget": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": true,
+    "hasIslamic": false
+  },
+  "tradeview": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "nordfx": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "fxopen": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "royal": {
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "captrader": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "mexem": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "trading212": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "vt-markets": {
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "tmgm": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "trade-nation": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "fx-trading": {
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "multibank": {
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "tradestation-global": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "spreadex": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "fusion-markets": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "eightcap": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "hantec-markets": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "global-prime": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "go-markets": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "moneta-markets": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "blackbull": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "startrader": {
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "libertex": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "capital-com": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "blackbull-markets": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "ictrading": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": true,
+    "hasIslamic": true
+  },
+  "easymarkets": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "freedom24": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  },
+  "fxoro": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "startrader-global": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "puprime": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "gbe-brokers": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "thunder-markets": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "superforex": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "instaforex": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "lifefinance": {
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "fxgt": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "traderstrust": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "freshforex": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": true,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "windsor-broker": {
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false,
+    "hasMT4": true,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": true
+  },
+  "tastyfx": {
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true,
+    "hasMT4": false,
+    "hasMT5": false,
+    "hasCopyTrading": false,
+    "hasIslamic": false
+  }
+}

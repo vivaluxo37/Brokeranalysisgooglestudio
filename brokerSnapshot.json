@@ -1,0 +1,1199 @@
+{
+  "pepperstone": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader",
+      "TradingView"
+    ],
+    "accountTypes": []
+  },
+  "ic-markets": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader"
+    ],
+    "accountTypes": []
+  },
+  "xtb": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "xStation 5"
+    ],
+    "accountTypes": []
+  },
+  "forex-com": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access"
+    ],
+    "platforms": [
+      "MT4",
+      "Advanced Trading Platform",
+      "TradingView"
+    ],
+    "accountTypes": []
+  },
+  "ig": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "IG Trading Platform (Web & Mobile)",
+      "ProRealTime",
+      "MT4",
+      "RESTful API"
+    ],
+    "accountTypes": []
+  },
+  "saxo-bank": {
+    "brokerType": "Hybrid",
+    "coreType": "",
+    "features": [
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "SaxoTraderGO",
+      "SaxoTraderPRO"
+    ],
+    "accountTypes": []
+  },
+  "interactive-brokers": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access"
+    ],
+    "platforms": [
+      "TWS (Trader Workstation)",
+      "IBKR Mobile",
+      "WebTrader",
+      "API"
+    ],
+    "accountTypes": []
+  },
+  "etoro": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "eToro Platform"
+    ],
+    "accountTypes": []
+  },
+  "plus500": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [],
+    "platforms": [
+      "Plus500 Platform"
+    ],
+    "accountTypes": []
+  },
+  "avatrade": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "AvaTradeGo",
+      "AvaOptions"
+    ],
+    "accountTypes": []
+  },
+  "oanda": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "fxTrade",
+      "MT4",
+      "TradingView"
+    ],
+    "accountTypes": []
+  },
+  "fxpro": {
+    "brokerType": "NDD",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader",
+      "FxPro Edge"
+    ],
+    "accountTypes": []
+  },
+  "axi": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4"
+    ],
+    "accountTypes": []
+  },
+  "fp-markets": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader",
+      "Iress"
+    ],
+    "accountTypes": []
+  },
+  "cmc-markets": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "Next Generation",
+      "MT4"
+    ],
+    "accountTypes": []
+  },
+  "admirals": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "MetaTrader Supreme Edition"
+    ],
+    "accountTypes": []
+  },
+  "tickmill": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "swissquote": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Copy Trading",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "Advanced Trader",
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "dukascopy": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "JForex",
+      "MT4"
+    ],
+    "accountTypes": []
+  },
+  "thinkmarkets": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "ThinkTrader",
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "fxcm": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "Trading Station (Professional)",
+      "MetaTrader 4",
+      "TradingView Integration"
+    ],
+    "accountTypes": []
+  },
+  "xm": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "exness": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "Exness Terminal"
+    ],
+    "accountTypes": []
+  },
+  "hf-markets": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "fbs": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "FBS Trader"
+    ],
+    "accountTypes": []
+  },
+  "octafx": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "roboforex": {
+    "brokerType": "Hybrid",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader",
+      "R StocksTrader"
+    ],
+    "accountTypes": []
+  },
+  "hycm": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "city-index": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "Web Trader",
+      "AT Pro",
+      "MT4",
+      "TradingView"
+    ],
+    "accountTypes": []
+  },
+  "activtrades": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "ActivTrader",
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "atfx": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4"
+    ],
+    "accountTypes": []
+  },
+  "lcg": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "LCG Trader",
+      "MT4"
+    ],
+    "accountTypes": []
+  },
+  "markets-com": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "Markets.com Platform",
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "ironfx": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4"
+    ],
+    "accountTypes": []
+  },
+  "gmo-click": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "Platinum Chart",
+      "FXroid Plus"
+    ],
+    "accountTypes": []
+  },
+  "gkfx": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "bitget": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "API Access",
+      "Copy Trading"
+    ],
+    "platforms": [
+      "Bitget Platform"
+    ],
+    "accountTypes": []
+  },
+  "tradeview": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader",
+      "Currenex"
+    ],
+    "accountTypes": []
+  },
+  "nordfx": {
+    "brokerType": "Hybrid",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4"
+    ],
+    "accountTypes": []
+  },
+  "fxopen": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "TickTrader"
+    ],
+    "accountTypes": []
+  },
+  "royal": {
+    "brokerType": "STP/ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "Royal WebTrader",
+      "Royal Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "captrader": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "CapTrader WebTrader",
+      "CapTrader Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "mexem": {
+    "brokerType": "Market Maker/STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "Mexem WebTrader",
+      "Mexem Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "trading212": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [],
+    "platforms": [
+      "Trading 212 Web Platform",
+      "Trading 212 Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "vt-markets": {
+    "brokerType": "ECN/STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "VT Markets Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "tmgm": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "TMGM Trader",
+      "TMGM Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "trade-nation": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "Trade Nation Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "fx-trading": {
+    "brokerType": "ECN/STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "FX Trading WebTrader",
+      "FX Trading Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "multibank": {
+    "brokerType": "ECN/STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "Multibank Trader",
+      "Multibank Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "tradestation-global": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access"
+    ],
+    "platforms": [
+      "Tradestation Platform",
+      "Tradestation Mobile",
+      "Matrix",
+      "OptionStation"
+    ],
+    "accountTypes": []
+  },
+  "spreadex": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "Trading Signals"
+    ],
+    "platforms": [
+      "Spreadex Platform",
+      "Spreadex Mobile App",
+      "MT4"
+    ],
+    "accountTypes": []
+  },
+  "fusion-markets": {
+    "brokerType": "Unknown",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader"
+    ],
+    "accountTypes": []
+  },
+  "eightcap": {
+    "brokerType": "Unknown",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "TradingView"
+    ],
+    "accountTypes": []
+  },
+  "hantec-markets": {
+    "brokerType": "Unknown",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "global-prime": {
+    "brokerType": "Unknown",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "go-markets": {
+    "brokerType": "Unknown",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "moneta-markets": {
+    "brokerType": "Unknown",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "blackbull": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader"
+    ],
+    "accountTypes": []
+  },
+  "startrader": {
+    "brokerType": "ECN/STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "libertex": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "Libertex Platform",
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "capital-com": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "Capital.com Platform",
+      "MT4"
+    ],
+    "accountTypes": []
+  },
+  "blackbull-markets": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader",
+      "TradingView"
+    ],
+    "accountTypes": []
+  },
+  "ictrading": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Copy Trading",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "cTrader",
+      "ZuluTrade"
+    ],
+    "accountTypes": []
+  },
+  "easymarkets": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "EasyMarkets Platform",
+      "TradingView",
+      "MT4",
+      "MT5"
+    ],
+    "accountTypes": []
+  },
+  "freedom24": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access"
+    ],
+    "platforms": [
+      "Freedom24 Platform"
+    ],
+    "accountTypes": []
+  },
+  "fxoro": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "startrader-global": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "puprime": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "gbe-brokers": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "thunder-markets": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "superforex": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "instaforex": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "lifefinance": {
+    "brokerType": "STP",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "fxgt": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "API Access",
+      "Islamic Account",
+      "Islamic Friendly"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader"
+    ],
+    "accountTypes": []
+  },
+  "traderstrust": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader",
+      "Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "freshforex": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "MT5",
+      "WebTrader",
+      "Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "windsor-broker": {
+    "brokerType": "Market Maker",
+    "coreType": "",
+    "features": [
+      "EA Support",
+      "Islamic Account",
+      "Islamic Friendly",
+      "Trading Signals"
+    ],
+    "platforms": [
+      "MT4",
+      "Windsor Direct",
+      "Mobile App"
+    ],
+    "accountTypes": []
+  },
+  "tastyfx": {
+    "brokerType": "ECN",
+    "coreType": "",
+    "features": [
+      "Trading Signals"
+    ],
+    "platforms": [
+      "tastytrade platform",
+      "Desktop",
+      "Mobile App"
+    ],
+    "accountTypes": []
+  }
+}

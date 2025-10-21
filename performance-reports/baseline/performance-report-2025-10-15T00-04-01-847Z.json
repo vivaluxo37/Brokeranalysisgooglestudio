@@ -1,0 +1,113 @@
+{
+  "timestamp": "2025-10-15T00-04-01-847Z",
+  "summary": {
+    "totalBundleSize": 96,
+    "totalFiles": 14,
+    "lighthouseAudits": 0,
+    "failedAudits": 0
+  },
+  "bundleAnalysis": {
+    "timestamp": "2025-10-15T00-04-01-847Z",
+    "javascript": [
+      {
+        "name": "index-iCamL49s.js",
+        "size": 1,
+        "sizeFormatted": "1 KB"
+      },
+      {
+        "name": "chunk-BIjMHF-b.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-BQEWTaK-.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-C3LV8HgG.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-C6Kfwj0f.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-D0WdxB02.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-DdXTRxfG.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-DP2rzg_V.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-DVN7Oi2P.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-K6Dvbx-E.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-l0sNRNKZ.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-My_wb10K.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      },
+      {
+        "name": "chunk-RnTpOC5-.js",
+        "size": 0,
+        "sizeFormatted": "0 KB"
+      }
+    ],
+    "css": [
+      {
+        "name": "index-D2warNg9.css",
+        "size": 95,
+        "sizeFormatted": "95 KB"
+      }
+    ],
+    "total": {
+      "size": 96,
+      "files": 14
+    }
+  },
+  "lighthouseResults": [],
+  "recommendations": [
+    {
+      "category": "Performance",
+      "priority": "high",
+      "description": "Implement virtualization for brokers list to reduce DOM nodes"
+    },
+    {
+      "category": "Performance",
+      "priority": "medium",
+      "description": "Add lazy loading for images and below-the-fold content"
+    },
+    {
+      "category": "Performance",
+      "priority": "medium",
+      "description": "Optimize images with WebP/AVIF formats and responsive srcset"
+    },
+    {
+      "category": "Performance",
+      "priority": "low",
+      "description": "Add service worker for better caching strategy"
+    }
+  ]
+}

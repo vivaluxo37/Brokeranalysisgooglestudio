@@ -1,0 +1,548 @@
+[
+  {
+    "id": "pepperstone",
+    "name": "Pepperstone",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "ic-markets",
+    "name": "IC Markets",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "xtb",
+    "name": "XTB",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "forex-com",
+    "name": "Forex.com",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "ig",
+    "name": "IG",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "saxo-bank",
+    "name": "Saxo Bank",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "interactive-brokers",
+    "name": "Interactive Brokers",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "etoro",
+    "name": "eToro",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "plus500",
+    "name": "Plus500",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "avatrade",
+    "name": "AvaTrade",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "oanda",
+    "name": "OANDA",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "fxpro",
+    "name": "FxPro",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": true
+  },
+  {
+    "id": "axi",
+    "name": "Axi",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "fp-markets",
+    "name": "FP Markets",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "cmc-markets",
+    "name": "CMC Markets",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "admirals",
+    "name": "Admirals",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "tickmill",
+    "name": "Tickmill",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "swissquote",
+    "name": "Swissquote",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "dukascopy",
+    "name": "Dukascopy",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "thinkmarkets",
+    "name": "ThinkMarkets",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "fxcm",
+    "name": "FXCM",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "xm",
+    "name": "XM",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "exness",
+    "name": "Exness",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "hf-markets",
+    "name": "HF Markets",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "fbs",
+    "name": "FBS",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "octafx",
+    "name": "OctaFX",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "roboforex",
+    "name": "RoboForex",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "hycm",
+    "name": "HYCM",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "city-index",
+    "name": "City Index",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "activtrades",
+    "name": "ActivTrades",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "atfx",
+    "name": "ATFX",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "lcg",
+    "name": "LCG",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "markets-com",
+    "name": "Markets.com",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "ironfx",
+    "name": "IronFX",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "gmo-click",
+    "name": "GMO Click",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "gkfx",
+    "name": "GKFX",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "bitget",
+    "name": "Bitget (CFD)",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "tradeview",
+    "name": "Tradeview",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "nordfx",
+    "name": "NordFX",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "fxopen",
+    "name": "FXOpen",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "royal",
+    "name": "Royal",
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "captrader",
+    "name": "CapTrader",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "mexem",
+    "name": "Mexem",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "trading212",
+    "name": "Trading 212",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "vt-markets",
+    "name": "VT Markets",
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "tmgm",
+    "name": "TMGM",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "trade-nation",
+    "name": "Trade Nation",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "fx-trading",
+    "name": "FX Trading.com",
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "multibank",
+    "name": "Multibank",
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "tradestation-global",
+    "name": "Tradestation Global",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "spreadex",
+    "name": "Spreadex",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "fusion-markets",
+    "name": "Fusion Markets",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "eightcap",
+    "name": "Eightcap",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "hantec-markets",
+    "name": "Hantec Markets",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "global-prime",
+    "name": "Global Prime",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "go-markets",
+    "name": "Go Markets",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "moneta-markets",
+    "name": "Moneta Markets",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "blackbull",
+    "name": "BlackBull Markets",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "startrader",
+    "name": "StarTrader",
+    "isECN": true,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "libertex",
+    "name": "Libertex",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "capital-com",
+    "name": "Capital.com",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "blackbull-markets",
+    "name": "BlackBull Markets",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "ictrading",
+    "name": "IC Trading",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "easymarkets",
+    "name": "EasyMarkets",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "freedom24",
+    "name": "Freedom24",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "fxoro",
+    "name": "FXORO",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "startrader-global",
+    "name": "StarTrader",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "puprime",
+    "name": "PU Prime",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "gbe-brokers",
+    "name": "GBE Brokers",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "thunder-markets",
+    "name": "Thunder Markets",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "superforex",
+    "name": "SuperForex",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "instaforex",
+    "name": "InstaForex",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "lifefinance",
+    "name": "LifeFinance",
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": false
+  },
+  {
+    "id": "fxgt",
+    "name": "FXGT",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "traderstrust",
+    "name": "TradersTrust",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "freshforex",
+    "name": "FreshForex",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "windsor-broker",
+    "name": "Windsor Brokers",
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  {
+    "id": "tastyfx",
+    "name": "TastyFX",
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": false
+  }
+]

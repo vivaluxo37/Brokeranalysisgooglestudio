@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Features Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .response {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Features Test Dashboard</h1>
+    
+    <div class="test-section">
+        <h2>1. Proxy Server Health Check</h2>
+        <button onclick="testProxyHealth()">Test Health Endpoint</button>
+        <div id="proxy-status" class="status pending">Not tested</div>
+        <div id="proxy-response" class="response" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Chatbot API Test</h2>
+        <button onclick="testChatbot()">Test Chatbot</button>
+        <div id="chatbot-status" class="status pending">Not tested</div>
+        <div id="chatbot-response" class="response" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. AI Tutor API Test</h2>
+        <button onclick="testTutor()">Test AI Tutor</button>
+        <div id="tutor-status" class="status pending">Not tested</div>
+        <div id="tutor-response" class="response" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Broker Matcher API Test</h2>
+        <button onclick="testMatcher()">Test Broker Matcher</button>
+        <div id="matcher-status" class="status pending">Not tested</div>
+        <div id="matcher-response" class="response" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>5. Test From Different Ports</h2>
+        <button onclick="testCORS(3000)">Test from Port 3000</button>
+        <button onclick="testCORS(3005)">Test from Port 3005</button>
+        <button onclick="testCORS(5173)">Test from Port 5173</button>
+        <div id="cors-status" class="status pending">Not tested</div>
+        <div id="cors-response" class="response" style="display: none;"></div>
+    </div>
+
+    <script>
+        const PROXY_URL = 'http://localhost:3001';
+
+        async function testProxyHealth() {
+            const statusEl = document.getElementById('proxy-status');
+            const responseEl = document.getElementById('proxy-response');
+            
+            try {
+                statusEl.textContent = 'Testing...';
+                statusEl.className = 'status pending';
+                
+                const response = await fetch(`${PROXY_URL}/health`);
+                const data = await response.json();
+                
+                statusEl.textContent = '✓ Proxy server is running';
+                statusEl.className = 'status success';
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                statusEl.textContent = '✗ Failed to connect to proxy server';
+                statusEl.className = 'status error';
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>Error: ${error.message}</pre>`;
+            }
+        }
+
+        async function testChatbot() {
+            const statusEl = document.getElementById('chatbot-status');
+            const responseEl = document.getElementById('chatbot-response');
+            
+            try {
+                statusEl.textContent = 'Testing...';
+                statusEl.className = 'status pending';
+                
+                const response = await fetch(`${PROXY_URL}/api/chatbot`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: "What is Pepperstone?",
+                        brokerContext: JSON.stringify([{
+                            id: 'pepperstone',
+                            name: 'Pepperstone',
+                            score: 4.8,
+                            minDeposit: 200
+                        }])
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    statusEl.textContent = '✓ Chatbot API working';
+                    statusEl.className = 'status success';
+                } else {
+                    statusEl.textContent = '✗ Chatbot API returned error';
+                    statusEl.className = 'status error';
+                }
+                
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                statusEl.textContent = '✗ Failed to call chatbot API';
+                statusEl.className = 'status error';
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>Error: ${error.message}</pre>`;
+            }
+        }
+
+        async function testTutor() {
+            const statusEl = document.getElementById('tutor-status');
+            const responseEl = document.getElementById('tutor-response');
+            
+            try {
+                statusEl.textContent = 'Testing...';
+                statusEl.className = 'status pending';
+                
+                const response = await fetch(`${PROXY_URL}/api/tutor`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        topic: "What is a pip?",
+                        difficulty: 'beginner',
+                        userLevel: 'beginner',
+                        history: []
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    statusEl.textContent = '✓ AI Tutor API working';
+                    statusEl.className = 'status success';
+                } else {
+                    statusEl.textContent = '✗ AI Tutor API returned error';
+                    statusEl.className = 'status error';
+                }
+                
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>${data.content ? data.content.substring(0, 500) + '...' : JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                statusEl.textContent = '✗ Failed to call AI Tutor API';
+                statusEl.className = 'status error';
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>Error: ${error.message}</pre>`;
+            }
+        }
+
+        async function testMatcher() {
+            const statusEl = document.getElementById('matcher-status');
+            const responseEl = document.getElementById('matcher-response');
+            
+            try {
+                statusEl.textContent = 'Testing...';
+                statusEl.className = 'status pending';
+                
+                const response = await fetch(`${PROXY_URL}/api/broker-matcher`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        strategyDescription: "I want to do scalping with low spreads",
+                        brokers: [{
+                            id: 'pepperstone',
+                            name: 'Pepperstone',
+                            score: 4.8,
+                            executionType: 'ECN',
+                            eurusdSpread: '0.1'
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    statusEl.textContent = '✓ Broker Matcher API working';
+                    statusEl.className = 'status success';
+                } else {
+                    statusEl.textContent = '✗ Broker Matcher API returned error';
+                    statusEl.className = 'status error';
+                }
+                
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                statusEl.textContent = '✗ Failed to call Broker Matcher API';
+                statusEl.className = 'status error';
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>Error: ${error.message}</pre>`;
+            }
+        }
+
+        async function testCORS(port) {
+            const statusEl = document.getElementById('cors-status');
+            const responseEl = document.getElementById('cors-response');
+            
+            try {
+                statusEl.textContent = `Testing from port ${port}...`;
+                statusEl.className = 'status pending';
+                
+                const response = await fetch(`${PROXY_URL}/api/chatbot`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': `http://localhost:${port}`
+                    },
+                    body: JSON.stringify({
+                        message: `Test from port ${port}`,
+                        brokerContext: ""
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    statusEl.textContent = `✓ CORS working for port ${port}`;
+                    statusEl.className = 'status success';
+                } else {
+                    statusEl.textContent = `✗ CORS failed for port ${port}`;
+                    statusEl.className = 'status error';
+                }
+                
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>Port ${port}: ${data.success ? 'Success' : 'Failed'}\n${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                statusEl.textContent = `✗ CORS failed for port ${port}`;
+                statusEl.className = 'status error';
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>Port ${port} Error: ${error.message}</pre>`;
+            }
+        }
+
+        // Run initial health check
+        window.addEventListener('load', () => {
+            testProxyHealth();
+        });
+    </script>
+</body>
+</html>

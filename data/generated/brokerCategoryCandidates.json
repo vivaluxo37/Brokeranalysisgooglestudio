@@ -1,0 +1,1199 @@
+{
+  "ndd": [
+    {
+      "id": "pepperstone",
+      "name": "Pepperstone"
+    },
+    {
+      "id": "ic-markets",
+      "name": "IC Markets"
+    },
+    {
+      "id": "interactive-brokers",
+      "name": "Interactive Brokers"
+    },
+    {
+      "id": "fxpro",
+      "name": "FxPro"
+    },
+    {
+      "id": "axi",
+      "name": "Axi"
+    },
+    {
+      "id": "fp-markets",
+      "name": "FP Markets"
+    },
+    {
+      "id": "admirals",
+      "name": "Admirals"
+    },
+    {
+      "id": "tickmill",
+      "name": "Tickmill"
+    },
+    {
+      "id": "swissquote",
+      "name": "Swissquote"
+    },
+    {
+      "id": "dukascopy",
+      "name": "Dukascopy"
+    },
+    {
+      "id": "thinkmarkets",
+      "name": "ThinkMarkets"
+    },
+    {
+      "id": "fxcm",
+      "name": "FXCM"
+    },
+    {
+      "id": "hf-markets",
+      "name": "HF Markets"
+    },
+    {
+      "id": "fbs",
+      "name": "FBS"
+    },
+    {
+      "id": "octafx",
+      "name": "OctaFX"
+    },
+    {
+      "id": "activtrades",
+      "name": "ActivTrades"
+    },
+    {
+      "id": "atfx",
+      "name": "ATFX"
+    },
+    {
+      "id": "ironfx",
+      "name": "IronFX"
+    },
+    {
+      "id": "gkfx",
+      "name": "GKFX"
+    },
+    {
+      "id": "bitget",
+      "name": "Bitget (CFD)"
+    },
+    {
+      "id": "tradeview",
+      "name": "Tradeview"
+    },
+    {
+      "id": "fxopen",
+      "name": "FXOpen"
+    },
+    {
+      "id": "royal",
+      "name": "Royal"
+    },
+    {
+      "id": "captrader",
+      "name": "CapTrader"
+    },
+    {
+      "id": "mexem",
+      "name": "Mexem"
+    },
+    {
+      "id": "vt-markets",
+      "name": "VT Markets"
+    },
+    {
+      "id": "tmgm",
+      "name": "TMGM"
+    },
+    {
+      "id": "fx-trading",
+      "name": "FX Trading.com"
+    },
+    {
+      "id": "multibank",
+      "name": "Multibank"
+    },
+    {
+      "id": "tradestation-global",
+      "name": "Tradestation Global"
+    },
+    {
+      "id": "blackbull",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "startrader",
+      "name": "StarTrader"
+    },
+    {
+      "id": "capital-com",
+      "name": "Capital.com"
+    },
+    {
+      "id": "blackbull-markets",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "ictrading",
+      "name": "IC Trading"
+    },
+    {
+      "id": "freedom24",
+      "name": "Freedom24"
+    },
+    {
+      "id": "startrader-global",
+      "name": "StarTrader"
+    },
+    {
+      "id": "puprime",
+      "name": "PU Prime"
+    },
+    {
+      "id": "gbe-brokers",
+      "name": "GBE Brokers"
+    },
+    {
+      "id": "thunder-markets",
+      "name": "Thunder Markets"
+    },
+    {
+      "id": "superforex",
+      "name": "SuperForex"
+    },
+    {
+      "id": "instaforex",
+      "name": "InstaForex"
+    },
+    {
+      "id": "lifefinance",
+      "name": "LifeFinance"
+    },
+    {
+      "id": "fxgt",
+      "name": "FXGT"
+    },
+    {
+      "id": "tastyfx",
+      "name": "TastyFX"
+    }
+  ],
+  "ecn": [
+    {
+      "id": "pepperstone",
+      "name": "Pepperstone"
+    },
+    {
+      "id": "ic-markets",
+      "name": "IC Markets"
+    },
+    {
+      "id": "interactive-brokers",
+      "name": "Interactive Brokers"
+    },
+    {
+      "id": "fp-markets",
+      "name": "FP Markets"
+    },
+    {
+      "id": "tickmill",
+      "name": "Tickmill"
+    },
+    {
+      "id": "dukascopy",
+      "name": "Dukascopy"
+    },
+    {
+      "id": "bitget",
+      "name": "Bitget (CFD)"
+    },
+    {
+      "id": "tradeview",
+      "name": "Tradeview"
+    },
+    {
+      "id": "fxopen",
+      "name": "FXOpen"
+    },
+    {
+      "id": "royal",
+      "name": "Royal"
+    },
+    {
+      "id": "captrader",
+      "name": "CapTrader"
+    },
+    {
+      "id": "vt-markets",
+      "name": "VT Markets"
+    },
+    {
+      "id": "tmgm",
+      "name": "TMGM"
+    },
+    {
+      "id": "fx-trading",
+      "name": "FX Trading.com"
+    },
+    {
+      "id": "multibank",
+      "name": "Multibank"
+    },
+    {
+      "id": "tradestation-global",
+      "name": "Tradestation Global"
+    },
+    {
+      "id": "blackbull",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "startrader",
+      "name": "StarTrader"
+    },
+    {
+      "id": "blackbull-markets",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "ictrading",
+      "name": "IC Trading"
+    },
+    {
+      "id": "puprime",
+      "name": "PU Prime"
+    },
+    {
+      "id": "thunder-markets",
+      "name": "Thunder Markets"
+    },
+    {
+      "id": "superforex",
+      "name": "SuperForex"
+    },
+    {
+      "id": "instaforex",
+      "name": "InstaForex"
+    },
+    {
+      "id": "fxgt",
+      "name": "FXGT"
+    },
+    {
+      "id": "tastyfx",
+      "name": "TastyFX"
+    }
+  ],
+  "stp": [
+    {
+      "id": "axi",
+      "name": "Axi"
+    },
+    {
+      "id": "admirals",
+      "name": "Admirals"
+    },
+    {
+      "id": "swissquote",
+      "name": "Swissquote"
+    },
+    {
+      "id": "thinkmarkets",
+      "name": "ThinkMarkets"
+    },
+    {
+      "id": "fxcm",
+      "name": "FXCM"
+    },
+    {
+      "id": "hf-markets",
+      "name": "HF Markets"
+    },
+    {
+      "id": "fbs",
+      "name": "FBS"
+    },
+    {
+      "id": "octafx",
+      "name": "OctaFX"
+    },
+    {
+      "id": "activtrades",
+      "name": "ActivTrades"
+    },
+    {
+      "id": "atfx",
+      "name": "ATFX"
+    },
+    {
+      "id": "ironfx",
+      "name": "IronFX"
+    },
+    {
+      "id": "gkfx",
+      "name": "GKFX"
+    },
+    {
+      "id": "royal",
+      "name": "Royal"
+    },
+    {
+      "id": "mexem",
+      "name": "Mexem"
+    },
+    {
+      "id": "vt-markets",
+      "name": "VT Markets"
+    },
+    {
+      "id": "fx-trading",
+      "name": "FX Trading.com"
+    },
+    {
+      "id": "multibank",
+      "name": "Multibank"
+    },
+    {
+      "id": "startrader",
+      "name": "StarTrader"
+    },
+    {
+      "id": "capital-com",
+      "name": "Capital.com"
+    },
+    {
+      "id": "freedom24",
+      "name": "Freedom24"
+    },
+    {
+      "id": "startrader-global",
+      "name": "StarTrader"
+    },
+    {
+      "id": "gbe-brokers",
+      "name": "GBE Brokers"
+    },
+    {
+      "id": "lifefinance",
+      "name": "LifeFinance"
+    }
+  ],
+  "mt4": [
+    {
+      "id": "pepperstone",
+      "name": "Pepperstone"
+    },
+    {
+      "id": "ic-markets",
+      "name": "IC Markets"
+    },
+    {
+      "id": "forex-com",
+      "name": "Forex.com"
+    },
+    {
+      "id": "ig",
+      "name": "IG"
+    },
+    {
+      "id": "avatrade",
+      "name": "AvaTrade"
+    },
+    {
+      "id": "oanda",
+      "name": "OANDA"
+    },
+    {
+      "id": "fxpro",
+      "name": "FxPro"
+    },
+    {
+      "id": "axi",
+      "name": "Axi"
+    },
+    {
+      "id": "fp-markets",
+      "name": "FP Markets"
+    },
+    {
+      "id": "cmc-markets",
+      "name": "CMC Markets"
+    },
+    {
+      "id": "admirals",
+      "name": "Admirals"
+    },
+    {
+      "id": "tickmill",
+      "name": "Tickmill"
+    },
+    {
+      "id": "swissquote",
+      "name": "Swissquote"
+    },
+    {
+      "id": "dukascopy",
+      "name": "Dukascopy"
+    },
+    {
+      "id": "thinkmarkets",
+      "name": "ThinkMarkets"
+    },
+    {
+      "id": "fxcm",
+      "name": "FXCM"
+    },
+    {
+      "id": "xm",
+      "name": "XM"
+    },
+    {
+      "id": "exness",
+      "name": "Exness"
+    },
+    {
+      "id": "hf-markets",
+      "name": "HF Markets"
+    },
+    {
+      "id": "fbs",
+      "name": "FBS"
+    },
+    {
+      "id": "octafx",
+      "name": "OctaFX"
+    },
+    {
+      "id": "roboforex",
+      "name": "RoboForex"
+    },
+    {
+      "id": "hycm",
+      "name": "HYCM"
+    },
+    {
+      "id": "city-index",
+      "name": "City Index"
+    },
+    {
+      "id": "activtrades",
+      "name": "ActivTrades"
+    },
+    {
+      "id": "atfx",
+      "name": "ATFX"
+    },
+    {
+      "id": "lcg",
+      "name": "LCG"
+    },
+    {
+      "id": "markets-com",
+      "name": "Markets.com"
+    },
+    {
+      "id": "ironfx",
+      "name": "IronFX"
+    },
+    {
+      "id": "gkfx",
+      "name": "GKFX"
+    },
+    {
+      "id": "tradeview",
+      "name": "Tradeview"
+    },
+    {
+      "id": "nordfx",
+      "name": "NordFX"
+    },
+    {
+      "id": "fxopen",
+      "name": "FXOpen"
+    },
+    {
+      "id": "royal",
+      "name": "Royal"
+    },
+    {
+      "id": "captrader",
+      "name": "CapTrader"
+    },
+    {
+      "id": "mexem",
+      "name": "Mexem"
+    },
+    {
+      "id": "vt-markets",
+      "name": "VT Markets"
+    },
+    {
+      "id": "tmgm",
+      "name": "TMGM"
+    },
+    {
+      "id": "trade-nation",
+      "name": "Trade Nation"
+    },
+    {
+      "id": "fx-trading",
+      "name": "FX Trading.com"
+    },
+    {
+      "id": "multibank",
+      "name": "Multibank"
+    },
+    {
+      "id": "spreadex",
+      "name": "Spreadex"
+    },
+    {
+      "id": "fusion-markets",
+      "name": "Fusion Markets"
+    },
+    {
+      "id": "eightcap",
+      "name": "Eightcap"
+    },
+    {
+      "id": "hantec-markets",
+      "name": "Hantec Markets"
+    },
+    {
+      "id": "global-prime",
+      "name": "Global Prime"
+    },
+    {
+      "id": "go-markets",
+      "name": "Go Markets"
+    },
+    {
+      "id": "moneta-markets",
+      "name": "Moneta Markets"
+    },
+    {
+      "id": "blackbull",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "startrader",
+      "name": "StarTrader"
+    },
+    {
+      "id": "libertex",
+      "name": "Libertex"
+    },
+    {
+      "id": "capital-com",
+      "name": "Capital.com"
+    },
+    {
+      "id": "blackbull-markets",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "ictrading",
+      "name": "IC Trading"
+    },
+    {
+      "id": "easymarkets",
+      "name": "EasyMarkets"
+    },
+    {
+      "id": "fxoro",
+      "name": "FXORO"
+    },
+    {
+      "id": "startrader-global",
+      "name": "StarTrader"
+    },
+    {
+      "id": "puprime",
+      "name": "PU Prime"
+    },
+    {
+      "id": "gbe-brokers",
+      "name": "GBE Brokers"
+    },
+    {
+      "id": "thunder-markets",
+      "name": "Thunder Markets"
+    },
+    {
+      "id": "superforex",
+      "name": "SuperForex"
+    },
+    {
+      "id": "instaforex",
+      "name": "InstaForex"
+    },
+    {
+      "id": "lifefinance",
+      "name": "LifeFinance"
+    },
+    {
+      "id": "fxgt",
+      "name": "FXGT"
+    },
+    {
+      "id": "traderstrust",
+      "name": "TradersTrust"
+    },
+    {
+      "id": "freshforex",
+      "name": "FreshForex"
+    },
+    {
+      "id": "windsor-broker",
+      "name": "Windsor Brokers"
+    }
+  ],
+  "mt5": [
+    {
+      "id": "pepperstone",
+      "name": "Pepperstone"
+    },
+    {
+      "id": "ic-markets",
+      "name": "IC Markets"
+    },
+    {
+      "id": "avatrade",
+      "name": "AvaTrade"
+    },
+    {
+      "id": "fxpro",
+      "name": "FxPro"
+    },
+    {
+      "id": "fp-markets",
+      "name": "FP Markets"
+    },
+    {
+      "id": "admirals",
+      "name": "Admirals"
+    },
+    {
+      "id": "tickmill",
+      "name": "Tickmill"
+    },
+    {
+      "id": "swissquote",
+      "name": "Swissquote"
+    },
+    {
+      "id": "thinkmarkets",
+      "name": "ThinkMarkets"
+    },
+    {
+      "id": "xm",
+      "name": "XM"
+    },
+    {
+      "id": "exness",
+      "name": "Exness"
+    },
+    {
+      "id": "hf-markets",
+      "name": "HF Markets"
+    },
+    {
+      "id": "fbs",
+      "name": "FBS"
+    },
+    {
+      "id": "octafx",
+      "name": "OctaFX"
+    },
+    {
+      "id": "roboforex",
+      "name": "RoboForex"
+    },
+    {
+      "id": "hycm",
+      "name": "HYCM"
+    },
+    {
+      "id": "activtrades",
+      "name": "ActivTrades"
+    },
+    {
+      "id": "markets-com",
+      "name": "Markets.com"
+    },
+    {
+      "id": "gkfx",
+      "name": "GKFX"
+    },
+    {
+      "id": "tradeview",
+      "name": "Tradeview"
+    },
+    {
+      "id": "fxopen",
+      "name": "FXOpen"
+    },
+    {
+      "id": "royal",
+      "name": "Royal"
+    },
+    {
+      "id": "captrader",
+      "name": "CapTrader"
+    },
+    {
+      "id": "mexem",
+      "name": "Mexem"
+    },
+    {
+      "id": "vt-markets",
+      "name": "VT Markets"
+    },
+    {
+      "id": "tmgm",
+      "name": "TMGM"
+    },
+    {
+      "id": "trade-nation",
+      "name": "Trade Nation"
+    },
+    {
+      "id": "fx-trading",
+      "name": "FX Trading.com"
+    },
+    {
+      "id": "multibank",
+      "name": "Multibank"
+    },
+    {
+      "id": "fusion-markets",
+      "name": "Fusion Markets"
+    },
+    {
+      "id": "eightcap",
+      "name": "Eightcap"
+    },
+    {
+      "id": "hantec-markets",
+      "name": "Hantec Markets"
+    },
+    {
+      "id": "global-prime",
+      "name": "Global Prime"
+    },
+    {
+      "id": "go-markets",
+      "name": "Go Markets"
+    },
+    {
+      "id": "moneta-markets",
+      "name": "Moneta Markets"
+    },
+    {
+      "id": "blackbull",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "startrader",
+      "name": "StarTrader"
+    },
+    {
+      "id": "libertex",
+      "name": "Libertex"
+    },
+    {
+      "id": "blackbull-markets",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "ictrading",
+      "name": "IC Trading"
+    },
+    {
+      "id": "easymarkets",
+      "name": "EasyMarkets"
+    },
+    {
+      "id": "fxoro",
+      "name": "FXORO"
+    },
+    {
+      "id": "startrader-global",
+      "name": "StarTrader"
+    },
+    {
+      "id": "puprime",
+      "name": "PU Prime"
+    },
+    {
+      "id": "gbe-brokers",
+      "name": "GBE Brokers"
+    },
+    {
+      "id": "thunder-markets",
+      "name": "Thunder Markets"
+    },
+    {
+      "id": "superforex",
+      "name": "SuperForex"
+    },
+    {
+      "id": "instaforex",
+      "name": "InstaForex"
+    },
+    {
+      "id": "lifefinance",
+      "name": "LifeFinance"
+    },
+    {
+      "id": "fxgt",
+      "name": "FXGT"
+    },
+    {
+      "id": "traderstrust",
+      "name": "TradersTrust"
+    },
+    {
+      "id": "freshforex",
+      "name": "FreshForex"
+    }
+  ],
+  "copy": [
+    {
+      "id": "pepperstone",
+      "name": "Pepperstone"
+    },
+    {
+      "id": "ic-markets",
+      "name": "IC Markets"
+    },
+    {
+      "id": "ig",
+      "name": "IG"
+    },
+    {
+      "id": "etoro",
+      "name": "eToro"
+    },
+    {
+      "id": "avatrade",
+      "name": "AvaTrade"
+    },
+    {
+      "id": "axi",
+      "name": "Axi"
+    },
+    {
+      "id": "fp-markets",
+      "name": "FP Markets"
+    },
+    {
+      "id": "admirals",
+      "name": "Admirals"
+    },
+    {
+      "id": "tickmill",
+      "name": "Tickmill"
+    },
+    {
+      "id": "swissquote",
+      "name": "Swissquote"
+    },
+    {
+      "id": "dukascopy",
+      "name": "Dukascopy"
+    },
+    {
+      "id": "thinkmarkets",
+      "name": "ThinkMarkets"
+    },
+    {
+      "id": "fxcm",
+      "name": "FXCM"
+    },
+    {
+      "id": "exness",
+      "name": "Exness"
+    },
+    {
+      "id": "hf-markets",
+      "name": "HF Markets"
+    },
+    {
+      "id": "fbs",
+      "name": "FBS"
+    },
+    {
+      "id": "octafx",
+      "name": "OctaFX"
+    },
+    {
+      "id": "roboforex",
+      "name": "RoboForex"
+    },
+    {
+      "id": "bitget",
+      "name": "Bitget (CFD)"
+    },
+    {
+      "id": "tradeview",
+      "name": "Tradeview"
+    },
+    {
+      "id": "nordfx",
+      "name": "NordFX"
+    },
+    {
+      "id": "fxopen",
+      "name": "FXOpen"
+    },
+    {
+      "id": "blackbull",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "ictrading",
+      "name": "IC Trading"
+    }
+  ],
+  "islamic": [
+    {
+      "id": "pepperstone",
+      "name": "Pepperstone"
+    },
+    {
+      "id": "ic-markets",
+      "name": "IC Markets"
+    },
+    {
+      "id": "xtb",
+      "name": "XTB"
+    },
+    {
+      "id": "ig",
+      "name": "IG"
+    },
+    {
+      "id": "etoro",
+      "name": "eToro"
+    },
+    {
+      "id": "avatrade",
+      "name": "AvaTrade"
+    },
+    {
+      "id": "fxpro",
+      "name": "FxPro"
+    },
+    {
+      "id": "axi",
+      "name": "Axi"
+    },
+    {
+      "id": "fp-markets",
+      "name": "FP Markets"
+    },
+    {
+      "id": "admirals",
+      "name": "Admirals"
+    },
+    {
+      "id": "tickmill",
+      "name": "Tickmill"
+    },
+    {
+      "id": "dukascopy",
+      "name": "Dukascopy"
+    },
+    {
+      "id": "thinkmarkets",
+      "name": "ThinkMarkets"
+    },
+    {
+      "id": "fxcm",
+      "name": "FXCM"
+    },
+    {
+      "id": "xm",
+      "name": "XM"
+    },
+    {
+      "id": "exness",
+      "name": "Exness"
+    },
+    {
+      "id": "hf-markets",
+      "name": "HF Markets"
+    },
+    {
+      "id": "fbs",
+      "name": "FBS"
+    },
+    {
+      "id": "octafx",
+      "name": "OctaFX"
+    },
+    {
+      "id": "roboforex",
+      "name": "RoboForex"
+    },
+    {
+      "id": "hycm",
+      "name": "HYCM"
+    },
+    {
+      "id": "activtrades",
+      "name": "ActivTrades"
+    },
+    {
+      "id": "atfx",
+      "name": "ATFX"
+    },
+    {
+      "id": "markets-com",
+      "name": "Markets.com"
+    },
+    {
+      "id": "ironfx",
+      "name": "IronFX"
+    },
+    {
+      "id": "gkfx",
+      "name": "GKFX"
+    },
+    {
+      "id": "tradeview",
+      "name": "Tradeview"
+    },
+    {
+      "id": "nordfx",
+      "name": "NordFX"
+    },
+    {
+      "id": "fxopen",
+      "name": "FXOpen"
+    },
+    {
+      "id": "royal",
+      "name": "Royal"
+    },
+    {
+      "id": "captrader",
+      "name": "CapTrader"
+    },
+    {
+      "id": "mexem",
+      "name": "Mexem"
+    },
+    {
+      "id": "vt-markets",
+      "name": "VT Markets"
+    },
+    {
+      "id": "tmgm",
+      "name": "TMGM"
+    },
+    {
+      "id": "trade-nation",
+      "name": "Trade Nation"
+    },
+    {
+      "id": "fx-trading",
+      "name": "FX Trading.com"
+    },
+    {
+      "id": "multibank",
+      "name": "Multibank"
+    },
+    {
+      "id": "blackbull",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "startrader",
+      "name": "StarTrader"
+    },
+    {
+      "id": "libertex",
+      "name": "Libertex"
+    },
+    {
+      "id": "capital-com",
+      "name": "Capital.com"
+    },
+    {
+      "id": "blackbull-markets",
+      "name": "BlackBull Markets"
+    },
+    {
+      "id": "ictrading",
+      "name": "IC Trading"
+    },
+    {
+      "id": "easymarkets",
+      "name": "EasyMarkets"
+    },
+    {
+      "id": "fxoro",
+      "name": "FXORO"
+    },
+    {
+      "id": "startrader-global",
+      "name": "StarTrader"
+    },
+    {
+      "id": "puprime",
+      "name": "PU Prime"
+    },
+    {
+      "id": "gbe-brokers",
+      "name": "GBE Brokers"
+    },
+    {
+      "id": "thunder-markets",
+      "name": "Thunder Markets"
+    },
+    {
+      "id": "superforex",
+      "name": "SuperForex"
+    },
+    {
+      "id": "instaforex",
+      "name": "InstaForex"
+    },
+    {
+      "id": "lifefinance",
+      "name": "LifeFinance"
+    },
+    {
+      "id": "fxgt",
+      "name": "FXGT"
+    },
+    {
+      "id": "traderstrust",
+      "name": "TradersTrust"
+    },
+    {
+      "id": "freshforex",
+      "name": "FreshForex"
+    },
+    {
+      "id": "windsor-broker",
+      "name": "Windsor Brokers"
+    }
+  ],
+  "crypto": [],
+  "gold": [],
+  "stocks": [],
+  "noDeposit": [],
+  "lowDeposit": [],
+  "highLeverage": [],
+  "beginner": [],
+  "pamm": [],
+  "swing": [],
+  "day": [],
+  "scalping": []
+}

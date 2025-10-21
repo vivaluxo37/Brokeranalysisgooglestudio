@@ -1,0 +1,9 @@
+node_modules/
+dist/
+build/
+coverage/
+Brokeranalysisgooglestudio/
+awesome-llm-apps/
+App-test.tsx
+**/*.generated.ts
+**/*.generated.tsx

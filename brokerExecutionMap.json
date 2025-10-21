@@ -1,0 +1,65 @@
+{
+  "pepperstone": {
+    "executionType": "Market Maker",
+    "accountTypes": [
+      "Standard"
+    ],
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  "plus500": {
+    "executionType": "Market Maker",
+    "accountTypes": [
+      "Standard"
+    ],
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  "avatrade": {
+    "executionType": "Market Maker",
+    "accountTypes": [
+      "Standard"
+    ],
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  "oanda": {
+    "executionType": "Market Maker",
+    "accountTypes": [
+      "Standard"
+    ],
+    "isECN": false,
+    "isSTP": false,
+    "isNDD": false
+  },
+  "admirals": {
+    "executionType": "STP",
+    "accountTypes": [
+      "STP"
+    ],
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true
+  },
+  "dukascopy": {
+    "executionType": "ECN",
+    "accountTypes": [
+      "ECN"
+    ],
+    "isECN": true,
+    "isSTP": false,
+    "isNDD": true
+  },
+  "thinkmarkets": {
+    "executionType": "STP",
+    "accountTypes": [
+      "STP"
+    ],
+    "isECN": false,
+    "isSTP": true,
+    "isNDD": true
+  }
+}

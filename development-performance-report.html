@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development Server Performance Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        .status { padding: 10px; border-radius: 4px; margin: 10px 0; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .metric { display: inline-block; margin: 10px; padding: 15px; background: #ecf0f1; border-radius: 4px; min-width: 150px; text-align: center; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #2c3e50; }
+        .metric-label { font-size: 12px; color: #7f8c8d; text-transform: uppercase; }
+        .metric.passed .metric-value { color: #27ae60; }
+        .metric.failed .metric-value { color: #e74c3c; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f8f9fa; font-weight: bold; }
+        .error-list { max-height: 300px; overflow-y: auto; background: #f8f9fa; padding: 15px; border-radius: 4px; }
+        .error-item { margin: 10px 0; padding: 10px; background: white; border-left: 4px solid #e74c3c; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Development Server Performance Report</h1>
+        <p>Generated on 10/19/2025, 10:46:51 AM</p>
+        
+        <h2>📊 Overall Status</h2>
+        <div class="status warning">
+            <strong>Status:</strong> ⚠️ 6 Issues Detected
+        </div>
+        
+        <h2>🔧 Service Worker Status</h2>
+        <div class="status warning">
+            <strong>Registration:</strong> ⚠️ Not Active (Expected in Development)
+        </div>
+        
+        <h2>⚡ Performance Metrics</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+            <div class="metric failed">
+                <div class="metric-value">0ms</div>
+                <div class="metric-label">First Contentful Paint</div>
+            </div>
+            <div class="metric failed">
+                <div class="metric-value">0ms</div>
+                <div class="metric-label">DOM Content Loaded</div>
+            </div>
+            <div class="metric failed">
+                <div class="metric-value">0ms</div>
+                <div class="metric-label">Load Complete</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Resources Loaded</div>
+            </div>
+        </div>
+        
+        <h2>💾 Caching Analysis</h2>
+        <div class="status success">
+            <strong>Cache Hit Rate:</strong> 100%
+        </div>
+        
+        <h2>🌐 Network Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Total Requests</td>
+                    <td>250</td>
+                    <td>✅</td>
+                </tr>
+                <tr>
+                    <td>Slow Requests (>2s)</td>
+                    <td>0</td>
+                    <td>✅</td>
+                </tr>
+                <tr>
+                    <td>Potential Timeouts</td>
+                    <td>0</td>
+                    <td>✅</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        
+        <h2>❌ Errors Detected</h2>
+        <div class="error-list">
+            
+                <div class="error-item">
+                    <strong>service-worker:</strong> Navigation timeout of 30000 ms exceeded
+                    <br><small>2025-10-19T02:46:09.299Z</small>
+                </div>
+            
+                <div class="error-item">
+                    <strong>network:</strong> undefined
+                    <br><small>2025-10-19T02:46:37.105Z</small>
+                </div>
+            
+                <div class="error-item">
+                    <strong>console:</strong> Failed to load resource: the server responded with a status of 404 (Not Found)
+                    <br><small>2025-10-19T02:46:37.106Z</small>
+                </div>
+            
+                <div class="error-item">
+                    <strong>network:</strong> undefined
+                    <br><small>2025-10-19T02:46:38.255Z</small>
+                </div>
+            
+                <div class="error-item">
+                    <strong>console:</strong> Failed to load resource: the server responded with a status of 400 ()
+                    <br><small>2025-10-19T02:46:38.255Z</small>
+                </div>
+            
+                <div class="error-item">
+                    <strong>performance:</strong> Navigation timeout of 30000 ms exceeded
+                    <br><small>2025-10-19T02:46:39.315Z</small>
+                </div>
+            
+        </div>
+        
+        
+        <h2>🎯 Recommendations</h2>
+        <div class="recommendations">
+            <ol>
+                <li>⚠️ First Contentful Paint is above recommended threshold</li>
+                <li>✅ Consider optimizing 0 slow requests</li>
+                <li>⚠️ Service worker will be active in production environment</li>
+                <li>⚠️ Address 6 detected errors before production deployment</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

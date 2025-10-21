@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Pages Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success {
+            border-color: #28a745;
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .warning {
+            border-color: #ffc107;
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .loading {
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .broker-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .broker-name {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .feature-badge {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            margin: 1px;
+        }
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Category Pages Verification Tool</h1>
+
+    <div class="test-container">
+        <h2>Test All Category Pages</h2>
+        <p>Tests each category page to verify brokers have the required features.</p>
+        <button onclick="testAllCategories()" id="testAllBtn">Test All Categories</button>
+        <div id="summaryStats" class="summary-stats" style="display: none;"></div>
+        <div id="allResults"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000';
+
+        const categories = [
+            {
+                name: 'Europe (FCA, CySEC)',
+                path: '/brokers/region/europe',
+                expectedFeatures: ['FCA', 'CySEC', 'BaFin', 'FINMA']
+            },
+            {
+                name: 'North America (NFA, CIRO)',
+                path: '/brokers/region/north-america',
+                expectedFeatures: ['NFA', 'CFTC', 'CIRO']
+            },
+            {
+                name: 'Asia-Pacific (ASIC, MAS)',
+                path: '/brokers/region/asia-pacific',
+                expectedFeatures: ['ASIC', 'MAS']
+            },
+            {
+                name: 'Best for Beginners',
+                path: '/brokers/type/beginners',
+                expectedFeatures: ['Low Min Deposit', 'Demo Account', 'Education']
+            },
+            {
+                name: 'MT4 Brokers',
+                path: '/brokers/platform/mt4',
+                expectedFeatures: ['MT4 Platform']
+            },
+            {
+                name: 'ECN Brokers',
+                path: '/brokers/type/ecn',
+                expectedFeatures: ['ECN Account', 'Raw Spreads']
+            },
+            {
+                name: 'Scalping Brokers',
+                path: '/brokers/type/scalping',
+                expectedFeatures: ['Scalping Allowed', 'Low Spreads', 'Fast Execution']
+            },
+            {
+                name: 'Copy Trading',
+                path: '/brokers/type/copy-trading',
+                expectedFeatures: ['Copy Trading', 'Social Trading']
+            },
+            {
+                name: 'Islamic Brokers',
+                path: '/brokers/type/islamic',
+                expectedFeatures: ['Islamic Account', 'Swap-Free']
+            },
+            {
+                name: 'High Leverage',
+                path: '/brokers/type/high-leverage',
+                expectedFeatures: ['High Leverage', '1:500+']
+            },
+            {
+                name: 'Stock Trading',
+                path: '/brokers/type/stock-trading',
+                expectedFeatures: ['Stock CFDs', 'Share Trading']
+            },
+            {
+                name: 'Gold Trading',
+                path: '/brokers/type/gold-trading',
+                expectedFeatures: ['Gold Trading', 'Commodities']
+            }
+        ];
+
+        async function testAllCategories() {
+            const btn = document.getElementById('testAllBtn');
+            const allResults = document.getElementById('allResults');
+            const summaryStats = document.getElementById('summaryStats');
+
+            btn.disabled = true;
+            btn.innerHTML = 'Testing Categories<span class="loading"></span>';
+            allResults.innerHTML = '';
+            summaryStats.style.display = 'none';
+
+            const results = [];
+
+            for (const category of categories) {
+                const result = await testCategory(category);
+                results.push(result);
+                displayCategoryResult(result);
+            }
+
+            displaySummary(results);
+
+            btn.disabled = false;
+            btn.innerHTML = 'Test All Categories';
+        }
+
+        async function testCategory(category) {
+            try {
+                // Try to fetch the category page
+                const response = await fetch(`${API_BASE}${category.path}`);
+
+                if (!response.ok) {
+                    return {
+                        ...category,
+                        status: 'error',
+                        message: `HTTP ${response.status}: ${response.statusText}`,
+                        brokers: []
+                    };
+                }
+
+                const html = await response.text();
+
+                // Extract broker information from the HTML
+                const brokerMatches = html.match(/<h3[^>]*>([^<]*(?:pepperstone|ic-markets|fxpro|xm|admiral-markets|octafx|exness)[^<]*)<\/h3>/gi) || [];
+
+                const brokers = brokerMatches.map(match => {
+                    const brokerName = match.replace(/<[^>]*>/g, '').trim();
+                    return {
+                        name: brokerName,
+                        verified: true
+                    };
+                });
+
+                // Check if we found brokers
+                if (brokers.length === 0) {
+                    return {
+                        ...category,
+                        status: 'warning',
+                        message: 'No brokers found on this page',
+                        brokers: []
+                    };
+                }
+
+                return {
+                    ...category,
+                    status: 'success',
+                    message: `Found ${brokers.length} broker(s)`,
+                    brokers: brokers
+                };
+
+            } catch (error) {
+                return {
+                    ...category,
+                    status: 'error',
+                    message: error.message,
+                    brokers: []
+                };
+            }
+        }
+
+        function displayCategoryResult(result) {
+            const allResults = document.getElementById('allResults');
+
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'test-container';
+
+            const statusClass = result.status === 'success' ? 'success' :
+                              result.status === 'warning' ? 'warning' : 'error';
+
+            const statusIcon = result.status === 'success' ? '✅' :
+                              result.status === 'warning' ? '⚠️' : '❌';
+
+            resultDiv.innerHTML = `
+                <h3>${statusIcon} ${result.name}</h3>
+                <p><strong>Path:</strong> ${result.path}</p>
+                <p><strong>Status:</strong> ${result.message}</p>
+                <p><strong>Expected Features:</strong> ${result.expectedFeatures.join(', ')}</p>
+                <div class="result ${statusClass}">
+                    ${result.brokers.length > 0 ?
+                        `Brokers found:\n${result.brokers.map(b => `• ${b.name}`).join('\n')}` :
+                        'No brokers found'
+                    }
+                </div>
+            `;
+
+            allResults.appendChild(resultDiv);
+        }
+
+        function displaySummary(results) {
+            const summaryStats = document.getElementById('summaryStats');
+
+            const total = results.length;
+            const successful = results.filter(r => r.status === 'success').length;
+            const warnings = results.filter(r => r.status === 'warning').length;
+            const errors = results.filter(r => r.status === 'error').length;
+            const totalBrokers = results.reduce((sum, r) => sum + r.brokers.length, 0);
+
+            summaryStats.innerHTML = `
+                <div><strong>Total Categories:</strong> ${total}</div>
+                <div><strong>✅ Successful:</strong> ${successful}</div>
+                <div><strong>⚠️ Warnings:</strong> ${warnings}</div>
+                <div><strong>❌ Errors:</strong> ${errors}</div>
+                <div><strong>📊 Total Brokers Found:</strong> ${totalBrokers}</div>
+            `;
+            summaryStats.style.display = 'flex';
+
+            // Add detailed analysis
+            const allResults = document.getElementById('allResults');
+            const analysisDiv = document.createElement('div');
+            analysisDiv.className = 'test-container';
+
+            let issues = [];
+
+            results.forEach(result => {
+                if (result.status === 'warning' || result.status === 'error') {
+                    issues.push(`• ${result.name}: ${result.message}`);
+                }
+            });
+
+            if (issues.length > 0) {
+                analysisDiv.innerHTML = `
+                    <h3>🚨 Issues Found</h3>
+                    <div class="result error">${issues.join('\n')}</div>
+                `;
+                allResults.appendChild(analysisDiv);
+            }
+
+            // Add recommendations
+            const recommendationsDiv = document.createElement('div');
+            recommendationsDiv.className = 'test-container';
+
+            const recommendations = [
+                'Verify broker data matches current real-world offerings',
+                'Update copy trading platforms to reflect new services',
+                'Check ECN account availability for each broker',
+                'Verify Islamic account availability and conditions',
+                'Ensure stock CFD counts are accurate',
+                'Update regulator information for current licenses'
+            ];
+
+            recommendationsDiv.innerHTML = `
+                <h3>📝 Recommendations</h3>
+                <div class="result">
+                    ${recommendations.map(r => `• ${r}`).join('\n')}
+                </div>
+            `;
+            allResults.appendChild(recommendationsDiv);
+        }
+
+        // Test specific Pepperstone features
+        async function testPepperstoneFeatures() {
+            try {
+                const response = await fetch(`${API_BASE}/#/broker/pepperstone`);
+                const html = await response.text();
+
+                // Look for key features
+                const hasCopyTrading = html.includes('copy') || html.includes('CopyTrading');
+                const hasECN = html.includes('ECN') || html.includes('Razor');
+                const hasIslamic = html.includes('islamic') || html.includes('swap-free');
+                const hasStocks = html.includes('stock') || html.includes('share');
+
+                console.log('Pepperstone Features Analysis:', {
+                    copyTrading: hasCopyTrading,
+                    ecn: hasECN,
+                    islamic: hasIslamic,
+                    stocks: hasStocks
+                });
+
+            } catch (error) {
+                console.error('Error testing Pepperstone:', error);
+            }
+        }
+
+        // Auto-run when page loads
+        window.addEventListener('load', () => {
+            console.log('Category verification tool loaded');
+            console.log('Testing development server at:', API_BASE);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Fix Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .success {
+            background: #2e7d32;
+            color: #a5d6a7;
+        }
+        .error {
+            background: #c62828;
+            color: #ef9a9a;
+        }
+        .pending {
+            background: #f57c00;
+            color: #ffcc80;
+        }
+        button {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1565c0;
+        }
+        .response {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #3a3a3a;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #90caf9;
+        }
+        .console-log {
+            background: #1a1a1a;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #3a3a3a;
+        }
+        h1, h2 {
+            color: #fff;
+        }
+        .fix-summary {
+            background: #1b5e20;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 Chatbot Fix Test Dashboard</h1>
+    
+    <div class="fix-summary">
+        <h3>✅ Fixes Applied:</h3>
+        <ul>
+            <li>✓ Proxy server CORS now allows port 3000</li>
+            <li>✓ UserService handles 404 errors gracefully</li>
+            <li>✓ Better error logging in backendService</li>
+            <li>✓ Mock user returned when API not available</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>1. System Status Check</h2>
+        <button onclick="checkSystemStatus()">Run Status Check</button>
+        <div id="status-result" class="status pending">Not tested</div>
+        <div id="status-details" class="response" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Direct Proxy Test</h2>
+        <button onclick="testProxyDirectly()">Test Proxy Server</button>
+        <div id="proxy-status" class="status pending">Not tested</div>
+        <div id="proxy-response" class="response" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Simulated Frontend Test (Port 3000)</h2>
+        <button onclick="testFromFrontend()">Test as Frontend</button>
+        <div id="frontend-status" class="status pending">Not tested</div>
+        <div id="frontend-response" class="response" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Console Logs</h2>
+        <div id="console-output" class="console-log">
+            Console output will appear here...
+        </div>
+    </div>
+
+    <script>
+        // Capture console logs
+        const consoleDiv = document.getElementById('console-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addConsoleMessage('LOG', args);
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addConsoleMessage('ERROR', args);
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addConsoleMessage('WARN', args);
+        };
+        
+        function addConsoleMessage(type, args) {
+            const timestamp = new Date().toLocaleTimeString();
+            const message = args.map(arg => 
+                typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+            ).join(' ');
+            
+            const color = type === 'ERROR' ? '#ef5350' : type === 'WARN' ? '#ffa726' : '#66bb6a';
+            consoleDiv.innerHTML += `<div style="color: ${color}">[${timestamp}] ${type}: ${message}</div>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+        
+        const PROXY_URL = 'http://localhost:3001';
+        
+        async function checkSystemStatus() {
+            const statusEl = document.getElementById('status-result');
+            const detailsEl = document.getElementById('status-details');
+            
+            statusEl.textContent = 'Checking...';
+            statusEl.className = 'status pending';
+            
+            let results = {
+                proxy: false,
+                cors: false,
+                chatbot: false
+            };
+            
+            // Check proxy health
+            try {
+                const healthResponse = await fetch(`${PROXY_URL}/health`);
+                if (healthResponse.ok) {
+                    results.proxy = true;
+                    console.log('✅ Proxy server is running');
+                }
+            } catch (e) {
+                console.error('❌ Proxy server not accessible');
+            }
+            
+            // Check CORS for port 3000
+            try {
+                const corsResponse = await fetch(`${PROXY_URL}/health`, {
+                    headers: { 'Origin': 'http://localhost:3000' }
+                });
+                if (corsResponse.ok) {
+                    results.cors = true;
+                    console.log('✅ CORS configured for port 3000');
+                }
+            } catch (e) {
+                console.error('❌ CORS issue detected');
+            }
+            
+            // Check chatbot endpoint
+            try {
+                const chatResponse = await fetch(`${PROXY_URL}/api/chatbot`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': 'http://localhost:3000'
+                    },
+                    body: JSON.stringify({
+                        message: 'System check',
+                        brokerContext: ''
+                    })
+                });
+                
+                if (chatResponse.ok) {
+                    const data = await chatResponse.json();
+                    if (data.success) {
+                        results.chatbot = true;
+                        console.log('✅ Chatbot API working');
+                    }
+                }
+            } catch (e) {
+                console.error('❌ Chatbot API error:', e.message);
+            }
+            
+            // Update status
+            const allPassed = results.proxy && results.cors && results.chatbot;
+            statusEl.textContent = allPassed ? '✅ All Systems Operational' : '⚠️ Some Issues Detected';
+            statusEl.className = allPassed ? 'status success' : 'status error';
+            
+            detailsEl.style.display = 'block';
+            detailsEl.innerHTML = `<pre>${JSON.stringify(results, null, 2)}</pre>`;
+        }
+        
+        async function testProxyDirectly() {
+            const statusEl = document.getElementById('proxy-status');
+            const responseEl = document.getElementById('proxy-response');
+            
+            statusEl.textContent = 'Testing...';
+            statusEl.className = 'status pending';
+            
+            try {
+                console.log('[Test] Sending direct request to proxy...');
+                
+                const response = await fetch(`${PROXY_URL}/api/chatbot`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Hello from direct test',
+                        brokerContext: JSON.stringify([{
+                            id: 'test-broker',
+                            name: 'Test Broker',
+                            score: 4.5
+                        }])
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    statusEl.textContent = '✅ Proxy Working';
+                    statusEl.className = 'status success';
+                    console.log('✅ Proxy test successful');
+                } else {
+                    statusEl.textContent = '❌ Proxy Error';
+                    statusEl.className = 'status error';
+                    console.error('❌ Proxy returned error:', data);
+                }
+                
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                
+            } catch (error) {
+                statusEl.textContent = '❌ Connection Failed';
+                statusEl.className = 'status error';
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>Error: ${error.message}</pre>`;
+                console.error('❌ Proxy test failed:', error);
+            }
+        }
+        
+        async function testFromFrontend() {
+            const statusEl = document.getElementById('frontend-status');
+            const responseEl = document.getElementById('frontend-response');
+            
+            statusEl.textContent = 'Testing...';
+            statusEl.className = 'status pending';
+            
+            try {
+                console.log('[Test] Simulating request from frontend (port 3000)...');
+                
+                // Simulate the exact request the frontend would make
+                const response = await fetch(`${PROXY_URL}/api/chatbot`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Origin': 'http://localhost:3000'  // Simulate frontend origin
+                    },
+                    body: JSON.stringify({
+                        message: 'What are the best forex brokers?',
+                        brokerContext: JSON.stringify([])
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    statusEl.textContent = '✅ Frontend Integration Working';
+                    statusEl.className = 'status success';
+                    console.log('✅ Frontend test successful');
+                } else {
+                    statusEl.textContent = '⚠️ Response Issue';
+                    statusEl.className = 'status error';
+                    console.warn('⚠️ Response indicates issue:', data);
+                }
+                
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                
+            } catch (error) {
+                statusEl.textContent = '❌ Frontend Test Failed';
+                statusEl.className = 'status error';
+                responseEl.style.display = 'block';
+                responseEl.innerHTML = `<pre>Error: ${error.message}\n\nThis is what the frontend would see.</pre>`;
+                console.error('❌ Frontend test failed:', error);
+            }
+        }
+        
+        // Auto-run system check on load
+        window.addEventListener('load', () => {
+            console.log('🚀 Chatbot Fix Test Dashboard Loaded');
+            console.log('Running automatic system check...');
+            checkSystemStatus();
+        });
+    </script>
+</body>
+</html>

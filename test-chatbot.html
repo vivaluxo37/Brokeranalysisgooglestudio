@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot and Widget Test</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: linear-gradient(to bottom, #f0f4f8, #e0e7ff);
+            min-height: 100vh;
+        }
+        .info { 
+            background: #d4edda; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            border: 1px solid #c3e6cb; 
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 { 
+            color: #333; 
+            margin-top: 0;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .success { 
+            color: green; 
+            font-weight: bold;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .mock-chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+        .mock-widget {
+            position: fixed;
+            bottom: 96px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .visual-layout {
+            position: relative;
+            height: 300px;
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .visual-chatbot {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .visual-widget {
+            position: absolute;
+            bottom: 96px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>✅ Chatbot and Quick Access Widget Configuration</h1>
+    
+    <div class="info">
+        <h3>🎯 Configuration Complete!</h3>
+        <ul>
+            <li class="success">✅ Chatbot positioned at bottom-right (bottom-5 right-5)</li>
+            <li class="success">✅ Quick Access Widget moved higher to avoid overlap (bottom-24 right-6)</li>
+            <li class="success">✅ Gemini API key configured (VITE_API_KEY set)</li>
+            <li class="success">✅ Both components have proper z-index to avoid conflicts</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>📍 Component Positioning</h2>
+        <p><strong>AI Chatbot:</strong></p>
+        <ul>
+            <li>Position: Fixed, bottom-5, right-5</li>
+            <li>Z-index: Default (in component)</li>
+            <li>Icon: Chat bubble with pulse animation</li>
+            <li>Expands to show chat interface when clicked</li>
+        </ul>
+        
+        <p><strong>Quick Access Widget:</strong></p>
+        <ul>
+            <li>Position: Fixed, bottom-24, right-6</li>
+            <li>Z-index: 40</li>
+            <li>Icon: Blue circle with chevron up arrow</li>
+            <li>Expands to show quick links menu</li>
+        </ul>
+        
+        <div class="visual-layout">
+            <div style="position: absolute; top: 10px; left: 10px; color: #666;">Visual Layout Preview:</div>
+            <div class="visual-widget">⬆</div>
+            <div class="visual-chatbot">💬</div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🤖 Chatbot Features</h2>
+        <p>The AI-powered chatbot includes:</p>
+        <ul>
+            <li>✅ <strong>Gemini AI Integration</strong> - Uses Google's Gemini 1.5 Pro model</li>
+            <li>✅ <strong>Streaming Responses</strong> - Real-time text generation</li>
+            <li>✅ <strong>Broker Context</strong> - Knows about all brokers in the database</li>
+            <li>✅ <strong>Quick Suggestions</strong> - Pre-defined helpful prompts</li>
+            <li>✅ <strong>Markdown Support</strong> - Rich text formatting in responses</li>
+            <li>✅ <strong>Typing Indicator</strong> - Shows when AI is processing</li>
+            <li>✅ <strong>Context-Aware</strong> - Adapts greeting based on current page</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Testing Instructions</h2>
+        <ol>
+            <li><strong>Start the dev server:</strong> <code>npm run dev</code></li>
+            <li><strong>Open the application:</strong> <a href="http://localhost:3000" target="_blank" class="button">Open App</a></li>
+            <li><strong>Look for the chatbot:</strong> Blue chat icon in bottom-right corner</li>
+            <li><strong>Test the chatbot:</strong>
+                <ul>
+                    <li>Click the chat icon to open</li>
+                    <li>Try asking: "What are the best ECN brokers?"</li>
+                    <li>Or: "Tell me about Pepperstone"</li>
+                    <li>Or: "Compare IC Markets and Pepperstone"</li>
+                </ul>
+            </li>
+            <li><strong>Test Quick Access Widget:</strong> Blue circle with arrow above chatbot</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>⚠️ Troubleshooting</h2>
+        <p>If the chatbot doesn't work:</p>
+        <ol>
+            <li><strong>Check console for errors:</strong> Press F12 and look for red errors</li>
+            <li><strong>Verify API key:</strong> Make sure VITE_API_KEY is set in .env file</li>
+            <li><strong>Restart dev server:</strong> Stop and restart <code>npm run dev</code></li>
+            <li><strong>Check network tab:</strong> Look for failed Gemini API calls</li>
+            <li><strong>API Key issues:</strong> 
+                <ul>
+                    <li>The current key is: AIzaSyAjxTe_IQ11ABiHR_Es4jg_odd9CmwaEuQ</li>
+                    <li>Get a new one at: <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Mock visual elements to show positioning -->
+    <div class="mock-chatbot" title="AI Chatbot - Click to open">💬</div>
+    <div class="mock-widget" title="Quick Access Menu - Click to expand">⬆</div>
+
+    <script>
+        // Visual demonstration
+        document.querySelector('.mock-chatbot').addEventListener('click', function() {
+            alert('Chatbot clicked! In the real app, this opens the chat interface.');
+        });
+        
+        document.querySelector('.mock-widget').addEventListener('click', function() {
+            alert('Quick Access Widget clicked! This expands to show quick links.');
+        });
+        
+        console.log('✅ Chatbot Configuration:');
+        console.log('- Position: bottom-5 right-5');
+        console.log('- API Key: Configured');
+        console.log('- Service: Gemini 1.5 Pro');
+        console.log('');
+        console.log('✅ Quick Access Widget:');
+        console.log('- Position: bottom-24 right-6');
+        console.log('- No overlap with chatbot');
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: 'Brokeranalysisgooglestudio/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm ci
+      
+    - name: Run linter
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm run lint
+      
+    - name: Type check
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm run type-check
+      
+    - name: Run tests with coverage
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm run test:coverage
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./Brokeranalysisgooglestudio/coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: 'Brokeranalysisgooglestudio/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm ci
+      
+    - name: Build application
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm run build
+      
+    - name: Analyze bundle size
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm run analyze:bundle
+      
+    - name: Check bundle size limits
+      run: |
+        # Check if bundle size exceeds 500MB limit
+        bundle_size=$(du -sm ./Brokeranalysisgooglestudio/dist/client | cut -f1)
+        if [ "$bundle_size" -gt 500 ]; then
+          echo "Bundle size ${bundle_size}MB exceeds 500MB limit"
+          exit 1
+        else
+          echo "Bundle size ${bundle_size}MB is within limits"
+        fi
+
+  lighthouse:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: 'Brokeranalysisgooglestudio/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm ci
+      
+    - name: Build application
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm run build
+      
+    - name: Run Lighthouse CI
+      working-directory: ./Brokeranalysisgooglestudio
+      run: npm run lighthouse:ci
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

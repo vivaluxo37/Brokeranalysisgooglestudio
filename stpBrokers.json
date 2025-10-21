@@ -1,0 +1,94 @@
+[
+  {
+    "id": "axi",
+    "name": "Axi"
+  },
+  {
+    "id": "admirals",
+    "name": "Admirals"
+  },
+  {
+    "id": "swissquote",
+    "name": "Swissquote"
+  },
+  {
+    "id": "thinkmarkets",
+    "name": "ThinkMarkets"
+  },
+  {
+    "id": "fxcm",
+    "name": "FXCM"
+  },
+  {
+    "id": "hf-markets",
+    "name": "HF Markets"
+  },
+  {
+    "id": "fbs",
+    "name": "FBS"
+  },
+  {
+    "id": "octafx",
+    "name": "OctaFX"
+  },
+  {
+    "id": "activtrades",
+    "name": "ActivTrades"
+  },
+  {
+    "id": "atfx",
+    "name": "ATFX"
+  },
+  {
+    "id": "ironfx",
+    "name": "IronFX"
+  },
+  {
+    "id": "gkfx",
+    "name": "GKFX"
+  },
+  {
+    "id": "royal",
+    "name": "Royal"
+  },
+  {
+    "id": "mexem",
+    "name": "Mexem"
+  },
+  {
+    "id": "vt-markets",
+    "name": "VT Markets"
+  },
+  {
+    "id": "fx-trading",
+    "name": "FX Trading.com"
+  },
+  {
+    "id": "multibank",
+    "name": "Multibank"
+  },
+  {
+    "id": "startrader",
+    "name": "StarTrader"
+  },
+  {
+    "id": "capital-com",
+    "name": "Capital.com"
+  },
+  {
+    "id": "freedom24",
+    "name": "Freedom24"
+  },
+  {
+    "id": "startrader-global",
+    "name": "StarTrader"
+  },
+  {
+    "id": "gbe-brokers",
+    "name": "GBE Brokers"
+  },
+  {
+    "id": "lifefinance",
+    "name": "LifeFinance"
+  }
+]

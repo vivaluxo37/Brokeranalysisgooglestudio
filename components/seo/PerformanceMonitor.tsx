@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import React, { useEffect, useState } from 'react';
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import {
@@ -40,32 +46,22 @@ interface PerformanceMonitorProps {
 
 const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
   pageUrl,
-  enableRealTime = true
+  enableRealTime = true,
 }) => {
   const [metrics, setMetrics] = useState<PerformanceMetrics | null>(null);
   const [accessibilityIssues, setAccessibilityIssues] = useState<AccessibilityIssue[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [lastChecked, setLastChecked] = useState<Date | null>(null);
+  const [lastChecked, setLastChecked] = useState<string>('');
 
   // Simulate performance metrics collection
-  const collectMetrics = async (): Promise<PerformanceMetrics> => {
-    // In a real implementation, this would use:
-    // - Web Vitals API
-    // - Lighthouse CI
-    // - Custom performance monitoring
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          lcp: 2.1 + Math.random() * 0.5, // 2.1-2.6s
-          fid: 80 + Math.random() * 20, // 80-100ms
-          cls: 0.05 + Math.random() * 0.02, // 0.05-0.07
-          fcp: 1.8 + Math.random() * 0.4, // 1.8-2.2s
-          tti: 3.2 + Math.random() * 0.8, // 3.2-4.0s
-          tbt: 150 + Math.random() * 50 // 150-200ms
-        });
-      }, 500);
-    });
-  };
+  const collectMetrics = async (): Promise<PerformanceMetrics> => ({
+    lcp: 2.6,
+    fid: 100,
+    cls: 0.07,
+    fcp: 2.2,
+    tti: 4,
+    tbt: 200,
+  });
 
   // Simulate accessibility checking
   const checkAccessibility = async (): Promise<AccessibilityIssue[]> => {
@@ -73,37 +69,7 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
     // - axe-core
     // - WAVE API
     // - Custom accessibility rules
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const issues: AccessibilityIssue[] = [
-          {
-            id: 'alt-missing',
-            type: 'error',
-            category: 'Images',
-            description: 'Some images are missing alt attributes',
-            impact: 'serious',
-            element: 'img'
-          },
-          {
-            id: 'color-contrast',
-            type: 'warning',
-            category: 'Colors',
-            description: 'Low contrast ratio detected on some elements',
-            impact: 'moderate',
-            element: '.text-low-contrast'
-          },
-          {
-            id: 'heading-order',
-            type: 'info',
-            category: 'Structure',
-            description: 'Heading levels should not be skipped',
-            impact: 'minor',
-            element: 'h1, h3'
-          }
-        ];
-        resolve(issues);
-      }, 300);
-    });
+    return [];
   };
 
   const runAudit = async () => {
@@ -116,7 +82,7 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
 
       setMetrics(performanceData);
       setAccessibilityIssues(accessibilityData);
-      setLastChecked(new Date());
+      setLastChecked(new Date().toISOString());
     } catch (error) {
       console.error('Error running SEO audit:', error);
     } finally {
@@ -127,10 +93,12 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
   useEffect(() => {
     runAudit();
 
-    if (enableRealTime) {
-      const interval = setInterval(runAudit, 30000); // Check every 30 seconds
-      return () => clearInterval(interval);
+    if (!enableRealTime) {
+      return undefined;
     }
+
+    const interval = window.setInterval(runAudit, 30000); // Check every 30 seconds
+    return () => window.clearInterval(interval);
   }, [enableRealTime, pageUrl]);
 
   const getScoreColor = (value: number, thresholds: { good: number; needsImprovement: number }) => {
@@ -183,11 +151,11 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
               Core Web Vitals
             </CardTitle>
             <div className="flex items-center gap-2">
-              {lastChecked && (
+              {lastChecked ? (
                 <span className="text-sm text-gray-500">
-                  Last checked: {lastChecked.toLocaleTimeString()}
+                  Last checked: {new Date(lastChecked).toLocaleTimeString()}
                 </span>
-              )}
+              ) : null}
               <Button onClick={runAudit} size="sm" variant="outline">
                 Refresh
               </Button>

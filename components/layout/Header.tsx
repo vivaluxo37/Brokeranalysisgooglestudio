@@ -308,11 +308,11 @@ export default function Header() {
               <span className="xl:hidden">Join</span>
             </Link>
             <Link
-              to="/best-brokers"
+              to="/broker-matcher"
               className="bg-blue-600 text-white px-3 xl:px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors whitespace-nowrap"
             >
-              <span className="hidden xl:inline">Best Brokers</span>
-              <span className="xl:hidden">Brokers</span>
+              <span className="hidden xl:inline">Broker Matcher</span>
+              <span className="xl:hidden">Matcher</span>
             </Link>
           </div>
 

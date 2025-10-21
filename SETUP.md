@@ -55,7 +55,7 @@ To start the development server, run:
 npm run dev
 ```
 
-This will start the Vite development server, typically on http://localhost:5173
+This will start the Vite development server on http://localhost:3000 and the API proxy on http://localhost:3001
 
 **Note:** If you encounter an error related to `vitest` not being found when starting the dev server, make sure the vite.config.ts file is importing `defineConfig` from 'vite' rather than 'vitest/config'. The file should look like this:
 

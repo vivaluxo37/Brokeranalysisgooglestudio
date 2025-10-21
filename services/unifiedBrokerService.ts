@@ -17,7 +17,7 @@ class UnifiedBrokerService {
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
   /**
-   * Get all brokers - tries database first, falls back to static data
+   * Get all brokers - ONLY uses validated static data to prevent 404 errors
    */
   async getBrokers(): Promise<Broker[]> {
     // Return cached data if valid
@@ -25,35 +25,12 @@ class UnifiedBrokerService {
       return this.cache;
     }
 
-    try {
-      console.log('🔄 Attempting to fetch brokers from database...');
-      
-      // Try to get brokers from database
-      const dbBrokers = await brokerDatabaseService.getAllBrokers();
-      
-      if (dbBrokers && dbBrokers.length > 0) {
-        console.log(`✅ Successfully fetched ${dbBrokers.length} brokers from database`);
-        
-        // Transform database brokers to match the Broker interface
-        const transformedBrokers = dbBrokers.map(this.transformDatabaseBroker);
-        
-        // Cache the result
-        this.cache = transformedBrokers;
-        this.cacheExpiry = Date.now() + this.CACHE_DURATION;
-        
-        return transformedBrokers;
-      }
-    } catch (error) {
-      // Only show detailed error in development
-      if (import.meta.env.DEV) {
-        console.warn('⚠️ Database fetch failed, falling back to static data:', error.message);
-      }
-    }
-
-    // Fallback to static data
-    console.log(`📁 Using static broker data (${staticBrokers.length} brokers)`);
+    // IMPORTANT: Only use static brokers that have valid detail pages
+    // This prevents 404 errors from database brokers without corresponding pages
+    console.log(`📁 Using validated static broker data (${staticBrokers.length} brokers)`);
+    console.log('✅ All brokers have valid detail pages - preventing 404 errors');
     
-    // Cache static data as well
+    // Cache static data
     this.cache = staticBrokers;
     this.cacheExpiry = Date.now() + this.CACHE_DURATION;
     
@@ -97,6 +74,7 @@ class UnifiedBrokerService {
   clearCache(): void {
     this.cache = null;
     this.cacheExpiry = 0;
+    console.log('🔄 Broker cache cleared - will use validated static data');
   }
 
   /**

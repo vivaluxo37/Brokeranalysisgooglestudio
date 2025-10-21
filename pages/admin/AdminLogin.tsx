@@ -20,7 +20,8 @@ const AdminLogin: React.FC = () => {
       if (email === 'admin@brokeranalysis.com' && password === 'admin123') {
         // Store auth token or session
         localStorage.setItem('admin_token', 'mock-admin-token');
-        navigate('/admin/dashboard');
+        console.log('Admin token stored, navigating to /admin');
+        navigate('/admin');
       } else {
         setError('Invalid email or password');
       }

@@ -1,15 +1,57 @@
 
 
-// THIS FILE SIMULATES A SECURE BACKEND SERVER.
-// IN A REAL-WORLD APPLICATION, THIS LOGIC WOULD LIVE ON A SERVER-SIDE
-// ENDPOINT, AND THE API KEY WOULD BE A SERVER ENVIRONMENT VARIABLE.
+// SECURE BACKEND SERVICE CLIENT
+// This service calls the secure proxy server to handle AI requests
+// The proxy server manages API keys and rate limiting
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
+
 import { Broker, Review, AIRecommendation, NewsArticle, Signal, TradingJournalEntry, MarketMood, BrokerAlternativesResponse } from '../types';
 import { brokers } from '../data/brokers';
+import { aiProviderManager } from './aiProviders';
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
-const model = "gemini-1.5-pro";
+// Proxy server configuration
+const PROXY_BASE_URL = import.meta.env.VITE_API_PROXY_URL || 'http://localhost:3001';
+
+const FALLBACK_GEMINI_MODEL = 'gemini-2.0-flash-exp';
+const fallbackGeminiClient = (() => {
+  const apiKey = import.meta.env.VITE_API_KEY;
+  try {
+    return apiKey ? new GoogleGenerativeAI(apiKey) : null;
+  } catch (error) {
+    console.error('Failed to initialize fallback Gemini client:', error);
+    return null;
+  }
+})();
+
+const parseJsonResponse = <T>(rawText: string): T | null => {
+  const attempts: string[] = [];
+
+  if (rawText) {
+    attempts.push(rawText);
+  }
+
+  const fencedMatch = rawText.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fencedMatch) {
+    attempts.push(fencedMatch[1]);
+  }
+
+  const bracketStart = rawText.indexOf('{');
+  const bracketEnd = rawText.lastIndexOf('}');
+  if (bracketStart !== -1 && bracketEnd !== -1 && bracketEnd > bracketStart) {
+    attempts.push(rawText.slice(bracketStart, bracketEnd + 1));
+  }
+
+  for (const attempt of attempts) {
+    try {
+      return JSON.parse(attempt.trim());
+    } catch (error) {
+      continue;
+    }
+  }
+
+  return null;
+};
 
 // --- Chatbot Functionality ---
 
@@ -29,72 +71,100 @@ export const handleChatbotStream = async (message: string) => {
       executionType: b.technology.executionType,
   })), null, 2);
 
-  const prompt = `You are BrokerBot, an expert AI assistant for forex trading. You have access to a database of forex brokers in JSON format below. Use this data to answer user questions accurately. You can and should create links in your response using markdown format [link text](url).
+  try {
+    const response = await fetch(`${PROXY_BASE_URL}/api/chatbot`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: message,
+        brokerContext: brokerContext
+      })
+    });
 
-- To link to a broker's detail page within this app, use the 'internalPath' value. For example: "You can see more details on [Pepperstone](/#/broker/pepperstone)".
-- To link to a broker's official website, use the 'websiteUrl' value. For example: "Visit the [official Pepperstone website](https://pepperstone.com/)".
-- To link to the comparison page, use '/#/compare'. For example: "You can compare them on our [comparison page](/#/compare)".
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+    }
 
-**Answering "Best Broker" Questions:**
-When asked for the "best" broker for a specific category (e.g., "best ECN brokers", "best for beginners"), identify the top 2-3 brokers from the data that match the criteria. Explain your reasoning briefly. For example, for "beginners", look for low minimum deposits, high overall scores, and user-friendly platforms. For "ECN", look for brokers with \`executionType\` of 'ECN' and low costs.
+    const data = await response.json();
 
-If a user asks to compare brokers, use the data to provide a comparison. If the question is about a specific broker, use the data for that broker and provide helpful links. If it's a general forex question not related to the data, answer it from your general knowledge. Be helpful, concise, and friendly. Use markdown for formatting, like bolding broker names with **.
+    // Create a mock stream from the response
+    const text = data.response;
+    const stream = new ReadableStream<string>({
+      async start(controller) {
+        const segments = text.split(/(\s+)/g);
+        for (const segment of segments) {
+          if (!segment) {
+            continue;
+          }
+          controller.enqueue(segment);
+          // Small delay to simulate streaming
+          await new Promise(resolve => setTimeout(resolve, 40));
+        }
 
-Broker Data:
-${brokerContext}
+        controller.close();
+      }
+    });
 
-User's question: "${message}"`;
-
-  const generativeModel = genAI.getGenerativeModel({ model: model });
-  const result = await generativeModel.generateContentStream(prompt);
-  return result.stream;
+    return stream;
+    
+  } catch (error) {
+    console.error('Proxy server error:', error);
+    throw new Error('AI service is temporarily unavailable. Please try again later.');
+  }
 };
 
 
 // --- AI Tutor Functionality ---
 export const handleAiTutorStream = async (message: string, history: { sender: 'user' | 'ai'; text: string }[]) => {
-    const chatHistory = history.map(msg => ({
-        role: msg.sender === 'user' ? 'user' : 'model',
-        parts: [{ text: msg.text }]
-    }));
+    try {
+        const response = await fetch(`${PROXY_BASE_URL}/api/tutor`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                topic: message,
+                difficulty: 'beginner',
+                userLevel: 'beginner',
+                history: history
+            })
+        });
 
-    const systemInstruction = `You are "Professor Forex," a friendly and incredibly knowledgeable AI trading tutor. Your mission is to make the complex world of forex trading simple and accessible for everyone.
-- **Your Persona:** Patient, encouraging, and an expert at breaking down difficult topics using analogies and real-world examples.
-- **Your Core Topics:** Risk Management, Technical Analysis (charts, indicators, patterns), Fundamental Analysis (economic news), Trading Psychology, Broker Types (ECN, Market Maker), and Trading Strategies.
-- **Your Teaching Style:**
-  - Keep explanations concise and conversational. Use markdown like **bolding** and lists to make information easy to digest.
-  - After explaining a concept, always check for understanding with a question like, "Does that make sense?" or "Would you like me to explain any part of that in more detail?".
-  - Proactively encourage users to ask follow-up questions to foster a dynamic learning conversation.
-- **Your Resources:** You can and should link to our internal educational resources when relevant. Use markdown format for links. Here are the tools available to you:
-  - **Blog Posts:**
-    - [Forex for Beginners](/#/blog/forex-trading-for-beginners-guide-2025)
-    - [How to Choose a Broker](/#/blog/how-to-choose-a-forex-broker-2025)
-    - [ECN vs. Market Maker](/#/blog/ecn-vs-market-maker-broker)
-    - [Top 5 Trading Strategies](/#/blog/forex-trading-strategies)
-    - [5 Risk Management Rules](/#/blog/risk-management-in-forex)
-    - [Guide to Market Analysis](/#/blog/forex-market-analysis-guide-2025)
-    - [Mastering Trading Psychology](/#/blog/trading-psychology-tips-for-success)
-    - [Understanding Trading Costs](/#/blog/understanding-forex-trading-costs-2025)
-    - [Guide to Automated Trading/EAs](/#/blog/guide-to-automated-forex-trading-2025)
-    - [What is Leverage?](/#/blog/what-is-leverage-in-forex-2025)
-    - [Best Trading Platforms](/#/blog/best-forex-trading-platforms-2025)
-    - [What is Copy Trading?](/#/blog/what-is-copy-trading-beginners-guide-2025)
-    - [Demo vs. Live Trading](/#/blog/forex-demo-vs-live-trading-guide-2025)
-    - [Regulations Explained](/#/blog/forex-trading-regulations-explained-2025)
-  - **Quizzes & Simulators:**
-    - [Test your knowledge on key topics](/#/education/quizzes)
-    - [Practice with our trading simulators](/#/education/simulators)
-- **Handling Questions:**
-  - If a user asks about a specific broker, explain that your role is to teach trading concepts, but they can use the **[Broker Comparison Tool](/#/compare)** to research specific companies.
-  - If a question is completely off-topic (e.g., about the weather), politely steer the conversation back to trading education.`;
-    
-    const generativeModel = genAI.getGenerativeModel({ 
-        model: model,
-        systemInstruction: systemInstruction 
-    });
-    const chat = generativeModel.startChat({ history: chatHistory });
-    const result = await chat.sendMessageStream(message);
-    return result.stream;
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Create a mock stream from the response
+        const text = data.content;
+        const stream = new ReadableStream<string>({
+            async start(controller) {
+                const segments = text.split(/(\s+)/g);
+
+                for (const segment of segments) {
+                    if (!segment) {
+                        continue;
+                    }
+                    controller.enqueue(segment);
+                    // Small delay to simulate streaming
+                    await new Promise(resolve => setTimeout(resolve, 30));
+                }
+
+                controller.close();
+            }
+        });
+
+        return stream;
+        
+    } catch (error) {
+        console.error('Proxy server error:', error);
+        throw new Error('AI service is temporarily unavailable. Please try again later.');
+    }
 };
 
 
@@ -113,14 +183,14 @@ export const handleStrategyBrokerRecommendations = async (
         id: b.id,
         name: b.name,
         score: b.score,
-        executionType: b.technology.executionType,
-        commissionStructure: b.fees.trading.commissionStructure,
-        eurusdSpread: b.tradingConditions.spreads.eurusd,
-        swapFeeCategory: b.tradingConditions.swapFeeCategory,
-        platforms: b.technology.platforms,
+        executionType: b.technology?.executionType || 'STP',
+        commissionStructure: b.fees?.trading?.commissionStructure || 'No commission',
+        eurusdSpread: b.tradingConditions?.spreads?.eurusd || '1.0',
+        swapFeeCategory: b.tradingConditions?.swapFeeCategory || 'Standard',
+        platforms: b.technology?.platforms || [],
         hasCopyTrading: !!b.copyTrading,
-        hasApiAccess: !!b.technology.apiAccess,
-        scalpingAllowed: b.tradingConditionsExtended.scalpingAllowed
+        hasApiAccess: !!b.technology?.apiAccess,
+        scalpingAllowed: b.tradingConditionsExtended?.scalpingAllowed || false
     }));
 
     const prompt = `
@@ -150,34 +220,55 @@ export const handleStrategyBrokerRecommendations = async (
     **Your Output:**
     Provide a brief reasoning (3-4 sentences) explaining your choices. Start by summarizing your understanding of their strategy and explain how your picks meet the key requirements you identified. Then, provide a list of the top 3 broker IDs.
 
-    Respond ONLY in the specified JSON format.
+    Respond ONLY in the specified JSON format:
+    {
+      "reasoning": "explanation here",
+      "recommendedBrokerIds": ["broker1", "broker2", "broker3"]
+    }
   `;
 
-  const response = await ai.models.generateContent({
-    model: model,
-    contents: prompt,
-    config: {
-      responseMimeType: 'application/json',
-      responseSchema: {
-        type: Type.OBJECT,
-        properties: {
-          reasoning: {
-            type: Type.STRING,
-            description: "A brief explanation of why these brokers were recommended based on the user's strategy.",
-          },
-          recommendedBrokerIds: {
-            type: Type.ARRAY,
-            description: "An array of strings, where each string is the ID of a recommended broker.",
-            items: { type: Type.STRING },
-          },
-        },
-        required: ["reasoning", "recommendedBrokerIds"],
-      },
-    },
-  });
+  try {
+    const response = await aiProviderManager.generateResponse(prompt, {
+      stream: false,
+      systemInstruction: 'You are an expert forex broker analyst. Always respond with valid JSON only.'
+    });
 
-  const parsedResponse: BrokerRecommendationResponse = JSON.parse(response.text.trim());
-  return parsedResponse;
+    console.log(`Using ${response.provider} (${response.model}) for strategy recommendations`);
+
+    const responseText = typeof response.result === 'string'
+      ? response.result
+      : await response.result.text();
+
+    const parsedResponse = parseJsonResponse<BrokerRecommendationResponse>(responseText);
+    if (!parsedResponse) {
+      throw new Error('Invalid JSON returned by AI provider');
+    }
+
+    return parsedResponse;
+
+  } catch (error) {
+    console.error('AI Provider Manager failed, attempting Gemini fallback:', error);
+
+    if (fallbackGeminiClient) {
+      try {
+        const model = fallbackGeminiClient.getGenerativeModel({ model: FALLBACK_GEMINI_MODEL });
+        const fallbackResult = await model.generateContent(prompt);
+        const fallbackResponse = await fallbackResult.response;
+        const fallbackText = fallbackResponse.text();
+        const parsedResponse = parseJsonResponse<BrokerRecommendationResponse>(fallbackText);
+
+        if (parsedResponse) {
+          return parsedResponse;
+        }
+
+        console.warn('Gemini fallback returned non-JSON response');
+      } catch (geminiError) {
+        console.error('Gemini fallback failed:', geminiError);
+      }
+    }
+
+    throw new Error('AI service is temporarily unavailable. Please try again later.');
+  }
 };
 
 // --- Cost Analysis Functionality ---
@@ -206,11 +297,30 @@ export const handleCostAnalysis = async (instrument: string, costData: CostData[
         4. Keep the tone helpful and professional. Do not output JSON.
     `;
 
-    const response = await ai.models.generateContent({
-        model: model,
-        contents: prompt,
-    });
-    return response.text;
+    try {
+        const response = await aiProviderManager.generateResponse(prompt, {
+            stream: false,
+            systemInstruction: "You are an expert forex market analyst providing cost analysis."
+        });
+        
+        console.log(`Using ${response.provider} (${response.model}) for cost analysis`);
+        return typeof response.result === 'string' ? response.result : await response.result.text();
+        
+    } catch (error) {
+        console.error('AI Provider Manager failed, falling back to direct Gemini call:', error);
+        
+        // Fallback to original Gemini implementation
+        try {
+            const response = await genAI.models.generateContent({
+                model: model,
+                contents: prompt,
+            });
+            return response.text;
+        } catch (geminiError) {
+            console.error('All AI providers failed:', geminiError);
+            throw new Error('AI service is temporarily unavailable. Please try again later.');
+        }
+    }
 };
 
 // --- Personalized Cost Projection ---

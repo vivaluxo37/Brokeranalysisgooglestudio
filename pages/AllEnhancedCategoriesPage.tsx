@@ -186,15 +186,15 @@ const AllEnhancedCategoriesPage: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
               { id: 'ecn-brokers', name: 'ECN Brokers' },
-              { id: 'mt4-brokers', name: 'MT4 Brokers' },
-              { id: 'islamic-accounts-brokers', name: 'Islamic Accounts' },
-              { id: 'scalping-brokers', name: 'Scalping Brokers' },
-              { id: 'brokers-for-beginners', name: 'For Beginners' },
-              { id: 'high-leverage-brokers', name: 'High Leverage' }
+              { id: 'metatrader4-mt4', name: 'MT4 Brokers' },
+              { id: 'islamic-swap-free', name: 'Islamic Accounts' },
+              { id: 'scalping', name: 'Scalping Brokers' },
+              { id: 'no-minimum-deposit', name: 'For Beginners' },
+              { id: 'high-leverage', name: 'High Leverage' }
             ].map((cat) => (
               <Link
                 key={cat.id}
-                to={`/best-brokers/enhanced/${enhancedCategories.find(c => c.id === cat.id)?.slug || cat.id}`}
+                to={`/best-brokers/${cat.id}`}
                 className="block bg-white rounded-lg p-4 text-center hover:bg-blue-100 transition-colors border border-blue-200"
               >
                 <div className="text-sm font-medium text-gray-900">{cat.name}</div>

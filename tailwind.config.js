@@ -2,13 +2,14 @@
 export default {
   content: [
     "./index.html",
-    "./*.{js,ts,jsx,tsx}",
+    "./*.tsx",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./contexts/**/*.{js,ts,jsx,tsx}",
     "./hooks/**/*.{js,ts,jsx,tsx}",
     "./services/**/*.{js,ts,jsx,tsx}",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./lib/**/*.{js,ts,jsx,tsx}"
   ],
   darkMode: 'class',
   theme: {
@@ -143,39 +144,13 @@ export default {
       addUtilities(newUtilities);
     },
   ],
-  // Performance optimizations
-  mode: 'jit',
-  // Purge configuration for production builds
-  ...(process.env.NODE_ENV === 'production' && {
-    purge: {
-      enabled: true,
-      content: [
-        "./index.html",
-        "./*.{js,ts,jsx,tsx}",
-        "./components/**/*.{js,ts,jsx,tsx}",
-        "./pages/**/*.{js,ts,jsx,tsx}",
-        "./contexts/**/*.{js,ts,jsx,tsx}",
-        "./hooks/**/*.{js,ts,jsx,tsx}",
-        "./services/**/*.{js,ts,jsx,tsx}",
-        "./src/**/*.{js,ts,jsx,tsx}",
-        "./lib/**/*.{js,ts,jsx,tsx}",
-        "./api/**/*.{js,ts,jsx,tsx}"
-      ],
-      // Safelist dynamic classes
-      safelist: [
-        'bg-blue-50', 'bg-green-50', 'bg-yellow-50', 'bg-red-50',
-        'text-blue-600', 'text-green-600', 'text-yellow-600', 'text-red-600',
-        'border-blue-200', 'border-green-200', 'border-yellow-200', 'border-red-200',
-        'animate-pulse', 'animate-spin', 'animate-shimmer',
-        'skeleton', 'lazy-loading', 'lazy-loaded', 'lazy-error',
-        /^bg-(blue|green|yellow|red|gray)-(50|100|200|300|400|500|600|700|800|900)$/,
-        /^text-(blue|green|yellow|red|gray)-(50|100|200|300|400|500|600|700|800|900)$/,
-        /^border-(blue|green|yellow|red|gray)-(50|100|200|300|400|500|600|700|800|900)$/,
-      ],
-      options: {
-        keyframes: true,
-        fontFace: true,
-      },
-    },
-  }),
+  // Safelist dynamic classes for production
+  safelist: [
+    'bg-blue-50', 'bg-green-50', 'bg-yellow-50', 'bg-red-50',
+    'text-blue-600', 'text-green-600', 'text-yellow-600', 'text-red-600',
+    'border-blue-200', 'border-green-200', 'border-yellow-200', 'border-red-200',
+    'animate-pulse', 'animate-spin', 'animate-shimmer',
+    'skeleton', 'lazy-loading', 'lazy-loaded', 'lazy-error',
+    { pattern: /^(bg|text|border)-(blue|green|yellow|red|gray)-(50|100|200|300|400|500|600|700|800|900)$/ }
+  ],
 }

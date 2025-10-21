@@ -1,8 +1,5 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { 
   StarIcon, 
   CheckIcon, 
@@ -17,8 +14,10 @@ import {
   PlayIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
-import MainLayout from '@/components/layout/MainLayout';
-import BrokerCard from '@/components/common/BrokerCard';
+import BrokerCard from '../../../components/brokers/BrokerCard';
+import MetaTags from '../../../components/common/MetaTags';
+import JsonLdSchema from '../../../components/common/JsonLdSchema';
+import LoadingSpinner from '../../../components/ui/LoadingSpinner';
 
 interface BrokerPageProps {
   broker: {
@@ -160,18 +159,192 @@ interface BrokerPageProps {
   };
 }
 
-export default function BrokerPage({ broker, similarBrokers, seoContent }: BrokerPageProps) {
-  const router = useRouter();
+const BrokerDetailPage: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const [broker, setBroker] = useState<any>(null);
+  const [similarBrokers, setSimilarBrokers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'platforms' | 'costs' | 'accounts' | 'support' | 'reviews'>('overview');
   const [selectedCountry, setSelectedCountry] = useState<string>('');
 
-  if (router.isFallback) {
-    return <div>Loading...</div>;
+  useEffect(() => {
+    if (!slug) {
+      setError('No broker slug provided');
+      setLoading(false);
+      return;
+    }
+
+    // Fetch broker data
+    const fetchBrokerData = async () => {
+      try {
+        setLoading(true);
+        // For now, use mock data based on slug
+        if (['ic-markets', 'pepperstone', 'xm'].includes(slug)) {
+          const mockBroker = {
+            id: '1',
+            name: slug === 'ic-markets' ? 'IC Markets' : slug === 'pepperstone' ? 'Pepperstone' : 'XM',
+            slug: slug,
+            logo_url: `/images/brokers/${slug}.png`,
+            website_url: `https://${slug}.com`,
+            founded_year: 2007,
+            headquarters: 'Sydney, Australia',
+            overview: 'Leading ECN forex broker offering raw spreads and institutional-grade execution.',
+            overall_rating: 4.8,
+            trust_rating: 4.9,
+            platform_rating: 4.7,
+            costs_rating: 4.8,
+            service_rating: 4.6,
+            features_rating: 4.7,
+            min_deposit: 200,
+            min_deposit_currency: '$',
+            max_leverage: 500,
+            spreads_from: 0.0,
+            commission: '$3.50 per lot',
+            swap_free: true,
+            demo_account: true,
+            regulated: true,
+            regulations: [
+              { regulator: 'ASIC', license_number: '335692', country: 'Australia' },
+              { regulator: 'CySEC', license_number: '362/18', country: 'Cyprus' }
+            ],
+            platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader'],
+            trading_tools: ['Economic Calendar', 'VPS', 'Autochartist'],
+            mobile_apps: [
+              { platform: 'MetaTrader 4 Mobile', ios_rating: 4.5, android_rating: 4.3 }
+            ],
+            account_types: [
+              {
+                name: 'Standard Account',
+                min_deposit: 200,
+                spreads_from: 1.0,
+                commission: 'None'
+              }
+            ],
+            forex_pairs: 61,
+            cfds: 200,
+            commodities: 22,
+            indices: 20,
+            crypto: 12,
+            stocks: 0,
+            instruments_total: 232,
+            eur_usd_spread: '0.1 pips',
+            gbp_usd_spread: '0.4 pips',
+            usd_jpy_spread: '0.1 pips',
+            overnight_fees: 'Standard swap rates',
+            inactivity_fee: 0,
+            withdrawal_fee: 'Free',
+            features: ['ECN Execution', 'Raw Spreads'],
+            pros: ['Raw spreads from 0.0 pips', 'Excellent execution speeds'],
+            cons: ['Higher minimum deposit', 'Limited educational resources'],
+            support_languages: ['English', 'Spanish', 'Italian'],
+            support_hours: '24/5',
+            live_chat: true,
+            phone_support: true,
+            email_support: true,
+            deposit_methods: ['Credit Card', 'Bank Wire', 'PayPal'],
+            withdrawal_methods: ['Credit Card', 'Bank Wire', 'PayPal'],
+            deposit_time: 'Instant',
+            withdrawal_time: '1-3 business days',
+            education_resources: ['Trading Guides', 'Market Analysis'],
+            research_tools: ['Economic Calendar', 'Market News'],
+            market_analysis: true,
+            webinars: true,
+            current_promotions: [
+              {
+                title: 'Welcome Bonus - Trade $1000 Risk-Free',
+                description: 'New clients can trade up to $1000 risk-free',
+                expiry: '2024-12-31'
+              }
+            ],
+            user_reviews: [
+              {
+                rating: 5,
+                title: 'Excellent execution and spreads',
+                comment: 'Great service with tight spreads.',
+                author: 'John D.',
+                date: '2024-01-15',
+                verified: true
+              }
+            ],
+            last_updated: '2024-01-20',
+            cta_text: 'Visit Broker',
+            cta_url: `https://${slug}.com`
+          };
+
+          setBroker(mockBroker);
+          setSimilarBrokers([
+            {
+              id: '2',
+              name: 'Pepperstone',
+              slug: 'pepperstone',
+              overall_rating: 4.7,
+              min_deposit: 200,
+              logo_url: '/images/brokers/pepperstone.png',
+              website_url: 'https://pepperstone.com'
+            }
+          ]);
+        } else {
+          setError('Broker not found');
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load broker data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBrokerData();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
+  if (error || !broker) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Broker</h2>
+          <p className="text-gray-600 mb-4">{error || 'Broker not found'}</p>
+          <Link
+            to="/best-brokers"
+            className="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            Return to Best Brokers
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const seoContent = {
+    title: `${broker.name} Review 2025 - Detailed Analysis & Rating`,
+    description: `Comprehensive ${broker.name} review 2025. Analysis of spreads, platforms, regulation, and features.`,
+    keywords: `${broker.name.toLowerCase()} review, ${broker.name.toLowerCase()} broker, forex broker review`,
+    h1: `${broker.name} Review 2025`,
+    review_summary: `${broker.name} is a highly-rated ECN broker offering institutional-grade trading conditions.`,
+    bottom_line: `${broker.name} stands out as one of the top ECN brokers in the industry.`,
+    faqs: [
+      {
+        question: `Is ${broker.name} regulated?`,
+        answer: `Yes, ${broker.name} is regulated by multiple top-tier authorities.`
+      },
+      {
+        question: `What is the minimum deposit at ${broker.name}?`,
+        answer: `The minimum deposit at ${broker.name} is $${broker.min_deposit}.`
+      }
+    ]
+  };
+
   const breadcrumbs = [
-    { label: 'Brokers', href: '/brokers' },
-    { label: broker.name }
+    { name: 'Home', url: '/' },
+    { name: 'Brokers', url: '/brokers' },
+    { name: broker.name }
   ];
 
   const jsonLd = {
@@ -249,41 +422,67 @@ export default function BrokerPage({ broker, similarBrokers, seoContent }: Broke
   };
 
   return (
-    <MainLayout
-      title={seoContent.title}
-      description={seoContent.description}
-      keywords={seoContent.keywords}
-      canonical={`https://bestforexbrokers.com/broker/${broker.slug}`}
-      breadcrumbs={breadcrumbs}
-      jsonLd={jsonLd}
-    >
-      {/* Hero Section */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
-            {/* Broker Info */}
-            <div className="flex-1">
-              <div className="flex items-start space-x-6 mb-6">
-                {/* Logo */}
-                <div className="flex-shrink-0">
-                  {broker.logo_url ? (
-                    <div className="relative w-20 h-20 bg-gray-50 rounded-xl overflow-hidden border">
-                      <Image
-                        src={broker.logo_url}
-                        alt={`${broker.name} logo`}
-                        fill
-                        className="object-contain p-2"
-                        priority
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-20 h-20 bg-blue-600 rounded-xl flex items-center justify-center">
-                      <span className="text-white font-bold text-2xl">
-                        {broker.name.charAt(0)}
-                      </span>
-                    </div>
-                  )}
-                </div>
+    <>
+      <MetaTags
+        title={seoContent.title}
+        description={seoContent.description}
+        canonical={`https://brokeranalysis.com/broker/${broker.slug}`}
+        keywords={seoContent.keywords.split(', ')}
+      />
+
+      <JsonLdSchema data={jsonLd} />
+
+      <div className="min-h-screen bg-gray-50">
+        {/* Breadcrumbs */}
+        <div className="bg-white border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav className="flex" aria-label="Breadcrumb">
+              <ol className="flex items-center space-x-2">
+                {breadcrumbs.map((crumb, index) => (
+                  <li key={index} className="flex items-center">
+                    {index > 0 && <span className="text-gray-400 mx-2">/</span>}
+                    {index === breadcrumbs.length - 1 ? (
+                      <span className="text-gray-500">{crumb.name}</span>
+                    ) : (
+                      <Link
+                        to={crumb.url}
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        {crumb.name}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </div>
+        </div>
+
+        {/* Hero Section */}
+        <div className="bg-white border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
+              {/* Broker Info */}
+              <div className="flex-1">
+                <div className="flex items-start space-x-6 mb-6">
+                  {/* Logo */}
+                  <div className="flex-shrink-0">
+                    {broker.logo_url ? (
+                      <div className="w-20 h-20 bg-gray-50 rounded-xl overflow-hidden border flex items-center justify-center">
+                        <img
+                          src={broker.logo_url}
+                          alt={`${broker.name} logo`}
+                          className="w-full h-full object-contain p-2"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-20 h-20 bg-blue-600 rounded-xl flex items-center justify-center">
+                        <span className="text-white font-bold text-2xl">
+                          {broker.name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
 
                 {/* Header Info */}
                 <div className="flex-1">
@@ -847,7 +1046,7 @@ export default function BrokerPage({ broker, similarBrokers, seoContent }: Broke
                 Visit {broker.name}
               </a>
               <Link
-                href="/compare"
+                to="/compare"
                 className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
               >
                 Compare Brokers
@@ -891,235 +1090,9 @@ export default function BrokerPage({ broker, similarBrokers, seoContent }: Broke
           </div>
         </div>
       )}
-    </MainLayout>
+      </div>
+    </>
   );
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  // TODO: Fetch all broker slugs from database
-  // For now, return empty paths to use fallback
-  return {
-    paths: [
-      { params: { slug: 'ic-markets' } },
-      { params: { slug: 'pepperstone' } },
-      { params: { slug: 'xm' } }
-    ],
-    fallback: 'blocking'
-  };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const slug = params?.slug as string;
-
-  // TODO: Fetch actual broker data from database
-  // For now, we'll use mock data
-  if (!['ic-markets', 'pepperstone', 'xm'].includes(slug)) {
-    return { notFound: true };
-  }
-
-  const broker = {
-    id: '1',
-    name: 'IC Markets',
-    slug: 'ic-markets',
-    logo_url: '/images/brokers/ic-markets.png',
-    website_url: 'https://icmarkets.com',
-    founded_year: 2007,
-    headquarters: 'Sydney, Australia',
-    overview: 'IC Markets is a leading ECN forex broker offering raw spreads and institutional-grade execution to retail traders.',
-    
-    // Ratings
-    overall_rating: 4.8,
-    trust_rating: 4.9,
-    platform_rating: 4.7,
-    costs_rating: 4.8,
-    service_rating: 4.6,
-    features_rating: 4.7,
-    
-    // Basic Info
-    min_deposit: 200,
-    min_deposit_currency: '$',
-    max_leverage: 500,
-    spreads_from: 0.0,
-    commission: '$3.50 per lot',
-    swap_free: true,
-    demo_account: true,
-    
-    // Regulation
-    regulated: true,
-    regulations: [
-      { regulator: 'ASIC', license_number: '335692', country: 'Australia', website: 'https://asic.gov.au' },
-      { regulator: 'CySEC', license_number: '362/18', country: 'Cyprus', website: 'https://cysec.gov.cy' }
-    ],
-    
-    // Platforms
-    platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader'],
-    trading_tools: ['Economic Calendar', 'VPS', 'Autochartist', 'Market Analysis'],
-    mobile_apps: [
-      { platform: 'MetaTrader 4 Mobile', ios_rating: 4.5, android_rating: 4.3 },
-      { platform: 'MetaTrader 5 Mobile', ios_rating: 4.6, android_rating: 4.4 }
-    ],
-    
-    // Account Types
-    account_types: [
-      {
-        name: 'Standard Account',
-        min_deposit: 200,
-        spreads_from: 1.0,
-        commission: 'None',
-        description: 'Perfect for beginners with competitive spreads and no commission'
-      },
-      {
-        name: 'Raw Spread Account',
-        min_deposit: 200,
-        spreads_from: 0.0,
-        commission: '$3.50 per lot',
-        description: 'Raw institutional spreads with low commission fees'
-      }
-    ],
-    
-    // Instruments
-    forex_pairs: 61,
-    cfds: 200,
-    commodities: 22,
-    indices: 20,
-    crypto: 12,
-    stocks: 0,
-    instruments_total: 232,
-    
-    // Costs
-    eur_usd_spread: '0.1 pips',
-    gbp_usd_spread: '0.4 pips',
-    usd_jpy_spread: '0.1 pips',
-    overnight_fees: 'Standard swap rates',
-    inactivity_fee: 0,
-    withdrawal_fee: 'Free',
-    
-    // Features
-    features: ['ECN Execution', 'Raw Spreads', 'No Dealing Desk', 'VPS Hosting'],
-    pros: [
-      'Raw spreads from 0.0 pips on major pairs',
-      'Excellent execution speeds with ECN technology',
-      'Strong regulation by ASIC and CySEC',
-      'Professional trading platforms',
-      'No dealing desk intervention'
-    ],
-    cons: [
-      'Higher minimum deposit than some competitors',
-      'Limited educational resources',
-      'No US clients accepted'
-    ],
-    
-    // Support
-    support_languages: ['English', 'Spanish', 'Italian', 'German', 'French', 'Portuguese'],
-    support_hours: '24/5',
-    live_chat: true,
-    phone_support: true,
-    email_support: true,
-    
-    // Payments
-    deposit_methods: ['Credit Card', 'Bank Wire', 'PayPal', 'Skrill', 'Neteller'],
-    withdrawal_methods: ['Credit Card', 'Bank Wire', 'PayPal', 'Skrill', 'Neteller'],
-    deposit_time: 'Instant',
-    withdrawal_time: '1-3 business days',
-    
-    // Education
-    education_resources: ['Trading Guides', 'Market Analysis', 'Webinars'],
-    research_tools: ['Economic Calendar', 'Market News', 'Technical Analysis'],
-    market_analysis: true,
-    webinars: true,
-    
-    // Promotions
-    current_promotions: [
-      {
-        title: 'Welcome Bonus - Trade $1000 Risk-Free',
-        description: 'New clients can trade up to $1000 risk-free for the first 30 days',
-        terms: 'Terms and conditions apply',
-        expiry: '2024-12-31'
-      }
-    ],
-    
-    // Reviews
-    user_reviews: [
-      {
-        rating: 5,
-        title: 'Excellent execution and spreads',
-        comment: 'I have been trading with IC Markets for over 2 years and I am very satisfied with their service. The spreads are really tight and execution is fast.',
-        author: 'John D.',
-        date: '2024-01-15',
-        verified: true
-      },
-      {
-        rating: 4,
-        title: 'Good broker overall',
-        comment: 'Professional platform and good customer service. The only downside is the minimum deposit requirement.',
-        author: 'Sarah M.',
-        date: '2024-01-10',
-        verified: true
-      }
-    ],
-    
-    last_updated: '2024-01-20',
-    cta_text: 'Visit IC Markets',
-    cta_url: 'https://icmarkets.com'
-  };
-
-  // Similar brokers (mock data)
-  const similarBrokers = [
-    {
-      id: '2',
-      name: 'Pepperstone',
-      slug: 'pepperstone',
-      overall_rating: 4.7,
-      min_deposit: 200,
-      min_deposit_currency: '$',
-      max_leverage: 400,
-      spreads_from: 0.1,
-      platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader', 'TradingView'],
-      regulations: [
-        { regulator: 'ASIC', license_number: '414530' },
-        { regulator: 'FCA', license_number: '684312' }
-      ],
-      instruments_count: 1200,
-      pros: ['TradingView integration', 'Fast execution'],
-      cons: ['Limited educational resources'],
-      cta_text: 'Visit Pepperstone',
-      cta_url: 'https://pepperstone.com'
-    }
-  ];
-
-  const seoContent = {
-    title: `${broker.name} Review 2025 - Detailed Analysis & Rating`,
-    description: `Comprehensive ${broker.name} review 2025. Analysis of spreads, platforms, regulation, and features. Read our expert review before you trade.`,
-    keywords: `${broker.name.toLowerCase()} review, ${broker.name.toLowerCase()} broker, ${broker.name.toLowerCase()} spreads, ${broker.name.toLowerCase()} regulation, forex broker review`,
-    h1: `${broker.name} Review 2025`,
-    review_summary: `${broker.name} is a highly-rated ECN broker offering institutional-grade trading conditions to retail clients. With raw spreads starting from 0.0 pips and strong regulation by ASIC and CySEC, it's an excellent choice for serious traders who prioritize execution quality and tight spreads.`,
-    bottom_line: `${broker.name} stands out as one of the top ECN brokers in the industry, offering excellent trading conditions with raw spreads and fast execution. While the minimum deposit is higher than some competitors, the quality of service justifies the cost for serious traders.`,
-    faqs: [
-      {
-        question: `Is ${broker.name} regulated?`,
-        answer: `Yes, ${broker.name} is regulated by multiple top-tier authorities including ASIC (Australia) and CySEC (Cyprus), ensuring client fund protection and operational transparency.`
-      },
-      {
-        question: `What is the minimum deposit at ${broker.name}?`,
-        answer: `The minimum deposit at ${broker.name} is $${broker.min_deposit} for all account types, which is competitive for the quality of service provided.`
-      },
-      {
-        question: `Does ${broker.name} offer raw spreads?`,
-        answer: `Yes, ${broker.name} offers raw spreads starting from ${broker.spreads_from} pips on major currency pairs through their Raw Spread account with a commission of ${broker.commission}.`
-      },
-      {
-        question: `What trading platforms does ${broker.name} support?`,
-        answer: `${broker.name} supports ${broker.platforms?.join(', ')}, providing traders with professional-grade platforms for all trading styles.`
-      }
-    ]
-  };
-
-  return {
-    props: {
-      broker,
-      similarBrokers,
-      seoContent
-    },
-    revalidate: 3600 // Revalidate every hour
-  };
-};
+export default BrokerDetailPage;

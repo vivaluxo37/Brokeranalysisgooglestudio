@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { 
-  MagnifyingGlassIcon, 
+import { useNavigate } from 'react-router-dom';
+import {
+  MagnifyingGlassIcon,
   XMarkIcon,
   ClockIcon
 } from '@heroicons/react/24/outline';
@@ -40,7 +39,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   className = ''
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<SuggestionItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -145,19 +144,19 @@ const SearchBar: React.FC<SearchBarProps> = ({
     if (suggestion) {
       switch (suggestion.type) {
         case 'broker':
-          router.push(`/broker/${suggestion.slug}`);
+          navigate(`/broker/${suggestion.slug}`);
           break;
         case 'category':
-          router.push(`/categories/${suggestion.slug}`);
+          navigate(`/best-brokers/${suggestion.slug}`);
           break;
         case 'country':
-          router.push(`/countries/${suggestion.slug}`);
+          navigate(`/best-forex-brokers/${suggestion.slug}`);
           break;
         default:
-          router.push(`/brokers?q=${encodeURIComponent(finalQuery)}`);
+          navigate(`/brokers?q=${encodeURIComponent(finalQuery)}`);
       }
     } else {
-      router.push(`/brokers?q=${encodeURIComponent(finalQuery)}`);
+      navigate(`/brokers?q=${encodeURIComponent(finalQuery)}`);
     }
   };
 

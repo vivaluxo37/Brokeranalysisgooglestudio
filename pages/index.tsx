@@ -1,24 +1,138 @@
-import { GetStaticProps } from 'next';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import Link from 'react-router-dom';
 import { ChevronRightIcon, StarIcon, TrophyIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
-import MainLayout from '@/components/layout/MainLayout';
-import BrokerCard from '@/components/common/BrokerCard';
-import { CATEGORIES, getCategoriesByType } from '@/lib/constants/categories';
-import { POPULAR_COUNTRIES } from '@/lib/constants/countries';
+import BrokerCard from '../components/brokers/BrokerCard';
+import MetaTags from '../components/common/MetaTags';
+import JsonLdSchema from '../components/common/JsonLdSchema';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { CATEGORIES, getCategoriesByType } from '../lib/constants/categories';
+import { POPULAR_COUNTRIES } from '../lib/constants/countries';
 
-interface HomePageProps {
-  featuredBrokers: any[];
-  topBrokers: any[];
-  categories: any[];
-  popularCountries: any[];
-}
+const HomePage: React.FC = () => {
+  const [featuredBrokers, setFeaturedBrokers] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [popularCountries, setPopularCountries] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-export default function HomePage({ 
-  featuredBrokers, 
-  topBrokers, 
-  categories, 
-  popularCountries 
-}: HomePageProps) {
+  useEffect(() => {
+    const fetchHomeData = async () => {
+      try {
+        setLoading(true);
+
+        // Mock broker data - replace with actual API call
+        const mockFeaturedBrokers = [
+          {
+            id: '1',
+            name: 'IC Markets',
+            slug: 'ic-markets',
+            logo_url: '/images/brokers/ic-markets.png',
+            overall_rating: 4.8,
+            min_deposit: 200,
+            min_deposit_currency: '$',
+            max_leverage: 500,
+            spreads_from: 0.0,
+            regulated: true,
+            regulations: [
+              { regulator: 'ASIC', license_number: '335692' },
+              { regulator: 'CySEC', license_number: '362/18' }
+            ],
+            platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader'],
+            instruments_count: 232,
+            pros: ['Raw spreads from 0.0 pips', 'Excellent execution speeds'],
+            cons: ['High minimum deposit for some accounts'],
+            cta_text: 'Visit IC Markets',
+            cta_url: 'https://icmarkets.com'
+          },
+          {
+            id: '2',
+            name: 'Pepperstone',
+            slug: 'pepperstone',
+            overall_rating: 4.7,
+            min_deposit: 200,
+            min_deposit_currency: '$',
+            max_leverage: 400,
+            spreads_from: 0.1,
+            regulated: true,
+            regulations: [
+              { regulator: 'ASIC', license_number: '414530' },
+              { regulator: 'FCA', license_number: '684312' }
+            ],
+            platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader', 'TradingView'],
+            instruments_count: 1200,
+            pros: ['TradingView integration', 'Fast execution'],
+            cons: ['Limited educational resources'],
+            cta_text: 'Visit Pepperstone',
+            cta_url: 'https://pepperstone.com'
+          },
+          {
+            id: '3',
+            name: 'XM',
+            slug: 'xm',
+            overall_rating: 4.5,
+            min_deposit: 5,
+            min_deposit_currency: '$',
+            max_leverage: 1000,
+            spreads_from: 0.6,
+            regulated: true,
+            regulations: [
+              { regulator: 'CySEC', license_number: '120/10' },
+              { regulator: 'ASIC', license_number: '443670' }
+            ],
+            platforms: ['MetaTrader 4', 'MetaTrader 5'],
+            instruments_count: 1000,
+            pros: ['Very low minimum deposit', 'Excellent education'],
+            cons: ['Higher spreads on standard account'],
+            promotion_text: '$30 No Deposit Bonus',
+            cta_text: 'Visit XM',
+            cta_url: 'https://xm.com'
+          }
+        ];
+
+        const mockCategories = [
+          ...getCategoriesByType('broker_type').slice(0, 4),
+          ...getCategoriesByType('execution').slice(0, 3),
+          ...getCategoriesByType('feature').slice(0, 5)
+        ];
+
+        setFeaturedBrokers(mockFeaturedBrokers);
+        setCategories(mockCategories);
+        setPopularCountries(POPULAR_COUNTRIES.slice(0, 12));
+
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load home page data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHomeData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Page</h2>
+          <p className="text-gray-600">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
   
   const jsonLd = {
     "@context": "https://schema.org",
@@ -34,13 +148,23 @@ export default function HomePage({
   };
 
   return (
-    <MainLayout
-      title="Best Forex Brokers 2025 - Compare Top Trading Platforms"
-      description="Find the best forex brokers in 2025. Compare spreads, regulation, platforms and features. Expert reviews and analysis of top trading platforms."
-      keywords="forex brokers, best forex brokers, forex trading, trading platforms, broker comparison, forex reviews"
-      jsonLd={jsonLd}
-      showBreadcrumbs={false}
-    >
+    <>
+      <MetaTags
+        title="Best Forex Brokers 2025 - Compare Top Trading Platforms"
+        description="Find the best forex brokers in 2025. Compare spreads, regulation, platforms and features. Expert reviews and analysis of top trading platforms."
+        keywords={[
+          "forex brokers",
+          "best forex brokers",
+          "forex trading",
+          "trading platforms",
+          "broker comparison",
+          "forex reviews"
+        ]}
+      />
+
+      <JsonLdSchema data={jsonLd} />
+
+      <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,14 +180,14 @@ export default function HomePage({
             
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <Link
-                href="/brokers"
+                to="/best-brokers"
                 className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-colors inline-flex items-center justify-center"
               >
                 Browse All Brokers
                 <ChevronRightIcon className="ml-2 h-5 w-5" />
               </Link>
               <Link
-                href="/compare"
+                to="/compare"
                 className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors inline-flex items-center justify-center"
               >
                 Compare Brokers
@@ -125,7 +249,7 @@ export default function HomePage({
 
           <div className="text-center">
             <Link
-              href="/brokers"
+              to="/best-brokers"
               className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
             >
               View All Brokers
@@ -151,7 +275,7 @@ export default function HomePage({
             {categories.slice(0, 12).map((category) => (
               <Link
                 key={category.slug}
-                href={`/category/${category.slug}`}
+                to={`/best-brokers/${category.slug}`}
                 className="group bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-200 hover:border-blue-200"
               >
                 <div className="flex items-center mb-3">
@@ -179,7 +303,7 @@ export default function HomePage({
 
           <div className="text-center mt-8">
             <Link
-              href="/categories"
+              to="/best-brokers"
               className="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors"
             >
               View All Categories
@@ -205,7 +329,7 @@ export default function HomePage({
             {popularCountries.map((country) => (
               <Link
                 key={country.slug}
-                href={`/country/${country.slug}`}
+                to={`/best-forex-brokers/${country.slug}`}
                 className="group bg-gray-50 p-4 rounded-lg hover:bg-blue-50 transition-colors text-center"
               >
                 <div className="text-3xl mb-2">{country.flag}</div>
@@ -218,7 +342,7 @@ export default function HomePage({
 
           <div className="text-center mt-8">
             <Link
-              href="/countries"
+              to="/countries"
               className="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors"
             >
               View All Countries
@@ -283,94 +407,9 @@ export default function HomePage({
           </div>
         </div>
       </section>
-    </MainLayout>
+      </div>
+    </>
   );
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  // TODO: Replace with actual API calls to get broker data
-  // For now, we'll use mock data
-  const featuredBrokers = [
-    {
-      id: '1',
-      name: 'IC Markets',
-      slug: 'ic-markets',
-      logo_url: '/images/brokers/ic-markets.png',
-      overall_rating: 4.8,
-      min_deposit: 200,
-      min_deposit_currency: '$',
-      max_leverage: 500,
-      spreads_from: 0.0,
-      regulated: true,
-      regulations: [
-        { regulator: 'ASIC', license_number: '335692' },
-        { regulator: 'CySEC', license_number: '362/18' }
-      ],
-      platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader'],
-      instruments_count: 232,
-      pros: ['Raw spreads from 0.0 pips', 'Excellent execution speeds'],
-      cons: ['High minimum deposit for some accounts'],
-      cta_text: 'Visit IC Markets',
-      cta_url: 'https://icmarkets.com'
-    },
-    {
-      id: '2',
-      name: 'Pepperstone',
-      slug: 'pepperstone',
-      overall_rating: 4.7,
-      min_deposit: 200,
-      min_deposit_currency: '$',
-      max_leverage: 400,
-      spreads_from: 0.1,
-      regulated: true,
-      regulations: [
-        { regulator: 'ASIC', license_number: '414530' },
-        { regulator: 'FCA', license_number: '684312' }
-      ],
-      platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader', 'TradingView'],
-      instruments_count: 1200,
-      pros: ['TradingView integration', 'Fast execution'],
-      cons: ['Limited educational resources'],
-      cta_text: 'Visit Pepperstone',
-      cta_url: 'https://pepperstone.com'
-    },
-    {
-      id: '3',
-      name: 'XM',
-      slug: 'xm',
-      overall_rating: 4.5,
-      min_deposit: 5,
-      min_deposit_currency: '$',
-      max_leverage: 1000,
-      spreads_from: 0.6,
-      regulated: true,
-      regulations: [
-        { regulator: 'CySEC', license_number: '120/10' },
-        { regulator: 'ASIC', license_number: '443670' }
-      ],
-      platforms: ['MetaTrader 4', 'MetaTrader 5'],
-      instruments_count: 1000,
-      pros: ['Very low minimum deposit', 'Excellent education'],
-      cons: ['Higher spreads on standard account'],
-      promotion_text: '$30 No Deposit Bonus',
-      cta_text: 'Visit XM',
-      cta_url: 'https://xm.com'
-    }
-  ];
-
-  const categories = [
-    ...getCategoriesByType('broker_type').slice(0, 4),
-    ...getCategoriesByType('execution').slice(0, 3),
-    ...getCategoriesByType('feature').slice(0, 5)
-  ];
-
-  return {
-    props: {
-      featuredBrokers,
-      topBrokers: featuredBrokers, // Same for now
-      categories,
-      popularCountries: POPULAR_COUNTRIES.slice(0, 12)
-    },
-    revalidate: 3600 // Revalidate every hour
-  };
 };
+
+export default HomePage;

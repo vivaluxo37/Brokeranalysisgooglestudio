@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useOnboarding } from '../../hooks/useOnboarding';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { OnboardingContext } from '../../contexts/OnboardingContext';
 import { Button } from '../ui/button';
 import { Icons } from '../../constants';
 import { useLocation } from 'react-router-dom';
@@ -12,7 +12,15 @@ interface ElementRect {
 }
 
 const OnboardingGuide: React.FC = () => {
-    const { isActive, currentStep, tourSteps, goToNextStep, goToPrevStep, skipTour } = useOnboarding();
+    // Check if OnboardingContext is available before using it
+    const context = useContext(OnboardingContext);
+    
+    // Return null if context is not available (provider not loaded yet)
+    if (!context) {
+        return null;
+    }
+    
+    const { isActive, currentStep, tourSteps, goToNextStep, goToPrevStep, skipTour } = context;
     const [targetRect, setTargetRect] = useState<ElementRect | null>(null);
     const tooltipRef = useRef<HTMLDivElement>(null);
     const location = useLocation();

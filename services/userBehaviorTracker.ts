@@ -97,7 +97,7 @@ export interface JourneyStep {
 }
 
 export interface SEOImpactMetrics {
-  seoPages visited: number;
+  seoPagesVisited: number;
   totalSEOEngagement: number;
   conversionFromSEO: boolean;
   seoRevenueAttribution: number;

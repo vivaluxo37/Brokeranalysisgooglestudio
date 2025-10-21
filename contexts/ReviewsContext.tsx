@@ -14,6 +14,37 @@ const initialStaticReviews: Review[] = brokers.flatMap(broker =>
 
 export const ReviewsContext = createContext<ReviewsContextType | null>(null);
 
+// Validation utilities - moved before usage
+const isValidBrokerId = (id: unknown): id is string => {
+  return typeof id === 'string' && id.trim().length > 0 && id.trim().length <= 100;
+};
+
+const isValidUserId = (id: unknown): id is string => {
+  return typeof id === 'string' && id.trim().length > 0 && id.trim().length <= 100;
+};
+
+const sanitizeReviews = (reviewsList: unknown): Review[] => {
+  if (!Array.isArray(reviewsList)) {
+    return initialStaticReviews;
+  }
+
+  return reviewsList.filter(review => {
+    return (
+      review &&
+      typeof review === 'object' &&
+      isValidBrokerId(review.brokerId) &&
+      isValidUserId(review.userId) &&
+      typeof review.rating === 'number' &&
+      review.rating >= 1 &&
+      review.rating <= 5 &&
+      typeof review.title === 'string' &&
+      review.title.trim().length > 0 &&
+      typeof review.comment === 'string' &&
+      review.comment.trim().length > 0
+    );
+  });
+};
+
 export const ReviewsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [reviews, setReviews] = useState<Review[]>(() => {
     try {
@@ -40,37 +71,6 @@ export const ReviewsProvider: React.FC<{ children: React.ReactNode }> = ({ child
       localStorage.setItem('allReviews', JSON.stringify(reviews));
     }
   }, [reviews]);
-
-  // Validation utilities
-  const isValidBrokerId = (id: unknown): id is string => {
-    return typeof id === 'string' && id.trim().length > 0 && id.trim().length <= 100;
-  };
-
-  const isValidUserId = (id: unknown): id is string => {
-    return typeof id === 'string' && id.trim().length > 0 && id.trim().length <= 100;
-  };
-
-  const sanitizeReviews = (reviewsList: unknown): Review[] => {
-    if (!Array.isArray(reviewsList)) {
-      return initialStaticReviews;
-    }
-
-    return reviewsList.filter(review => {
-      return (
-        review &&
-        typeof review === 'object' &&
-        isValidBrokerId(review.brokerId) &&
-        isValidUserId(review.userId) &&
-        typeof review.rating === 'number' &&
-        review.rating >= 1 &&
-        review.rating <= 5 &&
-        typeof review.title === 'string' &&
-        review.title.trim().length > 0 &&
-        typeof review.comment === 'string' &&
-        review.comment.trim().length > 0
-      );
-    });
-  };
 
   const getReviewsByBrokerId = (brokerId: unknown): Review[] => {
     if (!isValidBrokerId(brokerId)) {

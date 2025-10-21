@@ -8,7 +8,7 @@ import {
   ArrowPathIcon,
   DocumentArrowDownIcon
 } from '@heroicons/react/24/outline';
-import { performanceMonitoring, usePerformanceMonitoring } from '../../services/performanceMonitoring';
+import { performanceMonitoring } from '../../services/performanceMonitoring';
 
 interface PerformanceDashboardProps {
   className?: string;
@@ -20,7 +20,20 @@ export default function PerformanceDashboard({ className = '' }: PerformanceDash
   const [loading, setLoading] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
 
-  const { getSystemReport, getRealtimeStats, exportMetrics } = usePerformanceMonitoring();
+  // Use performanceMonitoring methods directly
+  const getSystemReport = () => performanceMonitoring.generateReport();
+  const getRealtimeStats = () => performanceMonitoring.getMetrics();
+  const exportMetrics = async (format: 'json' | 'csv') => {
+    const report = performanceMonitoring.generateReport();
+    if (format === 'json') {
+      return JSON.stringify(report, null, 2);
+    } else {
+      // Simple CSV conversion
+      const metrics = report.metrics;
+      const rows = Object.entries(metrics).map(([key, value]) => `${key},${value}`);
+      return ['Metric,Value', ...rows].join('\n');
+    }
+  };
 
   // Load performance data
   const loadData = async () => {
@@ -48,6 +61,7 @@ export default function PerformanceDashboard({ className = '' }: PerformanceDash
       const interval = setInterval(loadData, 30000); // 30 seconds
       return () => clearInterval(interval);
     }
+    return undefined;
   }, [autoRefresh]);
 
   // Export metrics

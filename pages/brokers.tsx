@@ -1,8 +1,11 @@
-import { GetStaticProps } from 'next';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { 
+import { Link } from 'react-router-dom';
+import MetaTags from '../components/common/MetaTags';
+import JsonLdSchema from '../components/common/JsonLdSchema';
+import UnifiedBrokerCard from '../components/common/UnifiedBrokerCard';
+import { unifiedBrokerService } from '../services/unifiedBrokerService';
+import { SEOService } from '../services/seoService';
+import {
   MagnifyingGlassIcon,
   FunnelIcon,
   AdjustmentsHorizontalIcon,
@@ -10,8 +13,6 @@ import {
   XMarkIcon,
   CheckIcon
 } from '@heroicons/react/24/outline';
-import MainLayout from '@/components/layout/MainLayout';
-import BrokerCard from '@/components/common/BrokerCard';
 
 interface Broker {
   id: string;
@@ -50,17 +51,6 @@ interface Broker {
   };
 }
 
-interface BrokersPageProps {
-  brokers: Broker[];
-  totalCount: number;
-  categories: Array<{
-    slug: string;
-    name: string;
-  }>;
-  regulators: string[];
-  platforms: string[];
-}
-
 interface FilterState {
   search: string;
   category: string;
@@ -74,19 +64,151 @@ interface FilterState {
   country: string;
 }
 
-export default function BrokersPage({ 
-  brokers, 
-  totalCount, 
-  categories, 
-  regulators, 
-  platforms 
-}: BrokersPageProps) {
-  const router = useRouter();
-  const [filteredBrokers, setFilteredBrokers] = useState<Broker[]>(brokers);
+const BrokersPage: React.FC = () => {
+  const [brokers, setBrokers] = useState<Broker[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [categories, setCategories] = useState<Array<{ slug: string; name: string }>>([]);
+  const [regulators, setRegulators] = useState<string[]>([]);
+  const [platforms, setPlatforms] = useState<string[]>([]);
+  const [filteredBrokers, setFilteredBrokers] = useState<Broker[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBrokersData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Fetch real broker data from unified service
+        const brokerData = await unifiedBrokerService.getBrokers();
+        
+        // Transform broker data to match the expected interface
+        const processedBrokers: Broker[] = brokerData.map(broker => ({
+          id: broker.id,
+          name: broker.name,
+          slug: broker.id, // Use id as slug for consistency
+          logo_url: broker.logoUrl || `/images/brokers/${broker.id}.png`,
+          website_url: broker.websiteUrl || '',
+          overall_rating: broker.score || 0,
+          min_deposit: broker.accessibility?.minDeposit || 0,
+          min_deposit_currency: '$',
+          max_leverage: parseInt(
+            broker.tradingConditions?.maxLeverage?.replace(/[^0-9]/g, '') || '0'
+          ),
+          spreads_from: parseFloat(
+            String(broker.tradingConditions?.spreads?.eurusd || '0').replace(/[^0-9.]/g, '')
+          ),
+          commission: broker.fees?.trading?.commissionStructure || 'Varies',
+          regulated: (broker.regulation?.regulators?.length || 0) > 0,
+          regulations: broker.regulation?.regulators?.map(reg => ({
+            regulator: reg,
+            country: 'Global',
+            license_number: ''
+          })) || [],
+          platforms: broker.technology?.platforms || [],
+          instruments_total: 
+            (broker.tradableInstruments?.forexPairs || 0) +
+            (broker.tradableInstruments?.stocks || 0) +
+            (broker.tradableInstruments?.commodities || 0) +
+            (broker.tradableInstruments?.indices || 0) +
+            (broker.tradableInstruments?.cryptocurrencies || 0),
+          pros: broker.pros || [],
+          cons: broker.cons || [],
+          founded_year: broker.foundingYear,
+          headquarters: broker.headquarters || '',
+          demo_account: broker.coreInfo?.demoAccount || false,
+          swap_free: broker.accountManagement?.islamicAccount?.available || false,
+          live_chat: broker.customerSupport?.channels?.includes('Live Chat') || false,
+          phone_support: broker.customerSupport?.channels?.includes('Phone') || false,
+          features: [],
+          cta_text: 'Visit Broker',
+          cta_url: broker.websiteUrl || '',
+          country_availability: {
+            available: [],
+            restricted: []
+          }
+        }));
+
+        setBrokers(processedBrokers);
+        setFilteredBrokers(processedBrokers);
+        setTotalCount(processedBrokers.length);
+
+        // Extract unique regulators and platforms for filters
+        const uniqueRegulators = new Set<string>();
+        const uniquePlatforms = new Set<string>();
+        
+        processedBrokers.forEach(broker => {
+          broker.regulations?.forEach(reg => {
+            if (reg.regulator) uniqueRegulators.add(reg.regulator);
+          });
+          broker.platforms?.forEach(platform => {
+            if (platform) uniquePlatforms.add(platform);
+          });
+        });
+
+        // Set up filter options
+        setCategories([
+          { slug: 'ecn-brokers', name: 'ECN Brokers' },
+          { slug: 'stp-brokers', name: 'STP Brokers' },
+          { slug: 'market-makers', name: 'Market Makers' },
+          { slug: 'mt4-brokers', name: 'MT4 Brokers' },
+          { slug: 'mt5-brokers', name: 'MT5 Brokers' },
+          { slug: 'low-spread', name: 'Low Spread Brokers' }
+        ]);
+        
+        setRegulators(Array.from(uniqueRegulators).sort());
+        setPlatforms(Array.from(uniquePlatforms).sort());
+
+        console.log(`✅ Loaded ${processedBrokers.length} brokers successfully`);
+
+      } catch (err) {
+        console.error('💥 Error fetching brokers:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load brokers data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBrokersData();
+  }, []);
+
+  useEffect(() => {
+    applyFilters();
+  }, [filters, brokers]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading brokers...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Brokers</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <Link
+            to="/"
+            className="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            Return to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(12);
-  
+  const [itemsPerPage, setItemsPerPage] = useState(20); // Increased default to 20 for better UX
+
   const [filters, setFilters] = useState<FilterState>({
     search: '',
     category: '',
@@ -99,10 +221,6 @@ export default function BrokersPage({
     sortBy: 'rating',
     country: ''
   });
-
-  useEffect(() => {
-    applyFilters();
-  }, [filters]);
 
   const applyFilters = () => {
     let filtered = [...brokers];
@@ -244,33 +362,43 @@ export default function BrokersPage({
   const endIndex = startIndex + itemsPerPage;
   const currentBrokers = filteredBrokers.slice(startIndex, endIndex);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Forex Brokers Directory - Complete List",
-    "description": "Browse and compare all forex brokers. Filter by regulation, spreads, platforms, and more.",
-    "url": "https://bestforexbrokers.com/brokers",
-    "mainEntity": {
-      "@type": "ItemList",
-      "numberOfItems": totalCount,
-      "itemListElement": brokers.slice(0, 10).map((broker, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "url": `https://bestforexbrokers.com/broker/${broker.slug}`,
-        "name": broker.name
-      }))
-    }
-  };
+  // Generate SEO data
+  const seoConfig = SEOService.generateBrokerListingMeta('all');
+  const structuredData = SEOService.generateListingStructuredData('all', filteredBrokers);
+  const breadcrumbs = SEOService.generateBreadcrumbs([
+    { name: 'Home', url: '/' },
+    { name: 'All Brokers' }
+  ]);
 
   return (
-    <MainLayout
-      title="All Forex Brokers 2025 - Complete Directory & Reviews"
-      description="Browse and compare all forex brokers. Filter by regulation, spreads, platforms, and more. Find the perfect broker for your trading needs."
-      keywords="forex brokers directory, all forex brokers, broker comparison, forex broker reviews, trading platforms"
-      canonical="https://bestforexbrokers.com/brokers"
-      breadcrumbs={[{ label: 'All Brokers' }]}
-      jsonLd={jsonLd}
-    >
+    <>
+      <MetaTags
+        title={seoConfig.title}
+        description={seoConfig.description}
+        keywords={seoConfig.keywords.join(', ')}
+        canonical={seoConfig.canonical}
+      />
+
+      <JsonLdSchema data={structuredData} />
+      <JsonLdSchema data={breadcrumbs} />
+
+      {/* Breadcrumbs */}
+      <div className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <nav className="flex" aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-2">
+              <li className="flex items-center">
+                <Link to="/" className="text-blue-600 hover:text-blue-800">
+                  Home
+                </Link>
+                <span className="text-gray-400 mx-2">/</span>
+                <span className="text-gray-500">All Brokers</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -499,7 +627,7 @@ export default function BrokersPage({
 
           <div className="hidden sm:flex items-center space-x-4">
             <Link
-              href="/compare"
+              to="/compare"
               className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
             >
               Compare Brokers
@@ -512,68 +640,145 @@ export default function BrokersPage({
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
               {currentBrokers.map((broker, index) => (
-                <BrokerCard
+                <UnifiedBrokerCard
                   key={broker.id}
                   broker={broker}
                   priority={startIndex + index + 1}
+                  variant="compact"
                 />
               ))}
             </div>
 
-            {/* Pagination */}
+            {/* Pagination with controls */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-center space-x-2">
-                <button
-                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                  disabled={currentPage === 1}
-                  className={`px-4 py-2 border rounded-lg font-medium transition-colors ${
-                    currentPage === 1
-                      ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-                      : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  Previous
-                </button>
-
-                {/* Page Numbers */}
-                {Array.from({ length: Math.min(7, totalPages) }, (_, i) => {
-                  let pageNum;
-                  if (totalPages <= 7) {
-                    pageNum = i + 1;
-                  } else if (currentPage <= 4) {
-                    pageNum = i + 1;
-                  } else if (currentPage >= totalPages - 3) {
-                    pageNum = totalPages - 6 + i;
-                  } else {
-                    pageNum = currentPage - 3 + i;
-                  }
-
-                  return (
-                    <button
-                      key={pageNum}
-                      onClick={() => setCurrentPage(pageNum)}
-                      className={`px-4 py-2 border rounded-lg font-medium transition-colors ${
-                        currentPage === pageNum
-                          ? 'bg-blue-600 border-blue-600 text-white'
-                          : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                      }`}
+              <div className="mt-8 space-y-4">
+                {/* Items per page selector */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <label htmlFor="items-per-page" className="text-sm text-gray-600">
+                      Show:
+                    </label>
+                    <select
+                      id="items-per-page"
+                      value={itemsPerPage}
+                      onChange={(e) => {
+                        setItemsPerPage(Number(e.target.value));
+                        setCurrentPage(1); // Reset to first page when changing items per page
+                      }}
+                      className="border border-gray-300 rounded-lg px-3 py-1 text-sm focus:ring-blue-500 focus:border-blue-500"
                     >
-                      {pageNum}
-                    </button>
-                  );
-                })}
+                      <option value={10}>10 brokers</option>
+                      <option value={20}>20 brokers</option>
+                      <option value={30}>30 brokers</option>
+                      <option value={50}>50 brokers</option>
+                      <option value={100}>100 brokers</option>
+                    </select>
+                  </div>
+                  
+                  <div className="text-sm text-gray-600">
+                    Showing {startIndex + 1}-{Math.min(endIndex, filteredBrokers.length)} of {filteredBrokers.length} brokers
+                  </div>
+                </div>
 
-                <button
-                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                  disabled={currentPage === totalPages}
-                  className={`px-4 py-2 border rounded-lg font-medium transition-colors ${
-                    currentPage === totalPages
-                      ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-                      : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  Next
-                </button>
+                {/* Pagination controls */}
+                <div className="flex items-center justify-center space-x-2">
+                  <button
+                    onClick={() => setCurrentPage(1)}
+                    disabled={currentPage === 1}
+                    className={`px-3 py-2 border rounded-lg font-medium transition-colors ${
+                      currentPage === 1
+                        ? 'border-gray-200 text-gray-400 cursor-not-allowed'
+                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }`}
+                    title="First page"
+                  >
+                    ««
+                  </button>
+                  
+                  <button
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    disabled={currentPage === 1}
+                    className={`px-4 py-2 border rounded-lg font-medium transition-colors ${
+                      currentPage === 1
+                        ? 'border-gray-200 text-gray-400 cursor-not-allowed'
+                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    Previous
+                  </button>
+
+                  {/* Page Numbers */}
+                  {Array.from({ length: Math.min(7, totalPages) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 7) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 4) {
+                      pageNum = i + 1;
+                    } else if (currentPage >= totalPages - 3) {
+                      pageNum = totalPages - 6 + i;
+                    } else {
+                      pageNum = currentPage - 3 + i;
+                    }
+
+                    if (pageNum < 1 || pageNum > totalPages) return null;
+
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => setCurrentPage(pageNum)}
+                        className={`px-4 py-2 border rounded-lg font-medium transition-colors ${
+                          currentPage === pageNum
+                            ? 'bg-blue-600 border-blue-600 text-white'
+                            : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+
+                  <button
+                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                    disabled={currentPage === totalPages}
+                    className={`px-4 py-2 border rounded-lg font-medium transition-colors ${
+                      currentPage === totalPages
+                        ? 'border-gray-200 text-gray-400 cursor-not-allowed'
+                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    Next
+                  </button>
+                  
+                  <button
+                    onClick={() => setCurrentPage(totalPages)}
+                    disabled={currentPage === totalPages}
+                    className={`px-3 py-2 border rounded-lg font-medium transition-colors ${
+                      currentPage === totalPages
+                        ? 'border-gray-200 text-gray-400 cursor-not-allowed'
+                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }`}
+                    title="Last page"
+                  >
+                    »»
+                  </button>
+                </div>
+
+                {/* Go to page input */}
+                <div className="flex items-center justify-center space-x-2">
+                  <span className="text-sm text-gray-600">Go to page:</span>
+                  <input
+                    type="number"
+                    min={1}
+                    max={totalPages}
+                    value={currentPage}
+                    onChange={(e) => {
+                      const page = Math.max(1, Math.min(totalPages, Number(e.target.value)));
+                      setCurrentPage(page);
+                    }}
+                    className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  <span className="text-sm text-gray-600">of {totalPages}</span>
+                </div>
               </div>
             )}
           </>
@@ -596,124 +801,8 @@ export default function BrokersPage({
           </div>
         )}
       </div>
-    </MainLayout>
+    </>
   );
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  // TODO: Fetch actual broker data from database
-  // For now, we'll use mock data
-  const mockBrokers: Broker[] = [
-    {
-      id: '1',
-      name: 'IC Markets',
-      slug: 'ic-markets',
-      logo_url: '/images/brokers/ic-markets.png',
-      website_url: 'https://icmarkets.com',
-      overall_rating: 4.8,
-      min_deposit: 200,
-      min_deposit_currency: '$',
-      max_leverage: 500,
-      spreads_from: 0.0,
-      commission: '$3.50 per lot',
-      regulated: true,
-      regulations: [
-        { regulator: 'ASIC', license_number: '335692', country: 'Australia' },
-        { regulator: 'CySEC', license_number: '362/18', country: 'Cyprus' }
-      ],
-      platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader'],
-      instruments_total: 232,
-      pros: ['Raw spreads from 0.0 pips', 'Excellent execution speeds'],
-      cons: ['Higher minimum deposit'],
-      founded_year: 2007,
-      headquarters: 'Sydney, Australia',
-      demo_account: true,
-      swap_free: true,
-      live_chat: true,
-      phone_support: true,
-      features: ['ECN Execution', 'Raw Spreads'],
-      cta_text: 'Visit IC Markets',
-      cta_url: 'https://icmarkets.com'
-    },
-    {
-      id: '2',
-      name: 'Pepperstone',
-      slug: 'pepperstone',
-      website_url: 'https://pepperstone.com',
-      overall_rating: 4.7,
-      min_deposit: 200,
-      min_deposit_currency: '$',
-      max_leverage: 400,
-      spreads_from: 0.1,
-      commission: '$3.50 per lot',
-      regulated: true,
-      regulations: [
-        { regulator: 'ASIC', license_number: '414530', country: 'Australia' },
-        { regulator: 'FCA', license_number: '684312', country: 'UK' }
-      ],
-      platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader', 'TradingView'],
-      instruments_total: 1200,
-      pros: ['TradingView integration', 'Fast execution'],
-      cons: ['Limited educational resources'],
-      founded_year: 2010,
-      headquarters: 'Melbourne, Australia',
-      demo_account: true,
-      swap_free: true,
-      live_chat: true,
-      phone_support: true,
-      features: ['TradingView', 'Copy Trading'],
-      cta_text: 'Visit Pepperstone',
-      cta_url: 'https://pepperstone.com'
-    },
-    {
-      id: '3',
-      name: 'XM',
-      slug: 'xm',
-      website_url: 'https://xm.com',
-      overall_rating: 4.5,
-      min_deposit: 5,
-      min_deposit_currency: '$',
-      max_leverage: 1000,
-      spreads_from: 0.6,
-      commission: 'None on standard',
-      regulated: true,
-      regulations: [
-        { regulator: 'CySEC', license_number: '120/10', country: 'Cyprus' },
-        { regulator: 'ASIC', license_number: '443670', country: 'Australia' }
-      ],
-      platforms: ['MetaTrader 4', 'MetaTrader 5'],
-      instruments_total: 1000,
-      pros: ['Very low minimum deposit', 'Excellent education'],
-      cons: ['Higher spreads on standard account'],
-      founded_year: 2009,
-      headquarters: 'Cyprus',
-      demo_account: true,
-      swap_free: true,
-      live_chat: true,
-      phone_support: true,
-      features: ['Educational Resources', 'Multilingual Support'],
-      cta_text: 'Visit XM',
-      cta_url: 'https://xm.com'
-    }
-  ];
-
-  const categories = [
-    { slug: 'ecn-brokers', name: 'ECN Brokers' },
-    { slug: 'market-makers', name: 'Market Makers' },
-    { slug: 'stp-brokers', name: 'STP Brokers' }
-  ];
-
-  const regulators = ['ASIC', 'FCA', 'CySEC', 'CFTC', 'BaFin', 'FINMA'];
-  const platforms = ['MetaTrader 4', 'MetaTrader 5', 'cTrader', 'TradingView', 'Proprietary'];
-
-  return {
-    props: {
-      brokers: mockBrokers,
-      totalCount: mockBrokers.length,
-      categories,
-      regulators,
-      platforms
-    },
-    revalidate: 3600 // Revalidate every hour
-  };
 };
+
+export default BrokersPage;

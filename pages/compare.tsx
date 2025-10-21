@@ -1,8 +1,8 @@
-import { GetStaticProps } from 'next';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { 
+import { Link } from 'react-router-dom';
+import MetaTags from '../components/common/MetaTags';
+import JsonLdSchema from '../components/common/JsonLdSchema';
+import {
   MagnifyingGlassIcon,
   PlusIcon,
   XMarkIcon,
@@ -12,7 +12,6 @@ import {
   ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
-import MainLayout from '@/components/layout/MainLayout';
 
 interface Broker {
   id: string;
@@ -89,27 +88,171 @@ interface Broker {
   website_url: string;
 }
 
-interface ComparePageProps {
-  allBrokers: Broker[];
-  featuredBrokers: Broker[];
-}
-
-export default function ComparePage({ allBrokers, featuredBrokers }: ComparePageProps) {
+const ComparePage: React.FC = () => {
+  const [allBrokers, setAllBrokers] = useState<Broker[]>([]);
+  const [featuredBrokers, setFeaturedBrokers] = useState<Broker[]>([]);
   const [selectedBrokers, setSelectedBrokers] = useState<Broker[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredBrokers, setFilteredBrokers] = useState<Broker[]>(allBrokers);
+  const [filteredBrokers, setFilteredBrokers] = useState<Broker[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (searchQuery.trim() === '') {
-      setFilteredBrokers(allBrokers);
-    } else {
-      setFilteredBrokers(
-        allBrokers.filter(broker =>
-          broker.name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
-    }
-  }, [searchQuery, allBrokers]);
+    const fetchBrokersData = async () => {
+      try {
+        setLoading(true);
+
+        // Mock broker data - replace with actual API call
+        const mockBrokers: Broker[] = [
+          {
+            id: '1',
+            name: 'IC Markets',
+            slug: 'ic-markets',
+            logo_url: '/images/brokers/ic-markets.png',
+            website_url: 'https://icmarkets.com',
+            overall_rating: 4.8,
+            trust_rating: 4.9,
+            platform_rating: 4.7,
+            costs_rating: 4.8,
+            service_rating: 4.6,
+            min_deposit: 200,
+            min_deposit_currency: '$',
+            max_leverage: 500,
+            spreads_from: 0.0,
+            commission: '$3.50 per lot',
+            demo_account: true,
+            swap_free: true,
+            regulations: [
+              { regulator: 'ASIC', license_number: '335692', country: 'Australia' },
+              { regulator: 'CySEC', license_number: '362/18', country: 'Cyprus' }
+            ],
+            platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader'],
+            forex_pairs: 61,
+            cfds: 200,
+            commodities: 22,
+            indices: 20,
+            crypto: 12,
+            stocks: 0,
+            instruments_total: 232,
+            live_chat: true,
+            phone_support: true,
+            email_support: true,
+            support_hours: '24/5',
+            cta_url: 'https://icmarkets.com'
+          },
+          {
+            id: '2',
+            name: 'Pepperstone',
+            slug: 'pepperstone',
+            website_url: 'https://pepperstone.com',
+            overall_rating: 4.7,
+            trust_rating: 4.8,
+            platform_rating: 4.9,
+            costs_rating: 4.6,
+            service_rating: 4.5,
+            min_deposit: 200,
+            min_deposit_currency: '$',
+            max_leverage: 400,
+            spreads_from: 0.1,
+            commission: '$3.50 per lot',
+            demo_account: true,
+            swap_free: true,
+            regulations: [
+              { regulator: 'ASIC', license_number: '414530', country: 'Australia' },
+              { regulator: 'FCA', license_number: '684312', country: 'UK' }
+            ],
+            platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader', 'TradingView'],
+            forex_pairs: 90,
+            cfds: 1100,
+            commodities: 25,
+            indices: 18,
+            crypto: 5,
+            stocks: 0,
+            instruments_total: 1200,
+            live_chat: true,
+            phone_support: true,
+            email_support: true,
+            support_hours: '24/5',
+            cta_url: 'https://pepperstone.com'
+          },
+          {
+            id: '3',
+            name: 'XM',
+            slug: 'xm',
+            website_url: 'https://xm.com',
+            overall_rating: 4.5,
+            trust_rating: 4.6,
+            platform_rating: 4.4,
+            costs_rating: 4.3,
+            service_rating: 4.7,
+            min_deposit: 5,
+            min_deposit_currency: '$',
+            max_leverage: 1000,
+            spreads_from: 0.6,
+            commission: 'None on standard',
+            demo_account: true,
+            swap_free: true,
+            regulations: [
+              { regulator: 'CySEC', license_number: '120/10', country: 'Cyprus' },
+              { regulator: 'ASIC', license_number: '443670', country: 'Australia' }
+            ],
+            platforms: ['MetaTrader 4', 'MetaTrader 5'],
+            forex_pairs: 57,
+            cfds: 900,
+            commodities: 32,
+            indices: 24,
+            crypto: 31,
+            stocks: 0,
+            instruments_total: 1000,
+            live_chat: true,
+            phone_support: true,
+            email_support: true,
+            support_hours: '24/5',
+            cta_url: 'https://xm.com'
+          }
+        ];
+
+        setAllBrokers(mockBrokers);
+        setFeaturedBrokers(mockBrokers.slice(0, 3));
+        setFilteredBrokers(mockBrokers);
+
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load brokers data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBrokersData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading comparison tool...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Comparison</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <Link
+            to="/"
+            className="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            Return to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const addBrokerToComparison = (broker: Broker) => {
     if (selectedBrokers.length < 4 && !selectedBrokers.find(b => b.id === broker.id)) {
@@ -177,14 +320,32 @@ export default function ComparePage({ allBrokers, featuredBrokers }: ComparePage
   };
 
   return (
-    <MainLayout
-      title="Compare Forex Brokers 2025 - Side by Side Comparison Tool"
-      description="Compare the best forex brokers side by side. Detailed comparison of spreads, regulation, platforms, and features to help you choose the right broker."
-      keywords="compare forex brokers, broker comparison, forex broker comparison tool, side by side comparison"
-      canonical="https://bestforexbrokers.com/compare"
-      breadcrumbs={[{ label: 'Compare Brokers' }]}
-      jsonLd={jsonLd}
-    >
+    <>
+      <MetaTags
+        title="Compare Forex Brokers 2025 - Side by Side Comparison Tool"
+        description="Compare the best forex brokers side by side. Detailed comparison of spreads, regulation, platforms, and features to help you choose the right broker."
+        keywords="compare forex brokers, broker comparison, forex broker comparison tool, side by side comparison"
+        canonical="https://bestforexbrokers.com/compare"
+      />
+
+      <JsonLdSchema data={jsonLd} />
+
+      {/* Breadcrumbs */}
+      <div className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <nav className="flex" aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-2">
+              <li className="flex items-center">
+                <Link to="/" className="text-blue-600 hover:text-blue-800">
+                  Home
+                </Link>
+                <span className="text-gray-400 mx-2">/</span>
+                <span className="text-gray-500">Compare Brokers</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
       {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -243,14 +404,11 @@ export default function ComparePage({ allBrokers, featuredBrokers }: ComparePage
                     >
                       <div className="flex items-center space-x-3 mb-2">
                         {broker.logo_url ? (
-                          <div className="relative w-8 h-8">
-                            <Image
-                              src={broker.logo_url}
-                              alt={`${broker.name} logo`}
-                              fill
-                              className="object-contain"
-                            />
-                          </div>
+                          <img
+                            src={broker.logo_url}
+                            alt={`${broker.name} logo`}
+                            className="w-8 h-8 object-contain"
+                          />
                         ) : (
                           <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
                             <span className="text-white font-bold text-xs">
@@ -291,14 +449,11 @@ export default function ComparePage({ allBrokers, featuredBrokers }: ComparePage
                         >
                           <div className="flex items-center space-x-3">
                             {broker.logo_url ? (
-                              <div className="relative w-6 h-6">
-                                <Image
-                                  src={broker.logo_url}
-                                  alt={`${broker.name} logo`}
-                                  fill
-                                  className="object-contain"
-                                />
-                              </div>
+                              <img
+                                src={broker.logo_url}
+                                alt={`${broker.name} logo`}
+                                className="w-6 h-6 object-contain"
+                              />
                             ) : (
                               <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
                                 <span className="text-white font-bold text-xs">
@@ -353,12 +508,11 @@ export default function ComparePage({ allBrokers, featuredBrokers }: ComparePage
                           </button>
                           
                           {broker.logo_url ? (
-                            <div className="relative w-12 h-12 bg-gray-50 rounded-lg overflow-hidden">
-                              <Image
+                            <div className="w-12 h-12 bg-gray-50 rounded-lg overflow-hidden p-1 flex items-center justify-center">
+                              <img
                                 src={broker.logo_url}
                                 alt={`${broker.name} logo`}
-                                fill
-                                className="object-contain p-1"
+                                className="max-w-full max-h-full object-contain"
                               />
                             </div>
                           ) : (
@@ -696,7 +850,7 @@ export default function ComparePage({ allBrokers, featuredBrokers }: ComparePage
                             Open Account
                           </a>
                           <Link
-                            href={`/broker/${broker.slug}`}
+                            to={`/broker/${broker.slug}`}
                             className="block text-blue-600 hover:text-blue-700 text-sm transition-colors"
                           >
                             Read Review
@@ -728,127 +882,8 @@ export default function ComparePage({ allBrokers, featuredBrokers }: ComparePage
           </div>
         )}
       </div>
-    </MainLayout>
+    </>
   );
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  // TODO: Fetch actual broker data from database
-  // For now, we'll use mock data
-  const mockBrokers: Broker[] = [
-    {
-      id: '1',
-      name: 'IC Markets',
-      slug: 'ic-markets',
-      logo_url: '/images/brokers/ic-markets.png',
-      website_url: 'https://icmarkets.com',
-      overall_rating: 4.8,
-      trust_rating: 4.9,
-      platform_rating: 4.7,
-      costs_rating: 4.8,
-      service_rating: 4.6,
-      min_deposit: 200,
-      min_deposit_currency: '$',
-      max_leverage: 500,
-      spreads_from: 0.0,
-      commission: '$3.50 per lot',
-      demo_account: true,
-      swap_free: true,
-      regulations: [
-        { regulator: 'ASIC', license_number: '335692', country: 'Australia' },
-        { regulator: 'CySEC', license_number: '362/18', country: 'Cyprus' }
-      ],
-      platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader'],
-      forex_pairs: 61,
-      cfds: 200,
-      commodities: 22,
-      indices: 20,
-      crypto: 12,
-      stocks: 0,
-      instruments_total: 232,
-      live_chat: true,
-      phone_support: true,
-      email_support: true,
-      support_hours: '24/5',
-      cta_url: 'https://icmarkets.com'
-    },
-    {
-      id: '2',
-      name: 'Pepperstone',
-      slug: 'pepperstone',
-      website_url: 'https://pepperstone.com',
-      overall_rating: 4.7,
-      trust_rating: 4.8,
-      platform_rating: 4.9,
-      costs_rating: 4.6,
-      service_rating: 4.5,
-      min_deposit: 200,
-      min_deposit_currency: '$',
-      max_leverage: 400,
-      spreads_from: 0.1,
-      commission: '$3.50 per lot',
-      demo_account: true,
-      swap_free: true,
-      regulations: [
-        { regulator: 'ASIC', license_number: '414530', country: 'Australia' },
-        { regulator: 'FCA', license_number: '684312', country: 'UK' }
-      ],
-      platforms: ['MetaTrader 4', 'MetaTrader 5', 'cTrader', 'TradingView'],
-      forex_pairs: 90,
-      cfds: 1100,
-      commodities: 25,
-      indices: 18,
-      crypto: 5,
-      stocks: 0,
-      instruments_total: 1200,
-      live_chat: true,
-      phone_support: true,
-      email_support: true,
-      support_hours: '24/5',
-      cta_url: 'https://pepperstone.com'
-    },
-    {
-      id: '3',
-      name: 'XM',
-      slug: 'xm',
-      website_url: 'https://xm.com',
-      overall_rating: 4.5,
-      trust_rating: 4.6,
-      platform_rating: 4.4,
-      costs_rating: 4.3,
-      service_rating: 4.7,
-      min_deposit: 5,
-      min_deposit_currency: '$',
-      max_leverage: 1000,
-      spreads_from: 0.6,
-      commission: 'None on standard',
-      demo_account: true,
-      swap_free: true,
-      regulations: [
-        { regulator: 'CySEC', license_number: '120/10', country: 'Cyprus' },
-        { regulator: 'ASIC', license_number: '443670', country: 'Australia' }
-      ],
-      platforms: ['MetaTrader 4', 'MetaTrader 5'],
-      forex_pairs: 57,
-      cfds: 900,
-      commodities: 32,
-      indices: 24,
-      crypto: 31,
-      stocks: 0,
-      instruments_total: 1000,
-      live_chat: true,
-      phone_support: true,
-      email_support: true,
-      support_hours: '24/5',
-      cta_url: 'https://xm.com'
-    }
-  ];
-
-  return {
-    props: {
-      allBrokers: mockBrokers,
-      featuredBrokers: mockBrokers.slice(0, 3)
-    },
-    revalidate: 3600 // Revalidate every hour
-  };
 };
+
+export default ComparePage;

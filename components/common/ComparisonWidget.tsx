@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   PlusIcon,
   XMarkIcon,
@@ -32,7 +31,7 @@ const ComparisonWidget: React.FC<ComparisonWidgetProps> = ({
   position = 'fixed',
   className = ''
 }) => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [comparedBrokers, setComparedBrokers] = useState<Broker[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -106,7 +105,7 @@ const ComparisonWidget: React.FC<ComparisonWidgetProps> = ({
   // Navigate to comparison page
   const goToComparison = () => {
     const brokerSlugs = comparedBrokers.map(b => b.slug).join(',');
-    router.push(`/compare?brokers=${brokerSlugs}`);
+    navigate(`/compare?brokers=${brokerSlugs}`);
   };
 
   // Check if current broker is in comparison
@@ -229,7 +228,7 @@ const ComparisonWidget: React.FC<ComparisonWidgetProps> = ({
 
                 {/* Add More Placeholder */}
                 {comparedBrokers.length < 4 && (
-                  <Link href="/brokers" className="block">
+                  <Link to="/brokers" className="block">
                     <div className="flex items-center p-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-colors cursor-pointer">
                       <div className="w-8 h-8 border-2 border-dashed border-gray-400 rounded flex items-center justify-center mr-3">
                         <PlusIcon className="h-4 w-4 text-gray-400" />

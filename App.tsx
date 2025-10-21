@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { initializePerformanceOptimizations, lazyWithRetry } from './lib/performance';
 import { PageSkeleton, AdminDashboardSkeleton, CountryPageSkeleton } from './components/ui/SkeletonLoaders';
 import PerformanceMonitor from './components/ui/PerformanceMonitor';
+import { ErrorBoundary, RouteErrorBoundary, ComponentErrorBoundary, ErrorProvider } from './components/error';
 import AdvancedScreeningPage from './pages/AdvancedScreeningPage';
 import AiTutorPage from './pages/AiTutorPage';
 import AITestPage from './pages/AITestPage';
@@ -92,9 +93,19 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <AdminAuthProvider>
-      <Layout>
-        <Routes>
+    <ErrorProvider>
+      <ErrorBoundary
+        onError={(error, errorInfo, errorId) => {
+          // Global error handling - could send to monitoring service
+          console.error('Global app error:', { error, errorInfo, errorId });
+        }}
+        maxRetries={2}
+        enableRetry={true}
+      >
+        <AdminAuthProvider>
+          <Layout>
+            <RouteErrorBoundary>
+              <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/brokers" element={<AllBrokersPage />} />
         <Route path="/debug-brokers" element={<DebugBrokersPage />} />
@@ -142,6 +153,13 @@ const App: React.FC = () => {
             </Suspense>
           </ProtectedAdminRoute>
         } />
+        <Route path="/admin/dashboard" element={
+          <ProtectedAdminRoute>
+            <Suspense fallback={<AdminDashboardSkeleton />}>
+              <AdminDashboard />
+            </Suspense>
+          </ProtectedAdminRoute>
+        } />
         <Route path="/admin/verification" element={
           <ProtectedAdminRoute>
             <Suspense fallback={<PageSkeleton />}>
@@ -165,6 +183,8 @@ const App: React.FC = () => {
         } />
         <Route path="/brokers/advanced-screening" element={<AdvancedScreeningPage />} />
         <Route path="/brokers/promotions" element={<BrokerPromotionsPage />} />
+        <Route path="/brokers/:brokerId" element={<BrokerDetailPage />} />
+        {/* Legacy route redirect */}
         <Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/:brokerId1/vs/:brokerId2" element={<BrokerDuelPage />} />
@@ -226,9 +246,8 @@ const App: React.FC = () => {
         <Route path="/:seoSlug" element={<SEOPage />} />
 
         {/* Dynamically create routes for all category pages */}
-        {categoryPages.map(({ path, title, description, filterFn }) => (
+        {categoryPages.map(({ path, title, description, filterFn }, index) => (
           <Route 
-            key={path}
             path={path}
             element={<CategoryPage title={title} description={description} filterFn={filterFn} />} 
           />
@@ -251,11 +270,18 @@ const App: React.FC = () => {
         } />
 
         <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <Chatbot />
-        <PerformanceMonitor />
-      </Layout>
-    </AdminAuthProvider>
+              </Routes>
+            </RouteErrorBoundary>
+            <ComponentErrorBoundary showMessage={false}>
+              <Chatbot />
+            </ComponentErrorBoundary>
+            <ComponentErrorBoundary showMessage={false}>
+              <PerformanceMonitor />
+            </ComponentErrorBoundary>
+          </Layout>
+        </AdminAuthProvider>
+      </ErrorBoundary>
+    </ErrorProvider>
   );
 };
 

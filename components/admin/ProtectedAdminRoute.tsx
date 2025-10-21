@@ -11,12 +11,23 @@ const ProtectedAdminRoute: React.FC<ProtectedAdminRouteProps> = ({ children }) =
   const { user, isAdmin, isLoading } = useAdminAuth();
   const location = useLocation();
 
+  // DEV BYPASS: Allow admin access with localStorage token when VITE_DEV_ADMIN_BYPASS is enabled
+  const devAdminBypass = (import.meta as any).env?.VITE_DEV_ADMIN_BYPASS === 'true';
+  const hasDevAdminToken = typeof window !== 'undefined' && localStorage.getItem('admin_token') === 'mock-admin-token';
+  
+  console.log('ProtectedAdminRoute - devAdminBypass:', devAdminBypass, 'hasDevAdminToken:', hasDevAdminToken);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
+  }
+
+  // Check for dev bypass first
+  if (devAdminBypass && hasDevAdminToken) {
+    return <>{children}</>;
   }
 
   if (!user) {

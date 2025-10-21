@@ -199,15 +199,19 @@ export interface PromotionFilters {
   };
   accountTypes?: string[];
   activationMethod?: ActivationMethod[];
-  sortBy?: 'rating' | 'rebate_amount' | 'popularity' | 'newest';
+  sortBy?: 'rating' | 'rebate_amount' | 'popularity' | 'newest' | 'created_at' | 'updated_at';
   sortOrder?: 'asc' | 'desc';
 }
 
 export interface AvailableFilters {
-  brokers: Array<{ id: string; name: string; count: number }>;
-  promotionTypes: Array<{ type: PromotionType; count: number }>;
-  activationMethods: Array<{ method: ActivationMethod; count: number }>;
-  rebateRanges: Array<{ min: number; max: number; count: number }>;
+  brokerIds: string[];
+  promotionTypes: PromotionType[];
+  activationMethods: ActivationMethod[];
+  isActive?: boolean;
+  isFeatured?: boolean;
+  minRebate?: number;
+  maxRebate?: number;
+  accountTypes?: string[];
 }
 
 // Legacy interface for backward compatibility
@@ -651,7 +655,7 @@ export interface CreatePromotionRequest {
   contactInfo?: ContactInfo;
   requirements: PromotionRequirements;
   rates: Omit<PromotionRate, 'id' | 'promotionId'>[];
-  features?: Omit<PromotionFeature, 'id' | 'promotionId'>[];
+  features?: PromotionFeature[];
   startDate: string;
   endDate?: string;
   isFeatured?: boolean;
@@ -747,79 +751,7 @@ export interface OnboardingContextType {
   tourSteps: OnboardingStep[];
 }
 
-// ============================================================================
-// PROMOTION API INTERFACES
-// ============================================================================
 
-export interface GetPromotionsRequest {
-  filters?: PromotionFilters;
-  sort?: {
-    field: string;
-    order: 'asc' | 'desc';
-  };
-  pagination?: {
-    page: number;
-    limit: number;
-  };
-}
-
-export interface GetPromotionsResponse {
-  promotions: Promotion[];
-  totalCount: number;
-  hasMore: boolean;
-  filters: AvailableFilters;
-}
-
-export interface CalculateRebateRequest {
-  promotionId: string;
-  monthlyVolume: number;
-  accountType?: string;
-}
-
-export interface CalculateRebateResponse {
-  result: CalculationResult;
-  recommendations?: Promotion[];
-}
-
-export interface CreatePromotionRequest {
-  brokerId: string;
-  title: string;
-  description?: string;
-  promotionType: PromotionType;
-  activationMethod: ActivationMethod;
-  contactInfo?: ContactInfo;
-  requirements: PromotionRequirements;
-  rates: Omit<PromotionRate, 'id' | 'promotionId'>[];
-  features: Omit<PromotionFeature, 'id' | 'promotionId'>[];
-  startDate: string;
-  endDate?: string;
-  isFeatured?: boolean;
-  isExclusive?: boolean;
-  isPopular?: boolean;
-  terms?: string;
-  websiteUrl?: string;
-}
-
-export interface UpdatePromotionRequest extends Partial<CreatePromotionRequest> {
-  id: string;
-}
-
-export interface PromotionStatsResponse {
-  promotionId: string;
-  totalViews: number;
-  totalClicks: number;
-  totalConversions: number;
-  conversionRate: number;
-  clickThroughRate: number;
-  daysActive: number;
-  topReferrers?: string[];
-  performanceByDate?: Array<{
-    date: string;
-    views: number;
-    clicks: number;
-    conversions: number;
-  }>;
-}
 
 export interface AdminPromotionAnalytics {
   overview: {

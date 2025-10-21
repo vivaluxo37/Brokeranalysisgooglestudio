@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { unifiedBrokerService } from '../services/unifiedBrokerService';
+import { createSafeHook } from '../utils/hookValidation';
 import type { Broker } from '../types';
 
 
@@ -26,7 +27,7 @@ interface BrokerDetailsState {
 /**
  * Hook to get all brokers with database-first approach and file fallback
  */
-export const useBrokers = (): BrokerHookState => {
+const useBrokersInternal = (): BrokerHookState => {
   const [brokers, setBrokers] = useState<Broker[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -242,5 +243,8 @@ export const useCompareBrokers = (brokerIds: string[]) => {
 
   return { brokers, loading, error, refetch: fetchCompareBrokers };
 };
+
+// Export the safe version of the hook
+export const useBrokers = createSafeHook(useBrokersInternal, 'useBrokers');
 
 export default useBrokers;

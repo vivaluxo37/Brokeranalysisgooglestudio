@@ -62,27 +62,87 @@ const AiTutorPage: React.FC = () => {
         const history = messages.slice(1); // Exclude initial greeting from history
         try {
             const stream = await getAiTutorResponseStream(userMessageText, history);
+            if (!stream) {
+                setIsLoading(false);
+                return;
+            }
+
+            const extractChunkText = (value: unknown): string => {
+                if (!value && value !== 0) return '';
+                if (typeof value === 'string') return value;
+                if (typeof value === 'function') {
+                    try {
+                        return String((value as () => string)());
+                    } catch {
+                        return '';
+                    }
+                }
+                if (typeof value === 'object' && value !== null) {
+                    const chunkObj = value as { text?: unknown };
+                    if (typeof chunkObj.text === 'function') {
+                        try {
+                            return String(chunkObj.text());
+                        } catch {
+                            return '';
+                        }
+                    }
+                    if (typeof chunkObj.text === 'string') {
+                        return chunkObj.text;
+                    }
+                }
+                return String(value);
+            };
+
             let firstChunk = true;
-            let currentText = "";
-            
-            for await (const chunk of stream) {
-                currentText += chunk.text;
+            let currentText = '';
+
+            const appendChunk = (chunkText: string) => {
+                if (!chunkText) {
+                    return;
+                }
+
+                currentText += chunkText;
                 if (firstChunk) {
-                    setIsLoading(false); // Hide typing indicator
-                    const aiMessage: ChatMessage = { sender: 'ai', text: currentText };
-                    setMessages(prev => [...prev, aiMessage]);
+                    setIsLoading(false);
+                    setMessages(prev => [...prev, { sender: 'ai', text: currentText }]);
                     firstChunk = false;
                 } else {
                     setMessages(prev => {
                         const lastMessage = prev[prev.length - 1];
                         if (lastMessage?.sender === 'ai') {
-                           return [...prev.slice(0, -1), { ...lastMessage, text: currentText }];
+                            return [...prev.slice(0, -1), { ...lastMessage, text: currentText }];
                         }
                         return prev;
                     });
                 }
+            };
+
+            const reader = typeof (stream as ReadableStream<any>).getReader === 'function'
+                ? (stream as ReadableStream<any>).getReader()
+                : null;
+
+            if (reader) {
+                try {
+                    while (true) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+                        appendChunk(extractChunkText(value));
+                    }
+                } finally {
+                    reader.releaseLock?.();
+                }
+            } else if (Symbol.asyncIterator && typeof (stream as any)[Symbol.asyncIterator] === 'function') {
+                for await (const value of stream as AsyncIterable<unknown>) {
+                    appendChunk(extractChunkText(value));
+                }
+            } else if (typeof (stream as any)?.text === 'function') {
+                const fullText = await (stream as any).text();
+                appendChunk(typeof fullText === 'string' ? fullText : '');
             }
-            if (firstChunk) setIsLoading(false); // Handle empty stream
+
+            if (firstChunk) {
+                setIsLoading(false);
+            }
         } catch (error) {
             console.error('Gemini API error:', error);
             const errorMessage: ChatMessage = { sender: 'ai', text: "Sorry, I'm having trouble connecting right now." };

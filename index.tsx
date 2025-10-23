@@ -15,7 +15,7 @@ import './src/utils/vite-hmr-helper';
 // import * as serviceWorkerRegistration from './src/utils/serviceWorkerRegistration';
 
 // Import performance monitoring
-import { performanceMonitor } from './services/performanceMonitoring';
+import { performanceMonitoring as performanceMonitor } from './services/performanceMonitoring';
 import PerformanceOptimizer from './utils/performanceOptimization';
 
 // Import dependency preloader

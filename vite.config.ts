@@ -116,8 +116,8 @@ export default defineConfig(() => ({
 
           // Node modules splitting
           if (id.includes('node_modules')) {
-            // React ecosystem
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+            // React ecosystem (including scheduler to prevent circular dependencies)
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router') || id.includes('scheduler')) {
               return 'react-vendor';
             }
             

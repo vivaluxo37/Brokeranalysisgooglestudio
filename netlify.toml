@@ -1,5 +1,5 @@
 [build]
-  command = "npm install --legacy-peer-deps && npx vite build --outDir dist/client"
+  command = "chmod +x scripts/netlify-build.sh && bash scripts/netlify-build.sh"
   publish = "dist/client"
 
 [build.environment]

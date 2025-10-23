@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "An AI-driven single-page web application to help traders research, compare, and select forex brokers.",
   "type": "module",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "concurrently \"npm run proxy:dev\" \"npm run redirect -- 3000 5173,3005\" \"vite --host localhost --port 3000\"",
     "dev:3000": "concurrently \"npm run proxy:dev\" \"npm run redirect -- 3005 5173,3000\" \"vite --host localhost --port 3005\"",

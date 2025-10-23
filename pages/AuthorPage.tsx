@@ -3,7 +3,7 @@ import * as ReactRouterDOM from 'react-router-dom';
 import { authors } from '../data/authors';
 import { blogPosts } from '../data/blog';
 import NotFoundPage from './NotFoundPage';
-import { Card, CardContent } from '../components/ui/card';
+import { Card, CardContent } from '../components/ui/Card';
 import { Icons } from '../constants';
 import BlogPostCard from '../components/blog/BlogPostCard';
 import MetaTags from '../components/common/MetaTags';

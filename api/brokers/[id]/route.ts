@@ -26,7 +26,7 @@ export async function GET(
     }
 
     const { id } = params;
-    const supabase = getSupabaseClient();
+    const supabase = await getSupabaseClient();
 
     const { data: broker, error } = await supabase
       .from('brokers')

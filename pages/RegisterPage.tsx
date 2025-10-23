@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SignUp } from '@clerk/clerk-react';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { OAuthButtons } from '../components/Authentication';
 import { useTranslation } from '../hooks/useTranslation';
 

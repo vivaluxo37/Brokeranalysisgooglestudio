@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     // Validate query parameters
     const validatedQuery = BrokerQuerySchema.parse(query);
 
-    const supabase = getSupabaseClient();
+    const supabase = await getSupabaseClient();
     let queryBuilder = supabase
       .from('brokers')
       .select(`

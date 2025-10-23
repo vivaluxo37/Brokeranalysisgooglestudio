@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '10');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    const supabase = getSupabaseClient();
+    const supabase = await getSupabaseClient();
     let queryBuilder = supabase
       .from('comparisons')
       .select(`
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
 
     const validatedComparison = ComparisonSchema.parse(comparisonData);
 
-    const supabase = getSupabaseClientWithAuth();
+    const supabase = await getSupabaseClientWithAuth();
 
     // Insert comparison
     const { data: comparison, error } = await supabase

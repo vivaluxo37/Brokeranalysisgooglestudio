@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Broker } from '../../types';
-import { Card, CardContent } from '../ui/card';
-import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/Card';
+import { Button } from '../ui/Button';
 import { useComparison } from '../../hooks/useComparison';
 import { Icons } from '../../constants';
 import StarRating from '../ui/StarRating';

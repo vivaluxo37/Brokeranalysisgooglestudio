@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Button } from '../components/ui/button';
+import { Button } from '../components/ui/Button';
 import Spinner from '../components/ui/Spinner';
 import { Broker, StrategyMatcherHistoryItem } from '../types';
 import { useBrokers } from '../hooks/useBrokers';
 import BrokerCard from '../components/brokers/BrokerCard';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { getStrategyBrokerRecommendations } from '../services/geminiService';
 import { Icons } from '../constants';
 import { useAuth } from '../hooks/useAuth';

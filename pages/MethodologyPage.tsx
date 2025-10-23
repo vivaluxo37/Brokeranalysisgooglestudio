@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 
 const MethodologyPage: React.FC = () => {

@@ -4,7 +4,7 @@ import { Icons } from '../constants';
 import { ChatMessage } from '../types';
 import { getAiTutorResponseStream } from '../services/geminiService';
 import { useTranslation } from '../hooks/useTranslation';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import Markdown from '../components/ui/markdown';
 
 const TypingIndicator: React.FC = () => (

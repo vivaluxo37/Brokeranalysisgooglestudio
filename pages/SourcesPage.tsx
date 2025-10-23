@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
 
 const SourcesPage: React.FC = () => {
   const sources = [

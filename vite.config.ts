@@ -111,53 +111,85 @@ export default defineConfig(() => ({
     cssCodeSplit: true,
     rollupOptions: {
       output: {
-        // Advanced code splitting strategy
+        // Ultra aggressive code splitting to prevent circular dependencies
         manualChunks: (id) => {
-
           // Node modules splitting
           if (id.includes('node_modules')) {
-            // React ecosystem
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
-              return 'react-vendor';
+            // Split React core separately to prevent circular dependencies
+            if (id.includes('react') && !id.includes('react-dom') && !id.includes('react-router')) {
+              return 'react-core';
             }
-            
+
+            // React DOM separate
+            if (id.includes('react-dom')) {
+              return 'react-dom';
+            }
+
+            // React Router separate
+            if (id.includes('react-router')) {
+              return 'react-router';
+            }
+
             // Chart libraries
             if (id.includes('chart.js') || id.includes('react-chartjs-2') || id.includes('recharts')) {
               return 'charts';
             }
-            
-            // Icon libraries
-            if (id.includes('lucide-react') || id.includes('@heroicons/react')) {
-              return 'icons';
+
+            // Icon libraries split further
+            if (id.includes('lucide-react')) {
+              return 'lucide-icons';
             }
-            
-            // UI libraries
-            if (id.includes('@radix-ui') || id.includes('class-variance-authority') || 
-                id.includes('clsx') || id.includes('tailwind-merge')) {
-              return 'ui-libs';
+
+            if (id.includes('@heroicons/react')) {
+              return 'heroicons';
             }
-            
+
+            // UI libraries split individually
+            if (id.includes('@radix-ui')) {
+              return 'radix-ui';
+            }
+
+            if (id.includes('class-variance-authority')) {
+              return 'cva';
+            }
+
+            if (id.includes('clsx')) {
+              return 'clsx';
+            }
+
+            if (id.includes('tailwind-merge')) {
+              return 'tailwind-merge';
+            }
+
             // Authentication
             if (id.includes('@clerk/clerk-react')) {
-              return 'auth';
+              return 'clerk-auth';
             }
-            
-            // Database/Storage
+
+            // Database/Storage - completely isolated
             if (id.includes('@supabase/supabase-js')) {
-              return 'database';
+              return 'supabase-iso';
             }
-            
+
             // AI/ML libraries
             if (id.includes('@google/generative-ai')) {
               return 'ai-core';
             }
-            
-            // Testing libraries (shouldn't be in production but just in case)
-            if (id.includes('@testing-library') || id.includes('vitest') || id.includes('cypress')) {
-              return 'testing';
+
+            // Other problematic modules split individually
+            if (id.includes('jsdom') || id.includes('cheerio')) {
+              return 'parsers';
             }
-            
-            // Other vendor libraries
+
+            if (id.includes('axios')) {
+              return 'axios';
+            }
+
+            if (id.includes('cookie')) {
+              return 'cookie';
+            }
+
+            // Group remaining vendor libraries together to avoid circular chunk dependencies
             return 'vendor';
           }
           
@@ -216,7 +248,6 @@ export default defineConfig(() => ({
             return 'utils';
           }
         },
-        
         // Optimized asset naming for better caching
         assetFileNames: (assetInfo) => {
           if (!assetInfo.name) return 'assets/[name]-[hash][extname]';
@@ -254,73 +285,21 @@ export default defineConfig(() => ({
         },
         
         // Optimized chunk naming
-        chunkFileNames: (chunkInfo) => {
-          // Get meaningful name from chunk
-          if (chunkInfo.facadeModuleId) {
-            const facadeModuleId = chunkInfo.facadeModuleId;
-            const parts = facadeModuleId.split('/');
-            const fileName = parts[parts.length - 1];
-            const name = fileName.replace(/\.(tsx?|jsx?)$/, '');
-            
-            // Handle specific patterns
-            if (name.startsWith('index')) {
-              const folder = parts[parts.length - 2] || 'chunk';
-              return `js/${folder}-[hash].js`;
-            }
-            
-            return `js/${name}-[hash].js`;
-          }
-          
-          return `js/chunk-[hash].js`;
-        },
-        
+        chunkFileNames: `js/[name]-[hash].js`,
+
         // Entry file naming
         entryFileNames: `js/[name]-[hash].js`,
       },
       
       // Advanced tree shaking
-      treeshake: {
-        moduleSideEffects: false,
-        propertyReadSideEffects: false,
-        unknownGlobalSideEffects: false,
-      },
-      
-      // External dependencies (for production CDN usage)
-      external: process.env.NODE_ENV === 'production' ? [
-        // Example: 'react', 'react-dom' for CDN
-      ] : [],
+      treeshake: true,
     },
     
     // Source maps for debugging
     sourcemap: process.env.NODE_ENV === 'development',
     
     // Advanced minification
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        // Remove console logs in production
-        drop_console: process.env.NODE_ENV === 'production',
-        drop_debugger: true,
-        pure_funcs: process.env.NODE_ENV === 'production' ? 
-          ['console.log', 'console.info', 'console.debug'] : [],
-        // Advanced optimizations
-        passes: 2,
-        unsafe: true,
-        unsafe_comps: true,
-        unsafe_Function: true,
-        unsafe_math: true,
-        unsafe_proto: true,
-        unsafe_regexp: true,
-      },
-      mangle: {
-        properties: {
-          regex: /^_/, // Mangle private properties
-        },
-      },
-      format: {
-        comments: false,
-      },
-    },
+    minify: 'esbuild',
     
     // Report compressed size
     reportCompressedSize: true,
@@ -330,11 +309,17 @@ export default defineConfig(() => ({
     
     
   },
-  // Optimize dependencies
+  // Optimize dependencies - more conservative approach
   optimizeDeps: {
     include: [
       'react',
-      'react-dom',
+      'react-dom'
+    ],
+    // Exclude more dependencies to prevent circular dependency issues
+    exclude: [
+      'react-router-dom',
+      'lucide-react',
+      '@heroicons/react',
       'class-variance-authority',
       'clsx',
       'tailwind-merge',
@@ -343,17 +328,16 @@ export default defineConfig(() => ({
       '@radix-ui/react-slot',
       '@radix-ui/react-tabs',
       '@clerk/clerk-react',
-      'cookie'
-    ],
-    // Exclude problematic dependencies from optimization
-    exclude: [
-      'react-router-dom',
       'chart.js',
       'react-chartjs-2',
-      'lucide-react',
-      '@heroicons/react',
-      'set-cookie-parser', // Exclude to prevent ESM/CJS issues
-      'use-sync-external-store'
+      '@supabase/supabase-js',
+      '@google/generative-ai',
+      'axios',
+      'cookie',
+      'set-cookie-parser',
+      'use-sync-external-store',
+      'jsdom',
+      'cheerio'
     ],
     // Pre-bundle dependencies to avoid chunk loading issues
     force: false, // Force rebundling can cause HMR loops

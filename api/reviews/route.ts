@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
     const verified = searchParams.get('verified') === 'true';
 
-    const supabase = getSupabaseClient();
+    const supabase = await getSupabaseClient();
     let queryBuilder = supabase
       .from('reviews')
       .select(`
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
     const validatedReview = ReviewSchema.parse(reviewData);
 
     // Insert review into database
-    const supabase = getSupabaseClient();
+    const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('reviews')
       .insert(validatedReview)

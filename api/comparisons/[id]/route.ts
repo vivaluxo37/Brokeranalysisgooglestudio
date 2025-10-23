@@ -27,7 +27,7 @@ export async function GET(
     }
 
     const { id } = params;
-    const supabase = getSupabaseClient();
+    const supabase = await getSupabaseClient();
 
     const { data: comparison, error } = await supabase
       .from('comparisons')
@@ -128,7 +128,7 @@ export async function PUT(
     const body = await request.json();
     const { name, description, brokerIds } = body;
 
-    const supabase = getSupabaseClientWithAuth();
+    const supabase = await getSupabaseClientWithAuth();
 
     // Check if user owns the comparison
     const { data: existingComparison } = await supabase
@@ -243,7 +243,7 @@ export async function DELETE(
     const user = await requireAuth(request);
     const { id } = params;
 
-    const supabase = getSupabaseClientWithAuth();
+    const supabase = await getSupabaseClientWithAuth();
 
     // Check if user owns the comparison
     const { data: existingComparison } = await supabase

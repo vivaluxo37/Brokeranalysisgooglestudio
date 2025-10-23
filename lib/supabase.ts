@@ -1,32 +1,54 @@
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+
+type SupabaseModule = typeof import('@supabase/supabase-js');
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-let supabase: any = null;
+const missingEnvError = new Error('Supabase not configured');
 
-if (supabaseUrl && supabaseAnonKey) {
-  supabase = createClient(supabaseUrl, supabaseAnonKey);
-} else {
-  console.warn('⚠️ Supabase environment variables not found - database features disabled');
-  // Create a mock client that throws errors for any database operations
-  supabase = {
-    from: () => ({
-      select: () => Promise.reject(new Error('Supabase not configured')),
-      insert: () => Promise.reject(new Error('Supabase not configured')),
-      update: () => Promise.reject(new Error('Supabase not configured')),
-      delete: () => Promise.reject(new Error('Supabase not configured')),
-    }),
-    auth: {
-      signInWithPassword: () => Promise.reject(new Error('Supabase not configured')),
-      signOut: () => Promise.reject(new Error('Supabase not configured')),
-      getSession: () => Promise.reject(new Error('Supabase not configured')),
-      getUser: () => Promise.reject(new Error('Supabase not configured')),
-    }
-  };
-}
+const mockSupabase: SupabaseClient = {
+  from: () => ({
+    select: () => Promise.reject(missingEnvError),
+    insert: () => Promise.reject(missingEnvError),
+    update: () => Promise.reject(missingEnvError),
+    delete: () => Promise.reject(missingEnvError),
+  }),
+  auth: {
+    signInWithPassword: () => Promise.reject(missingEnvError),
+    signOut: () => Promise.reject(missingEnvError),
+    getSession: () => Promise.reject(missingEnvError),
+    getUser: () => Promise.reject(missingEnvError),
+  },
+} as unknown as SupabaseClient;
 
-export { supabase };
+let cachedModulePromise: Promise<SupabaseModule> | null = null;
+let cachedClient: SupabaseClient | null = null;
+
+const loadSupabaseModule = async (): Promise<SupabaseModule> => {
+  if (!cachedModulePromise) {
+    cachedModulePromise = import('@supabase/supabase-js');
+  }
+  return cachedModulePromise;
+};
+
+const createBrowserClient = async (): Promise<SupabaseClient> => {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn('⚠️ Supabase environment variables not found - database features disabled');
+    return mockSupabase;
+  }
+
+  if (!cachedClient) {
+    const { createClient } = await loadSupabaseModule();
+    cachedClient = createClient(supabaseUrl, supabaseAnonKey);
+  }
+
+  return cachedClient;
+};
+
+export const getSupabaseClient = async (): Promise<SupabaseClient> => {
+  return createBrowserClient();
+};
 
 // Database types for the Broker Analysis Application
 export interface Database {
@@ -245,7 +267,8 @@ export type User = Database['public']['Tables']['users']['Row'];
 // Admin authentication helper functions
 export const adminAuth = {
   async signIn(email: string, password: string) {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const client = await getSupabaseClient();
+    const { data, error } = await client.auth.signInWithPassword({
       email,
       password,
     });
@@ -253,26 +276,30 @@ export const adminAuth = {
   },
 
   async signOut() {
-    const { error } = await supabase.auth.signOut();
+    const client = await getSupabaseClient();
+    const { error } = await client.auth.signOut();
     return { error };
   },
 
   async getCurrentSession() {
-    const { data: { session }, error } = await supabase.auth.getSession();
+    const client = await getSupabaseClient();
+    const { data: { session }, error } = await client.auth.getSession();
     return { session, error };
   },
 
   async getCurrentUser() {
-    const { data: { user }, error } = await supabase.auth.getUser();
+    const client = await getSupabaseClient();
+    const { data: { user }, error } = await client.auth.getUser();
     return { user, error };
   },
 
   // Check if current user is admin
   async isAdmin() {
+    const client = await getSupabaseClient();
     const { user } = await this.getCurrentUser();
     if (!user) return false;
 
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from('users')
       .select('role')
       .eq('id', user.id)
@@ -287,4 +314,5 @@ export const adminAuth = {
   }
 };
 
-export default supabase;
+// Export a dynamic client getter instead of a static instance
+export { getSupabaseClient as default };

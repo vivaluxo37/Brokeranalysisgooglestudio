@@ -4,12 +4,12 @@ import { useComparison } from '../hooks/useComparison';
 import { brokers as allBrokers } from '../data/brokers';
 import { useLiveData, Instrument } from '../services/liveDataService';
 import { getCostAnalysis } from '../services/geminiService';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Button } from '../components/ui/Button';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import Spinner from '../components/ui/Spinner';
 import { Icons } from '../constants';
 import { Broker } from '../types';
-import { Input } from '../components/ui/input';
+import { Input } from '../components/ui/Input';
 
 const PIP_VALUE_STANDARD_LOT = 10;
 const TRADING_DAYS_PER_MONTH = 21;

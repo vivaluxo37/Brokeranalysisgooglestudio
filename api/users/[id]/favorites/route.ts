@@ -27,7 +27,7 @@ export async function GET(
     }
 
     const { id: userId } = params;
-    const supabase = getSupabaseClient();
+    const supabase = await getSupabaseClient();
 
     const { data: favorites, error } = await supabase
       .from('user_favorites')
@@ -113,7 +113,7 @@ export async function POST(
       );
     }
 
-    const supabase = getSupabaseClientWithAuth();
+    const supabase = await getSupabaseClientWithAuth();
 
     // Check if already favorited
     const { data: existing } = await supabase
@@ -213,7 +213,7 @@ export async function DELETE(
       );
     }
 
-    const supabase = getSupabaseClientWithAuth();
+    const supabase = await getSupabaseClientWithAuth();
 
     // Remove from favorites
     const { error } = await supabase

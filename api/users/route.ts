@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('id');
 
-    const supabase = getSupabaseClient();
+    const supabase = await getSupabaseClient();
 
     if (userId) {
       // Get specific user
@@ -118,7 +118,7 @@ export async function PUT(request: NextRequest) {
     const validatedData = UserSchema.partial().parse(updateData);
 
     // Update user profile
-    const supabase = getSupabaseClientWithAuth();
+    const supabase = await getSupabaseClientWithAuth();
     const { data: updatedUser, error } = await supabase
       .from('users')
       .update(validatedData)

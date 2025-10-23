@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "mcp__firecrawl__firecrawl_search",
-      "mcp__firecrawl__firecrawl_scrape"
+      "mcp__firecrawl__firecrawl_scrape",
+      "Bash(where npx)",
+      "Bash(npm search:*)",
+      "Bash(npx:*)",
+      "Bash(findstr:*)"
     ],
     "deny": [],
     "ask": []

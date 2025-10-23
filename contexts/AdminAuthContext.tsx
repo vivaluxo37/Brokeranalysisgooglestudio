@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, Session, AuthError } from '@supabase/supabase-js';
-import { supabase } from '../lib/supabase';
+import type { User, Session, AuthError, SupabaseClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from '../lib/supabase';
 
 interface AdminAuthContextType {
   user: User | null;
@@ -31,12 +31,40 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [supabaseClient, setSupabaseClient] = useState<SupabaseClient | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    const initializeClient = async () => {
+      try {
+        const client = await getSupabaseClient();
+        if (isMounted) {
+          setSupabaseClient(client);
+        }
+      } catch (error) {
+        console.error('Error initializing Supabase client:', error);
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    initializeClient();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     // Get initial session
     const getSession = async () => {
+      if (!supabaseClient) {
+        setIsLoading(false);
+        return;
+      }
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const { data: { session }, error } = await supabaseClient.auth.getSession();
         if (error) {
           console.error('Error getting session:', error);
           return;
@@ -59,7 +87,7 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
     getSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
       async (event, session) => {
         setSession(session);
         setUser(session?.user || null);
@@ -78,14 +106,14 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [supabaseClient]);
 
   const checkAdminStatus = async (): Promise<boolean> => {
-    if (!user) return false;
+    if (!user || !supabaseClient) return false;
 
     try {
       // Check if user has admin role in user metadata or a separate admin table
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('admin_users')
         .select('id, role')
         .eq('user_id', user.id)
@@ -109,7 +137,10 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
   const signIn = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      if (!supabaseClient) {
+        return { error: { name: 'SupabaseClientError', message: 'Supabase client not initialized' } as AuthError };
+      }
+      const { error } = await supabaseClient.auth.signInWithPassword({
         email,
         password,
       });
@@ -125,7 +156,7 @@ export const AdminAuthProvider: React.FC<AdminAuthProviderProps> = ({ children }
   const signOut = async () => {
     setIsLoading(true);
     try {
-      await supabase.auth.signOut();
+      await supabaseClient?.auth.signOut();
       setUser(null);
       setSession(null);
       setIsAdmin(false);

@@ -6,7 +6,9 @@ import JsonLdSchema from '../../components/common/JsonLdSchema';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import { POPULAR_COUNTRIES } from '../../lib/constants/countries';
 import { getBrokersForCountry } from '../../lib/data/countryBrokerMappings';
-import UnifiedBrokerCard from '../../components/common/UnifiedBrokerCard';
+// Temporarily use BrokerCard as UnifiedBrokerCard doesn't exist
+import BrokerCard from '../../components/broker/BrokerCard';
+const UnifiedBrokerCard = BrokerCard;
 
 const CountriesPage: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<string>('');

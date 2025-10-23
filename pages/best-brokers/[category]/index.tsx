@@ -13,7 +13,9 @@ import {
 } from '@heroicons/react/24/outline';
 import { Broker } from '../../../types';
 import { useCachedProgrammaticData } from '../../../hooks/useCachedProgrammaticData';
-import UnifiedBrokerCard from '../../../components/common/UnifiedBrokerCard';
+// Temporarily use BrokerCard as UnifiedBrokerCard doesn't exist
+import BrokerCard from '../../../components/common/BrokerCard';
+const UnifiedBrokerCard = BrokerCard;
 import MetaTags, { OptimizedMetaTags } from '../../../components/common/MetaTags';
 import JsonLdSchema from '../../../components/common/JsonLdSchema';
 import LoadingSpinner from '../../../components/ui/LoadingSpinner';

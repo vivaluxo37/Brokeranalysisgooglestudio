@@ -7,14 +7,15 @@ import './src/index.css';
 import './src/utils/vite-hmr-helper';
 
 // Import hook validation
-import { initializeHookValidation } from './utils/hookValidation';
+// Temporarily disabled - file not found
+// import { initializeHookValidation } from './utils/hookValidation';
 
 // Import service worker registration
 // Temporarily disabled - service worker file not found
 // import * as serviceWorkerRegistration from './src/utils/serviceWorkerRegistration';
 
 // Import performance monitoring
-import { performanceMonitor } from './src/services/performanceMonitor';
+import { performanceMonitor } from './services/performanceMonitoring';
 import PerformanceOptimizer from './utils/performanceOptimization';
 
 // Import dependency preloader

@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import MetaTags from '../components/common/MetaTags';
 import JsonLdSchema from '../components/common/JsonLdSchema';
-import UnifiedBrokerCard from '../components/common/UnifiedBrokerCard';
+// Temporarily use BrokerCard as UnifiedBrokerCard doesn't exist
+import BrokerCard from '../components/broker/BrokerCard';
+const UnifiedBrokerCard = BrokerCard;
 import { unifiedBrokerService } from '../services/unifiedBrokerService';
 import { SEOService } from '../services/seoService';
 import {

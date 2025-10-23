@@ -10,7 +10,8 @@ import './src/utils/vite-hmr-helper';
 import { initializeHookValidation } from './utils/hookValidation';
 
 // Import service worker registration
-import * as serviceWorkerRegistration from './src/utils/serviceWorkerRegistration';
+// Temporarily disabled - service worker file not found
+// import * as serviceWorkerRegistration from './src/utils/serviceWorkerRegistration';
 
 // Import performance monitoring
 import { performanceMonitor } from './src/services/performanceMonitor';
@@ -108,7 +109,8 @@ window.addEventListener('load', () => {
 });
 
 // Register service worker with proper configuration
-serviceWorkerRegistration.register({
+// Temporarily disabled - service worker file not found
+/* serviceWorkerRegistration.register({
   onUpdate: (registration) => {
     console.log('[App] New content available, please refresh');
     // Show update notification
@@ -122,7 +124,7 @@ serviceWorkerRegistration.register({
   onError: (error) => {
     console.error('[App] Service worker registration failed:', error);
   }
-});
+}); */
 
 // Log performance metrics for debugging
 if (import.meta.env.DEV) {

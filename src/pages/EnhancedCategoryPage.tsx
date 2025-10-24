@@ -569,4 +569,4 @@ const EnhancedCategoryPage: React.FC = () => {
   );
 };
 
-export default EnhancedCategoryPage;
+export default EnhancedCategoryPage;

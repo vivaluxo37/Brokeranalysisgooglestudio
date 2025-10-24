@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { useComparison } from '../hooks/useComparison';
 import { useBrokers } from '../hooks/useBrokers';
 import ComparisonTable from '../components/brokers/ComparisonTable';
-import { Button } from '../components/ui/button';
+import { Button } from '../components/ui/Button';
 import { getComparisonSummary } from '../services/geminiService';
 import Spinner from '../components/ui/Spinner';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { Icons } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
 

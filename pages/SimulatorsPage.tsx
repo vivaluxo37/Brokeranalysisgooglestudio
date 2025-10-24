@@ -1,8 +1,8 @@
 import React from 'react';
 import * as ReactRouterDOM from 'react-router-dom';
-import { Card, CardContent } from '../components/ui/card';
+import { Card, CardContent } from '../components/ui/Card';
 import { Icons } from '../constants';
-import { Button } from '../components/ui/button';
+import { Button } from '../components/ui/Button';
 import { useTranslation } from '../hooks/useTranslation';
 
 const SimulatorsPage: React.FC = () => {

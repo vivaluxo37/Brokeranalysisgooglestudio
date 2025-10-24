@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { brokers } from '../data/brokers';
 import NotFoundPage from './NotFoundPage';
-import { Button } from '../components/ui/button';
+import { Button } from '../components/ui/Button';
 import { useComparison } from '../hooks/useComparison';
 import { useFavorites } from '../hooks/useFavorites';
 import { useAuth } from '../hooks/useAuth';
@@ -11,7 +11,7 @@ import StarRating from '../components/ui/StarRating';
 import StarRatingInput from '../components/ui/StarRatingInput';
 import { Review, DiscussionPost } from '../types';
 import ReviewCard from '../components/brokers/ReviewCard';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { getReviewSummary, ReviewSummary, getRegulatoryTrustScore, TrustScore } from '../services/geminiService';
 import Spinner from '../components/ui/Spinner';
 import BrokerCharts from '../components/brokers/BrokerCharts';
@@ -21,7 +21,7 @@ import { useReviews } from '../hooks/useReviews';
 import Tooltip from '../components/ui/Tooltip';
 import RiskProfileCard from '../components/brokers/RiskProfileCard';
 import ReportBrokerModal from '../components/brokers/ReportBrokerModal';
-import { Input } from '../components/ui/input';
+import { Input } from '../components/ui/Input';
 import DiscussionPostCard from '../components/brokers/DiscussionPostCard';
 import AIAlternatives from '../components/brokers/AIAlternatives';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -35,8 +35,8 @@ import AccountOpeningGuide from '../components/brokers/AccountOpeningGuide';
 import ProductSelectionEnhanced from '../components/brokers/ProductSelectionEnhanced';
 import EducationalResources from '../components/brokers/EducationalResources';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Badge } from '../components/ui/badge';
-import { Progress } from '../components/ui/progress';
+import { Badge } from '../components/ui/Badge';
+import { Progress } from '../components/ui/Progress';
 import {
   TrendingUp,
   Shield,

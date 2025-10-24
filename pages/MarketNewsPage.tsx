@@ -3,11 +3,11 @@ import { Broker, NewsArticle } from '../types';
 import { mockNewsData } from '../data/news';
 import { getNewsAnalysis } from '../services/geminiService';
 import { useBrokers } from '../hooks/useBrokers';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import Spinner from '../components/ui/Spinner';
 import { Icons } from '../constants';
 import MiniBrokerCard from '../components/news/MiniBrokerCard';
-import { Badge } from '../components/ui/badge';
+import { Badge } from '../components/ui/Badge';
 
 const MarketNewsPage: React.FC = () => {
   const { brokers: allBrokers } = useBrokers();

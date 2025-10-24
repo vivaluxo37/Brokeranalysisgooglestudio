@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '../components/ui/button';
+import { Button } from '../components/ui/Button';
 import { Icons } from '../constants';
 import { useBrokers } from '../hooks/useBrokers';
 import JsonLdSchema from '../components/common/JsonLdSchema';
 import { useTranslation } from '../hooks/useTranslation';
 import TradingViewWidget from '../components/tools/tradingview/TradingViewWidget';
-import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import Spinner from '../components/ui/Spinner';
 import { categoryPageGroups } from './categoryPageData';
 import { getCategoriesByType, POPULAR_CATEGORIES } from '../lib/constants/categories';

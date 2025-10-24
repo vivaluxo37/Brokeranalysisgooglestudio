@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Broker } from '../../types';
-import { Card, CardContent, CardHeader } from '../ui/card';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
+import { Card, CardContent, CardHeader } from '../ui/Card';
+import { Button } from '../ui/Button';
+import { Badge } from '../ui/Badge';
 import { Star, TrendingUp, Shield, Zap } from 'lucide-react';
 import AIOptimizedContent from './AIOptimizedContent';
 import { useAIOptimizedContent } from '../../hooks/useAIOptimizedContent';

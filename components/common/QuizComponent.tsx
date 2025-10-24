@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardFooter } from '../ui/card';
-import { Button } from '../ui/button';
+import { Card, CardContent, CardFooter } from '../ui/Card';
+import { Button } from '../ui/Button';
 import { Icons } from '../../constants';
 import { useEducation } from '../../hooks/useEducation';
 

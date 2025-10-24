@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ComparisonContext } from '../../contexts/ComparisonContext';
 import { brokers as allBrokers } from '../../data/brokers';
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 import { Icons } from '../../constants';
 import * as ReactRouterDOM from 'react-router-dom';
 

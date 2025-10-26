@@ -1,19 +1,11 @@
 #!/bin/bash
 
-# Netlify build script to ensure correct platform dependencies
+# Netlify build script for production deployment
 echo "Starting Netlify build process..."
 
-# Clean up any existing installations
-echo "Cleaning up previous installations..."
-rm -rf node_modules package-lock.json
-
-# Install dependencies with legacy peer deps
+# Install dependencies
 echo "Installing dependencies..."
-npm install --legacy-peer-deps
-
-# Explicitly install rollup Linux binary if needed
-echo "Ensuring rollup Linux binary is installed..."
-npm install @rollup/rollup-linux-x64-gnu --save-optional --legacy-peer-deps || true
+npm ci
 
 # Run the build
 echo "Building the application..."

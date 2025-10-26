@@ -33,7 +33,7 @@ export default defineConfig(({ command, ssrBuild }) => {
       strictPort: true, // Fail if port is occupied
       hmr: {
         overlay: false, // Disable error overlay to prevent loops
-        port: 24679, // Use different HMR port
+        port: 24678, // Use different HMR port
       },
       watch: {
         usePolling: false, // Use native file watching

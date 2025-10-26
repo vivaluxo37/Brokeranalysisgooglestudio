@@ -106,3 +106,6 @@ export const ComparisonProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     </ComparisonContext.Provider>
   );
 };
+
+// Export as default for easier importing
+export default ComparisonProvider;

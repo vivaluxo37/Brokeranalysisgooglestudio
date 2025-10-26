@@ -594,7 +594,7 @@ class StructuredDataGeneratorService {
       '@context': 'https://schema.org',
       '@type': 'FinancialProduct',
       name: broker.name,
-      description: broker.summary || `${broker.name} is a forex broker offering trading services with ${broker.regulation.regulators.join(', ')} regulation.`,
+      description: broker.summary || `${broker.name} is a forex broker offering trading services with ${(broker.regulation?.regulators || []).join(', ')} regulation.`,
       provider: {
         '@context': 'https://schema.org',
         '@type': 'Organization',
@@ -737,10 +737,10 @@ class StructuredDataGeneratorService {
     // Simple rating calculation based on available data
     let score = 3; // Base score
     
-    if (broker.regulation.regulators.length > 0) score += 0.5;
-    if (broker.accessibility.minDeposit && broker.accessibility.minDeposit <= 100) score += 0.5;
-    if (broker.tradingConditions.spreads.eurusd < 1.0) score += 0.5;
-    if (broker.platforms.mt4 || broker.platforms.mt5) score += 0.5;
+    if (broker.regulation?.regulators && broker.regulation.regulators.length > 0) score += 0.5;
+    if (broker.accessibility?.minDeposit && broker.accessibility.minDeposit <= 100) score += 0.5;
+    if (broker.tradingConditions?.spreads?.eurusd && broker.tradingConditions.spreads.eurusd < 1.0) score += 0.5;
+    if (broker.platforms?.mt4 || broker.platforms?.mt5) score += 0.5;
     
     return Math.min(5, Math.max(1, Number(score.toFixed(1))));
   }

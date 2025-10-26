@@ -7,8 +7,7 @@ import './src/index.css';
 import './src/utils/vite-hmr-helper';
 
 // Import hook validation
-// Temporarily disabled - file not found
-// import { initializeHookValidation } from './utils/hookValidation';
+import { initializeHookValidation } from './utils/hookValidation';
 
 // Import service worker registration
 // Temporarily disabled - service worker file not found
@@ -96,8 +95,8 @@ if (rootElement.hasChildNodes()) {
   root.render(app);
 }
 
-// Initialize performance monitoring
-performanceMonitor.init();
+// Initialize performance monitoring (already initialized in constructor)
+// performanceMonitor.init();
 
 // Initialize performance optimizations
 PerformanceOptimizer.getInstance().init();

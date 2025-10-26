@@ -3,6 +3,9 @@
  * This server handles all AI API calls to keep API keys secure
  */
 
+// Load environment variables first
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -67,7 +70,15 @@ app.use(helmet({
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3005',
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3005',
+    'http://localhost:3010',
+    'http://192.168.100.2:3000',
+    'http://192.168.100.2:3005',
+    'http://192.168.100.2:3010',
+    process.env.FRONTEND_URL
+  ].filter(Boolean),
   credentials: true,
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],

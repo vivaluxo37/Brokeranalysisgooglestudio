@@ -4,6 +4,7 @@ import { initializePerformanceOptimizations, lazyWithRetry } from './lib/perform
 import { PageSkeleton, AdminDashboardSkeleton, CountryPageSkeleton } from './components/ui/SkeletonLoaders';
 import PerformanceMonitor from './components/ui/PerformanceMonitor';
 import { ErrorBoundary, RouteErrorBoundary, ComponentErrorBoundary, ErrorProvider } from './components/error';
+import ComparisonProvider from './contexts/ComparisonContext';
 import AdvancedScreeningPage from './pages/AdvancedScreeningPage';
 import AiTutorPage from './pages/AiTutorPage';
 import AITestPage from './pages/AITestPage';
@@ -186,8 +187,16 @@ const App: React.FC = () => {
         <Route path="/brokers/:brokerId" element={<BrokerDetailPage />} />
         {/* Legacy route redirect */}
         <Route path="/broker/:brokerId" element={<BrokerDetailPage />} />
-        <Route path="/compare" element={<ComparePage />} />
-        <Route path="/compare/:brokerId1/vs/:brokerId2" element={<BrokerDuelPage />} />
+        <Route path="/compare" element={
+          <ComparisonProvider>
+            <ComparePage />
+          </ComparisonProvider>
+        } />
+        <Route path="/compare/:brokerId1/vs/:brokerId2" element={
+          <ComparisonProvider>
+            <BrokerDuelPage />
+          </ComparisonProvider>
+        } />
         <Route path="/cost-analyzer" element={<CostAnalyzerPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

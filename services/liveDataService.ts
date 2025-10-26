@@ -45,7 +45,7 @@ const baseSpreads: Record<Instrument, Record<string, number>> = {
 };
 
 const getCommission = (broker: Broker): number => {
-  const commissionStr = broker.tradingConditions.commission.toLowerCase();
+  const commissionStr = (broker.tradingConditions?.commission || '').toLowerCase();
   if (commissionStr.includes('zero') || commissionStr.includes('included')) {
     return 0;
   }

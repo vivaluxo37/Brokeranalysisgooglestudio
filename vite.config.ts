@@ -31,7 +31,7 @@ export default defineConfig(() => ({
     strictPort: true, // Use specific port to avoid conflicts
     hmr: {
       overlay: false, // Disable error overlay to prevent restart loops
-      port: 24679, // Use different port for HMR to avoid conflicts
+      port: 24678, // Use different HMR port to avoid conflicts
     },
     watch: {
       usePolling: false, // Disable polling - causes excessive reloads on Windows
@@ -369,7 +369,7 @@ export default defineConfig(() => ({
   
   // SSR options for better CommonJS handling
   ssr: {
-    noExternal: ['cookie']
+    noExternal: ['cookie', 'set-cookie-parser']
   },
   // Resolve aliases
   resolve: {
@@ -380,11 +380,11 @@ export default defineConfig(() => ({
       { find: '@/contexts', replacement: path.resolve(__dirname, './contexts') },
       { find: '@/lib', replacement: path.resolve(__dirname, './lib') },
       { find: '@/utils', replacement: path.resolve(__dirname, './utils') },
-      // Fix for set-cookie-parser ESM/CJS issues - Commented out as polyfill doesn't exist
-      // {
-      //   find: 'set-cookie-parser',
-      //   replacement: path.resolve(__dirname, './src/polyfills/set-cookie-parser-fix.ts'),
-      // },
+      // Fix for set-cookie-parser ESM/CJS issues
+      {
+        find: 'set-cookie-parser',
+        replacement: path.resolve(__dirname, './src/polyfills/set-cookie-parser-fix.ts'),
+      },
       {
         find: 'use-sync-external-store/shim/index.js',
         replacement: path.resolve(

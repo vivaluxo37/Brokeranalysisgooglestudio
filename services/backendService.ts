@@ -62,13 +62,13 @@ export const handleChatbotStream = async (message: string) => {
       websiteUrl: b.websiteUrl,
       internalPath: `/#/broker/${b.id}`,
       score: b.score,
-      minDeposit: b.accessibility.minDeposit,
-      platforms: b.technology.platforms,
-      maxLeverage: b.tradingConditions.maxLeverage,
-      regulators: b.regulation.regulators,
-      spreads: b.tradingConditions.spreads,
-      commission: b.tradingConditions.commission,
-      executionType: b.technology.executionType,
+      minDeposit: b.accessibility?.minDeposit || 'N/A',
+      platforms: b.technology?.platforms || [],
+      maxLeverage: b.tradingConditions?.maxLeverage || 'N/A',
+      regulators: b.regulation?.regulators || [],
+      spreads: b.tradingConditions?.spreads || { eurusd: 'N/A' },
+      commission: b.tradingConditions?.commission || 'N/A',
+      executionType: b.technology?.executionType || 'N/A',
   })), null, 2);
 
   try {
@@ -353,8 +353,18 @@ export const handlePersonalizedCostProjection = async (request: PersonalizedCost
         4. Briefly mention why the other brokers are less suitable for them.
         Do not output JSON.
     `;
-    const response = await ai.models.generateContent({ model, contents: prompt });
-    return response.text;
+    
+    try {
+        const model = fallbackGeminiClient?.getGenerativeModel({ model: FALLBACK_GEMINI_MODEL });
+        if (!model) {
+            throw new Error('Gemini client not initialized');
+        }
+        const response = await model.generateContent(prompt);
+        return response.response.text();
+    } catch (error) {
+        console.error('Error in handleDuelVerdict:', error);
+        return 'Unable to generate duel verdict at this time.';
+    }
 };
 
 // --- AI Review Summarizer ---
@@ -453,8 +463,18 @@ export const handleRiskAnalysis = async (brokerName: string, signals: Signal[]):
         Signals:
         ${JSON.stringify(signals, null, 2)}
     `;
-    const response = await ai.models.generateContent({ model, contents: prompt });
-    return response.text;
+    
+    try {
+        const model = fallbackGeminiClient?.getGenerativeModel({ model: FALLBACK_GEMINI_MODEL });
+        if (!model) {
+            throw new Error('Gemini client not initialized');
+        }
+        const response = await model.generateContent(prompt);
+        return response.response.text();
+    } catch (error) {
+        console.error('Error in handleRiskAnalysis:', error);
+        return 'Unable to generate risk analysis at this time.';
+    }
 }
 
 
@@ -464,7 +484,14 @@ export const handleComparisonSummary = async (brokers: Broker[]): Promise<string
     Act as an expert forex broker analyst. You are comparing the following brokers: ${brokers.map(b => b.name).join(', ')}.
 
     Here is their data:
-    ${JSON.stringify(brokers.map(b => ({name: b.name, score: b.score, regulators: b.regulation.regulators, minDeposit: b.accessibility.minDeposit, eurusdSpread: b.tradingConditions.spreads.eurusd, platforms: b.technology.platforms})), null, 2)}
+    ${JSON.stringify(brokers.map(b => ({
+        name: b.name, 
+        score: b.score, 
+        regulators: b.regulation?.regulators || [], 
+        minDeposit: b.accessibility?.minDeposit || 'N/A', 
+        eurusdSpread: b.tradingConditions?.spreads?.eurusd || 'N/A', 
+        platforms: b.technology?.platforms || []
+    })), null, 2)}
 
     Please provide a summary analysis with a clear winner for two types of traders:
     1.  **For a Beginner Trader:** Who is the best choice and why? (Focus on ease of use, low min deposit, good support, platform simplicity).
@@ -472,8 +499,18 @@ export const handleComparisonSummary = async (brokers: Broker[]): Promise<string
 
     Structure your response as two short paragraphs, one for each trader type. Be decisive.
     `;
-    const response = await ai.models.generateContent({ model, contents: prompt });
-    return response.text;
+    
+    try {
+        const model = fallbackGeminiClient?.getGenerativeModel({ model: FALLBACK_GEMINI_MODEL });
+        if (!model) {
+            throw new Error('Gemini client not initialized');
+        }
+        const response = await model.generateContent(prompt);
+        return response.response.text();
+    } catch (error) {
+        console.error('Error in handleComparisonSummary:', error);
+        return 'Unable to generate comparison summary at this time.';
+    }
 }
 
 // --- AI Duel Verdict ---
@@ -482,15 +519,37 @@ export const handleDuelVerdict = async (broker1: Broker, broker2: Broker): Promi
     You are the judge in a head-to-head "Broker Duel" between ${broker1.name} and ${broker2.name}.
 
     Broker 1 Data (${broker1.name}):
-    ${JSON.stringify({score: broker1.score, regulators: broker1.regulation.regulators, minDeposit: broker1.accessibility.minDeposit, eurusdSpread: broker1.tradingConditions.spreads.eurusd, platforms: broker1.technology.platforms}, null, 2)}
+    ${JSON.stringify({
+        score: broker1.score, 
+        regulators: broker1.regulation?.regulators || [], 
+        minDeposit: broker1.accessibility?.minDeposit || 'N/A', 
+        eurusdSpread: broker1.tradingConditions?.spreads?.eurusd || 'N/A', 
+        platforms: broker1.technology?.platforms || []
+    }, null, 2)}
 
     Broker 2 Data (${broker2.name}):
-    ${JSON.stringify({score: broker2.score, regulators: broker2.regulation.regulators, minDeposit: broker2.accessibility.minDeposit, eurusdSpread: broker2.tradingConditions.spreads.eurusd, platforms: broker2.technology.platforms}, null, 2)}
+    ${JSON.stringify({
+        score: broker2.score, 
+        regulators: broker2.regulation?.regulators || [], 
+        minDeposit: broker2.accessibility?.minDeposit || 'N/A', 
+        eurusdSpread: broker2.tradingConditions?.spreads?.eurusd || 'N/A', 
+        platforms: broker2.technology?.platforms || []
+    }, null, 2)}
 
     Based on this data, declare an overall winner. Write a short, exciting verdict (3-4 sentences) explaining your decision. Mention the key factor that tipped the scales in the winner's favor.
     `;
-    const response = await ai.models.generateContent({ model, contents: prompt });
-    return response.text;
+    
+    try {
+        const model = fallbackGeminiClient?.getGenerativeModel({ model: FALLBACK_GEMINI_MODEL });
+        if (!model) {
+            throw new Error('Gemini client not initialized');
+        }
+        const response = await model.generateContent(prompt);
+        return response.response.text();
+    } catch (error) {
+        console.error('Error in handleDuelVerdict:', error);
+        return 'Unable to generate duel verdict at this time.';
+    }
 }
 
 // --- AI Broker Recommendation ---
@@ -503,9 +562,9 @@ export const handleAIRecommendation = async (brokers: Broker[]): Promise<AIRecom
     id: b.id,
     name: b.name,
     score: b.score,
-    regulators: b.regulation.regulators,
-    eurusdSpread: b.tradingConditions.spreads.eurusd,
-    commission: b.tradingConditions.commission,
+    regulators: b.regulation?.regulators || [],
+    eurusdSpread: b.tradingConditions?.spreads?.eurusd || 'N/A',
+    commission: b.tradingConditions?.commission || 'N/A',
   }));
 
   const prompt = `
@@ -562,11 +621,11 @@ export const handleNewsAnalysis = async (article: NewsArticle, brokers: Broker[]
     const brokerData = brokers.map(b => ({
         id: b.id,
         name: b.name,
-        executionType: b.technology.executionType,
-        negativeBalanceProtection: b.tradingConditionsExtended.negativeBalanceProtection,
-        regulators: b.regulation.regulators,
-        spreads: b.tradingConditions.spreads,
-        commission: b.tradingConditions.commission,
+        executionType: b.technology?.executionType || 'N/A',
+        negativeBalanceProtection: b.tradingConditionsExtended?.negativeBalanceProtection || false,
+        regulators: b.regulation?.regulators || [],
+        spreads: b.tradingConditions?.spreads || {},
+        commission: b.tradingConditions?.commission || 'N/A',
     }));
 
     const prompt = `
@@ -684,9 +743,9 @@ export const handleBrokerAlternatives = async (targetBroker: Broker, allBrokers:
             score: b.score,
             summary: b.summary,
             pros: b.pros,
-            executionType: b.technology.executionType,
-            minDeposit: b.accessibility.minDeposit,
-            platforms: b.technology.platforms,
+            executionType: b.technology?.executionType || 'N/A',
+            minDeposit: b.accessibility?.minDeposit || 'N/A',
+            platforms: b.technology?.platforms || [],
         }));
 
     const targetBrokerData = {
@@ -695,9 +754,9 @@ export const handleBrokerAlternatives = async (targetBroker: Broker, allBrokers:
         score: targetBroker.score,
         summary: targetBroker.summary,
         pros: targetBroker.pros,
-        executionType: targetBroker.technology.executionType,
-        minDeposit: targetBroker.accessibility.minDeposit,
-        platforms: targetBroker.technology.platforms,
+        executionType: targetBroker.technology?.executionType || 'N/A',
+        minDeposit: targetBroker.accessibility?.minDeposit || 'N/A',
+        platforms: targetBroker.technology?.platforms || [],
     };
 
     const prompt = `

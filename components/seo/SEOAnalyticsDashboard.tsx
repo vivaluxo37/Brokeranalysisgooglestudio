@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { seoTracker } from '../../utils/seoAnalytics';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
+import { Badge } from '../ui/Badge';
 import {
   BarChart3,
   TrendingUp,

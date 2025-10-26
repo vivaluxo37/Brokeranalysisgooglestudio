@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
-import { Checkbox } from '../ui/checkbox';
+import { Badge } from '../ui/Badge';
+import { Checkbox } from '../ui/Checkbox';
 import {
   CheckCircle,
   XCircle,
